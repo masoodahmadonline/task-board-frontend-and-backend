@@ -1,0 +1,364 @@
+<!doctype html>
+ 
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>jQuery UI Accordion - Default functionality</title>
+  <link rel="stylesheet" href="jquery/jquery-ui-1.10.3/themes/base/minified/jquery-ui.min.css" />
+  <script src="jquery/jquery-1.10.2.min.js"></script>
+  <script src="jquery/blur.js"></script>
+  
+  <script src="jquery/jquery-ui-1.10.3/ui/minified/jquery-ui.min.js"></script>
+  <!-- not avaialabe <link rel="stylesheet" href="/resources/demos/style.css" />  -->
+  <link rel="stylesheet" href="main.css" />
+  
+  
+  
+  <style type='text/css'>
+		
+		.circle{
+			margin:0 auto;
+			
+			-webkit-box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;
+			-moz-box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;
+			box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;
+			
+			width:255px;
+			height:255px;
+			
+			-webkit-border-radius:127px;
+			-moz-border-radius:127px;
+			border-radius:127px;
+			z-index:11;
+			cursor:move;
+			
+			position: absolute;
+			display:block;
+			top:0;
+			right:0;
+			margin-right:-180px;
+			margin-top:-192px;
+		}
+		
+		.circl:hover{
+		  
+		}
+	</style>
+  
+  
+  
+  
+  
+    <style>
+  .accordion-resizer {
+  
+  }
+  </style>
+  <script>
+
+  
+  $(function() {
+  
+    var icons = {
+      header: "ui-icon-circle-arrow-e",
+      activeHeader: "ui-icon-circle-arrow-s"
+    };
+    
+    $( ".accordion" ).accordion({
+      icons:icons,
+      heightStyle: "fill"
+    });
+  });
+  $(function() {
+    $( ".accordion-resizer" ).resizable({
+      minHeight: 140,
+      minWidth: 200,
+      resize: function() {
+        $( ".accordion" ).accordion( "refresh" );
+      }
+    });
+  });
+  
+  $(function() {
+    $( ".draggable" ).draggable({ cursor: "move" });
+    
+    
+  });
+  
+
+  
+  </script>
+</head>
+<body style="
+	    
+	background-image: url(handprint.png);
+	background-repeat: no-repeat;
+
+	background-attachment: fixed;
+	    
+	    ">
+  <div id="header">
+    <img id="company-logo" src="logo.png" />
+    <div id="circle" class="circle draggable blur">
+      <span style="position:absolute; display:block; left:50px; bottom:50px;">Menu</span>
+    </div>
+ </div>
+ 
+ <div id="content"> 
+	  
+		
+	        <table style="width:1000px;"> <!--have to edit-->
+	        <tbody>
+	
+		    
+		    <tr>
+		
+		      <td colspan="2" style="text-align: center;" >
+			<span style="display:block; margin:50px; font-size:200%;">Welcome&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br /> Authentication Required &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		      </td>
+		    </tr>
+		    <tr>
+			  <td>
+				<div id="outer-login-wrapper" class="blur draggable jQeffect-show-clip">
+
+				      <div id="inner-login-wrapper">
+					  <form method="post">
+					  
+					  <table>
+					  <tbody>
+						<tr>
+						  <td>
+						    <img style="height:30px;" src="company.png" />
+						  </td>
+						  
+						  <td>
+						    <input type="text" placeholder="Company Name" />
+						  </td>
+						  
+						  <td>
+						  </td>
+						  
+						</tr>
+						
+						<tr>
+						  <td>
+						      <img style="height:30px;" src="person.png" />
+						  </td>
+						  
+						  <td>
+						    <input type="text" placeholder="Log-in ID"/>
+						  </td>
+						  
+						  <td>
+						    <input type="submit" value="Log-In" />
+						  </td>
+						  
+						</tr>
+						
+						<tr>
+						  <td>
+						    <img style="height:30px;" src="password.png" />
+						  </td>
+						  
+						  <td>
+						    <input type="password" placeholder="Password" />
+						  </td>
+						  
+						  <td>
+						    <input type="reset" />
+						  </td>
+						  
+						</tr>
+						<tr>
+						  <td>
+						  </td>
+						  <td style="text-align:right;">
+						    Forgot your password?
+						  </td>
+						  <td>
+						  </td>
+						</tr>
+					    
+					    
+					    </tbody>
+					    </table>
+					  </form>
+					  
+					  
+					</div>
+				      
+				</div>
+			  
+			  </td>
+			  
+			  <td>
+				<div  id="login-accordion-container" class="ui-widget-content accordion-resizer draggable">
+				  <div id="login-accordion" class="accordion">
+				      <h3><span class="accordion-heading">Terms and conditions before you login </span>(demo, you may replace.)</h3>
+				      
+				      <div>
+					<p>
+					These are the terms and conditions. bla bla bla
+					lba bla blabla bla bla bal bla bla lba bla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lba bla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lba bla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lba
+					bla bla bla
+					lba bla blabla bla bla bal bla bla lba bla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					
+					
+					lba blablabla bla bla bal bla bla lba bla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbablabla bla bla
+					lba bla blabla bla bla bal bla bla lba bla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lba bla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lba bla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lba bla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lba
+					</p>
+				      </div>
+				    
+				      <h3><span class="accordion-heading ">Warning for unauthorized log-in attempts </span></h3>
+				      <div>
+					<p>
+					Any attempt would by reported to authorities and legal action may be taken. bla bla bla
+					lba bla blabla bla bla bal bla bla lba bla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lba
+					</p> 
+				      </div>
+				      
+				      <h3><span class="accordion-heading ">Information about us</span></h3>
+				      <div>
+					<p>
+					bla bla bla
+					lba bla blabla bla bla bal bla bla lba bla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lbabla bla bla
+					lba bla blabla bla bla bal bla bla lba
+					</p>
+					<ul>
+					  <li>List item one</li>
+					  <li>List item two</li>
+					  <li>List item three</li>
+					</ul>
+				      </div>
+				      
+				  </div>
+				</div>
+		      </td>
+		    </tr>
+		    
+		    
+		    
+		 
+	        </tbody>
+	        </table>
+			
+			
+			
+			
+			
+			
+			
+			
+		      
+
+			      
+			      
+		  <script type="text/javascript">
+			  $(document).ready(function(){
+				var menuOnn;  
+				  
+			  
+				  $('.blur').blurjs({
+					  draggable: true,
+					  overlay: 'rgba(255,255,255,0.1)',
+					  radius:40
+				  });
+				  
+				  
+				  
+				  var options = {percent: 100};
+				  $(".jQeffect-show-clip").css("display", "none");
+				  $( ".jQeffect-show-clip" ).show( 'clip', options, 7000 );
+				//  $(".jQeffect-show-clip").css("display", "inline-block");
+				
+				
+				
+				
+				 $("#circle").click(function(){
+				      
+				      if(menuOnn != 1){
+					  $("#circle").animate({
+					    backgroundColor: "rgba(70,130,180, 0.3)",
+					    //opacity: 0.4,
+					    marginRight: "-40px",
+					    marginTop: "-40px"
+					    
+					    
+					  }, 1500 );
+					  menuOnn = 1;
+				      }else{
+					  $("#circle").animate({
+					    backgroundColor: "rgba(70,130,180, 0.3)",
+					    //opacity: 0.4,
+					    marginRight: "-180px",
+					    marginTop: "-192px"
+					    
+					  }, 1500 );
+					  menuOnn = 0;
+				      }
+					  
+				  });
+				    
+				    
+				    
+				    
+				    
+				    
+				  
+			  });
+			  
+			  
+				   
+		  </script>
+ </div>		  
+
+</body>
+</html>
+
+
+<!--
+http://www.malsup.com/jquery/corner/
+http://blurjs.com/simpledemo.html
+http://www.functionn.in/2012/01/blurjs-jquery-plugin-producing-psuedo.html#.UfGjOj5BXZs
+http://www.blurjs.com/
+http://codecanyon.net/item/translucent-responsive-banner-rotator-slider/801607?WT.ac=search_item&WT.seg_1=search_item&WT.z_author=VF
+http://vectorflower.com/preview/trans_banner/index3.html?s_sel=3&&t_sel=4
+
+-->

@@ -1,0 +1,170 @@
+
+
+
+
+body { 
+	position:relative;
+	margin:0;padding:0;
+	font-size: 62.5%;
+	font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif";
+	/**background-image: url(handprint.png); **/
+	background-repeat: no-repeat;
+
+	background-attachment: fixed;
+	/** background-size:cover; **/
+			
+}
+
+
+.circle{
+        margin:0 auto;
+
+        -webkit-box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;
+        -moz-box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;
+        box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;
+
+        width:255px;
+        height:255px;
+
+        -webkit-border-radius:127px;
+        -moz-border-radius:127px;
+        border-radius:127px;
+        z-index:11;
+        cursor:move;
+
+        position: absolute;
+        display:block;
+        top:0;
+        right:0;
+        margin-right:-180px;
+        margin-top:-192px;
+}
+
+.circl:hover{
+
+}
+
+table {
+	font-size: 1em;
+}
+
+.demo-description {
+	clear: both;
+	padding: 12px;
+	font-size: 1.3em;
+	line-height: 1.4em;
+}
+
+.ui-draggable, .ui-droppable {
+	background-position: top;
+}
+
+
+.accordion-resizer{
+  
+    background-color:transparent;    
+    width: 350px;
+    height: 220px;
+    border: none;
+}
+#login-accordion{
+  background-color:transparent;
+
+}
+
+#login-accordion-container{
+  display:inline-block;
+}
+#login-accordion h3{ 
+    box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.7);
+}
+
+#login-accordion div{
+    box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.7);
+}
+.accordion-heading{
+  font-weight: bold;
+}
+
+
+
+#outer-login-wrapper{
+  display:inline-block;
+  border:thin lightgrey solid;
+  color:black;
+  margin:20px;
+
+  width: 350px;
+
+
+  
+  -moz-border-radius: 101px;
+  -webkit-border-radius: 101px;
+  border-radius: 101px;
+  box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.7);
+ /** text-shadow: 0 0 5pt white,
+		0 0 6pt white,
+		0 0 7pt white,
+		0 0 8pt white,
+		0 0 9pt white,
+		0 0 10pt white,
+		0 0 11pt white,
+		0 0 12pt white,
+		0 0 13pt white,
+		0 0 14pt white,
+		0 0 15pt white,
+		0 0 16pt white,
+		0 0 17pt white,
+		0 0 18pt white,
+		0 0 19pt white;
+                             
+  **/
+}
+
+
+
+
+#inner-login-wrapper{
+  display:inline-block;
+ margin-right:40px;
+ margin-left:40px;
+ margin-top:30px;
+ margin-bottom:30px;
+}
+
+
+#header{
+ 
+ 
+  z-index:10;
+  display:block;
+  border-bottom: grey thin solid;
+  position: fixed;
+  height:50px;
+  width:100%;  
+   
+
+   background-repeat: repeat-x; 
+  
+}
+
+#content{
+  width: 90%;
+  margin-right: auto;
+  margin-left:auto;
+  padding-top:50px;
+}
+
+#company-logo{
+ height: 50px; 
+}
+
+.td-heading{
+  text-align: center;
+  font-size:150%;
+}
+
+
+
+
+

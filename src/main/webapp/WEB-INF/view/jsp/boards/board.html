@@ -1,0 +1,992 @@
+<!doctype html>
+ 
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>jQuery UI Accordion - Default functionality</title>
+<!--     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.1.min.js"><\/script>');</script>
+-->        
+  <link rel="stylesheet" href="jquery/jquery-ui-1.10.3/themes/base/minified/jquery-ui.min.css" />
+  <script src="jquery/jquery-1.10.2.min.js"></script>
+  <script src="jquery/blur.js"></script>
+  
+  <script src="jquery/jquery-ui-1.10.3/ui/minified/jquery-ui.min.js"></script>
+  <!-- not avaialabe <link rel="stylesheet" href="/resources/demos/style.css" />  -->
+  <link rel="stylesheet" href="main.css" />
+  
+  
+  
+  <style type='text/css'>
+		
+		.circle{
+			margin:0 auto;
+			
+			-webkit-box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;
+			-moz-box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;
+			box-shadow:0 2px 2px #000, 0 1px 0 #fff inset;
+			
+			width:255px;
+			height:255px;
+			
+			-webkit-border-radius:127px;
+			-moz-border-radius:127px;
+			border-radius:127px;
+			z-index:11;
+			cursor:move;
+			
+			position: absolute;
+			display:block;
+			top:0;
+			right:0;
+			margin-right:-180px;
+			margin-top:-192px;
+		}
+		
+		.circl:hover{
+		  
+		}
+		
+		
+		
+		
+		
+
+.board{
+  display:inline-block;
+  margin-right:5px;
+  margin-left:5px;
+  margin-top:10px;
+  margin-bottom:10px;
+  
+
+  /**min-height:510px;**/
+  
+
+
+}
+
+
+.board-title{
+
+  color:white;
+  font-size:25px;
+  text-align:center;
+  border: white thin solid;
+  box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.7);
+  
+  -webkit-border-top-left-radius: 30px;
+-webkit-border-top-right-radius: 30px;
+-moz-border-radius-topleft: 30px;
+-moz-border-radius-topright: 30px;
+border-top-left-radius: 30px;
+border-top-right-radius: 30px;
+}
+
+.board-title span{
+
+display:inline-block;
+width:100%;
+background-color: rgba(70,130,180, 0.7);
+
+-webkit-border-top-left-radius: 30px;
+-webkit-border-top-right-radius: 30px;
+-moz-border-radius-topleft: 30px;
+-moz-border-radius-topright: 30px;
+border-top-left-radius: 30px;
+border-top-right-radius: 30px;
+
+}
+
+.board-body{
+  border: white thin solid;
+  box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.7);
+  
+    -webkit-border-bottom-right-radius: 20px;
+-webkit-border-bottom-left-radius: 20px;
+-moz-border-radius-bottomright: 20px;
+-moz-border-radius-bottomleft: 20px;
+border-bottom-right-radius: 20px;
+border-bottom-left-radius: 20px;
+}
+
+.box{
+  padding:10px;
+    
+    
+  vertical-align:top;
+  margin-right:5px;
+  margin-left:5px;
+  margin-top:10px;
+  margin-bottom:10px;
+  /**border: blue solid thin;**/ 
+  /**min-height:500px;**/
+  min-width:160px;
+  height:100%;
+ 
+
+ 
+}
+
+.box-title{
+  text-align:center;
+  width:100%;
+  
+  font-size:15px;
+  border: white thin solid;
+  
+  
+  -webkit-border-top-left-radius: 30px;
+-webkit-border-top-right-radius: 30px;
+-moz-border-radius-topleft: 30px;
+-moz-border-radius-topright: 30px;
+border-top-left-radius: 30px;
+border-top-right-radius: 30px;
+
+box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.7);
+}
+
+.box-title span{
+display:inline-block;
+width:100%;
+-webkit-border-top-left-radius: 30px;
+-webkit-border-top-right-radius: 30px;
+-moz-border-radius-topleft: 30px;
+-moz-border-radius-topright: 30px;
+border-top-left-radius: 30px;
+border-top-right-radius: 30px;
+background-color: rgba(70,130,180, 0.3);
+}
+
+.box-body{
+  display:inline-block;
+  border:thin white solid;
+  box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.7);
+  -webkit-border-bottom-right-radius: 20px;
+-webkit-border-bottom-left-radius: 20px;
+-moz-border-radius-bottomright: 20px;
+-moz-border-radius-bottomleft: 20px;
+border-bottom-right-radius: 20px;
+border-bottom-left-radius: 20px;
+
+
+  min-width:190px;
+  min-height:150px;
+  height:100%;
+  width:100%;
+  
+  
+
+
+
+ 
+}
+
+.box-parent{
+  
+  
+}
+
+.box-vertical{
+  display:table-cell;
+  vertical-align:top:
+
+
+    vertical-align:top;
+  margin-right:5px;
+  margin-left:5px;
+  margin-top:10px;
+  margin-bottom:10px;
+  /**  border: blue solid thin;**/
+  /**min-height:500px;**/
+  /**min-width:160px;**/
+  height:100%;
+}
+
+.box-horizontal{
+
+  display:inline-block;
+  vertical-align:top;
+  margin-right:5px;
+  margin-left:5px;
+  margin-top:10px;
+  margin-bottom:10px;
+  /**  border: blue solid 20px; **/
+  /**min-height:500px;**/
+  width:97%;
+  
+ 
+  
+}
+
+
+
+.task{
+ font-size:12px; 
+  padding:2px;
+  margin-right:5px;
+  margin-left:5px;
+  margin-top:10px;
+  margin-bottom:10px;
+  display:block;
+  float: left;
+
+  width:80px;
+  height:70px;
+  
+  -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+
+box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.7);
+
+
+          transition:All 2s ;
+-webkit-transition:All 2s ;
+-moz-transition:All 2s ;
+-o-transition:All 2s ;
+transform:  scale(1) ;
+-webkit-transform:  scale(1) ;
+-moz-transform:  scale(1)  ;
+-o-transform:  scale(1)  ;
+-ms-transform:  scale(1)  ;
+
+
+text-shadow: 
+	      0 0 2pt white,
+	      /*0 0 3pt white,
+	      0 0 4pt white,
+
+	      0 0 5pt white,*/
+	      0 0 6pt white,
+	      0 0 7pt white;
+
+}
+
+
+.task:hover{
+z-index:11;
+ transform:  scale(2)  ;
+-webkit-transform:  scale(2)  ;
+-moz-transform:  scale(2) ;
+-o-transform:  scale(2)  ;
+-ms-transform:  scale(2)  ;
+}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</style>
+  
+  
+  
+  
+  
+    <style>
+  .accordion-resizer {
+  
+  }
+  </style>
+  <script>
+  
+  
+     
+     
+  $(function() {
+  
+    var icons = {
+      header: "ui-icon-circle-arrow-e",
+      activeHeader: "ui-icon-circle-arrow-s"
+    };
+    
+    $( ".accordion" ).accordion({
+      icons:icons,
+      heightStyle: "fill"
+    });
+  });
+  $(function() {
+    $( ".accordion-resizer" ).resizable({
+      minHeight: 140,
+      minWidth: 200,
+      resize: function() {
+        $( ".accordion" ).accordion( "refresh" );
+      }
+    });
+  });
+  
+  $(function() {
+    $( ".draggable" ).draggable({ cursor: "move" });
+    
+    
+  });
+  
+//2 , 77, 1111, 3333
+  
+  </script>
+</head>
+<body style="
+ 	      background-image: url(ants.png); 
+	      background-position:top left;
+        background-repeat:repeat;
+        
+        background-attachment:fixed;   
+	    
+	    " >
+   
+ <div id="header">
+    <img id="company-logo" src="logo.png" />
+    <div id="circle" class="circle draggable blur">
+      <span style="position:absolute; display:block; left:50px; bottom:50px;">Menu</span>
+    </div>
+ </div>
+ 
+<div id="content"> 
+	  
+	<div class="board">
+		<div class="board-title"><span>Board Name</span>
+		</div>
+		<div class="board-body">
+		
+		
+		
+		
+		
+		
+			<div class="box box-vertical">
+				  <div class="box-title"><span>box at virtical</span> 
+				  </div>
+				  <div class="box-body">
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				  </div>   
+			</div>
+		
+		
+		
+			<div class="box box-vertical">
+				  <div class="box-title"><span>box at virtical</span>
+				  </div>
+				  <div class="box-body">
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				  </div>   
+			</div>
+		
+		
+		
+		
+		
+		
+	
+		
+		
+			<div class="box box-vertical">
+				<div class="box-title"><span>box virtical</span>
+				</div>
+				<div class="box-body">
+					<div class="box box-vertical">
+						  <div class="box-title"><span>inner virtical box</span>
+						  </div>
+						  <div class="box-body">
+						      <div class="task">
+						      </div>
+						      <div class="task">
+						      </div>
+						      <div class="task">
+						      </div>
+						      <div class="task">
+						      </div>
+						      <div class="task">
+						      </div>
+						      <div class="task">
+						      </div>
+						      
+						      <div class="task">
+						      </div>
+						      <div class="task">
+						      </div>
+						  </div>   
+					</div>
+					<div class="box box-vertical">
+						  <div class="box-title"><span>inner virtical box</span>
+						  </div>
+						  <div class="box-body">
+						     
+						     
+						     
+						     
+						     
+							<div class="box box-vertical">
+								  <div class="box-title"><span>inner virtical box</span>
+								  </div>
+								  <div class="box-body">
+								      <div class="task">
+								      </div>
+								      <div class="task">
+								      </div>
+								      <div class="task">
+								      </div>
+								      <div class="task">
+								      </div>
+								      <div class="task">
+								      </div>
+								      
+								      <div class="task">
+								      </div>
+								      <div class="task">
+								      </div>
+								      <div class="task">
+								      </div>
+								  </div>   
+							</div>
+							<div class="box box-vertical">
+								  <div class="box-title"><span>inner virtical box</span>
+								  </div>
+								  <div class="box-body">
+								      <div class="task">
+								      </div>
+								      <div class="task">
+								      </div>
+								      <div class="task">
+								      </div>
+								      <div class="task">
+								      </div>
+								     
+								      <div class="task">
+								      </div>
+								      <div class="task">
+								      </div>
+								      <div class="task">
+								      </div>
+								      <div class="task">
+								      </div>
+								  </div>   
+							</div>
+						     
+						     
+						     
+						     
+			
+						     
+						  </div>   
+					</div>
+				</div>
+			      
+				
+						
+			</div>
+			
+			
+			
+			
+			
+			
+			<div class="box box-vertical">
+				  <div class="box-title"><span>box at side</span>
+				  </div>
+				  <div class="box-body">
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				  </div>   
+			</div>
+			
+			
+			
+			
+			
+			<div class="box box-horizontal">
+				  <div class="box-title"><span>box at horizontal</span>
+				  </div>
+				  <div class="box-body">
+				     
+				     
+				      
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      <div class="task">
+				      </div>
+				      
+				  </div>   
+			</div>
+			
+			
+			
+			<div class="box box-horizontal">
+				  <div class="box-title"><span>box at horizontal</span>
+				  </div>
+				  <div class="box-body">
+				       
+				      
+				     
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      <div class="task" style="background-color:yellow;">
+				      </div>
+				      
+				  </div>   
+			</div>
+			
+			
+			<div class="box box-horizontal">
+				  <div class="box-title"><span>box at horizontal</span>
+				  </div>
+				  <div class="box-body">
+				      
+				       
+				      
+				      <div class="box box-vertical">
+						<div class="box-title"><span>inner virtical box</span>
+						</div>
+						<div class="box-body">
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						</div>   
+				      </div>
+				      <div class="box box-vertical">
+						<div class="box-title"><span>inner virtical box</span>
+						</div>
+						<div class="box-body">
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						</div>   
+				      </div>
+				      
+				      <div class="box box-vertical">
+						<div class="box-title"><span>inner virtical box</span>
+						</div>
+						<div class="box-body">
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						    <div class="task">
+						    </div>
+						</div>   
+				      </div>
+				     
+				      
+				      
+      
+				      
+				  </div>   
+			</div>
+			
+			
+			
+			
+			
+		</div>
+
+	</div>
+	        
+	        
+	        
+</div> 	        
+	        
+	        
+	        
+	        
+	        
+	        
+			      
+			      
+	<script type="text/javascript">
+		$(document).ready(function(){
+		      var menuOnn;  
+			
+		
+			$('.blur').blurjs({
+				draggable: true,
+				overlay: 'rgba(255,255,255,0.1)',
+				radius:40
+			});
+			
+			$('.box-title , .board-title , .box-body').blurjs({
+				
+			//	source: 'body',
+				draggable: false,
+			//	overlay: 'rgba(255,255,255,0.5)',
+			//	overlay: 'rgba(70,130,180, 0.2)',
+				radius:40
+			});
+			
+			
+			
+			
+			var options = {percent: 100};
+			$(".jQeffect-show-clip").css("display", "none");
+			$( ".jQeffect-show-clip" ).show( 'clip', options, 7000 );
+		      //  $(".jQeffect-show-clip").css("display", "inline-block");
+		      
+		      
+		      
+		      
+			 $("#circle").click(function(){
+				      
+			      if(menuOnn != 1){
+				  $("#circle").animate({
+				    backgroundColor: "rgba(70,130,180, 0.3)",
+				    //opacity: 0.4,
+				    marginRight: "-40px",
+				    marginTop: "-40px"
+				    
+				    
+				  }, 1500 );
+				  menuOnn = 1;
+			      }else{
+				  $("#circle").animate({
+				    backgroundColor: "rgba(70,130,180, 0.3)",
+				    //opacity: 0.4,
+				    marginRight: "-180px",
+				    marginTop: "-192px"
+				    
+				  }, 1500 );
+				  menuOnn = 0;
+			      }
+				  
+			  });
+			  
+			  
+			  
+			  
+			  
+			  $('.task').draggable();
+			  $('.box-body').droppable({
+			  
+			      drop:function(e, ui) {
+				  $(e.target).append($(ui.draggable).detach().css({'top':'', 'left':''}));
+			      }
+			      
+			  });
+						    
+			  
+			  
+			  var taskColor = ['rgba(255,255,0,0.6)','rgba(255,0,0,0.6)', 'rgba(0,128,0,0.6)', 'rgba(0,0,255,0.6)'];
+
+			  function pickRandom(arr) {
+			      return arr[Math.floor(Math.random() * arr.length)];
+			  }
+
+			  $('.task').each(function (_, item) {
+			      $(item).css({
+				  "background-color": pickRandom(taskColor)
+			      });
+			      $(item).append($('<div><b>hello world</b></div><div>demo text bla bla bla</div>'));
+			  //    $(item).append($('<u>hello world</u> <p>demo text bla bla bla</p>'));
+			  });
+			  
+			  
+			  
+			  
+			  
+			  
+			  
+			  
+			  
+			  
+			
+		});
+		
+		
+			  
+	</script>
+ </div>		  
+ <c:import url="${mainDir}/common/footer.jsp" />
+
+
+<!--
+http://www.malsup.com/jquery/corner/
+http://blurjs.com/simpledemo.html
+http://www.functionn.in/2012/01/blurjs-jquery-plugin-producing-psuedo.html#.UfGjOj5BXZs
+http://www.blurjs.com/
+http://codecanyon.net/item/translucent-responsive-banner-rotator-slider/801607?WT.ac=search_item&WT.seg_1=search_item&WT.z_author=VF
+http://vectorflower.com/preview/trans_banner/index3.html?s_sel=3&&t_sel=4
+
+
+
+create box > vertical/horizontal?
+
+drop: function(e, ui) { $(e.target).append($('#'+ui.draggable.id).detach()); }
+ui.draggable is the element being dragged, then then dropped
+
+
+$(".target").droppable({
+    accept: '.draggable',
+    drop: function(event, ui) {
+        $(this).append(ui.draggable);
+    }
+});
+$(".draggable").draggable();
+Here is a demonstration: http://jsfiddle.net/VTHcG/
+
+http://jsfiddle.net/4bmT9/
+
+great       http://jsfiddle.net/4bmT9/1/
+
+
+$('.dragme').draggable();
+$('#drop, #source').droppable({
+    drop:function(e, ui) {
+        $(e.target).append($(ui.draggable).detach().css({'top':'', 'left':''}));
+    }
+});
+
+
+
+
+<div id="source" class="box">
+    <div class="dragme">bacon</div>
+    
+</div>
+<div id="drop" class="box"></div>
+
+
+
+
+
+.box { height:100px;width:100px;border:1px solid #333; }
+.dragme { width:100%; margin:5px; border:1px solid #333; }
+ 
+
+
+
+
+
+
+##############################################
+
+
+<div id="source" class="box">
+    <div class="dragme">bacon</div>
+    
+</div>
+<div id="drop" class="box"></div>
+
+
+
+$('#drop, #source').sortable({
+    connectWith:'#drop, #source'
+});
+
+
+
+.box { height:100px;width:100px;border:1px solid #333; }
+.dragme { width:100%; margin:5px; border:1px solid #333; }
+
+
+-->
