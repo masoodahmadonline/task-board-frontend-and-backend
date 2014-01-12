@@ -59,7 +59,7 @@ body {
   height: 220px;
   border: none; }
 
-#login-messages span {
+.form-messages span {
   -webkit-text-shadow: 0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white, 0px 0px 5px white, 0px 0px 6px white, 0px 0px 7px white, 0px 0px 8px white, 0px 0px 9px white, 0px 0px 10px white, 0px 0px 11px white, 0px 0px 12px white;
   -moz-text-shadow: 0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white, 0px 0px 5px white, 0px 0px 6px white, 0px 0px 7px white, 0px 0px 8px white, 0px 0px 9px white, 0px 0px 10px white, 0px 0px 11px white, 0px 0px 12px white;
   -o-text-shadow: 0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white, 0px 0px 5px white, 0px 0px 6px white, 0px 0px 7px white, 0px 0px 8px white, 0px 0px 9px white, 0px 0px 10px white, 0px 0px 11px white, 0px 0px 12px white;
@@ -75,7 +75,10 @@ body {
   border-radius: 20px;
   width: 80%;
   margin-right: auto;
-  margin-left: auto; }
+  margin-left: auto;
+  max-width: 300px;
+  text-align: left;
+  padding: 5px; }
 
 .message-success {
   background-color: rgba(0, 100, 0, 0.1);
@@ -86,7 +89,9 @@ body {
   border-radius: 20px;
   width: 80%;
   margin-right: auto;
-  margin-left: auto; }
+  margin-left: auto;
+  max-width: 300px;
+  text-align: left; }
 
 #login-accordion {
   background-color: transparent;
@@ -128,19 +133,48 @@ body {
   -ms-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.7);
   box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.7); }
 
-#inner-login-wrapper {
+.form-wrapper {
+  display: block;
+  border: thin lightgrey solid;
+  color: black;
+  width: auto;
+  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.7);
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -o-border-radius: 20px;
+  -ms-border-radius: 20px;
+  border-radius: 20px;
+  -webkit-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.7);
+  -o-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.7);
+  -ms-box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.7);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 80px;
+  padding-left: 80px;
+  overflow-x: hidden;
+  max-height: 600px; }
+
+.inner-form-wrapper {
   display: inline-block; }
 
-#login-page-divs-wrapper {
+.wrapper-for-form-block {
   display: block;
-  padding-top: 100px; }
+  padding-top: 50px; }
 
 #login-block-1 {
   display: inline-block;
   margin-right: 30px;
   vertical-align: middle; }
 
-#login-message {
+.form-block {
+  display: inline-block;
+  margin-right: 30px;
+  vertical-align: middle; }
+
+.form-title {
   display: block;
   font-size: 18px;
   margin-bottom: 10px; }
@@ -150,7 +184,8 @@ body {
   font-size: 13px;
   color: red;
   margin-top: 15px;
-  margin-bottom: 15px; }
+  margin-bottom: 15px;
+  max-width: 300px; }
 
 .form-input {
   background-color: transparent;
@@ -162,16 +197,17 @@ body {
   border: thin solid transparent;
   background-color: rgba(255, 255, 255, 0.4);
   /** queued  .........seems ok as independant color........**/
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -o-border-radius: 5px;
-  -ms-border-radius: 5px;
-  border-radius: 5px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  border-radius: 3px;
   -webkit-text-shadow: 0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white, 0px 0px 5px white, 0px 0px 6px white, 0px 0px 7px white, 0px 0px 8px white, 0px 0px 9px white, 0px 0px 10px white, 0px 0px 11px white, 0px 0px 12px white;
   -moz-text-shadow: 0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white, 0px 0px 5px white, 0px 0px 6px white, 0px 0px 7px white, 0px 0px 8px white, 0px 0px 9px white, 0px 0px 10px white, 0px 0px 11px white, 0px 0px 12px white;
   -o-text-shadow: 0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white, 0px 0px 5px white, 0px 0px 6px white, 0px 0px 7px white, 0px 0px 8px white, 0px 0px 9px white, 0px 0px 10px white, 0px 0px 11px white, 0px 0px 12px white;
   -ms-text-shadow: 0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white, 0px 0px 5px white, 0px 0px 6px white, 0px 0px 7px white, 0px 0px 8px white, 0px 0px 9px white, 0px 0px 10px white, 0px 0px 11px white, 0px 0px 12px white;
-  text-shadow: 0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white, 0px 0px 5px white, 0px 0px 6px white, 0px 0px 7px white, 0px 0px 8px white, 0px 0px 9px white, 0px 0px 10px white, 0px 0px 11px white, 0px 0px 12px white; }
+  text-shadow: 0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white, 0px 0px 5px white, 0px 0px 6px white, 0px 0px 7px white, 0px 0px 8px white, 0px 0px 9px white, 0px 0px 10px white, 0px 0px 11px white, 0px 0px 12px white;
+  width: 200px; }
 
 #header {
   background-color: white;
@@ -638,7 +674,9 @@ input[type=checkbox]:checked + label {
 
 .forms-for-board {
   display: block;
-  position: fixed; }
+  position: fixed;
+  max-height: 250px;
+  overflow-x: hidden; }
 
 .attachment {
   cursor: pointer;

@@ -29,6 +29,7 @@
                        <span>
                           <div class="drop-menu-button">&#x25be;&nbsp;
                               <ul class="drop-menu-options">
+                                  <li><a href="#" class="task-assign-unassign-wizard">Assign/Unassign</a></li>
                                   <li><a href="#" class="file-attachment-wizard">Attach file</a></li>
                                   <li class="ui-state-disabled"><a href="#">Edit this task</a></li>
                                   <li><a href="#">Set priority</a>

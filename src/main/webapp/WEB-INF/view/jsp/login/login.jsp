@@ -20,12 +20,12 @@
         
 
         
-            <div id="login-page-divs-wrapper">
+            <div class="wrapper-for-form-block">
                 <div id="login-block-1">
 
                     <div style="display: block;  ">
-                        <div id="login-messages">
-                            <span id="login-message">Welcome<br />Authentication Required</span>
+                        <div class="form-messages">
+                            <span class="form-title">Welcome<br />Authentication Required</span>
 
                             <c:if test="${param.error}">
                             <span class="message-error">${invalidCreds}</span>
@@ -35,7 +35,7 @@
 
                                 <div id="outer-login-wrapper" class="blur draggable jQeffect-show-clip" >
 
-                                    <div id="inner-login-wrapper" >
+                                    <div class="inner-form-wrapper" >
                                         <form action="${pageContext.request.contextPath}/j_spring_security_check" method="post">
 
                                         <table>

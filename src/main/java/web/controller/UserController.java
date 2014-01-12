@@ -69,7 +69,7 @@ public class UserController {
     
 //    @RequestMapping(value = "/create", method = RequestMethod.GET )
     @RequestMapping(value = "/users/create" )
-    public String creatUser(ModelMap model){
+    public String createUser(ModelMap model){
 //        Users user = new Users();
 //        user.setEmail("admin@admin.com");
 //        user.setName("Admin");
@@ -77,6 +77,11 @@ public class UserController {
 //        userService.saveOrUpdate(user);
 //        System.out.println("created--------------------");
         return "/users/create";
+    }
+
+    @RequestMapping(value = "/users/edit" )
+    public String editUser(ModelMap model){
+        return "/users/edit";
     }
     
     @RequestMapping(value = "/users/home" )

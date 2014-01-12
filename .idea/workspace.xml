@@ -6,10 +6,23 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="526b93bc-8256-4334-9b16-db9f5f6a5271" name="Default" comment="" />
+    <list default="true" id="526b93bc-8256-4334-9b16-db9f5f6a5271" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/edit.jsp" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/create.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/create-old.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/.sass-cache/d8b6d0d49a0fa80abb9dcccc1e0fb75440b68db3/main.scssc" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/.sass-cache/d8b6d0d49a0fa80abb9dcccc1e0fb75440b68db3/main.scssc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/controller/UserController.java" afterPath="$PROJECT_DIR$/src/main/java/web/controller/UserController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/board.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/board.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/box-template.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/box-template.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/create.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/create.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/login/login.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/login/login.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/main.css" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/main.scss" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/main.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/messages.properties" afterPath="$PROJECT_DIR$/src/main/resources/messages.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="ttmaven.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/board.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1388960878020" ignored="false" />
+    <file path="/board.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389514419776" ignored="false" />
     <file path="/fragment.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389054801989" ignored="false" />
     <file path="/TaskController.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1386514251657" ignored="false" />
     <file path="/TasksService.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1386514129858" ignored="false" />
@@ -19,10 +32,10 @@
     <file path="/BoxesDAOImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1382735689084" ignored="false" />
     <file path="/BoardsServiceImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1385496672295" ignored="false" />
     <file path="/BoardController.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1388964150454" ignored="false" />
-    <file path="/main.scss" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1386510683734" ignored="false" />
+    <file path="/main.scss" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389537655576" ignored="false" />
     <file path="$PROJECT_DIR$/../crawler/src/crawler/Crawler.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1383922931824" ignored="false" />
     <file path="/inner-header.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1384188447716" ignored="false" />
-    <file path="/UserController.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389053113920" ignored="false" />
+    <file path="/UserController.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389528611711" ignored="false" />
     <file path="/UsersServiceImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389054035256" ignored="false" />
     <file path="/spring-security.xml" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389039817664" ignored="false" />
     <file path="/Crawler.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1383922920593" ignored="false" />
@@ -30,10 +43,10 @@
     <file path="/Tasks.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1385407388687" ignored="false" />
     <file path="/File.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1385408246130" ignored="false" />
     <file path="/Attachment.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1386181039561" ignored="false" />
-    <file path="/Dummy.txt" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389132449660" ignored="false" />
+    <file path="/Dummy.txt" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389182428559" ignored="false" />
     <file path="/web.xml" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1388854430167" ignored="false" />
     <file path="/redirect.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1388861092943" ignored="false" />
-    <file path="/box-template.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1388962239172" ignored="false" />
+    <file path="/box-template.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389510618588" ignored="false" />
     <file path="/BoxesServiceImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1388964213248" ignored="false" />
     <file path="/a.dummy" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1388963159115" ignored="false" />
     <file path="/Boxes.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1388964457569" ignored="false" />
@@ -41,6 +54,10 @@
     <file path="/UserRoleForBoard.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389052849113" ignored="false" />
     <file path="/UsersDAO.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389050226468" ignored="false" />
     <file path="/UsersService.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389052508414" ignored="false" />
+    <file path="/create.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389522300454" ignored="false" />
+    <file path="/login.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389371569938" ignored="false" />
+    <file path="/messages.properties" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389535809953" ignored="false" />
+    <file path="/edit.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389538983390" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +77,43 @@
     <sortChildren value="false" />
   </component>
   <component name="DebuggerManager">
+    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </breakpoint_any>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint url="file://$PROJECT_DIR$/src/main/java/web/service/UsersServiceImpl.java" line="82" class="web.service.UsersServiceImpl" package="web.service">
         <option name="ENABLED" value="true" />
@@ -137,43 +191,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </line_breakpoints>
-    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint>
-        <option name="NOTIFY_CAUGHT" value="true" />
-        <option name="NOTIFY_UNCAUGHT" value="true" />
-        <option name="ENABLED" value="false" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint>
-        <option name="NOTIFY_CAUGHT" value="true" />
-        <option name="NOTIFY_UNCAUGHT" value="true" />
-        <option name="ENABLED" value="false" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -183,46 +200,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SessionImpl.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/internal/SessionImpl.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="323" column="31" selection-start="21106" selection-end="21106" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbstractEntityManagerImpl.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-entitymanager/4.2.3.Final/hibernate-entitymanager-4.2.3.Final.jar!/org/hibernate/ejb/AbstractEntityManagerImpl.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="35" selection-start="3583" selection-end="3583" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SharedEntityManagerCreator.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-orm/3.2.3.RELEASE/spring-orm-3.2.3.RELEASE.jar!/org/springframework/orm/jpa/SharedEntityManagerCreator.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="32" selection-start="1985" selection-end="1985" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UsersDAOImpl.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/UsersDAOImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="86" column="0" selection-start="2685" selection-end="2685" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UsersServiceImpl.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="UsersServiceImpl.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/web/service/UsersServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="107" column="24" selection-start="3989" selection-end="3989" vertical-scroll-proportion="1.3523622">
+            <state line="107" column="22" selection-start="3989" selection-end="3989" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#4005#0" expanded="true" />
                 <element signature="imports" expanded="true" />
@@ -232,46 +213,84 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoadQueryInfluencers.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/engine/spi/LoadQueryInfluencers.class">
+      <file leaf-file-name="login.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/login/login.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="64" selection-start="1433" selection-end="1433" vertical-scroll-proportion="0.0">
+            <state line="58" column="124" selection-start="2435" selection-end="2503" vertical-scroll-proportion="-3.0273972">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbstractSessionImpl.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/internal/AbstractSessionImpl.class">
+      <file leaf-file-name="board.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/board.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="31" selection-start="1759" selection-end="1759" vertical-scroll-proportion="0.0">
+            <state line="582" column="26" selection-start="21005" selection-end="25351" vertical-scroll-proportion="-6.0">
+              <folding>
+                <marker date="1389515403850" expanded="false" signature="3539:3551" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="box-template.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/box-template.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="31" column="62" selection-start="1935" selection-end="1935" vertical-scroll-proportion="-2.8235295">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QueryPlanCache.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/engine/query/spi/QueryPlanCache.class">
+      <file leaf-file-name="create-old.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/create-old.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="55" selection-start="1214" selection-end="1214" vertical-scroll-proportion="0.0">
+            <state line="39" column="46" selection-start="2504" selection-end="2971" vertical-scroll-proportion="-3.9615386">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BoundedConcurrentHashMap.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/internal/util/collections/BoundedConcurrentHashMap.class">
+      <file leaf-file-name="create.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/create.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="13" selection-start="2541" selection-end="2541" vertical-scroll-proportion="0.0">
+            <state line="41" column="40" selection-start="1645" selection-end="1645" vertical-scroll-proportion="-3.2692308">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CollectionHelper.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/internal/util/collections/CollectionHelper.class">
+      <file leaf-file-name="edit.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/edit.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="26" selection-start="1771" selection-end="1771" vertical-scroll-proportion="0.0">
+            <state line="39" column="40" selection-start="1399" selection-end="1399" vertical-scroll-proportion="-9.807693">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="messages.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/messages.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="15" selection-start="1570" selection-end="1599" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.scss" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/css/main.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="207" column="53" selection-start="5578" selection-end="5578" vertical-scroll-proportion="1.52">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/UserController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="82" column="45" selection-start="2782" selection-end="2782" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -297,14 +316,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/common/inner-header.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/board.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/box-template.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/web/service/BoardsServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/web/entity/Boxes.java" />
-        <option value="$PROJECT_DIR$/src/main/java/web/controller/BoardController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/web/service/BoxesServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring-security.xml" />
         <option value="$PROJECT_DIR$/src/main/java/web/entity/BoardPrivileges.java" />
         <option value="$PROJECT_DIR$/src/main/java/web/entity/Users.java" />
         <option value="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/UsersDAOImpl.java" />
@@ -312,7 +323,15 @@
         <option value="$PROJECT_DIR$/src/main/java/web/service/UsersService.java" />
         <option value="$PROJECT_DIR$/src/main/java/web/entity/UserRoleForBoard.java" />
         <option value="$PROJECT_DIR$/src/main/java/web/service/UsersServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/add.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/login/login.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/box-template.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/board.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/web/controller/UserController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/messages.properties" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/edit.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/create.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/resources/css/main.scss" />
       </list>
     </option>
   </component>
@@ -374,8 +393,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -510,6 +527,44 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="users" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="login" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -605,6 +660,66 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -824,6 +939,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -842,8 +959,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -852,6 +969,7 @@
       <recent name="web.controller" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users" />
       <recent name="$PROJECT_DIR$/src/main/webapp" />
     </key>
     <key name="ImportMappingsDialog.RecentPackages">
@@ -950,6 +1068,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -976,19 +1107,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1118,31 +1236,31 @@
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43074325" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2829486" sideWeight="0.6266892" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28257576" sideWeight="0.4847973" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.07121212" sideWeight="0.8158784" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39864865" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5726496" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293919" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2787162" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29393938" sideWeight="0.20101352" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32991454" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.8158784" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3260135" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28030303" sideWeight="0.44256756" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7837838" sideWeight="0.66742426" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28030303" sideWeight="0.6351351" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5152027" sideWeight="0.66742426" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293919" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4510135" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1210,7 +1328,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/board.jsp</url>
-          <line>750</line>
+          <line>867</line>
         </line-breakpoint>
       </breakpoints>
       <option name="time" value="1" />
@@ -1221,57 +1339,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-entitymanager/4.2.3.Final/hibernate-entitymanager-4.2.3.Final.jar!/org/hibernate/ejb/EntityManagerImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="36" selection-start="965" selection-end="965" vertical-scroll-proportion="-3.56" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/internal/SessionFactoryImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="57" selection-start="6610" selection-end="6610" vertical-scroll-proportion="-3.92" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/cfg/Settings.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="251" column="19" selection-start="10971" selection-end="10971" vertical-scroll-proportion="-5.16" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/engine/transaction/internal/jdbc/JdbcTransactionFactory.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="19" selection-start="786" selection-end="786" vertical-scroll-proportion="-4.64" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/engine/transaction/internal/TransactionCoordinatorImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="99" selection-start="3212" selection-end="3212" vertical-scroll-proportion="-3.56" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/engine/transaction/synchronization/internal/SynchronizationCallbackCoordinatorImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="16" selection-start="2342" selection-end="2342" vertical-scroll-proportion="-3.56" />
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/engine/spi/LoadQueryInfluencers.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="64" selection-start="1433" selection-end="1433" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/internal/util/collections/CollectionHelper.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="26" selection-start="1771" selection-end="1771" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/internal/util/collections/BoundedConcurrentHashMap.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="13" selection-start="2541" selection-end="2541" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.2.3.Final/hibernate-core-4.2.3.Final.jar!/org/hibernate/engine/query/spi/QueryPlanCache.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="55" selection-start="1214" selection-end="1214" vertical-scroll-proportion="0.0">
@@ -1300,13 +1367,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-orm/3.2.3.RELEASE/spring-orm-3.2.3.RELEASE.jar!/org/springframework/orm/jpa/SharedEntityManagerCreator.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="32" selection-start="1985" selection-end="1985" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/UsersDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="86" column="0" selection-start="2685" selection-end="2685" vertical-scroll-proportion="0.0">
@@ -1314,14 +1374,86 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-orm/3.2.3.RELEASE/spring-orm-3.2.3.RELEASE.jar!/org/springframework/orm/jpa/SharedEntityManagerCreator.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="124" selection-start="1020" selection-end="1020" vertical-scroll-proportion="0.3688213">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/web/service/UsersServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="107" column="24" selection-start="3989" selection-end="3989" vertical-scroll-proportion="1.3523622">
+        <state line="107" column="22" selection-start="3989" selection-end="3989" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#4005#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#3206#3224#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/box-template.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="62" selection-start="1935" selection-end="1935" vertical-scroll-proportion="-2.8235295">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/login/login.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="124" selection-start="2435" selection-end="2503" vertical-scroll-proportion="-3.0273972">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/board.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="582" column="26" selection-start="21005" selection-end="25351" vertical-scroll-proportion="-6.0">
+          <folding>
+            <marker date="1389515403850" expanded="false" signature="3539:3551" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/create-old.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="46" selection-start="2504" selection-end="2971" vertical-scroll-proportion="-3.9615386">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="82" column="45" selection-start="2782" selection-end="2782" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/messages.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="15" selection-start="1570" selection-end="1599" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/edit.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="40" selection-start="1399" selection-end="1399" vertical-scroll-proportion="-9.807693">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/create.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="40" selection-start="1645" selection-end="1645" vertical-scroll-proportion="-3.2692308">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/css/main.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="207" column="53" selection-start="5578" selection-end="5578" vertical-scroll-proportion="1.52">
+          <folding />
         </state>
       </provider>
     </entry>
