@@ -411,27 +411,9 @@
 <script>
     $(document).ready(function(){
         $('form').on('submit', function(e){
-            var message = "";
-            var show = false;
-            if(  $("#password1").val() != $("#password2").val() ){
-                show = true;
-                message += "<spring:message code="error.confirmPassowordMissmatch"/>";
-                e.preventDefault();
-            }
-
-            if($("#password1").empty() || $("#password1").val().length < 5){
-                show = true;
-                message += "<spring:message code="error.emptyOrShortPassword"/>";
-                e.preventDefault();
-            }
-
-            if(show){
-//                alert(message);
-                $(".form-messages").append('<span class="message-error">'+message+'</span>');
-            }
-
+//            e.preventDefault();
+//            pending ajax call until user module related backend is stable.
         });
-
     });
 </script>
 
