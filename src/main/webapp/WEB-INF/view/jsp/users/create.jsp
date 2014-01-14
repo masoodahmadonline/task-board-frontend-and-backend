@@ -33,7 +33,7 @@
                 <c:if test="${param.userExists}">
                     <span class="message-error">User already exists by that email ${replace this with server side message}</span>
                 </c:if>
-                <c:if test="${param.success}">
+                <c:if test="${successMessage}">
                     <span class="message-success">User created successfully. Create another user? ${replace this with server side message}</span>
                 </c:if>
             </div>
@@ -51,7 +51,7 @@
 
                                         </td>
                                         <td>
-                                            <input class="form-input" type="email" required="required" placeholder="<spring:message code="placeholder.email"/>"  tabindex="1" />
+                                            <input class="form-input" name="email" type="email" required="required" placeholder="<spring:message code="placeholder.email"/>"  tabindex="1" />
                                         </td>
                                         <td>
 
@@ -64,7 +64,7 @@
 
                                         </td>
                                         <td>
-                                            <input class="form-input" type="text" required="required" placeholder="<spring:message code="placeholder.firstName"/>" tabindex="2" />
+                                            <input class="form-input" name="firstName" type="text" required="required" placeholder="<spring:message code="placeholder.firstName"/>" tabindex="2" />
                                         </td>
                                         <td>
 
@@ -75,7 +75,7 @@
 
                                         </td>
                                         <td>
-                                            <input class="form-input" type="text" required="required" placeholder="<spring:message code="placeholder.lastName"/>" tabindex="3" />
+                                            <input class="form-input" name="lastName" type="text" required="required" placeholder="<spring:message code="placeholder.lastName"/>" tabindex="3" />
                                         </td>
                                         <td>
 
@@ -86,7 +86,7 @@
 
                                         </td>
                                         <td>
-                                            <input id="password1" class="form-input" type="password" required="required" placeholder="<spring:message code="placeholder.password"/>" tabindex="4" />
+                                            <input id="password1" name="password1" class="form-input" type="password" required="required" placeholder="<spring:message code="placeholder.password"/>" tabindex="4" />
                                         </td>
                                         <td>
 
@@ -97,7 +97,7 @@
 
                                         </td>
                                         <td>
-                                            <input id="password2" class="form-input" type="password" required="required" placeholder="<spring:message code="placeholder.retypePassword"/>" tabindex="5" />
+                                            <input id="password2" name="password2" class="form-input" type="password" required="required" placeholder="<spring:message code="placeholder.retypePassword"/>" tabindex="5" />
                                         </td>
                                         <td>
 
@@ -111,7 +111,7 @@
 
                                         </td>
                                         <td>
-                                            <input id="1" class="form-input" type="checkbox" checked="checked" tabindex="6" />
+                                            <input id="1" name="enable" class="form-input" type="checkbox" checked="checked" tabindex="6" />
                                             <label for="1" class="priv-checkbox-this"></label>
                                             <spring:message code="form.text.checkbox.enableUser"/>
 

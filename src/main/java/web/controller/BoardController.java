@@ -126,8 +126,8 @@ public class BoardController {
             System.out.println("debug --- 7");
        }  
        System.out.println("debug --- 8");
-       Boxes box = (Boxes)( (boxService.getBoxById(287L)).getObject() );
-       Boxes box2 = (Boxes)( (boxService.getBoxById(209L)).getObject() );
+//       Boxes box = (Boxes)( (boxService.getBoxById(287L)).getObject() );
+//       Boxes box2 = (Boxes)( (boxService.getBoxById(209L)).getObject() );
 
 
        return "/boards/board";
