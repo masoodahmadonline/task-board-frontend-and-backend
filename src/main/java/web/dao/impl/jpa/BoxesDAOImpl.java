@@ -88,8 +88,10 @@ public class BoxesDAOImpl implements BoxesDAO {
             query.setParameter("id", id);
 
             List<?> list = query.getResultList();
-            
-            System.out.println("box name retrieved is" +((Boxes)list.get(0)).getTitle().toString() );
+            if(list.size() > 0){
+                System.out.println("box name retrieved is" +((Boxes)list.get(0)).getTitle().toString() );
+            }
+
             
             if(list == null || list.size() == 0) throw new UsernameNotFoundException("box not found");
            Boxes boxToBeReturned = (Boxes)list.get(0);
