@@ -17,11 +17,6 @@ import javax.persistence.TransactionRequiredException;
 import java.util.List;
 
 
-/**
- * 
- * @version $Revision$
- * @since   1.0
- */
 @Repository
 public class TasksDAOImpl implements TasksDAO {
 	
@@ -31,20 +26,9 @@ public class TasksDAOImpl implements TasksDAO {
 //        @Autowired
 	private EntityManager entityManager;
 	
-	/**
-	 * Set the entity manager
-	 * 
-	 * @param entityManager
-     *
-	 * Saves or Updates an existing user entity instance.
-	 * 
-	 * @param user	the user entity
-	 * @return		the managed user entity instance
-	 */
-	public Tasks save(Tasks task) {
 
-        Tasks taskToBeReturned = entityManager.merge(task);
-            return taskToBeReturned;
+	public Tasks save(Tasks task) {
+        return entityManager.merge(task);
 	}
 
     public Attachment saveAttachment(Attachment attachment){
@@ -58,23 +42,10 @@ public class TasksDAOImpl implements TasksDAO {
         Tasks task = entityManager.find(Tasks.class, id);
         System.out.println("Task fetched for deletion: "+ task.getId());
          if(task != null){
-              try {
-                entityManager.remove(task);
-                b = true;
-              }
-              catch(IllegalArgumentException e) {
-                System.out.println(e);
-
-              }
-              catch(TransactionRequiredException e) {
-                System.out.println(e);
-
-              }
-
+            entityManager.remove(task);
+            b = true;
          }
-
          return b;
-
     }
 
     public boolean deleteAttachment(Long id){
@@ -82,69 +53,22 @@ public class TasksDAOImpl implements TasksDAO {
         Attachment attachment = entityManager.find(Attachment.class, id);
         System.out.println("Task fetched for deletion: "+ attachment.getId());
         if(attachment != null){
-            try {
-                entityManager.remove(attachment);
-                b = true;
-            }
-            catch(IllegalArgumentException e) {
-                System.out.println(e);
-
-            }
-            catch(TransactionRequiredException e) {
-                System.out.println(e);
-
-            }
-
+            entityManager.remove(attachment);
+            b = true;
         }
-
         return b;
-
     }
         
-        public Tasks getTaskById(Long id){
-            System.out.println("task id supplied to fetch task in dao was ======== "+ id);
-            
-            String queryString = "SELECT task FROM Tasks AS task " +
-                         "WHERE task.id = :id";
-            Query query = entityManager.createQuery(queryString);
-            
-            query.setParameter("id", id);
-
-            List<?> list = query.getResultList();
-            
-            //System.out.println("task name retrieved is" + ((Tasks) list.get(0)).getTitle().toString());
-            System.out.println("====list size for tasks fetch by dao ===== "+ list.size());
-            if(list == null || list.size() == 0) throw new UsernameNotFoundException("task not found");
-            Tasks taskToBeReturned = (Tasks)list.get(0);
-         
-           System.out.println("tiltle of task to be returned ==========="+taskToBeReturned.getTitle());
-           return taskToBeReturned;
-//            return (Users)list.get(0);
-            
-        }
+    public Tasks getTaskById(Long id){
+        System.out.println("task id supplied to fetch task in dao was ======== "+ id);
+        return entityManager.find(Tasks.class, id);
+    }
 
 
-        public Attachment getAttachmentById(Long id){
-            System.out.println("attachment id supplied to fetch task in dao was ======== "+ id);
-
-            String queryString = "SELECT attachment FROM Attachment AS attachment " +
-                    "WHERE attachment.id = :id";
-            Query query = entityManager.createQuery(queryString);
-
-            query.setParameter("id", id);
-
-            List<?> list = query.getResultList();
-
-            //System.out.println("task name retrieved is" + ((Tasks) list.get(0)).getTitle().toString());
-            System.out.println("====list size for attachment fetch by dao ===== "+ list.size());
-            if(list == null || list.size() == 0) throw new UsernameNotFoundException("attachment not found");
-            Attachment attachmentToBeReturned = (Attachment)list.get(0);
-
-            System.out.println("tiltle of attachment to be returned ==========="+attachmentToBeReturned.getName());
-            return attachmentToBeReturned;
-    //            return (Users)list.get(0);
-
-        }
+    public Attachment getAttachmentById(Long id){
+        System.out.println("attachment id supplied to fetch task in dao was ======== "+ id);
+        return entityManager.find(Attachment.class, id);
+    }
         
         
         

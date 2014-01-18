@@ -1,18 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package web.service;
 
-/**
- *
- * @author syncsys
- */
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,24 +25,21 @@ public class BoardsServiceImpl implements BoardsService{
     private UsersDAO userDAO;
     @Autowired
     private ResultImpl result;
-    
-   
-    
+
     @Transactional(readOnly = false)
     public ResultImpl save(Boards board){
-        /////////////////// queue , check if named boar already exists or not?
         Boards boardToBeReturned = boardDAO.save(board);
         if(boardToBeReturned == null){
-                result.setIsSuccessful(false);
-                result.setObject(null);
-                result.setMessageList(Arrays.asList("error.boardCreationErrorUnknown"/*,"string"*/));
-                return result;
-            }else{
-                result.setIsSuccessful(true);
-                result.setObject(boardToBeReturned);
-                result.setMessageList(Arrays.asList("success.boardCreated"/*,"string"*/));
-                return result;
-            }
+            result.setIsSuccessful(false);
+            result.setObject(null);
+            result.setMessageList(Arrays.asList("error.boardCreationErrorUnknown"/*,"second message (if any)"*/));
+            return result;
+        }else{
+            result.setIsSuccessful(true);
+            result.setObject(boardToBeReturned);
+            result.setMessageList(Arrays.asList("success.boardCreated"/*,"second message (if any)"*/));
+            return result;
+        }
         
        
     }

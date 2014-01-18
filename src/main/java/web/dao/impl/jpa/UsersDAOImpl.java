@@ -16,11 +16,6 @@ import web.entity.Users;
 
 
 
-/**
- * 
- * @version $Revision$
- * @since   1.0
- */
 @Repository
 public class UsersDAOImpl implements UsersDAO {
 	
@@ -29,65 +24,53 @@ public class UsersDAOImpl implements UsersDAO {
 	 */
 //        @Autowired
 	private EntityManager entityManager;
-	
-	/**
-	 * Set the entity manager
-	 * 
-	 * @param entityManager
-	 */
-        
-        /**
-	 * Saves or Updates an existing user entity instance.
-	 * 
-	 * @param user	the user entity
-	 * @return		the managed user entity instance
-	 */
-	public Users save(Users user) {
-		
-            Users userToBeReturned = entityManager.merge(user);
-            return userToBeReturned;
-	}
-        
-        public boolean doesLoginIdExists(String email){
-            System.out.println("debug --- a");
-            String queryString = "SELECT user FROM Users AS user " +
-                         "WHERE user.email = :email";
-            Query query = entityManager.createQuery(queryString);
-            query.setParameter("email", email);
-            System.out.println("debug --- b");
-            List<?> list = query.getResultList();
-            if(list == null || list.size() == 0){
-                System.out.println("debug --- c");
-                return false;
-            }else{
-                System.out.println("debug --- d");
-                return true;
-            }
-         
-            
-        }
-        
-        public Users getUserByLoginId(String email){
-            System.out.println("email entered for lookup was : "+email);
-            System.out.println("debug --- a");
-            String queryString = "SELECT user FROM Users AS user " +
-                         "WHERE user.email = :email";
-            Query query = entityManager.createQuery(queryString);
-            System.out.println("debug --- b");
-            query.setParameter("email", email);
 
-            List<?> list = query.getResultList();
-            
-            System.out.println("email retrieved is" +((Users)list.get(0)).getEmail() );
+	public Users save(Users user) {
+        return entityManager.merge(user);
+	}
+
+    // edit queued.
+    public boolean doesLoginIdExists(String email){
+        System.out.println("debug --- a");
+        String queryString = "SELECT user FROM Users AS user " +
+                     "WHERE user.email = :email";
+        Query query = entityManager.createQuery(queryString);
+        query.setParameter("email", email);
+        System.out.println("debug --- b");
+        List<?> list = query.getResultList();
+        if(list == null || list.size() == 0){
             System.out.println("debug --- c");
-            if(list == null || list.size() == 0) throw new UsernameNotFoundException("User not found");
-           Users user = (Users)list.get(0);
-           System.out.println("debug --- d");
-           System.out.println(user.getEmail());
-           return user;
-//            return (Users)list.get(0);
-            
+            return false;
+        }else{
+            System.out.println("debug --- d");
+            return true;
         }
+
+
+    }
+
+    // edit queued.
+    public Users getUserByLoginId(String email){
+        System.out.println("email entered for lookup was : "+email);
+        System.out.println("debug --- a");
+        String queryString = "SELECT user FROM Users AS user " +
+                     "WHERE user.email = :email";
+        Query query = entityManager.createQuery(queryString);
+        System.out.println("debug --- b");
+        query.setParameter("email", email);
+
+        List<?> list = query.getResultList();
+
+        System.out.println("email retrieved is" +((Users)list.get(0)).getEmail() );
+        System.out.println("debug --- c");
+        if(list == null || list.size() == 0) throw new UsernameNotFoundException("User not found");
+       Users user = (Users)list.get(0);
+       System.out.println("debug --- d");
+       System.out.println(user.getEmail());
+       return user;
+//            return (Users)list.get(0);
+
+    }
 
 
         

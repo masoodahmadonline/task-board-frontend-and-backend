@@ -18,11 +18,6 @@ import web.entity.Users;
 
 
 
-/**
- * 
- * @version $Revision$
- * @since   1.0
- */
 @Repository
 public class CompaniesDAOImpl implements CompaniesDAO {
 	
@@ -32,64 +27,43 @@ public class CompaniesDAOImpl implements CompaniesDAO {
 //        @Autowired
 	private EntityManager entityManager;
 	
-	/**
-	 * Set the entity manager
-	 * 
-	 * @param entityManager
-	 */
-        
-        /**
-	 * Saves or Updates an existing user entity instance.
-	 * 
-	 * @param user	the user entity
-	 * @return		the managed user entity instance
-	 */
-	public Companies save(Companies company) {
-		
-            Companies companyToBeReturned = entityManager.merge(company);
-            return companyToBeReturned;
-	}
-        
-        public boolean doesCompanyExists(String name){
-            System.out.println("debug --- a");
-            String queryString = "SELECT user FROM Companies AS company " +
-                         "WHERE company.name = :name";
-            Query query = entityManager.createQuery(queryString);
-            query.setParameter("name", name);
-            System.out.println("debug --- b");
-            List<?> list = query.getResultList();
-            if(list == null || list.size() == 0){
-                System.out.println("debug --- c");
-                return false;
-            }else{
-                System.out.println("debug --- d");
-                return true;
-            }
-         
-            
-        }
-        
-        public Companies getCompanyByName(String name){
-            System.out.println("company name entered for lookup was : "+name);
-            System.out.println("debug --- a");
-            String queryString = "SELECT user FROM Companies AS company " +
-                         "WHERE company.name = :name";
-            Query query = entityManager.createQuery(queryString);
-            System.out.println("debug --- b");
-            query.setParameter("name", name);
 
-            List<?> list = query.getResultList();
-            
-            System.out.println("company name retrieved is" +((Companies)list.get(0)).getName() );
-            System.out.println("debug --- c");
-            if(list == null || list.size() == 0) throw new UsernameNotFoundException("Company not found");
-           Companies companyToBeReturned = (Companies)list.get(0);
-           System.out.println("debug --- d");
-           System.out.println(companyToBeReturned.getName());
-           return companyToBeReturned;
-//            return (Users)list.get(0);
-            
+	public Companies save(Companies company) {
+        return entityManager.merge(company);
+	}
+
+    // edit queued.
+    public boolean doesCompanyExists(String name){
+        String queryString = "SELECT user FROM Companies AS company " +
+                     "WHERE company.name = :name";
+        Query query = entityManager.createQuery(queryString);
+        query.setParameter("name", name);
+        List<?> list = query.getResultList();
+        if(list == null || list.size() == 0){
+            return false;
+        }else{
+            return true;
         }
+    }
+
+    // edit queued.
+    public Companies getCompanyByName(String name){
+        System.out.println("company name entered for lookup was : "+name);
+        String queryString = "SELECT user FROM Companies AS company " +
+                     "WHERE company.name = :name";
+        Query query = entityManager.createQuery(queryString);
+        query.setParameter("name", name);
+        List<?> list = query.getResultList();
+        System.out.println("company name retrieved is" +((Companies)list.get(0)).getName() );
+        System.out.println("debug --- c");
+        if(list == null || list.size() == 0) throw new UsernameNotFoundException("Company not found");
+       Companies companyToBeReturned = (Companies)list.get(0);
+       System.out.println("debug --- d");
+       System.out.println(companyToBeReturned.getName());
+       return companyToBeReturned;
+//            return (Users)list.get(0);
+
+    }
         
         
 	@PersistenceContext
