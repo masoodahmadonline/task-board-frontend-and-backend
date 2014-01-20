@@ -7,12 +7,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="526b93bc-8256-4334-9b16-db9f5f6a5271" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/controller/BoardController.java" afterPath="$PROJECT_DIR$/src/main/java/web/controller/BoardController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/BoardsDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/BoardsDAOImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/service/BoardsServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/web/service/BoardsServiceImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/BoxesDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/BoxesDAOImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/service/BoxesServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/web/service/BoxesServiceImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/CompaniesDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/CompaniesDAOImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/service/common/CustomUserDetailsService.java" afterPath="$PROJECT_DIR$/src/main/java/web/service/common/CustomUserDetailsService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/TasksDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/TasksDAOImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/controller/UserController.java" afterPath="$PROJECT_DIR$/src/main/java/web/controller/UserController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/UsersDAOImpl.java" afterPath="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/UsersDAOImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -31,7 +32,7 @@
     <file path="/main.scss" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389537655576" ignored="false" />
     <file path="$PROJECT_DIR$/../crawler/src/crawler/Crawler.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1383922931824" ignored="false" />
     <file path="/inner-header.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1384188447716" ignored="false" />
-    <file path="/UserController.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389705394670" ignored="false" />
+    <file path="/UserController.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1390248604690" ignored="false" />
     <file path="/UsersServiceImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389054035256" ignored="false" />
     <file path="/spring-security.xml" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389039817664" ignored="false" />
     <file path="/Crawler.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1383922920593" ignored="false" />
@@ -39,7 +40,7 @@
     <file path="/Tasks.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1385407388687" ignored="false" />
     <file path="/File.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1385408246130" ignored="false" />
     <file path="/Attachment.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1386181039561" ignored="false" />
-    <file path="/Dummy.txt" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389905081911" ignored="false" />
+    <file path="/Dummy.txt" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1390245621487" ignored="false" />
     <file path="/web.xml" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1388854430167" ignored="false" />
     <file path="/redirect.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1388861092943" ignored="false" />
     <file path="/box-template.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389510618588" ignored="false" />
@@ -55,8 +56,9 @@
     <file path="/messages.properties" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389535809953" ignored="false" />
     <file path="/edit.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389635627432" ignored="false" />
     <file path="/BoardsDAOImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1390060232590" ignored="false" />
-    <file path="/CompaniesDAOImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1390062705030" ignored="false" />
-    <file path="/UsersDAOImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1390058777849" ignored="false" />
+    <file path="/CompaniesDAOImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1390248423620" ignored="false" />
+    <file path="/UsersDAOImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1390248396767" ignored="false" />
+    <file path="/CustomUserDetailsService.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1390248689009" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,83 +115,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/web/service/UsersServiceImpl.java" line="82" class="web.service.UsersServiceImpl" package="web.service">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/web/service/UsersServiceImpl.java" line="84" class="web.service.UsersServiceImpl" package="web.service">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/web/service/UsersServiceImpl.java" line="87" class="web.service.UsersServiceImpl" package="web.service">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/web/service/UsersServiceImpl.java" line="89" class="web.service.UsersServiceImpl" package="web.service">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/web/service/UsersServiceImpl.java" line="90" class="web.service.UsersServiceImpl" package="web.service">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </line_breakpoints>
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -199,19 +125,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CompanyController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/CompanyController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="13" selection-start="1129" selection-end="1129" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="BoxesDAOImpl.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/BoxesDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="13" selection-start="272" selection-end="272" vertical-scroll-proportion="0.0">
+            <state line="33" column="21" selection-start="761" selection-end="761" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -222,8 +139,10 @@
       <file leaf-file-name="CompaniesDAOImpl.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/CompaniesDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="4" selection-start="1270" selection-end="1285" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="49" column="14" selection-start="1439" selection-end="1439" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -231,7 +150,7 @@
       <file leaf-file-name="TasksDAOImpl.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/TasksDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="51" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.0">
+            <state line="65" column="0" selection-start="1812" selection-end="1812" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -240,34 +159,7 @@
       <file leaf-file-name="UsersDAOImpl.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/UsersDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="5" selection-start="1365" selection-end="2274" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TaskController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/TaskController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="172" column="35" selection-start="7286" selection-end="7301" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/UserController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="43" selection-start="2515" selection-end="2515" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BoardController.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/BoardController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="97" column="0" selection-start="3575" selection-end="3725" vertical-scroll-proportion="1.0057636">
+            <state line="51" column="48" selection-start="1579" selection-end="1579" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -275,16 +167,47 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BoardsServiceImpl.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/web/service/BoardsServiceImpl.java">
+      <file leaf-file-name="UserController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="46" selection-start="860" selection-end="860" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#2370#2377#0" expanded="false" />
-                <element signature="e#3864#3871#0" expanded="false" />
-                <element signature="e#4387#4395#0" expanded="false" />
-              </folding>
+            <state line="73" column="60" selection-start="2496" selection-end="2496" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CustomUserDetailsService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/web/service/common/CustomUserDetailsService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="62" column="25" selection-start="2166" selection-end="2166" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BoxesServiceImpl.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/web/service/BoxesServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="59" column="66" selection-start="1694" selection-end="1694" vertical-scroll-proportion="2.7567568">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TasksServiceImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/web/service/TasksServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="13" selection-start="657" selection-end="657" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UsersServiceImpl.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/web/service/UsersServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="13" selection-start="634" selection-end="634" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -292,7 +215,7 @@
       <file leaf-file-name="BoardsDAOImpl.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/BoardsDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="8" selection-start="660" selection-end="704" vertical-scroll-proportion="0.0">
+            <state line="33" column="43" selection-start="822" selection-end="822" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -320,22 +243,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/add.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/login/login.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/box-template.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/board.jsp" />
         <option value="$PROJECT_DIR$/src/main/resources/messages.properties" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/css/main.scss" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/edit.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/create.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/web/controller/UserController.java" />
         <option value="$PROJECT_DIR$/src/main/java/web/service/BoardsServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/web/controller/BoardController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/web/service/BoxesServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/TasksDAOImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/BoardsDAOImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/BoxesDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/CompaniesDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/TasksDAOImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/UsersDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/CompaniesDAOImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/web/controller/UserController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/web/service/common/CustomUserDetailsService.java" />
       </list>
     </option>
   </component>
@@ -429,6 +352,70 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -751,7 +738,15 @@
       <created>1389731134445</created>
       <updated>1389731134445</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Changed DAOs for delete/getByIds, .find .merge. BoardController and some minor changes.">
+      <created>1390063306497</created>
+      <updated>1390063306497</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Edited &amp; eliminated some errors in CompaniesDAOImpl, UsersDAOImpl to change method behaviour for unique and queries">
+      <created>1390245630409</created>
+      <updated>1390245630409</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -799,9 +794,9 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3260135" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27963525" sideWeight="0.6769231" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27963525" sideWeight="0.5863248" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.6717949" order="5" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32307693" sideWeight="0.66742426" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.41367522" sideWeight="0.66742426" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -849,7 +844,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="added name to input fields of user/create.jsp" />
+    <option name="LAST_COMMIT_MESSAGE" value="Edited &amp; eliminated some errors in CompaniesDAOImpl, UsersDAOImpl to change method behaviour for unique and queries" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -869,6 +864,8 @@
     <MESSAGE value="created room for ajax form submit in users/edit.jsp" />
     <MESSAGE value="commented out debuging lines in BoardController. eliminated null pointer exception in BoxesDAOImpl" />
     <MESSAGE value="added name to input fields of user/create.jsp" />
+    <MESSAGE value="Changed DAOs for delete/getByIds, .find .merge. BoardController and some minor changes." />
+    <MESSAGE value="Edited &amp; eliminated some errors in CompaniesDAOImpl, UsersDAOImpl to change method behaviour for unique and queries" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -886,58 +883,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/web/dao/BoardsDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="11" selection-start="367" selection-end="367" vertical-scroll-proportion="0.5708955">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/bin/jdk1.7.0_10/src.zip!/java/lang/System.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="36" selection-start="3145" selection-end="3145" vertical-scroll-proportion="0.8078358">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/web/entityBeans/Boards.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="12" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#3154#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#823#830#0" expanded="false" />
-            <element signature="e#1029#1046#0" expanded="false" />
-            <element signature="e#1122#1129#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/web/entityBeans/BoxPrivileges.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="12" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#12174#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#613#620#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/web/entityBeans/BoardPrivileges.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="8" selection-start="108" selection-end="108" vertical-scroll-proportion="0.049418606">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/BoxController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="45" selection-start="1404" selection-end="1404" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/CompanyController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="13" selection-start="1129" selection-end="1129" vertical-scroll-proportion="0.0">
@@ -952,28 +897,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/UserController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/BoardController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="43" selection-start="2515" selection-end="2515" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="97" column="0" selection-start="3575" selection-end="3725" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/web/service/BoardsServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="46" selection-start="860" selection-end="860" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2370#2377#0" expanded="false" />
-            <element signature="e#3864#3871#0" expanded="false" />
-            <element signature="e#4387#4395#0" expanded="false" />
-          </folding>
+        <state line="58" column="22" selection-start="1968" selection-end="1968" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/service/CompaniesService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="17" selection-start="262" selection-end="262" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/service/CompaniesServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="13" selection-start="576" selection-end="576" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/service/TasksServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="13" selection-start="657" selection-end="657" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/service/UsersServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="13" selection-start="634" selection-end="634" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/BoardsDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="8" selection-start="660" selection-end="704" vertical-scroll-proportion="0.0">
+        <state line="33" column="43" selection-start="822" selection-end="822" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -982,40 +952,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/BoxesDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="13" selection-start="272" selection-end="272" vertical-scroll-proportion="0.0">
+        <state line="33" column="21" selection-start="761" selection-end="761" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/CompaniesDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="4" selection-start="1270" selection-end="1285" vertical-scroll-proportion="0.0">
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/TasksDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="51" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.0">
+        <state line="65" column="0" selection-start="1812" selection-end="1812" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/CompaniesDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="14" selection-start="1439" selection-end="1439" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/UsersDAOImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="5" selection-start="1365" selection-end="2274" vertical-scroll-proportion="0.0">
+        <state line="51" column="48" selection-start="1579" selection-end="1579" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="60" selection-start="2496" selection-end="2496" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/BoardController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/service/common/CustomUserDetailsService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="97" column="0" selection-start="3575" selection-end="3725" vertical-scroll-proportion="1.0057636">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="62" column="25" selection-start="2166" selection-end="2166" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/service/BoxesServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="66" selection-start="1694" selection-end="1694" vertical-scroll-proportion="2.7567568">
+          <folding />
         </state>
       </provider>
     </entry>

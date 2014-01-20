@@ -71,7 +71,7 @@ public class UserController {
     @RequestMapping(value = "/users/create" )
     public String createUser(ModelMap model){
 //        Users user = new Users();
-//        user.setEmail("admin@admin.com");
+//        user.setEmail("admin@admin.com".toLowerCase());
 //        user.setName("Admin");
 //        user.setPassword("admin");
 //        userService.saveOrUpdate(user);

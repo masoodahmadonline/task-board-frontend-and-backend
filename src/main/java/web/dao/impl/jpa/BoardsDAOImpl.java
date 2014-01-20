@@ -23,14 +23,12 @@ public class BoardsDAOImpl implements BoardsDAO {
 	public Boards save(Boards board) {
         return entityManager.merge(board);
 	}
-        
 
     public Boards getBoardById(Long id){
         System.out.println("board id entered for lookup was : "+id);
         return entityManager.find(Boards.class, id);
     }
-        
-        
+
 	@PersistenceContext
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
@@ -45,12 +43,11 @@ public class BoardsDAOImpl implements BoardsDAO {
 	protected Session getHibernateSession() {
 		return entityManager.unwrap(Session.class);
 	}
-	
-        
-        public List<Boards> getBoardListByUser(Users user){
-            
-            return null;
-        }
+
+    public List<Boards> getBoardListByUser(Users user){
+
+        return null;
+    }
 	
 	
 }

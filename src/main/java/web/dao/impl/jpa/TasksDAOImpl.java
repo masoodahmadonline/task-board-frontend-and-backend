@@ -64,14 +64,11 @@ public class TasksDAOImpl implements TasksDAO {
         return entityManager.find(Tasks.class, id);
     }
 
-
     public Attachment getAttachmentById(Long id){
         System.out.println("attachment id supplied to fetch task in dao was ======== "+ id);
         return entityManager.find(Attachment.class, id);
     }
-        
-        
-        
+
 	@PersistenceContext
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;

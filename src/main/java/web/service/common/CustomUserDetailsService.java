@@ -59,8 +59,8 @@ public class CustomUserDetailsService implements UserDetailsService{
    // getAuthorities() will translate the access level to the correct role type
  System.out.println("debug ---- 2");
    springUser =  new User(
-     dbUser.getEmail(),
-     dbUser.getPassword().toLowerCase(),
+     dbUser.getEmail().toLowerCase(),
+     dbUser.getPassword(),
      true,
      true,
      true,

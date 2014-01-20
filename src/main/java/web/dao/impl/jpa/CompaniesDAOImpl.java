@@ -49,7 +49,7 @@ public class CompaniesDAOImpl implements CompaniesDAO {
         query.setParameter("name", name);
         List<?> list = query.getResultList();
         //query.getSingleResult(); can also be used.{M-A}
-        //getResultList() is never returned, despite that:{M-A}
+        //getResultList() is never returned null, despite that:{M-A}
         if(list != null && list.size() > 0){
             companyToBeReturned = (Companies)list.get(0);
             System.out.println(companyToBeReturned.getName());

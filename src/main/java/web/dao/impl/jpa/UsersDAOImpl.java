@@ -1,15 +1,11 @@
 
 package web.dao.impl.jpa;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import web.dao.UsersDAO;
 import web.entity.Users;
@@ -29,7 +25,6 @@ public class UsersDAOImpl implements UsersDAO {
         return entityManager.merge(user);
 	}
 
-    // edit queued.
     public boolean doesLoginIdExists(String email){
         email = email.toLowerCase();
         String queryString = "SELECT user FROM Users AS user " +
@@ -54,7 +49,7 @@ public class UsersDAOImpl implements UsersDAO {
         query.setParameter("email", email);
         List<?> list = query.getResultList();
         //query.getSingleResult(); can also be used.{M-A}
-        //getResultList() is never returned, despite that:{M-A}
+        //getResultList() is never returned null, despite that:{M-A}
         if(list != null && list.size() > 0){
             System.out.println("email retrieved is" +((Users)list.get(0)).getEmail() );
             System.out.println(user.getEmail());
@@ -65,9 +60,6 @@ public class UsersDAOImpl implements UsersDAO {
         return user;
     }
 
-
-        
-        
 	@PersistenceContext
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
@@ -83,7 +75,5 @@ public class UsersDAOImpl implements UsersDAO {
            
 		return entityManager.unwrap(Session.class);
 	}
-	
-	
-	
+
 }

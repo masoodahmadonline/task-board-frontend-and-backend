@@ -29,8 +29,8 @@ public class BoxesDAOImpl implements BoxesDAO {
         Boxes box = getBoxById(id);
         System.out.println("box fetched for deletion: "+ box.getId());
          if(box != null){
-                entityManager.remove(box);
-                b = true;
+            entityManager.remove(box);
+            b = true;
          }
          return b;
     }
@@ -38,10 +38,7 @@ public class BoxesDAOImpl implements BoxesDAO {
     public Boxes getBoxById(Long id){
         return entityManager.find(Boxes.class, id);
     }
-        
-        
-        
-        
+
 	@PersistenceContext
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
@@ -56,8 +53,5 @@ public class BoxesDAOImpl implements BoxesDAO {
 	protected Session getHibernateSession() {
 		return entityManager.unwrap(Session.class);
 	}
-	
-        
-       
-	
+
 }

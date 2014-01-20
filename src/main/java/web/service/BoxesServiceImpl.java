@@ -39,21 +39,18 @@ public class BoxesServiceImpl implements BoxesService{
     
     @Transactional(readOnly = false)
     public ResultImpl save(Boxes box){
-        /////////////////// queue , check if named box already exists or not?
         Boxes boardToBeReturned = boxDAO.save(box);
         if(boardToBeReturned == null){
-                result.setIsSuccessful(false);
-                result.setObject(null);
-                result.setMessageList(Arrays.asList("error.boardCreationErrorUnknown"/*,"string"*/));
-                return result;
-            }else{
-                result.setIsSuccessful(true);
-                result.setObject(boardToBeReturned);
-                result.setMessageList(Arrays.asList("success.boardCreated"/*,"string"*/));
-                return result;
-            }
-        
-       
+            result.setIsSuccessful(false);
+            result.setObject(null);
+            result.setMessageList(Arrays.asList("error.boardCreationErrorUnknown"/*,"string"*/));
+            return result;
+        }else{
+            result.setIsSuccessful(true);
+            result.setObject(boardToBeReturned);
+            result.setMessageList(Arrays.asList("success.boardCreated"/*,"string"*/));
+            return result;
+        }
     }
     
     @Transactional(readOnly = false)
