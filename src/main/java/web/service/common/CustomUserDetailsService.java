@@ -46,6 +46,7 @@ public class CustomUserDetailsService implements UserDetailsService{
   
    
   try {
+      System.out.println("=====zzzzzzzz==");
     System.out.println("the email passed from CustomUserDetailsService in method loadUserByUsername is: " +email);
    // Search database for a springUser that matches the specified email
    // You can provide a custom DAO to access your persistence layer
@@ -53,6 +54,8 @@ public class CustomUserDetailsService implements UserDetailsService{
    // DbUser is our custom domain springUser. This is not the same as Spring's User
       System.out.println("debug ---- 1");
    Users dbUser = userDAO.getUserByLoginId(email);
+      System.out.println("dbUser email: "+dbUser.getEmail());
+      System.out.println("dbUser password: "+dbUser.getPassword());
     
    // Populate the Spring User object with details from the dbUser
    // Here we just pass the email, password, and access level

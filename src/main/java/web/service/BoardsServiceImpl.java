@@ -40,8 +40,6 @@ public class BoardsServiceImpl implements BoardsService{
             result.setMessageList(Arrays.asList("success.boardCreated"/*,"second message (if any)"*/));
             return result;
         }
-        
-       
     }
     
     @Transactional(readOnly = false)
@@ -50,47 +48,30 @@ public class BoardsServiceImpl implements BoardsService{
         if (board != null){
             result.setIsSuccessful(true);
             result.setObject(board);
-            //result.setMessageList(Arrays.asList("error.userCreationErrorUnknown"/*,"string"*/));
+            result.setMessageList(Arrays.asList("success.boardLoadedSuccessfully"));
         }else{
             result.setIsSuccessful(false);
             result.setObject(null);
-            result.setMessageList(Arrays.asList("error.boardCreationErrorUnknown"/*,"string"*/));
+            result.setMessageList(Arrays.asList("error.boardRetrievalFailed","error.namedBoardDoesNotExist"));
         }
         return result;
-        
     }
     
     @Transactional(readOnly = false)
     public ResultImpl getBoardByIdToDisplay(Long id){
-        System.out.println("-----------------1");
-        Boards board = boardDAO.getBoardById(id);
-        System.out.println("-----------------2");
-        if (board != null){
-            System.out.println("-----------------3");
-            Collection<Boxes> childBoxList = new ArrayList<Boxes>();
-            childBoxList =  board.getChildBoxList();
-            if(childBoxList.isEmpty() || childBoxList == null){
-                System.out.println("child boxes are null---");
+        result = getBoardById(id);
+        Boards board;
+        if (result.getIsSuccessful()){
+            board = (Boards)result.getObject();
+            Collection<Boxes> childBoxList = board.getChildBoxList();
+            if(childBoxList == null || childBoxList.isEmpty()){
+               System.out.println("child boxes for getBoardByIdToDisplay() are null---");
             }else{
-                System.out.println("childbox list size: "+ childBoxList.size());
-                crawlBoxes(childBoxList);
+               System.out.println("childbox list size for getBoardByIdToDisplay(): "+ childBoxList.size());
+               crawlBoxes(childBoxList);
             }
-            System.out.println("-----------------4");
-
-            result.setIsSuccessful(true);
-            result.setObject(board);
-            return result;
-            //result.setMessageList(Arrays.asList("error.userCreationErrorUnknown"/*,"string"*/));
-        }else{
-            System.out.println("-----------------5");
-            result.setIsSuccessful(false);
-            result.setObject(null);
-            result.setMessageList(Arrays.asList("error.namedBoardDoesNotExist"/*,"string"*/));
-            return result;
         }
-        
-        
-        
+        return result;
     }
 
     @Transactional(readOnly = false)

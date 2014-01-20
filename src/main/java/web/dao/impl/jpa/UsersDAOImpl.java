@@ -51,9 +51,8 @@ public class UsersDAOImpl implements UsersDAO {
         //query.getSingleResult(); can also be used.{M-A}
         //getResultList() is never returned null, despite that:{M-A}
         if(list != null && list.size() > 0){
-            System.out.println("email retrieved is" +((Users)list.get(0)).getEmail() );
-            System.out.println(user.getEmail());
             user = (Users)list.get(0);
+            System.out.println("email retrieved is" + user.getEmail() );
         }else {
             System.out.println("User not found by email");
         }
