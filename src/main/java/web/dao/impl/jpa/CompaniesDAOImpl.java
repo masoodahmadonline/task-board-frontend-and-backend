@@ -1,20 +1,15 @@
 
 package web.dao.impl.jpa;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import web.dao.CompaniesDAO;
-import web.dao.UsersDAO;
 import web.entity.Companies;
-import web.entity.Users;
+
 
 
 
@@ -32,7 +27,6 @@ public class CompaniesDAOImpl implements CompaniesDAO {
         return entityManager.merge(company);
 	}
 
-    // edit queued.
     public boolean doesCompanyExists(String name){
         String queryString = "SELECT user FROM Companies AS company " +
                      "WHERE company.name = :name";
@@ -46,26 +40,24 @@ public class CompaniesDAOImpl implements CompaniesDAO {
         }
     }
 
-    // edit queued.
     public Companies getCompanyByName(String name){
+        Companies companyToBeReturned = null;
         System.out.println("company name entered for lookup was : "+name);
         String queryString = "SELECT user FROM Companies AS company " +
                      "WHERE company.name = :name";
         Query query = entityManager.createQuery(queryString);
         query.setParameter("name", name);
         List<?> list = query.getResultList();
-        System.out.println("company name retrieved is" +((Companies)list.get(0)).getName() );
-        System.out.println("debug --- c");
-        if(list == null || list.size() == 0) throw new UsernameNotFoundException("Company not found");
-       Companies companyToBeReturned = (Companies)list.get(0);
-       System.out.println("debug --- d");
-       System.out.println(companyToBeReturned.getName());
-       return companyToBeReturned;
-//            return (Users)list.get(0);
-
+        //query.getSingleResult(); can also be used.{M-A}
+        //getResultList() is never returned, despite that:{M-A}
+        if(list != null && list.size() > 0){
+            companyToBeReturned = (Companies)list.get(0);
+            System.out.println(companyToBeReturned.getName());
+            System.out.println("company name retrieved is" +((Companies)list.get(0)).getName() );
+        }
+        return companyToBeReturned;
     }
-        
-        
+
 	@PersistenceContext
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
@@ -80,7 +72,5 @@ public class CompaniesDAOImpl implements CompaniesDAO {
 	protected Session getHibernateSession() {
 		return entityManager.unwrap(Session.class);
 	}
-	
-	
-	
+
 }

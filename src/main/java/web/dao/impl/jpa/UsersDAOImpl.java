@@ -31,45 +31,38 @@ public class UsersDAOImpl implements UsersDAO {
 
     // edit queued.
     public boolean doesLoginIdExists(String email){
-        System.out.println("debug --- a");
+        email = email.toLowerCase();
         String queryString = "SELECT user FROM Users AS user " +
                      "WHERE user.email = :email";
         Query query = entityManager.createQuery(queryString);
         query.setParameter("email", email);
-        System.out.println("debug --- b");
         List<?> list = query.getResultList();
         if(list == null || list.size() == 0){
-            System.out.println("debug --- c");
             return false;
         }else{
-            System.out.println("debug --- d");
             return true;
         }
-
-
     }
 
-    // edit queued.
     public Users getUserByLoginId(String email){
+        Users user = null;
+        email = email.toLowerCase();
         System.out.println("email entered for lookup was : "+email);
-        System.out.println("debug --- a");
         String queryString = "SELECT user FROM Users AS user " +
                      "WHERE user.email = :email";
         Query query = entityManager.createQuery(queryString);
-        System.out.println("debug --- b");
         query.setParameter("email", email);
-
         List<?> list = query.getResultList();
-
-        System.out.println("email retrieved is" +((Users)list.get(0)).getEmail() );
-        System.out.println("debug --- c");
-        if(list == null || list.size() == 0) throw new UsernameNotFoundException("User not found");
-       Users user = (Users)list.get(0);
-       System.out.println("debug --- d");
-       System.out.println(user.getEmail());
-       return user;
-//            return (Users)list.get(0);
-
+        //query.getSingleResult(); can also be used.{M-A}
+        //getResultList() is never returned, despite that:{M-A}
+        if(list != null && list.size() > 0){
+            System.out.println("email retrieved is" +((Users)list.get(0)).getEmail() );
+            System.out.println(user.getEmail());
+            user = (Users)list.get(0);
+        }else {
+            System.out.println("User not found by email");
+        }
+        return user;
     }
 
 
