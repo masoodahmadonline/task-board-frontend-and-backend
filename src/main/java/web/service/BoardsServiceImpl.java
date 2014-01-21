@@ -33,16 +33,15 @@ public class BoardsServiceImpl implements BoardsService{
             result.setIsSuccessful(false);
             result.setObject(null);
             result.setMessageList(Arrays.asList("error.boardCreationErrorUnknown"/*,"second message (if any)"*/));
-            return result;
         }else{
             result.setIsSuccessful(true);
             result.setObject(boardToBeReturned);
-            result.setMessageList(Arrays.asList("success.boardCreated"/*,"second message (if any)"*/));
-            return result;
+            result.setMessageList(Arrays.asList("success.boardCreated"));
         }
+        return result;
     }
     
-    @Transactional(readOnly = false)
+    @Transactional
     public ResultImpl getBoardById(Long id){
         Boards board = boardDAO.getBoardById(id);
         if (board != null){
@@ -57,7 +56,7 @@ public class BoardsServiceImpl implements BoardsService{
         return result;
     }
     
-    @Transactional(readOnly = false)
+    @Transactional
     public ResultImpl getBoardByIdToDisplay(Long id){
         result = getBoardById(id);
         Boards board;
@@ -74,7 +73,7 @@ public class BoardsServiceImpl implements BoardsService{
         return result;
     }
 
-    @Transactional(readOnly = false)
+    @Transactional
     void crawlBoxes(Collection boxList){
         for( Object o : boxList ){
            Boxes box = (Boxes)o;    
@@ -85,7 +84,7 @@ public class BoardsServiceImpl implements BoardsService{
                System.out.println( "The Attachment List size is  ========= " +task.getAttachmentList().size() );;
            }
            List<Boxes> childBoxList = new ArrayList<Boxes> ( box.getChildBoxList() ); // list of sub child boxes of this box
-            System.out.println(" ======================== boxid : "+box.getId()+" and its childBoxList size: "+ childBoxList.size());
+           System.out.println(" ======================== boxid : "+box.getId()+" and its childBoxList size: "+ childBoxList.size());
            if(!childBoxList.isEmpty()){
                crawlBoxes(childBoxList);
            }
@@ -93,17 +92,18 @@ public class BoardsServiceImpl implements BoardsService{
        }
     }
     
-    @Transactional(readOnly = false)
+    @Transactional
     public ResultImpl getBoardListByUser(Users user){
         Users  u =  userDAO.getUserByLoginId(user.getEmail());
         List<Boards> boardList = new ArrayList<Boards>(u.getBoardList());
         if(!boardList.isEmpty()){
             result.setIsSuccessful(true);
             result.setObject(boardList);
+            result.setMessageList(Arrays.asList("success.boardLoadedSuccessfully"));
         }else{
             result.setIsSuccessful(false);
+            result.setMessageList(Arrays.asList("error.noBoardFoundForUser"));
         }
-        
         return result;
     }
     

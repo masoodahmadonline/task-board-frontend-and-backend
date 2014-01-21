@@ -28,16 +28,14 @@ public class CompaniesServiceImpl implements CompaniesService{
     @Autowired
     private ResultImpl result;
     
-   
+
     
     @Transactional(readOnly = false)
     public ResultImpl save(Companies company){
         if( companiesDAO.doesCompanyExists(company.getName()) ){
-          
             result.setIsSuccessful(false);
             result.setObject(null);
             result.setMessageList(Arrays.asList("error.companyNameAlreadyExists"/*,"string"*/));
-           // setResult(false,null,Arrays.asList("error.emailAlreadyExists"/*,"string"*/) );
             return result;
         }else{
             Companies companyToBeReturned = companiesDAO.save(company);
@@ -45,34 +43,26 @@ public class CompaniesServiceImpl implements CompaniesService{
                 result.setIsSuccessful(false);
                 result.setObject(null);
                 result.setMessageList(Arrays.asList("error.companyCreationErrorUnknown"/*,"string"*/));
-                return result;
             }else{
                 result.setIsSuccessful(true);
                 result.setObject(companyToBeReturned);
                 result.setMessageList(Arrays.asList("success.companyCreated"/*,"string"*/));
-                return result;
             }
-           
-            
-
-//             
-//         return new ResultImpl(true,userToBeReturned,Arrays.asList("success.userCreated"/*,"string"*/));
         }
-       
+        return result;
     }
     
-    @Transactional(readOnly = false)
+    @Transactional
     public ResultImpl getCompanyByName(String name){
         Companies company = companiesDAO.getCompanyByName(name);
         if (company != null){
             result.setIsSuccessful(true);
             result.setObject(company);
-            //result.setMessageList(Arrays.asList("error.userCreationErrorUnknown"/*,"string"*/));
         }else{
             result.setIsSuccessful(false);
             result.setObject(null);
-            result.setMessageList(Arrays.asList("error.namedCompanyDoesNotExist"/*,"string"*/));
         }
         return result;
     }
+
 }

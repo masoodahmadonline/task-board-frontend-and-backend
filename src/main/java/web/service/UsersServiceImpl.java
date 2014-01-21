@@ -39,38 +39,28 @@ public class UsersServiceImpl implements UsersService{
         if( userDAO.doesLoginIdExists(user.getEmail()) ){
             result.setIsSuccessful(false);
             result.setObject(null);
-            result.setMessageList(Arrays.asList("error.emailAlreadyExists"/*,"string"*/));
-           // setResult(false,null,Arrays.asList("error.emailAlreadyExists"/*,"string"*/) );
-            return result;
+            result.setMessageList(Arrays.asList("error.emailAlreadyExists"/*,"some.other.message"*/));
         }else{
             Users userToBeReturned = userDAO.save(user);
             if(userToBeReturned == null){
                 result.setIsSuccessful(false);
                 result.setObject(null);
-                result.setMessageList(Arrays.asList("error.userCreationErrorUnknown"/*,"string"*/));
-                return result;
+                result.setMessageList(Arrays.asList("error.userCreationErrorUnknown"));
             }else{
                 result.setIsSuccessful(true);
                 result.setObject(userToBeReturned);
-                result.setMessageList(Arrays.asList("success.userCreated"/*,"string"*/));
-                return result;
+                result.setMessageList(Arrays.asList("success.userCreated"));
             }
-           
-            
-
-//             
-//         return new ResultImpl(true,userToBeReturned,Arrays.asList("success.userCreated"/*,"string"*/));
         }
-       
+        return result;
     }
     
-    @Transactional(readOnly = false)
+    @Transactional
     public ResultImpl getUserByLoginId(String email){
         Users user = userDAO.getUserByLoginId(email);
         if (user != null){
             result.setIsSuccessful(true);
             result.setObject(user);
-            //result.setMessageList(Arrays.asList("error.userCreationErrorUnknown"/*,"string"*/));
         }else{
             result.setIsSuccessful(false);
             result.setObject(null);
@@ -80,7 +70,9 @@ public class UsersServiceImpl implements UsersService{
         
     }
 
+    @Deprecated
     @Transactional(readOnly = false)
+    //changeable with full authority by other peer developers{M-A}
     public ResultImpl changeUserRoleForBoard(String userEmail, String role, long boardId){
                    System.out.println("================1=============");
         Users user = userDAO.getUserByLoginId(userEmail);
@@ -102,7 +94,6 @@ public class UsersServiceImpl implements UsersService{
                 System.out.println("================6=============");
                     System.out.println(urfb.getBoard().getTitle()+urfb.getRole()+urfb.getUser().getName()+"=====================");
                     result.setIsSuccessful(true);
-
             }
         }
         return result;
