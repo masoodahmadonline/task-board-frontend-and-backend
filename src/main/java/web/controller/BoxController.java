@@ -58,38 +58,41 @@ public class BoxController {
                                           @PathVariable(value="boxTitle") String boxTitle,
                                           @PathVariable(value="boxDescription") String boxDescription
                                           ){
-        
-        //queue
+        //queue {user-module}
         //get user id from session (save id in session first)
         //verify for privs of user if he can create box or not.
         
         //create box in the parent board / box
+        Boxes boxToBeReturned = null;
         Boxes box = new Boxes();
         box.setTitle(boxTitle);
         box.setType(boxType);
         box.setDescription(boxDescription);
         if(parent.equals("board")){
             box.setIsFirstLevelBox(true);
-            //do this in service rather here. / that is set parent of box.
             Boards board = (Boards)( boardService.getBoardById(Long.valueOf(parentId)) ).getObject();
-            boxService.setParent(box, board);
+             boxService.setParent(box, board);
+
         }else if(parent.equals("box")){
             Boxes parentBox = (Boxes)( boxService.getBoxById(Long.valueOf(parentId)) ).getObject();
             boxService.setParent(box, parentBox);
         }
-        
-        Boxes savedBox = (Boxes)boxService.save(box).getObject();
-
-        System.out.println("box saved title was "+ savedBox.getTitle());
-        Boxes boxToBeReturned = new Boxes();
-        boxToBeReturned.setType(savedBox.getType());
-        boxToBeReturned.setTitle(savedBox.getTitle());
-        boxToBeReturned.setId(savedBox.getId());
-        boxToBeReturned.setDescription(savedBox.getDescription());
-        
-        
-        
-        return boxToBeReturned;
+        result = boxService.save(box);
+        if(result.getIsSuccessful()){
+            model.put("successMessages", result.getMessageList());
+            Boxes savedBox = (Boxes)result.getObject();
+            System.out.println("box saved title was "+ savedBox.getTitle());
+            //reusing savedBox in boxToBeReturned because of an issue.
+            //unable to do that directly to savedBox
+            boxToBeReturned = new Boxes();
+            boxToBeReturned.setType(savedBox.getType());
+            boxToBeReturned.setTitle(savedBox.getTitle());
+            boxToBeReturned.setId(savedBox.getId());
+            boxToBeReturned.setDescription(savedBox.getDescription());
+        }else{
+            model.put("errorMessages", result.getMessageList());
+        }
+        return boxToBeReturned; //queued - send model message also (if needed)
     }
     
     //ajax
@@ -99,22 +102,15 @@ public class BoxController {
                                           ){
         System.out.println("box delete controller method called.");
         result = boxService.deleteBox(Long.parseLong(boxId));
-
-        System.out.println("succes was: "+ result.getIsSuccessful()   );
-        if (result.getIsSuccessful()) {
+        if(result.getIsSuccessful()){
+            model.put("successMessages", result.getMessageList());
             System.out.println("box deleted ------------------");
+            return "success";  //queued - send model message also (if needed)
         }else{
-            System.out.println("result was false");
+            model.put("errorMessages", result.getMessageList());
+            System.out.println("box deletion failed ------------------");
+            return "failure";  //queued - send model message also (if needed)
         }
-
-
-
-        return "success";
     }
-    
-    
-    
-   
-    
-   
+
 }

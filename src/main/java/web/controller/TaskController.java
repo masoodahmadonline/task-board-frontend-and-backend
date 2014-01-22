@@ -55,28 +55,26 @@ public class TaskController {
         //queue
         //get user id from session (save id in session first)
         //verify for privs of user if he can create box or not.
-        
-        //create box in the parent board / box
+
+        Tasks taskToBeReturned = null;
         Tasks task = new Tasks();
         task.setTitle(taskTitle);
         task.setDescription(taskDescription);
-
-            Boxes parentBox = (Boxes)( boxService.getBoxById(Long.valueOf(parentBoxId)) ).getObject();
-            taskService.setParent(task, parentBox);
-
-        
-        Tasks savedTask = (Tasks)taskService.save(task).getObject();
-
-        System.out.println("box saved title was " + savedTask.getTitle());
-        Tasks taskToBeReturned = new Tasks();
-
-        taskToBeReturned.setTitle(savedTask.getTitle());
-        taskToBeReturned.setId(savedTask.getId());
-        taskToBeReturned.setDescription(savedTask.getDescription());
-        
-        
-        
-        return taskToBeReturned;
+        Boxes parentBox = (Boxes)( boxService.getBoxById(Long.valueOf(parentBoxId)) ).getObject();
+        taskService.setParent(task, parentBox);
+        result = taskService.save(task);
+        if(result.getIsSuccessful()){
+            model.put("successMessages", result.getMessageList());
+            Tasks savedTask = (Tasks)result.getObject();
+            System.out.println("box saved title was " + savedTask.getTitle());
+            taskToBeReturned = new Tasks();
+            taskToBeReturned.setTitle(savedTask.getTitle());
+            taskToBeReturned.setId(savedTask.getId());
+            taskToBeReturned.setDescription(savedTask.getDescription());
+        }else{
+            model.put("errorMessages", result.getMessageList());
+        }
+        return taskToBeReturned; //queued - send model message also (if needed)
     }
     
     //ajax
@@ -86,17 +84,15 @@ public class TaskController {
                                           ){
         System.out.println("task delete controller method called.");
         result = taskService.deleteTask(Long.parseLong(taskId));
-
-        System.out.println("succes was: "+ result.getIsSuccessful()   );
         if (result.getIsSuccessful()) {
+            model.put("successMessages", result.getMessageList());
             System.out.println("task deleted ------------------");
+            return "success";//queued - send model message also (if needed)
         }else{
-            System.out.println("result was false");
+            System.out.println("task deletion failed ---------------");
+            model.put("errorMessages", result.getMessageList());
+            return "failure";//queued - send model message also (if needed)
         }
-
-
-
-        return "success";
     }
 
     //ajax
@@ -107,17 +103,16 @@ public class TaskController {
     ){
         System.out.println("task priority controller method called.");
         result = taskService.changeTaskPriority(Long.parseLong(taskId), priority);
-
-        System.out.println("succes was: "+ result.getIsSuccessful()   );
         if (result.getIsSuccessful()) {
+            model.put("successMessages", result.getMessageList());
             System.out.println("task priority changed ------------------");
+            return "success";
         }else{
+            model.put("errorMessages", result.getMessageList());
             System.out.println("result for ask priority change was false");
+            return "failure";
         }
-
-
-
-        return "success";
+        //queued - send model message also (if needed)
     }
 
     //ajax
@@ -132,21 +127,21 @@ public class TaskController {
         result = taskService.moveTask(Long.parseLong(taskId), Long.parseLong(initialParentBoxId), Long.parseLong(destinationParentBoxId));
 
         Tasks savedTask = (Tasks)result.getObject();
-
 //        Tasks taskToBeReturned = new Tasks();
 //        taskToBeReturned.setTitle(savedTask.getTitle());
 //        taskToBeReturned.setId(savedTask.getId());
 //        taskToBeReturned.setDescription(savedTask.getDescription());
 //        taskToBeReturned.setParentBox(savedTask.getParentBox());
-
-        System.out.println("success was: "+ result.getIsSuccessful()   );
         if (result.getIsSuccessful()) {
             System.out.println("task moved ------------------");
+            model.put("successMessages", result.getMessageList());
+            return "success";
         }else{
-            System.out.println("result was false: could not move");
+            System.out.println("task move failuer --------------");
+            model.put("errorMessages", result.getMessageList());
+            return "failure";
         }
-
-        return "success";
+        //queued - send model message also (if needed)
     }
 
     @RequestMapping (value = "/task/attach-file", method=RequestMethod.POST)
@@ -163,9 +158,8 @@ public class TaskController {
         attachment.setSize(file.getSize() / 1024);//convert to kb instead of bytes
         attachment.setPath(filePathToSave);
         attachment.setDescription(fileDescription);
-        //attachment.setParentTask(taskIdForFileUpload.getTaskByDAO);
         Long taskId = Long.parseLong(taskIdForFileUpload);
-                                                         System.out.println("service call param for task: ===========" +taskId);
+        System.out.println("service call param for task: ===========" +taskId);
         result = taskService.saveAttachment(taskId, attachment);
         if (result.getIsSuccessful()){
             Attachment savedAttachment = (Attachment)result.getObject();
@@ -175,16 +169,47 @@ public class TaskController {
                     savedAttachment.getId()         +
                     savedAttachment.getParentTask() +
                     savedAttachment.getPath()
-
             );
-
         }
-
-
         System.out.println(session.getAttribute("previous_page").toString());
-
         return "redirect:"+session.getAttribute("previous_page").toString();
+        //queued - send model message also (if needed)
     }
+
+    @RequestMapping (value = "/attachment/download/{attachmentId}", method=RequestMethod.GET)
+    public String downloadFile( HttpServletResponse response,
+                                @PathVariable(value = "attachmentId")Long attachmentId
+
+
+    )throws IOException{
+        result = taskService.getAttachmentById(attachmentId);
+        if(result.getIsSuccessful()){
+            Attachment attachment = (Attachment)result.getObject();
+            File file = new File(attachment.getPath());
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+            byte[] ba = FileUtils.readFileToByteArray(file);
+            response.getOutputStream().write(ba);
+        }
+        return null;
+        //queued - send model message also (if needed)
+    }
+
+    //ajax
+    @RequestMapping (value = "/attachment/delete/{attachmentId}", method=RequestMethod.GET)
+    public @ResponseBody  String deleteAttachment(ModelMap model,
+                                          @PathVariable(value="attachmentId") Long attachmentId ){
+        result =  taskService.deleteAttachment(attachmentId);
+        if(result.getIsSuccessful()){
+            System.out.println("attachment deleted ==========");
+            return "success";
+        }else{
+            System.out.println("attachment NOT deleted ==========");
+            return "failure";
+        }
+    } //queued - send model message also (if needed)
+
+}
 
 
 
@@ -213,44 +238,3 @@ public class TaskController {
 ////        outputwriter.close();
 //        return null;
 //    }
-
-    @RequestMapping (value = "/attachment/download/{attachmentId}", method=RequestMethod.GET)
-    public String downloadFile( HttpServletResponse response,
-                                @PathVariable(value = "attachmentId")Long attachmentId
-
-
-    )throws IOException{
-        result = taskService.getAttachmentById(attachmentId);
-        if(result.getIsSuccessful()){
-            Attachment attachment = (Attachment)result.getObject();
-            File file = new File(attachment.getPath());
-            response.setContentType("application/octet-stream");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
-            byte[] ba = FileUtils.readFileToByteArray(file);
-            response.getOutputStream().write(ba);
-        }
-
-
-        return null;
-    }
-
-    //ajax
-    @RequestMapping (value = "/attachment/delete/{attachmentId}", method=RequestMethod.GET)
-    public @ResponseBody  String deleteAttachment(ModelMap model,
-                                          @PathVariable(value="attachmentId") Long attachmentId
-
-    ){
-        result =  taskService.deleteAttachment(attachmentId);
-        if(result.getIsSuccessful()){
-            System.out.println("attachment deleted ==========");
-            return "success";
-        }else{
-            System.out.println("attachment NOT deleted ==========");
-            return "failure";
-        }
-    }
-    
-   
-    
-   
-}

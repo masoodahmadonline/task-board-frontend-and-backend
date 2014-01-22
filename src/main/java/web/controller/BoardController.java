@@ -54,33 +54,20 @@ public class BoardController {
         }
         return "/boards/create";
     }
-    
-    
+
    @RequestMapping (value = "/boards/{id}")
-   public String viewBoard(
-                           ModelMap model,
+   public String viewBoard(ModelMap model,
                            HttpServletRequest request,
                            HttpSession session,
                            @PathVariable(value="id") String id){
 
-       //// queue, {user-module} if user is admin or has privs to view a board
+        //// queue, {user-module} if user is admin or has privs to view a board
 
         String[] uriArray = request.getRequestURI().toString().split("/");
         int uriArraySize = uriArray.length;
         session.setAttribute("previous_page", "/"+uriArray[uriArraySize-2]+"/"+uriArray[uriArraySize-1]);
-
-//       String requestUrl="/"+uri[1]+"/"+uri[2] ;
-//       String stripped = request.getRequestURI().toString().substring(1);
-//       String sub = stripped.substring(stripped.indexOf('/'));
-//       if(uri.split("/").length == 2){
-//           session.setAttribute("previous_page",uri);
-//       }else{
-//           session.setAttribute("previous_page",sub);
-//       }
-
-       result =  boardService.getBoardByIdToDisplay(Long.parseLong(id));
-
-       if(result.getIsSuccessful()){
+        result =  boardService.getBoardByIdToDisplay(Long.parseLong(id));
+        if(result.getIsSuccessful()){
             model.put("successMessages", result.getMessageList());
             model.put("board", result.getObject());
             Boards tempBoard = (Boards)result.getObject();
@@ -92,11 +79,21 @@ public class BoardController {
                     System.out.println("task title: ====="+ task.getTitle());
                 }
             }
-       }else{
+        }else{
             model.put("errorMessages", result.getMessageList());
-       }
-//       Boxes box = (Boxes)( (boxService.getBoxById(287L)).getObject() );
-//       Boxes box2 = (Boxes)( (boxService.getBoxById(209L)).getObject() );
-       return "/boards/board";
+        }
+        return "/boards/board";
    }
 }
+
+
+
+//      for viewBoard() /boards/{id}
+//       String requestUrl="/"+uri[1]+"/"+uri[2] ;
+//       String stripped = request.getRequestURI().toString().substring(1);
+//       String sub = stripped.substring(stripped.indexOf('/'));
+//       if(uri.split("/").length == 2){
+//           session.setAttribute("previous_page",uri);
+//       }else{
+//           session.setAttribute("previous_page",sub);
+//       }

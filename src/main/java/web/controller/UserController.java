@@ -50,21 +50,17 @@ public class UserController {
     
     
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String getLoginPage(@RequestParam(value="error", required=false) boolean error,
-      ModelMap model) {
-     System.out.println("Received request to show login page");
-
-     String message =  null;
-     if (error == true) {
-         message = messages.getMessage("message.invalidCreds",  new Object [] {"UserName"}, "Invalid credentials", null);
-      // Assign an error message
-      model.put("invalidCreds", message);
-     } else {
-      model.put("invalidCreds", "");
-     }
-
-     // This will resolve to /WEB-INF/jsp/loginpage.jsp
-     return "/login/login";
+    public String getLoginPage(@RequestParam(value="error",required=false) boolean error,
+                                                ModelMap model) {
+        System.out.println("Received request to show login page");
+        String message =  null;
+        if (error == true) {
+        message = messages.getMessage("message.invalidCreds",  new Object [] {"UserName"}, "Invalid credentials", null);
+        model.put("invalidCreds", message);
+        } else {
+        model.put("invalidCreds", "");
+        }
+        return "/login/login";
     }
     
 //    @RequestMapping(value = "/create", method = RequestMethod.GET )
@@ -74,7 +70,7 @@ public class UserController {
 //        user.setEmail("admin@admin.com".toLowerCase());
 //        user.setName("Admin");
 //        user.setPassword("admin");
-//        userService.saveOrUpdate(user);
+//        userService.saveOrUpdate(user);  //or its changed to .save(user)
 //        System.out.println("created--------------------");
         return "/users/create";
     }
@@ -88,33 +84,21 @@ public class UserController {
     public String userHome(ModelMap model, HttpServletRequest request) {
         User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String loginId = springUser.getUsername(); //get logged in username
-
         result = userService.getUserByLoginId(loginId); /////////////   to be edited
         Users user = (Users)result.getObject();
         HttpSession session = request.getSession(true);
         session.setAttribute("userName", user.getName());
-
-         result = boardService.getBoardListByUser(user);
-         List<Boards> boardList = new ArrayList<Boards>((List)result.getObject());
-         model.put("boards",boardList);
-         System.out.println("boardList size: "+boardList.size());
-         for(Boards b: boardList){
-             System.out.println("The board id fetched was "+b.getId());
-         }
-                
-        
-        
+        result = boardService.getBoardListByUser(user);
+        List<Boards> boardList = new ArrayList<Boards>((List)result.getObject());
+        model.put("boards",boardList);
+        System.out.println("boardList size: "+boardList.size());
+        for(Boards b: boardList){
+         System.out.println("The board id fetched was "+b.getId());
+        }
 //        model.addAttribute("username", user.getName());
         System.out.println("user-home shown--------------------");
         return "/users/home";       
     }
-    
-//    @RequestMapping(value = "/logout" )
-//    public String logout(ModelMap model, HttpServletRequest request){
-////        request.getSession(true).invalidate();
-//        System.out.println("logout user page shown--------------------");
-//        return "/login/logout";
-//    }
     
     @RequestMapping(value = "/logoutfail" )
     public String logoutFail(ModelMap model){
@@ -122,10 +106,7 @@ public class UserController {
         System.out.println("logout user fail page shown--------------------");
         return "/login/logout-fail";       
     }
-    
- 
-    
-    
+
     @RequestMapping("/loginfail")
     public String loginFail(ModelMap model){
         return "/login/login-fail";       
@@ -146,7 +127,6 @@ public class UserController {
             user.setPassword("admin");
             user.setCompany((Companies)result.getObject());   
             user.setIsEnabled(true);
-
             result = userService.save(user);
             if(result.getIsSuccessful()){
                 successMessagesList.add(result.getMessageList());  // to be edited / removed. adds double success messagge on view page.
@@ -165,7 +145,7 @@ public class UserController {
         return "/users/createadmin";       
     }
 
-
+    //{user-module} this method can be overridden
     @RequestMapping(value = "/users/change-role/{userEmail}/{role}/{boardId}", method=RequestMethod.GET)
     public String changeUserRole(ModelMap model,
                                  @PathVariable(value="userEmail") String userEmail,
@@ -178,7 +158,14 @@ public class UserController {
 
         return null;
     }
-    
-    
-   
+
 }
+
+
+
+//    @RequestMapping(value = "/logout" )
+//    public String logout(ModelMap model, HttpServletRequest request){
+////        request.getSession(true).invalidate();
+//        System.out.println("logout user page shown--------------------");
+//        return "/login/logout";
+//    }
