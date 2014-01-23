@@ -1,6 +1,7 @@
 
 package web.dao.impl.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -74,5 +75,22 @@ public class UsersDAOImpl implements UsersDAO {
            
 		return entityManager.unwrap(Session.class);
 	}
+
+    public Object findById(Object object, Long id) {
+        Session session = getHibernateSession();
+        Object instance = null;
+        instance = session.get(object.getClass().getName(), id);
+        return instance;
+    }
+
+    public List findAll(Object hibernateObject) {
+        //Session session = getHibernateSession();
+        List results = new ArrayList();
+        String queryString = "select model from "
+                + hibernateObject.getClass().getName() + " as model ";
+        Query queryObject = entityManager.createQuery(queryString);
+        results = queryObject.getResultList();
+        return results;
+    }
 
 }
