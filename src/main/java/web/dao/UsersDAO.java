@@ -5,6 +5,8 @@ package web.dao;
 
 import web.entity.Users;
 
+import java.util.List;
+
 /**
  * 
  * @version $Revision$
@@ -21,5 +23,9 @@ public interface UsersDAO {
 	Users save(Users user);
         boolean doesLoginIdExists(String email);
         Users getUserByLoginId(String email);
+
+    public List findAll(Object hibernateObject); // Farhan - general method to populate all data from the given object
+    public Object findById(Object object, Long id); // Farhan - general method to find table by primary key
+
 
 }

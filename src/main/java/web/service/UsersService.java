@@ -6,6 +6,9 @@ package web.service;
 
 import web.entity.Users;
 import web.service.common.ResultImpl;
+import web.wrapper.UserWrapper;
+
+import java.util.List;
 
 /**
  *
@@ -15,5 +18,11 @@ public interface UsersService {
     ResultImpl save(Users user);
     public ResultImpl getUserByLoginId(String email);
     public ResultImpl changeUserRoleForBoard(String userEmail, String role, long boardId);
+
+
+    ResultImpl saveUser(UserWrapper wrapper);     // Farhan - added for Creating a new user
+    public List<UserWrapper> populateRoleList(); // For populating user roles for board
+    public List<UserWrapper> listUsersWithDetail();  // To display list of all users with detail
+    ResultImpl editUserAccess(UserWrapper wrapper);  // Edit list of user's access
   
 }
