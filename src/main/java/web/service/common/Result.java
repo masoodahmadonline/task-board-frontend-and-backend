@@ -28,4 +28,8 @@ public interface Result {
     public List getMessageList();
     public void setMessageList(List errorList);
     public void setMessageSource(MessageSource messageSource);
+
+    //Farhan - general error/success message
+    public void setMessage(String message);
+    public String getMessage();
 }

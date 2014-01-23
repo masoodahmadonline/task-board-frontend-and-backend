@@ -24,6 +24,7 @@ public class ResultImpl implements MessageSourceAware, Result{
     private boolean isSuccessful;
     private Object object;
     private List messageList = new ArrayList();
+    private String message;
     @Autowired
     private MessageSource messageSource;
 
@@ -64,7 +65,7 @@ public class ResultImpl implements MessageSourceAware, Result{
     }
 
     /**
-     * @param messageList the messageList to set
+     * @param errorList the messageList to set
      */
     public void setMessageList(List errorList) {
         if(errorList != null){
@@ -73,6 +74,20 @@ public class ResultImpl implements MessageSourceAware, Result{
                 this.messageList.add(errorMessage);
             }
         }
+    }
+
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override
