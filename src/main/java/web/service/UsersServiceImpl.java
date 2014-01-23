@@ -20,6 +20,8 @@ import web.entity.UserRoleForBoard;
 import web.entity.Users;
 import web.entity.Boards;
 import web.service.common.ResultImpl;
+import web.service.common.ValidationUtility;
+import web.wrapper.UserWrapper;
 
 @Service
 @Transactional(readOnly = true)
@@ -97,6 +99,173 @@ public class UsersServiceImpl implements UsersService{
             }
         }
         return result;
+    }
+
+    @Transactional(readOnly = false)
+    public ResultImpl saveUser(UserWrapper wrapper) {
+
+        if( userDAO.doesLoginIdExists(wrapper.getEmail()) ){
+            result.setIsSuccessful(false);
+            result.setObject(null);
+            result.setMessage("The email address supplied is already taken.");
+            result.setMessageList(Arrays.asList("error.emailAlreadyExists"/*,"string"*/));
+            System.out.println("\n********** Error message from ServiceImpl 1 ***************\n");
+            // setResult(false,null,Arrays.asList("error.emailAlreadyExists"/*,"string"*/) );
+            return result;
+        }else{
+            Users userTable = new Users();
+            userTable = populateUsersFromWrapper(wrapper, userTable);
+            System.out.println("\nuser id before:" + userTable.getId());
+            userDAO.save(userTable);
+            System.out.println("\nuser id after:" + userTable.getId());
+
+            if(userTable == null){
+                result.setIsSuccessful(false);
+                result.setObject(null);
+                result.setMessage("There was an unknown error while creating user.");
+                //result.setMessageList(Arrays.asList("error.userCreationErrorUnknown"/*,"string"*/));
+                System.out.println("\n********** Error message from ServiceImpl 2 ***************\n");
+                return result;
+            }else{
+                result.setIsSuccessful(true);
+                result.setObject(wrapper);
+                result.setMessage("The user was created successfully.");
+                //result.setMessageList(Arrays.asList("success.userCreated"/*,"string"*/));
+                System.out.println("\n********** Success message from ServiceImpl ***************\n");
+                return result;
+            }
+        }
+    }
+
+    @Transactional(readOnly = false)
+    public ResultImpl editUserAccess(UserWrapper wrapper) {
+
+        Users uTable = null;
+        if(ValidationUtility.isExists(wrapper.getUserList())){
+            if (wrapper.getUserList().size() > 0) {
+                for (UserWrapper uWrapper : wrapper.getUserList()) {
+                    if(uWrapper.isEnableUserId()){
+                        if(ValidationUtility.isExists(uWrapper.getUserId())){
+                            uTable = new Users();
+                            uTable = (Users)userDAO.findById(uTable, Long.valueOf(uWrapper.getUserId()));
+                            //uTable.set
+                        }
+                    }
+                }
+            }
+        }
+
+
+        if( userDAO.doesLoginIdExists(wrapper.getEmail()) ){
+            result.setIsSuccessful(false);
+            result.setObject(null);
+            result.setMessage("The email address supplied is already taken.");
+            result.setMessageList(Arrays.asList("error.emailAlreadyExists"/*,"string"*/));
+            System.out.println("\n********** Error message from ServiceImpl 1 ***************\n");
+            // setResult(false,null,Arrays.asList("error.emailAlreadyExists"/*,"string"*/) );
+            return result;
+        }else{
+            Users userTable = new Users();
+            userTable = populateUsersFromWrapper(wrapper, userTable);
+            System.out.println("\nuser id before:" + userTable.getId());
+            userDAO.save(userTable);
+            System.out.println("\nuser id after:" + userTable.getId());
+
+            if(userTable == null){
+                result.setIsSuccessful(false);
+                result.setObject(null);
+                result.setMessage("There was an unknown error while creating user.");
+                //result.setMessageList(Arrays.asList("error.userCreationErrorUnknown"/*,"string"*/));
+                System.out.println("\n********** Error message from ServiceImpl 2 ***************\n");
+                return result;
+            }else{
+                result.setIsSuccessful(true);
+                result.setObject(wrapper);
+                result.setMessage("The user was created successfully.");
+                //result.setMessageList(Arrays.asList("success.userCreated"/*,"string"*/));
+                System.out.println("\n********** Success message from ServiceImpl ***************\n");
+                return result;
+            }
+        }
+    }
+
+    private Users populateUsersFromWrapper(UserWrapper wrapper, Users table){
+
+        if(ValidationUtility.isExists(wrapper.getUserId())){
+            table.setId(Long.valueOf(wrapper.getUserId()));
+        }
+        table.setEmail(wrapper.getEmail());
+        table.setFirstName(wrapper.getFirstName());
+        table.setLastName(wrapper.getLastName());
+        table.setPassword(wrapper.getPassword1());
+        if(ValidationUtility.isExists(wrapper.getEnableUser())){
+            if(wrapper.getEnableUser().equalsIgnoreCase("on")){
+                table.setEnabled(true);
+            }else{
+                table.setEnabled(false);
+            }
+        }
+
+        return table;
+    }
+
+    @Transactional
+    public List<UserWrapper> populateRoleList() {
+        List<UserWrapper> list = new ArrayList<UserWrapper>();
+        UserRoleForBoard table = new UserRoleForBoard();
+        UserWrapper wrapper = null;
+
+        List qList = new ArrayList();
+        qList = userDAO.findAll(table);
+        for (int j = 0; j < qList.size(); j++) {
+            table = (UserRoleForBoard) qList.get(j);
+            wrapper = new UserWrapper();
+            wrapper = populateWrapperFromRoleTable(wrapper, table);
+            list.add(wrapper);
+        }
+
+        return list;
+    }
+
+    @Transactional
+    public List<UserWrapper> listUsersWithDetail() {
+        List<UserWrapper> userList = new ArrayList<UserWrapper>();
+        Users userTable = new Users();
+        List list = new ArrayList();
+        UserWrapper wrapper = null;
+
+        list = userDAO.findAll(userTable);
+
+        for (int i = 0; i < list.size(); i++) {
+            userTable = (Users) list.get(i);
+            wrapper = new UserWrapper();
+            wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
+            userList.add(wrapper);
+        }
+
+
+        return userList;
+    }
+
+    private UserWrapper populateWrapperFromRoleTable(UserWrapper wrapper, UserRoleForBoard table){
+        wrapper.setRoleId("" + table.getId());
+        wrapper.setRoleName(table.getRole());
+
+        return wrapper;
+    }
+
+    private UserWrapper populateUserWrapperFromUserTable(UserWrapper wrapper, Users table){
+        wrapper.setUserId("" + table.getId());
+        wrapper.setFirstName(table.getFirstName());
+        wrapper.setLastName(table.getLastName());
+        wrapper.setEmail(table.getEmail());
+        wrapper.setRoleName(table.getRole());
+
+
+        wrapper.setRoleId("1");  // To be edited after join role with users tables
+        //wrapper.setWip(table.getWip());
+
+        return wrapper;
     }
     
  
