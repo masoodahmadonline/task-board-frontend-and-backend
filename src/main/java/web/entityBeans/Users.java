@@ -31,8 +31,7 @@ public class Users {
     @Lob
     private String description;
     private boolean isEnabled; // have to log in first time with given password (when user was invited)
-    private boolean isAdmin;
-    
+
     @ManyToOne
     private Companies company;
     @OneToMany
@@ -145,20 +144,6 @@ public class Users {
      */
     public void setIsEnabled(boolean isEnabled) {
         this.isEnabled = isEnabled;
-    }
-
-    /**
-     * @return the isAdmin
-     */
-    public boolean getIsAdmin() {
-        return isAdmin;
-    }
-
-    /**
-     * @param isAdmin the isAdmin to set
-     */
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
     }
 
     /**

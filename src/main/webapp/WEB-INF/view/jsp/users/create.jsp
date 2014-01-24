@@ -1,6 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" />
 <c:set var="pageTitle" scope="request" >
@@ -39,105 +40,63 @@
                 <div class="form-wrapper draggable jQeffect-show-clip" >
 
                     <div class="inner-form-wrapper" >
-                        <form action="${pageContext.request.contextPath}/users/create" method="post" >
-
+                        <form:form action="${pageContext.request.contextPath}/users/create" method="post" commandName="createUserWrapper">
                             <table>
                                 <tbody>
                                 <tr>
+                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px;"></td>
                                     <td>
-
+                                        <form:input cssClass="form-input" path="email" tabindex="1" placeholder="Email Address (Will be login ID)" maxlength="100" />
                                     </td>
-                                    <td>
-                                        <input class="form-input" name="email" type="email" required="required" placeholder="<spring:message code="placeholder.email"/>"  tabindex="1" />
-                                    </td>
-                                    <td>
-
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-                                    <td>
-
-                                    </td>
-                                    <td>
-                                        <input class="form-input" name="firstName" type="text" required="required" placeholder="<spring:message code="placeholder.firstName"/>" tabindex="2" />
-                                    </td>
-                                    <td>
-
-                                    </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
+                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px;"></td>
                                     <td>
-
+                                        <form:input cssClass="form-input" path="firstName" maxlength="100" placeholder="First Name" tabindex="2" />
                                     </td>
-                                    <td>
-                                        <input class="form-input" name="lastName" type="text" required="required" placeholder="<spring:message code="placeholder.lastName"/>" tabindex="3" />
-                                    </td>
-                                    <td>
-
-                                    </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
+                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px;"></td>
                                     <td>
-
+                                        <form:input cssClass="form-input" path="lastName" maxlength="100" placeholder="Last Name" tabindex="3" />
                                     </td>
-                                    <td>
-                                        <input id="password1" name="password1" class="form-input" type="password" required="required" placeholder="<spring:message code="placeholder.password"/>" tabindex="4" />
-                                    </td>
-                                    <td>
-
-                                    </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
+                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px;"></td>
                                     <td>
-
+                                        <form:password id="password1" path="password1" cssClass="form-input" placeholder="Password" maxlength="100" tabindex="4" />
                                     </td>
-                                    <td>
-                                        <input id="password2" name="password2" class="form-input" type="password" required="required" placeholder="<spring:message code="placeholder.retypePassword"/>" tabindex="5" />
-                                    </td>
-                                    <td>
-
-                                    </td>
-
-
+                                    <td></td>
                                 </tr>
-
                                 <tr>
+                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px;"></td>
                                     <td>
-
+                                        <form:password id="password2" path="password2" cssClass="form-input" placeholder="Re-type Password" maxlength="100" tabindex="5" />
                                     </td>
-                                    <td>
-                                        <input id="1" name="enable" class="form-input" type="checkbox" checked="checked" tabindex="6" />
-                                        <label for="1" class="priv-checkbox-this"></label>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right"></td>
+                                    <td style="text-align: left">
+                                        <form:checkbox path="enableUserId" cssStyle="display: inline-block;" tabindex="6" placeholder="Chekcbox" />
                                         <spring:message code="form.text.checkbox.enableUser"/>
-
                                     </td>
-                                    <td>
-
-                                    </td>
-
-
+                                    <td></td>
                                 </tr>
-
                                 <tr>
-                                    <td>
-
-                                    </td>
+                                    <td></td>
                                     <td>
                                         <input type="submit" value="<spring:message code="form.text.button.creatUser"/>" tabindex="7"/>
                                         <input type="<spring:message code="form.text.button.reset"/>" tabindex="8"/>
                                     </td>
-
-                                    <td>
-
-                                    </td>
-
+                                    <td></td>
                                 </tr>
-
                                 </tbody>
                             </table>
-                        </form>
+                        </form:form>
                     </div>
 
                 </div>

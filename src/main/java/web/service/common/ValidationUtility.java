@@ -74,11 +74,11 @@ public class ValidationUtility {
 		return validateRegx(str, ALL_ALPHABETS_WITH_SPACE_AND_NUMERICS);
 	}
 
-	/*public static boolean isValidEmail(String str) {
-		// return validateRegx(strEmailAddress, IS_VALID_EMAIL);
-		return GenericValidator.isEmail(str);
+	public static boolean isValidEmail(String str) {
+		return validateRegx(str, IS_VALID_EMAIL);
+		//return GenericValidator.isEmail(str);
 
-	}*/
+	}
 
 	public static boolean isExists(Object object) {
 		if (object == null) {

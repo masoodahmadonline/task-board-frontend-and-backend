@@ -198,6 +198,9 @@ public class UsersServiceImpl implements UsersService{
         table.setFirstName(wrapper.getFirstName());
         table.setLastName(wrapper.getLastName());
         table.setPassword(wrapper.getPassword1());
+        if(ValidationUtility.isExists(wrapper.getEnableUserId())){
+            table.setEnabled(wrapper.getEnableUserId());
+        }
         if(ValidationUtility.isExists(wrapper.getEnableUser())){
             if(wrapper.getEnableUser().equalsIgnoreCase("on")){
                 table.setEnabled(true);
@@ -205,6 +208,7 @@ public class UsersServiceImpl implements UsersService{
                 table.setEnabled(false);
             }
         }
+
 
         return table;
     }
