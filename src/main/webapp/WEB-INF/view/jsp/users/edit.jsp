@@ -27,13 +27,11 @@
         <div style="display: block;  ">
             <div class="form-messages">
                 <span class="form-title"><spring:message code="title.editeUser"/></span>
-
-                <c:if test="${param.error}">
-                    <span class="message-error">${replace this with server side message}</span>
+                <c:if test="${error}">
+                    <span class="message-error">${errorMsg}</span>
                 </c:if>
-
-                <c:if test="${param.success}">
-                    <span class="message-success">User(s) edited successfully. ${replace this with server side message}</span>
+                <c:if test="${success}">
+                    <span class="message-success">${successMsg}</span>
                 </c:if>
             </div>
             <div>

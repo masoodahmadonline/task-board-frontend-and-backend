@@ -26,6 +26,7 @@ import web.service.CompaniesService;
 import web.service.UsersService;
 import web.service.common.Result;
 import web.service.common.ResultImpl;
+import web.service.common.ValidationUtility;
 import web.wrapper.UserWrapper;
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpSession;
@@ -63,58 +64,47 @@ public class UserController {
         return "/login/login";
     }
     
-//    @RequestMapping(value = "/users/create", method = RequestMethod.GET)
-public String createUser(ModelMap model){
-    return "/users/create";
-}
+    @RequestMapping(value = "/users/create", method = RequestMethod.GET)
+    public String createUser(ModelMap model){
+        System.out.println("\n Create User GET method \n");
+        UserWrapper wrapper = new UserWrapper();
+        model.put("createUserWrapper", wrapper);
+        return "/users/create";
+    }
 
-    //    @RequestMapping(value = "/create", method = RequestMethod.GET )
     @RequestMapping(value = "/users/create", method = RequestMethod.POST)
-    public String createUser(@RequestParam(value="email", required=false) String emailVar,
-                             @RequestParam(value="firstName", required=false) String firstNameVar,
-                             @RequestParam(value="lastName", required=false) String lastNameVar,
-                             @RequestParam(value="password1", required=false) String password1Var,
-                             @RequestParam(value="password2", required=false) String password2Var,
-                             @RequestParam(value="enable", required=false) String enableVar,
-                             ModelMap model){
+    public String createUser(@ModelAttribute("createUserWrapper")UserWrapper userWrapper, ModelMap model){
 
         System.out.println("\n\n********** POST User Created Info Start ***************");
-        System.out.println("Email:      " + emailVar);
-        System.out.println("First Name: " + firstNameVar);
-        System.out.println("Last Name:  " + lastNameVar);
-        System.out.println("Password 1: " + password1Var);
-        System.out.println("Password 2: " + password2Var);
-        System.out.println("Enable:     " + enableVar);
-        System.out.println("********** POST User Created Info End ***************\n\n");
 
-        UserWrapper wrapper = new UserWrapper();
-        wrapper.setEmail(emailVar);
-        wrapper.setFirstName(firstNameVar);
-        wrapper.setLastName(lastNameVar);
-        wrapper.setPassword1(password1Var);
-        wrapper.setPassword2(password2Var);
-        wrapper.setEnableUser(enableVar);
-
-        result = userService.saveUser(wrapper);
-
-        List errorMessagesList = new ArrayList();
-        List successMessagesList = new ArrayList();
-        if(result.getIsSuccessful()){
-            successMessagesList.add(result.getMessageList());
-            model.put("error", false);
-            model.put("success", true);
-            model.put("successMsg", result.getMessage());
-            System.out.println("\n********** Success message from controller ***************\n");
-        }else{
-            errorMessagesList.add(result.getMessageList());
-            model.put("error", true);
-            model.put("success", false);
-            model.put("errorMsg", result.getMessage());
-            System.out.println("\n********** error message from controller ***************\n");
+        model.put("error", true);
+        model.put("success", false);
+        if(!ValidationUtility.isExists(userWrapper.getEmail())){
+            model.put("errorMsg", "Please enter your Login ID (Email)");
+        }else if(!ValidationUtility.isValidEmail(userWrapper.getEmail())){
+            model.put("errorMsg", "Please enter Valid Email");
+        }else if(!ValidationUtility.isExists(userWrapper.getFirstName())){
+            model.put("errorMsg", "Please enter your First Name");
+        }else if(!ValidationUtility.isExists(userWrapper.getLastName())){
+            model.put("errorMsg", "Please enter your Last Name");
+        }else if(!ValidationUtility.isExists(userWrapper.getPassword1())){
+            model.put("errorMsg", "Please enter both Passwords");
+        }else if(!ValidationUtility.isExists(userWrapper.getPassword2())){
+            model.put("errorMsg", "Please enter both Passwords");
+        }else if(!userWrapper.getPassword1().equals(userWrapper.getPassword2())){
+            model.put("errorMsg", "Passwords don't match");
+        }else {
+            result = userService.saveUser(userWrapper);
+            if(result.getIsSuccessful()){
+                model.put("error", false);
+                model.put("success", true);
+                model.put("successMsg", result.getMessage());
+                System.out.println("\n********** Success message from controller ***************\n");
+            }else{
+                model.put("errorMsg", result.getMessage());
+                System.out.println("\n********** error message from controller ***************\n");
+            }
         }
-
-        model.put("successMessages", successMessagesList);
-        model.put("errorMessages", errorMessagesList);
 
         return "/users/create";
     }
@@ -149,15 +139,24 @@ public String createUser(ModelMap model){
     public String editUser(@ModelAttribute("editUserWrapper")UserWrapper userWrapper, ModelMap model){
         System.out.println("\n Edit User POST method \n");
 
-        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        /*User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String loginId = springUser.getUsername(); //get logged in username (email)
         result = userService.getUserByLoginId(loginId);
-        Users user = (Users)result.getObject();
+        Users user = (Users)result.getObject();*/
 
         result = userService.editUserAccess(userWrapper);
         System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
+        if(result.getIsSuccessful()){
+            model.put("error", false);
+            model.put("success", true);
+            model.put("successMsg", result.getMessage());
+            System.out.println("\n********** Success message from controller ***************\n");
+        }else{
+            model.put("errorMsg", result.getMessage());
+            System.out.println("\n********** error message from controller ***************\n");
+        }
 
-        return "/users/edit";
+        return null;
     }
     @RequestMapping(value = "/users/home" )
     public String userHome(ModelMap model, HttpServletRequest request) {

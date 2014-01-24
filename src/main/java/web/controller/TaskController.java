@@ -209,6 +209,38 @@ public class TaskController {
         }
     } //queued - send model message also (if needed)
 
+    @RequestMapping (value = "/task/assign-task", method=RequestMethod.POST)
+    public String taskAssignment( HttpSession session,
+                              @RequestParam("taskIdForFileUpload") String taskIdForFileUpload,
+                              @RequestParam("fileDescription") String fileDescription,
+                              @RequestParam("file") MultipartFile file) throws IOException {
+
+        System.out.println("taskId is: "+taskIdForFileUpload+" and file name and size are: "+file.getName()+ " " +file.getSize()/1024+ " kb, content type: " +file.getContentType() + file.getOriginalFilename() + "THe description is: " +fileDescription);
+        String filePathToSave =  "/attachments/"+taskIdForFileUpload+"/"+file.getOriginalFilename();
+        FileUtils.writeByteArrayToFile(new File(filePathToSave), file.getBytes());
+        Attachment attachment = new Attachment();
+        attachment.setName(file.getOriginalFilename());
+        attachment.setSize(file.getSize() / 1024);//convert to kb instead of bytes
+        attachment.setPath(filePathToSave);
+        attachment.setDescription(fileDescription);
+        Long taskId = Long.parseLong(taskIdForFileUpload);
+        System.out.println("service call param for task: ===========" +taskId);
+        result = taskService.saveAttachment(taskId, attachment);
+        if (result.getIsSuccessful()){
+            Attachment savedAttachment = (Attachment)result.getObject();
+            System.out.println("========== attachment details ======= "+
+                    savedAttachment.getName()       +
+                    savedAttachment.getSize()       +
+                    savedAttachment.getId()         +
+                    savedAttachment.getParentTask() +
+                    savedAttachment.getPath()
+            );
+        }
+        System.out.println(session.getAttribute("previous_page").toString());
+        return "redirect:"+session.getAttribute("previous_page").toString();
+        //queued - send model message also (if needed)
+    }
+
 }
 
 

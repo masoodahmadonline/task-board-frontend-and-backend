@@ -24,16 +24,14 @@ public class Users {
     @Id
     @GeneratedValue
     private Long id;
-    private String type; // admin / teamlead / normal
     private String firstName;
     private String lastName;
     private String name;//to be depricated
     private String email;
     private String password;
-    @Lob
-    private String description;
     private boolean isEnabled; // have to log in first time with given password (when user was invited)
     private String role;
+    private Long wip;
     
     @ManyToOne
     private Companies company;
@@ -51,8 +49,8 @@ public class Users {
     @ManyToMany (mappedBy = "userList")
     private Collection<Tasks> taskList = new ArrayList<Tasks>();
 
-    @OneToMany (mappedBy = "user")
-    private Collection<UserRoleForBoard> userRoleForBoardList = new ArrayList<UserRoleForBoard>();
+    @ManyToOne
+    private UserRoleForBoard userRoleForBoard;
 
     /**
      * @return the id
@@ -67,21 +65,6 @@ public class Users {
     public void setId(Long id) {
         this.id = id;
     }
-
-    /**
-     * @return the type
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * @param type the type to set
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
 
     /**
      * @return the email
@@ -109,20 +92,6 @@ public class Users {
      */
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    /**
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     /**
@@ -272,19 +241,28 @@ public class Users {
         isEnabled = enabled;
     }
 
-    public Collection<UserRoleForBoard> getUserRoleForBoardList() {
-        return userRoleForBoardList;
-    }
-
-    public void setUserRoleForBoardList(Collection<UserRoleForBoard> userRoleForBoardList) {
-        this.userRoleForBoardList = userRoleForBoardList;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    public UserRoleForBoard getUserRoleForBoard() {
+        return userRoleForBoard;
+    }
+
+    public void setUserRoleForBoard(UserRoleForBoard userRoleForBoard) {
+        this.userRoleForBoard = userRoleForBoard;
+    }
+
+    public Long getWip() {
+        return wip;
+    }
+
+    public void setWip(Long wip) {
+        this.wip = wip;
     }
 }
