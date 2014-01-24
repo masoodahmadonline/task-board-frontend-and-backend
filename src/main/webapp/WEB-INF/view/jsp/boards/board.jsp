@@ -464,8 +464,8 @@
             </form>
         </div>
 
-        <div id="task-assign-unassign-form" class="forms-for-board" style="max-height: 400px;" title="Assign or Unassign this task">
-            <form >
+        <div id="task-assign-unassign-form" class="forms-for-board" style="max-height: 400px; overflow-x: visible;" title="Assign or Unassign this task">
+            <form action="${pageContext.request.contextPath}/task/assign-task" method="POST">
                 <table>
                     <tr>
                         <td></td>
@@ -510,71 +510,6 @@
                         <td style="text-align: right;">
                             <input id="useridhere-2" class="form-input" type="checkbox" tabindex="6" />
                             <label for="useridhere-2" class="priv-checkbox-this"></label>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <img src="${resourcesDir}/images/avatar-small.png" />
-                        </td>
-                        <td>
-                            xyz<br />xyz@template.com
-                        </td>
-                        <td style="text-align: right;">
-                            <input id="useridhere-3" class="form-input" type="checkbox" tabindex="6" />
-                            <label for="useridhere-3" class="priv-checkbox-this"></label>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <img src="${resourcesDir}/images/avatar-small.png" />
-                        </td>
-                        <td>
-                            someOther<br />someOther@template.com
-                        </td>
-                        <td style="text-align: right;">
-                            <input id="useridhere-4" class="form-input" type="checkbox" tabindex="6" />
-                            <label for="useridhere-4" class="priv-checkbox-this"></label>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <img src="${resourcesDir}/images/avatar-small.png" />
-                        </td>
-                        <td>
-                            Some other 5<br />5@template.com
-                        </td>
-                        <td style="text-align: right;">
-                            <input id="useridhere-5" class="form-input" type="checkbox" tabindex="6" />
-                            <label for="useridhere-5" class="priv-checkbox-this"></label>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <img src="${resourcesDir}/images/avatar-small.png" />
-                        </td>
-                        <td>
-                            6<br />6@template.com
-                        </td>
-                        <td style="text-align: right;">
-                            <input id="useridhere-6" class="form-input" type="checkbox" tabindex="6" />
-                            <label for="useridhere-6" class="priv-checkbox-this"></label>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <img src="${resourcesDir}/images/avatar-small.png" />
-                        </td>
-                        <td>
-                            7<br />7@template.com
-                        </td>
-                        <td style="text-align: right;">
-                            <input id="useridhere-7" class="form-input" type="checkbox" tabindex="6" />
-                            <label for="useridhere-7" class="priv-checkbox-this"></label>
                         </td>
                     </tr>
 

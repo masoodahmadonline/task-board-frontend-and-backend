@@ -1,6 +1,8 @@
 package web.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 @Entity
@@ -11,8 +13,10 @@ public class UserRoleForBoard {
     @OneToOne
     private Boards board;
     private String role;
-    @ManyToOne
-    private Users user;
+
+    //users
+    @OneToMany (mappedBy = "userRoleForBoard")
+    private Collection<Users> userList = new ArrayList<Users>();
 
     public Long getId() {
         return id;
@@ -38,11 +42,11 @@ public class UserRoleForBoard {
         this.role = role;
     }
 
-    public Users getUser() {
-        return user;
+    public Collection<Users> getUserList() {
+        return userList;
     }
 
-    public void setUser(Users user) {
-        this.user = user;
+    public void setUserList(Collection<Users> userList) {
+        this.userList = userList;
     }
 }

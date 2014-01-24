@@ -83,18 +83,17 @@ public class UsersServiceImpl implements UsersService{
             Boards board = boardDAO.getBoardById(boardId);
             if(board != null){
                 System.out.println("================3=============");
-                List<UserRoleForBoard> urfbList =
-                        new ArrayList<UserRoleForBoard>( user.getUserRoleForBoardList() );
+                //List<UserRoleForBoard> urfbList =  new ArrayList<UserRoleForBoard>( user.getUserRoleForBoard() );
                 System.out.println("================4=============");
                     UserRoleForBoard urfb = new UserRoleForBoard();
                 System.out.println("================5=============");
                     urfb.setBoard(board);
-                    urfb.setUser(user);
+                    //urfb.setUser(user);
                     urfb.setRole(role);
-                    urfbList.add(urfb);
-                    user.setUserRoleForBoardList(urfbList);
+                    //urfbList.add(urfb);
+                    //user.setUserRoleForBoardList(urfbList);
                 System.out.println("================6=============");
-                    System.out.println(urfb.getBoard().getTitle()+urfb.getRole()+urfb.getUser().getName()+"=====================");
+                    //System.out.println(urfb.getBoard().getTitle()+urfb.getRole()+urfb.getUser().getName()+"=====================");
                     result.setIsSuccessful(true);
             }
         }
@@ -139,7 +138,6 @@ public class UsersServiceImpl implements UsersService{
 
     @Transactional(readOnly = false)
     public ResultImpl editUserAccess(UserWrapper wrapper) {
-
         Users uTable = null;
         if(ValidationUtility.isExists(wrapper.getUserList())){
             if (wrapper.getUserList().size() > 0) {
@@ -148,45 +146,34 @@ public class UsersServiceImpl implements UsersService{
                         if(ValidationUtility.isExists(uWrapper.getUserId())){
                             uTable = new Users();
                             uTable = (Users)userDAO.findById(uTable, Long.valueOf(uWrapper.getUserId()));
-                            //uTable.set
+                            if(ValidationUtility.isExists(uWrapper.getRoleId())){
+                                UserRoleForBoard uRoleTable = new UserRoleForBoard();
+                                uRoleTable.setId(Long.valueOf(uWrapper.getRoleId()));
+                                uTable.setUserRoleForBoard(uRoleTable);
+                            }
+                            if(ValidationUtility.isExists(uWrapper.getWip())){
+                                uTable.setWip(Long.valueOf(uWrapper.getWip()));
+                            }else{
+                                uTable.setWip(Long.valueOf(10));
+                            }
+                            userDAO.save(uTable);
+                            if(uTable == null){
+                                result.setIsSuccessful(false);
+                                result.setObject(null);
+                                result.setMessage("There was an unknown error while updating selected users' access levels");
+                                return result;
+                            }else{
+                                result.setIsSuccessful(true);
+                                result.setObject(uWrapper);
+                                result.setMessage("The selected users' access levels updated successfully.");
+                                return result;
+                            }
                         }
                     }
                 }
             }
         }
-
-
-        if( userDAO.doesLoginIdExists(wrapper.getEmail()) ){
-            result.setIsSuccessful(false);
-            result.setObject(null);
-            result.setMessage("The email address supplied is already taken.");
-            result.setMessageList(Arrays.asList("error.emailAlreadyExists"/*,"string"*/));
-            System.out.println("\n********** Error message from ServiceImpl 1 ***************\n");
-            // setResult(false,null,Arrays.asList("error.emailAlreadyExists"/*,"string"*/) );
-            return result;
-        }else{
-            Users userTable = new Users();
-            userTable = populateUsersFromWrapper(wrapper, userTable);
-            System.out.println("\nuser id before:" + userTable.getId());
-            userDAO.save(userTable);
-            System.out.println("\nuser id after:" + userTable.getId());
-
-            if(userTable == null){
-                result.setIsSuccessful(false);
-                result.setObject(null);
-                result.setMessage("There was an unknown error while creating user.");
-                //result.setMessageList(Arrays.asList("error.userCreationErrorUnknown"/*,"string"*/));
-                System.out.println("\n********** Error message from ServiceImpl 2 ***************\n");
-                return result;
-            }else{
-                result.setIsSuccessful(true);
-                result.setObject(wrapper);
-                result.setMessage("The user was created successfully.");
-                //result.setMessageList(Arrays.asList("success.userCreated"/*,"string"*/));
-                System.out.println("\n********** Success message from ServiceImpl ***************\n");
-                return result;
-            }
-        }
+        return result;
     }
 
     private Users populateUsersFromWrapper(UserWrapper wrapper, Users table){

@@ -139,15 +139,24 @@ public class UserController {
     public String editUser(@ModelAttribute("editUserWrapper")UserWrapper userWrapper, ModelMap model){
         System.out.println("\n Edit User POST method \n");
 
-        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        /*User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String loginId = springUser.getUsername(); //get logged in username (email)
         result = userService.getUserByLoginId(loginId);
-        Users user = (Users)result.getObject();
+        Users user = (Users)result.getObject();*/
 
         result = userService.editUserAccess(userWrapper);
         System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
+        if(result.getIsSuccessful()){
+            model.put("error", false);
+            model.put("success", true);
+            model.put("successMsg", result.getMessage());
+            System.out.println("\n********** Success message from controller ***************\n");
+        }else{
+            model.put("errorMsg", result.getMessage());
+            System.out.println("\n********** error message from controller ***************\n");
+        }
 
-        return "/users/edit";
+        return null;
     }
     @RequestMapping(value = "/users/home" )
     public String userHome(ModelMap model, HttpServletRequest request) {
