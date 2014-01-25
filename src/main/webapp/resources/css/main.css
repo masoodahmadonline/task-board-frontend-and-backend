@@ -422,7 +422,7 @@ input[type=checkbox]:checked + label {
 
 .priv-checkbox-this {
   display: inline-block;
-  background-color: lightpink;
+  background-color: #fcefa1;
   margin: 0px;
   padding: 0px;
   -webkit-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.7) inset;

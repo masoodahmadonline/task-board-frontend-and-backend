@@ -20,7 +20,7 @@ import web.service.UsersService;
 import web.service.common.Result;
 
 
-
+//test comment to check github functionality
 @Controller
 public class BoardController {
     @Autowired
