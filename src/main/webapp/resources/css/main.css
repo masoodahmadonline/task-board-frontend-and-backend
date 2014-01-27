@@ -209,6 +209,16 @@ body {
   text-shadow: 0px 0px 1px white, 0px 0px 2px white, 0px 0px 3px white, 0px 0px 4px white, 0px 0px 5px white, 0px 0px 6px white, 0px 0px 7px white, 0px 0px 8px white, 0px 0px 9px white, 0px 0px 10px white, 0px 0px 11px white, 0px 0px 12px white;
   width: 200px; }
 
+.form-input-view {
+  text-align: left;
+  padding: 3px;
+  padding-left: 10px; }
+
+.form-input-description {
+  text-align: right;
+  padding: 3px;
+  padding-right: 10px; }
+
 #header {
   background-color: white;
   z-index: 10;
