@@ -1,6 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" />
 <c:set var="pageTitle" scope="request" >
@@ -27,16 +28,15 @@
             <div class="form-messages">
                 <span class="form-title"><spring:message code="title.editeUser"/></span>
 
-                <c:if test="${param.error}">
-                    <span class="message-error">${replace this with server side message}</span>
+                <c:if test="${error}">
+                    <span class="message-error">${errorMsg}</span>
                 </c:if>
-
-                <c:if test="${param.success}">
-                    <span class="message-success">User(s) edited successfully. ${replace this with server side message}</span>
+                <c:if test="${success}">
+                    <span class="message-success">${successMsg}</span>
                 </c:if>
             </div>
             <div>
-                 <form>
+                <form:form action="${pageContext.request.contextPath}/users/edit" method="post" commandName="editUserWrapper" >
                     <div class="form-wrapper jQeffect-show-clip" >
 
                         <div class="inner-form-wrapper" >
@@ -53,10 +53,36 @@
                             <br />
                             <br />
 
-                            <input type="hidden" name="userIdhere" />
+
                             <table>
-                                <tbody>
-                                <tr>
+                                <c:forEach items="${editUserWrapper.userList}" var="wrapper" varStatus="idx">
+                                    <form:hidden path="userList[${idx.index}].userId"></form:hidden>
+                                    <tr>
+                                        <td>
+                                            <form:checkbox id="1" path="userList[${idx.index}].enableUserId" cssStyle="display: inline-block; background-color: #fcefa1; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.7) inset;"></form:checkbox>
+                                        </td>
+                                        <td>
+                                            <img src="${resourcesDir}/images/avatar-small.png" height="40px;" />
+                                        </td>
+                                        <td>
+                                            <span style="width:200px;  display:inline-block; text-align: left; font-weight: bold">${wrapper.firstName}&nbsp;${wrapper.lastName}</span> <br />
+                                            <span style="width:200px;  display:inline-block; text-align: left;">${wrapper.email}</span>
+                                        </td>
+                                        <td>
+                                            <span style="width:100px;  display:inline-block; text-align: right; padding: 5px;">${wrapper.roleName}</span>
+                                        </td>
+                                        <td>
+                                            <span style="width: 40px;  display:inline-block; text-align: center;padding: 5px;">WIP: ${wrapper.wip}</span>
+                                        </td>
+                                        <td>
+                                            <c:url var="uId" value="${pageContext.request.contextPath}/users/edit/${wrapper.userId}">
+                                                <%--<c:param name="uId" value="${offWrapper.offerId}" />--%>
+                                            </c:url>
+                                            <a href='<c:out value="${uId}"/>'>Edit User</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                <%--<tr>
                                     <td>
                                         <input id="1" type="checkbox" /><label for="1" class="priv-checkbox-this"></label>
                                     </td>
@@ -73,114 +99,15 @@
                                         <span style="width:100px;  display:inline-block; text-align: right; padding: 5px;">Admin</span>
                                     </td>
                                     <td>
-                                        <span style="width: 20px;  display:inline-block; text-align: center;padding: 5px;">WIP: 10</span>
+                                        <span style="width: 40px;  display:inline-block; text-align: center;padding: 5px;">WIP: 10</span>
                                     </td>
 
                                     <td>
                                         <a href="#" style="display:inline-block; text-align: center;padding: 5px;">Edit User</a> <br />
                                     </td>
-                                </tr>
-                                </tbody>
+                                </tr>--%>
+
                             </table>
-                            <hr />
-
-                            <input type="hidden" name="userIdhere" />
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <input id="2" type="checkbox" /><label for="2" class="priv-checkbox-this"></label>
-                                    </td>
-
-                                    <td>
-                                        <img src="${resourcesDir}/images/avatar-small.png" />
-                                    </td>
-                                    <td>
-                                        <span style="width:200px;  display:inline-block; text-align: left;">Farhan Bajwa</span> <br />
-                                        <span style="width:200px;  display:inline-block; text-align: left;">farhan@syncsysllc.com</span> <br />
-
-                                    </td>
-                                    <td>
-                                        <span style="width:100px;  display:inline-block; text-align: right; padding: 5px;">Manager</span>
-                                    </td>
-                                    <td>
-                                        <span style="width: 20px;  display:inline-block; text-align: center;padding: 5px;">WIP: 5</span>
-                                    </td>
-
-                                    <td>
-                                        <a href="#" style="display:inline-block; text-align: center;padding: 5px;">Edit User</a> <br />
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <hr />
-
-
-
-                            <input type="hidden" name="userIdhere" />
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <input id="3" type="checkbox" /><label for="3" class="priv-checkbox-this"></label>
-                                    </td>
-
-                                    <td>
-                                        <img src="${resourcesDir}/images/avatar-small.png" />
-                                    </td>
-                                    <td>
-                                        <span style="width:200px;  display:inline-block; text-align: left;">Muhammad Ismail</span> <br />
-                                        <span style="width:200px;  display:inline-block; text-align: left;">ismail@syncsysllc.com</span> <br />
-
-                                    </td>
-                                    <td>
-                                        <span style="width:100px;  display:inline-block; text-align: right; padding: 5px;">User</span>
-                                    </td>
-                                    <td>
-                                        <span style="width: 20px;  display:inline-block; text-align: center;padding: 5px;">WIP: 2</span>
-                                    </td>
-
-                                    <td>
-                                        <a href="#" style="display:inline-block; text-align: center;padding: 5px;">Edit User</a> <br />
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <hr />
-
-                            <input type="hidden" name="userIdhere" />
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <input id="4" type="checkbox" /><label for="4" class="priv-checkbox-this"></label>
-                                    </td>
-
-                                    <td>
-                                        <img src="${resourcesDir}/images/avatar-small.png" />
-                                    </td>
-                                    <td>
-                                        <span style="width:200px;  display:inline-block; text-align: left;">God help otb</span> <br />
-                                        <span style="width:200px;  display:inline-block; text-align: left;">HELP@syncsysllc.com</span> <br />
-
-                                    </td>
-                                    <td>
-                                        <span style="width:100px;  display:inline-block; text-align: right; padding: 5px;">SomeOther</span>
-                                    </td>
-                                    <td>
-                                        <span style="width: 20px;  display:inline-block; text-align: center;padding: 5px;">WIP: 0</span>
-                                    </td>
-
-                                    <td>
-                                        <a href="#" style="display:inline-block; text-align: center;padding: 5px;">Edit User</a> <br />
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <hr />
-
-
-
                         </div>
 
                     </div>
@@ -193,10 +120,10 @@
                         <br />
                         <br />
                         <input type="submit" value="Edit Role/WIP" />&nbsp;   &nbsp;
-                        <input type="reset" value="Reset" />
+                        <input id="resetId" type="reset" value="Reset" />
                         <input id="selectAll" type="button" value="Select All">
                     </div>
-                 </form>
+                 </form:form>
             </div>
         </div>
 
@@ -210,6 +137,9 @@
     $(document).ready(function(){
         $("#selectAll").click(function () {
             $("input[type=checkbox]").prop('checked', true)
+        });
+        $("#resetId").click(function () {
+            $("input[type=checkbox]").prop('checked', false)
         });
     });
 </script>

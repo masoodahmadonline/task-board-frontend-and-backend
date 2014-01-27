@@ -17,12 +17,15 @@ import web.entity.Boxes;
 import web.entity.Tasks;
 import web.service.TasksService;
 import web.service.BoxesService;
+import web.service.UsersService;
 import web.service.common.Result;
+import web.wrapper.UserWrapper;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpSession;
 
@@ -37,6 +40,8 @@ public class TaskController {
     private TasksService taskService;
     @Autowired
     private BoxesService boxService;
+    @Autowired
+    private UsersService userService;
     @Autowired
     private MessageSource messages;
     @Autowired
@@ -209,36 +214,23 @@ public class TaskController {
         }
     } //queued - send model message also (if needed)
 
-    @RequestMapping (value = "/task/assign-task", method=RequestMethod.POST)
-    public String taskAssignment( HttpSession session,
-                              @RequestParam("taskIdForFileUpload") String taskIdForFileUpload,
-                              @RequestParam("fileDescription") String fileDescription,
-                              @RequestParam("file") MultipartFile file) throws IOException {
 
-        System.out.println("taskId is: "+taskIdForFileUpload+" and file name and size are: "+file.getName()+ " " +file.getSize()/1024+ " kb, content type: " +file.getContentType() + file.getOriginalFilename() + "THe description is: " +fileDescription);
-        String filePathToSave =  "/attachments/"+taskIdForFileUpload+"/"+file.getOriginalFilename();
-        FileUtils.writeByteArrayToFile(new File(filePathToSave), file.getBytes());
-        Attachment attachment = new Attachment();
-        attachment.setName(file.getOriginalFilename());
-        attachment.setSize(file.getSize() / 1024);//convert to kb instead of bytes
-        attachment.setPath(filePathToSave);
-        attachment.setDescription(fileDescription);
-        Long taskId = Long.parseLong(taskIdForFileUpload);
-        System.out.println("service call param for task: ===========" +taskId);
-        result = taskService.saveAttachment(taskId, attachment);
-        if (result.getIsSuccessful()){
-            Attachment savedAttachment = (Attachment)result.getObject();
-            System.out.println("========== attachment details ======= "+
-                    savedAttachment.getName()       +
-                    savedAttachment.getSize()       +
-                    savedAttachment.getId()         +
-                    savedAttachment.getParentTask() +
-                    savedAttachment.getPath()
-            );
+    @RequestMapping (value = "/task/assign-task", method=RequestMethod.POST)
+    public String taskAssignment( HttpSession session, @ModelAttribute("uWrapper")UserWrapper userWrapper, ModelMap model) throws IOException {
+
+        System.out.println("\n Task Id after POST method (for user assignment): "+userWrapper.getTaskId()+"\n");
+        result = userService.taskAssignment(userWrapper);
+        System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
+        if(result.getIsSuccessful()){
+            model.put("error", false);
+            model.put("success", true);
+            model.put("successMsg", result.getMessage());
+            System.out.println("\n********** Success message from controller ***************\n");
+        }else{
+            model.put("errorMsg", result.getMessage());
+            System.out.println("\n********** error message from controller ***************\n");
         }
-        System.out.println(session.getAttribute("previous_page").toString());
         return "redirect:"+session.getAttribute("previous_page").toString();
-        //queued - send model message also (if needed)
     }
 
 }
