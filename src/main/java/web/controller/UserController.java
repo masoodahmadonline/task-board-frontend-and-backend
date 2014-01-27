@@ -74,7 +74,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users/create", method = RequestMethod.POST)
-    public String createUser(@ModelAttribute("createUserWrapper")UserWrapper userWrapper, ModelMap model){
+    public String createUser(HttpSession session, @ModelAttribute("createUserWrapper")UserWrapper userWrapper, ModelMap model){
 
         System.out.println("\n\n********** POST User Created Info Start ***************");
 
@@ -111,7 +111,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users/edit", method = RequestMethod.GET)
-    public String editUser(ModelMap model){
+    public String editUser(HttpSession session, ModelMap model){
         System.out.println("\n Edit User GET method \n");
         UserWrapper wrapper = new UserWrapper();
         List<UserWrapper> usersList = null;
@@ -137,7 +137,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users/edit", method = RequestMethod.POST)
-    public String editUser(@ModelAttribute("editUserWrapper")UserWrapper userWrapper, ModelMap model){
+    public String editUser(HttpSession session, @ModelAttribute("editUserWrapper")UserWrapper userWrapper, ModelMap model){
         System.out.println("\n Edit User POST method \n");
 
         /*User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -156,8 +156,32 @@ public class UserController {
             model.put("errorMsg", result.getMessage());
             System.out.println("\n********** error message from controller ***************\n");
         }
+        return "redirect:"+session.getAttribute("previous_page").toString();
+        //return null;
+    }
 
-        return null;
+    @RequestMapping(value = "/users/{userId}")
+    public String editUser(HttpSession session, ModelMap model, @PathVariable(value="userId") String id){
+        System.out.println("\n Edit User Info method \n");
+
+        /*User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername(); //get logged in username (email)
+        result = userService.getUserByLoginId(loginId);
+        Users user = (Users)result.getObject();*/
+
+        result = userService.editUserInfo(id);
+        //System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
+        if(result.getIsSuccessful()){
+            model.put("error", false);
+            model.put("success", true);
+            model.put("successMsg", result.getMessage());
+            System.out.println("\n********** Success message from controller ***************\n");
+        }else{
+            model.put("errorMsg", result.getMessage());
+            System.out.println("\n********** error message from controller ***************\n");
+        }
+
+        return "/users/edit";
     }
     @RequestMapping(value = "/users/home" )
     public String userHome(ModelMap model, HttpServletRequest request) {

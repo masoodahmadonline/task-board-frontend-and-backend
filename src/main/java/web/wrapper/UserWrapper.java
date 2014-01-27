@@ -21,6 +21,7 @@ public class UserWrapper implements Serializable {
     private String password2;
     private String enableUser;
     private String wip;
+    private String taskId;
     private boolean enableUserId = true;
 
     private String roleId;
@@ -38,6 +39,7 @@ public class UserWrapper implements Serializable {
         this.setPassword2("");
         this.setEnableUser("");
         this.setWip("");
+        this.setTaskId("");
         this.setEnableUserId(false);
 
         this.setRoleId("");
@@ -158,5 +160,13 @@ public class UserWrapper implements Serializable {
 
     public boolean getEnableUserId() {
         return enableUserId;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 }

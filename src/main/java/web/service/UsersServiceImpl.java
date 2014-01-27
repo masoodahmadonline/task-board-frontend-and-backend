@@ -176,6 +176,72 @@ public class UsersServiceImpl implements UsersService{
         return result;
     }
 
+    @Transactional(readOnly = false)
+    public ResultImpl taskAssignment(UserWrapper wrapper) {
+        Users uTable = null;
+        if(ValidationUtility.isExists(wrapper.getUserList())){
+            if (wrapper.getUserList().size() > 0) {
+                for (UserWrapper uWrapper : wrapper.getUserList()) {
+                    if(uWrapper.isEnableUserId()){
+                        if(ValidationUtility.isExists(uWrapper.getUserId())){
+                            uTable = new Users();
+                            result.setMessage("The selected users' assigned to the task successfully.");
+                            /*uTable = (Users)userDAO.findById(uTable, Long.valueOf(uWrapper.getUserId()));
+                            if(ValidationUtility.isExists(uWrapper.getRoleId())){
+                                UserRoleForBoard uRoleTable = new UserRoleForBoard();
+                                uRoleTable.setId(Long.valueOf(uWrapper.getRoleId()));
+                                uTable.setUserRoleForBoard(uRoleTable);
+                            }
+                            if(ValidationUtility.isExists(uWrapper.getWip())){
+                                uTable.setWip(Long.valueOf(uWrapper.getWip()));
+                            }else{
+                                uTable.setWip(Long.valueOf(10));
+                            }
+                            userDAO.save(uTable);
+                            if(uTable == null){
+                                result.setIsSuccessful(false);
+                                result.setObject(null);
+                                result.setMessage("There was an unknown error while updating selected users' access levels");
+                                return result;
+                            }else{
+                                result.setIsSuccessful(true);
+                                result.setObject(uWrapper);
+                                result.setMessage("The selected users' access levels updated successfully.");
+                                return result;
+                            }*/
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public ResultImpl editUserInfo(String userId){
+        Users uTable = new Users();
+        if(!ValidationUtility.isExists(userId)){
+            result.setIsSuccessful(false);
+            result.setObject(null);
+            result.setMessage("Please select a User before Update");
+            return result;
+        }else{
+            uTable = (Users)userDAO.findById(uTable, Long.valueOf(userId));
+            UserWrapper wrapper = new UserWrapper();
+            wrapper = populateUserWrapperFromUserTable(wrapper, uTable);
+            if(wrapper == null){
+                result.setIsSuccessful(false);
+                result.setObject(null);
+                result.setMessage("There was an unknown error while updating user.");
+                return result;
+            }else{
+                result.setIsSuccessful(true);
+                result.setObject(wrapper);
+                result.setMessage("The user was updated successfully.");
+                return result;
+            }
+        }
+    }
+
     private Users populateUsersFromWrapper(UserWrapper wrapper, Users table){
 
         if(ValidationUtility.isExists(wrapper.getUserId())){
@@ -250,11 +316,12 @@ public class UsersServiceImpl implements UsersService{
         wrapper.setFirstName(table.getFirstName());
         wrapper.setLastName(table.getLastName());
         wrapper.setEmail(table.getEmail());
-        wrapper.setRoleName(table.getRole());
-
-
-        wrapper.setRoleId("1");  // To be edited after join role with users tables
-        //wrapper.setWip(table.getWip());
+        if(ValidationUtility.isExists(table.getUserRoleForBoard())){
+            wrapper.setRoleName(table.getUserRoleForBoard().getRole());
+            wrapper.setRoleId("" + table.getUserRoleForBoard().getId());
+        }
+        wrapper.setWip("" + table.getWip());
+        wrapper.setEnableUserId(false);
 
         return wrapper;
     }

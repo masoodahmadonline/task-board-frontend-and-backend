@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import web.entity.Boards;
@@ -18,6 +19,7 @@ import web.service.BoardsService;
 import web.service.BoxesService;
 import web.service.UsersService;
 import web.service.common.Result;
+import web.wrapper.UserWrapper;
 
 
 //test comment to check github functionality
@@ -62,8 +64,14 @@ public class BoardController {
                            @PathVariable(value="id") String id){
 
         //// queue, {user-module} if user is admin or has privs to view a board
+       List<UserWrapper> usersList = null;
+       usersList = userService.listUsersWithDetail();
+       UserWrapper userWrapper = new UserWrapper();
+       userWrapper.setUserList(usersList);
+       model.put("uWrapper", userWrapper);
+       System.out.println("\nDuring Board population: No. of Users: " + usersList.size() +"\n");
 
-        String[] uriArray = request.getRequestURI().toString().split("/");
+       String[] uriArray = request.getRequestURI().toString().split("/");
         int uriArraySize = uriArray.length;
         session.setAttribute("previous_page", "/"+uriArray[uriArraySize-2]+"/"+uriArray[uriArraySize-1]);
         result =  boardService.getBoardByIdToDisplay(Long.parseLong(id));
