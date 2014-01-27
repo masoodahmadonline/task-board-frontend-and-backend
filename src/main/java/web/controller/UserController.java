@@ -62,6 +62,7 @@ public class UserController {
         model.put("invalidCreds", "");
         }
         return "/login/login";
+
     }
     
     @RequestMapping(value = "/users/create", method = RequestMethod.GET)
