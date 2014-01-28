@@ -226,6 +226,7 @@ public class TaskController {
             model.put("success", true);
             model.put("successMsg", result.getMessage());
             System.out.println("\n********** Success message from controller ***************\n");
+
         }else{
             model.put("errorMsg", result.getMessage());
             System.out.println("\n********** error message from controller ***************\n");
