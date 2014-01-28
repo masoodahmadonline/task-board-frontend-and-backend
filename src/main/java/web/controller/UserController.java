@@ -262,7 +262,20 @@ public class UserController {
         return null;
     }
 
+    @RequestMapping(value = "/users/profile-view", method = RequestMethod.GET)
+    public String viewUserProfile(ModelMap model){
+        return "/users/profile-view";
+    }
+
+    @RequestMapping(value = "/users/profile-edit", method = RequestMethod.GET)
+    public String editUserProfile(ModelMap model){
+        return "/users/profile-edit";
+    }
+
 }
+
+
+
 
 
 
