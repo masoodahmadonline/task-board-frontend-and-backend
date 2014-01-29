@@ -6,13 +6,7 @@ package web.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 
 /**
@@ -46,11 +40,17 @@ public class Users {
     private Collection<Boards> boardList = new ArrayList<Boards>();
     @ManyToMany (mappedBy = "userList")
     private Collection<Boxes> BoxList = new ArrayList<Boxes>();
-    @ManyToMany (mappedBy = "userList")
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name="tasks_users", joinColumns={@JoinColumn(name="userlist_id")}, inverseJoinColumns={@JoinColumn(name="tasklist_id")})
     private Collection<Tasks> taskList = new ArrayList<Tasks>();
 
     @ManyToOne
     private UserRoleForBoard userRoleForBoard;
+
+    /*@ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name="users_tasks", joinColumns={@JoinColumn(name="tasklist_id")}, inverseJoinColumns={@JoinColumn(name="userlist_id")})
+    private Collection <Users> userList = new ArrayList<Users>();*/
 
     /**
      * @return the id

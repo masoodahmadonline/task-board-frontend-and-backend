@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.dao.BoardsDAO;
+import web.dao.TasksDAO;
 import web.dao.UsersDAO;
+import web.entity.Tasks;
 import web.entity.UserRoleForBoard;
 import web.entity.Users;
 import web.entity.Boards;
@@ -31,6 +33,8 @@ public class UsersServiceImpl implements UsersService{
     private UsersDAO userDAO;
     @Autowired
     private BoardsDAO boardDAO;
+    @Autowired
+    private TasksDAO taskDAO;
     @Autowired
     private ResultImpl result;
     
@@ -142,7 +146,7 @@ public class UsersServiceImpl implements UsersService{
         if(ValidationUtility.isExists(wrapper.getUserList())){
             if (wrapper.getUserList().size() > 0) {
                 for (UserWrapper uWrapper : wrapper.getUserList()) {
-                    if(uWrapper.isEnableUserId()){
+                    if(uWrapper.isEnableUserEditId()){
                         if(ValidationUtility.isExists(uWrapper.getUserId())){
                             uTable = new Users();
                             uTable = (Users)userDAO.findById(uTable, Long.valueOf(uWrapper.getUserId()));
@@ -154,19 +158,19 @@ public class UsersServiceImpl implements UsersService{
                             if(ValidationUtility.isExists(uWrapper.getWip())){
                                 uTable.setWip(Long.valueOf(uWrapper.getWip()));
                             }else{
-                                uTable.setWip(Long.valueOf(10));
+                                uTable.setWip(Long.valueOf(0));
                             }
                             userDAO.save(uTable);
                             if(uTable == null){
                                 result.setIsSuccessful(false);
                                 result.setObject(null);
                                 result.setMessage("There was an unknown error while updating selected users' access levels");
-                                return result;
+                                //return result;
                             }else{
                                 result.setIsSuccessful(true);
                                 result.setObject(uWrapper);
                                 result.setMessage("The selected users' access levels updated successfully.");
-                                return result;
+                                //return result;
                             }
                         }
                     }
@@ -179,15 +183,33 @@ public class UsersServiceImpl implements UsersService{
     @Transactional(readOnly = false)
     public ResultImpl taskAssignment(UserWrapper wrapper) {
         Users uTable = null;
-        if(ValidationUtility.isExists(wrapper.getUserList())){
-            if (wrapper.getUserList().size() > 0) {
-                for (UserWrapper uWrapper : wrapper.getUserList()) {
-                    if(uWrapper.isEnableUserId()){
+        Tasks tTable = null;
+        if(ValidationUtility.isExists(wrapper.getTaskId())){
+            tTable = new Tasks();
+            tTable = (Tasks)userDAO.findById(tTable, Long.valueOf(wrapper.getTaskId()));
+
+            if(ValidationUtility.isExists(wrapper.getUserList())){
+                if (wrapper.getUserList().size() > 0) {
+                    for (UserWrapper uWrapper : wrapper.getUserList()) {
                         if(ValidationUtility.isExists(uWrapper.getUserId())){
                             uTable = new Users();
-                            result.setMessage("The selected users' assigned to the task successfully.");
-                            /*uTable = (Users)userDAO.findById(uTable, Long.valueOf(uWrapper.getUserId()));
-                            if(ValidationUtility.isExists(uWrapper.getRoleId())){
+                            uTable = (Users)userDAO.findById(uTable, Long.valueOf(uWrapper.getUserId()));
+                            if(uWrapper.isEnableUserAssignId()){
+                                if(!uTable.getTaskList().contains(tTable)){
+                                    uTable.getTaskList().add(tTable);
+                                }
+                            }else{
+                                if(uTable.getTaskList().contains(tTable)){
+                                    uTable.getTaskList().remove(tTable);
+                                }
+                            }
+                            userDAO.save(uTable);
+                            //uTable.getTaskList().add(tTable);
+                            System.out.println("\n\n\n\nUser ID: " + uTable.getId());
+                            System.out.println("Task ID: " + tTable.getId() +"\n\n\n\n");
+                            //uTable.setTaskList(tasksList);
+
+                            /*if(ValidationUtility.isExists(uWrapper.getRoleId())){
                                 UserRoleForBoard uRoleTable = new UserRoleForBoard();
                                 uRoleTable.setId(Long.valueOf(uWrapper.getRoleId()));
                                 uTable.setUserRoleForBoard(uRoleTable);
@@ -196,24 +218,23 @@ public class UsersServiceImpl implements UsersService{
                                 uTable.setWip(Long.valueOf(uWrapper.getWip()));
                             }else{
                                 uTable.setWip(Long.valueOf(10));
-                            }
-                            userDAO.save(uTable);
+                            }*/
+
                             if(uTable == null){
                                 result.setIsSuccessful(false);
                                 result.setObject(null);
-                                result.setMessage("There was an unknown error while updating selected users' access levels");
-                                return result;
+                                result.setMessage("There was an unknown error while assigning task to users");
                             }else{
                                 result.setIsSuccessful(true);
                                 result.setObject(uWrapper);
-                                result.setMessage("The selected users' access levels updated successfully.");
-                                return result;
-                            }*/
+                                result.setMessage("The selected users assigned to the task successfully.");
+                            }
                         }
                     }
                 }
             }
         }
+
         return result;
     }
 
@@ -251,8 +272,8 @@ public class UsersServiceImpl implements UsersService{
         table.setFirstName(wrapper.getFirstName());
         table.setLastName(wrapper.getLastName());
         table.setPassword(wrapper.getPassword1());
-        if(ValidationUtility.isExists(wrapper.getEnableUserId())){
-            table.setEnabled(wrapper.getEnableUserId());
+        if(ValidationUtility.isExists(wrapper.isEnableUserId())){
+            table.setEnabled(wrapper.isEnableUserId());
         }
         if(ValidationUtility.isExists(wrapper.getEnableUser())){
             if(wrapper.getEnableUser().equalsIgnoreCase("on")){
@@ -260,6 +281,15 @@ public class UsersServiceImpl implements UsersService{
             }else{
                 table.setEnabled(false);
             }
+        }
+
+        if(!ValidationUtility.isExists(table.getUserRoleForBoard())){
+            UserRoleForBoard role = new UserRoleForBoard();
+            role.setId(Long.valueOf(2)); // For New User: assign role of user
+            table.setUserRoleForBoard(role);
+        }
+        if(!ValidationUtility.isExists(table.getWip())){
+            table.setWip(Long.valueOf(0));  // For new User: assign Wip = 0
         }
 
 
@@ -321,9 +351,49 @@ public class UsersServiceImpl implements UsersService{
             wrapper.setRoleId("" + table.getUserRoleForBoard().getId());
         }
         wrapper.setWip("" + table.getWip());
+        wrapper.setEnableUserEditId(false);
+        wrapper.setEnableUserAssignId(false);
         wrapper.setEnableUserId(false);
+        /**/
 
         return wrapper;
+    }
+
+    public ResultImpl getTaskUsersList(Long taskId){
+        Tasks tTable = new Tasks();
+
+        tTable = (Tasks)userDAO.findById(tTable, taskId);
+        List<UserWrapper> userList = new ArrayList<UserWrapper>();
+        Users userTable = new Users();
+        List list = new ArrayList();
+        UserWrapper wrapper = null;
+
+        list = userDAO.findAll(userTable);
+
+        for (int i = 0; i < list.size(); i++) {
+            userTable = (Users) list.get(i);
+            wrapper = new UserWrapper();
+            wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
+            System.out.println("\n ---- Task exist for User Id : " + userTable.getId());
+            System.out.println(" ---- Task exist for User Size : " + userTable.getTaskList().size() + "\n");
+            if(userTable.getTaskList().contains(tTable)){
+                System.out.println("\n ---- Assigned Task Id: " + tTable.getId());
+                System.out.println("\n ---- Assigned User Id: " + userTable.getId());
+                wrapper.setEnableUserAssignId(true);
+            }else{
+                wrapper.setEnableUserAssignId(false);
+            }
+            userList.add(wrapper);
+        }
+
+        if(userList.size()>0){
+            result.setObject(userList);
+            result.setIsSuccessful(true);
+        }else{
+            result.setIsSuccessful(false);
+        }
+
+        return result;
     }
     
  

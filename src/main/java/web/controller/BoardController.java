@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import web.entity.Boards;
 import web.entity.Boxes;
 import web.entity.Tasks;
@@ -19,6 +17,7 @@ import web.service.BoardsService;
 import web.service.BoxesService;
 import web.service.UsersService;
 import web.service.common.Result;
+import web.service.common.ValidationUtility;
 import web.wrapper.UserWrapper;
 
 
@@ -61,15 +60,19 @@ public class BoardController {
    public String viewBoard(ModelMap model,
                            HttpServletRequest request,
                            HttpSession session,
-                           @PathVariable(value="id") String id){
+                           @PathVariable(value="id") String id,
+                           @ModelAttribute("uWrapper")UserWrapper userWrapper){
 
         //// queue, {user-module} if user is admin or has privs to view a board
        List<UserWrapper> usersList = null;
        usersList = userService.listUsersWithDetail();
-       UserWrapper userWrapper = new UserWrapper();
+       //UserWrapper userWrapper = new UserWrapper();
        userWrapper.setUserList(usersList);
-       model.put("uWrapper", userWrapper);
-       System.out.println("\nDuring Board population: No. of Users: " + usersList.size() +"\n");
+       //model.put("uWrapper", userWrapper);
+       model.put("viewAssignForm", true);
+       if(ValidationUtility.isExists(userWrapper.getUserList()))
+       System.out.println("\n\nuser List size in view board: " + userWrapper.getUserList().size() + "\n\n");
+       //System.out.println("\nDuring Board population: No. of Users: " + usersList.size() +"\n");
 
        String[] uriArray = request.getRequestURI().toString().split("/");
         int uriArraySize = uriArray.length;
@@ -85,6 +88,17 @@ public class BoardController {
                 for(Tasks task : box.getTaskList()){
                     System.out.println("task id: ========"+ task.getId());
                     System.out.println("task title: ====="+ task.getTitle());
+                    /*List<Users> taskUsersList = null;
+                    taskUsersList = userService.getTaskUsersList(task.getId());
+                    if(!taskUsersList.isEmpty()){
+                        System.out.println("user id: ========"+ taskUsersList.get(1).getId());
+                        //taskUsersList.get(1).getId();
+                    }*/
+                    //List<Users> userList = new ArrayList<Users>( task.getUserList());
+                    /*for(Users user : task.getUserList()){
+                        System.out.println("user id: ========"+ user.getId());
+                        System.out.println("user name: ====="+ user.getEmail());
+                    }*/
                 }
             }
         }else{
@@ -92,6 +106,33 @@ public class BoardController {
         }
         return "/boards/board";
    }
+
+    //ajax
+    @RequestMapping (value = "/task/assign/{taskId}", method= RequestMethod.GET)
+    public @ResponseBody
+    String assignTask(ModelMap model,
+                      @PathVariable(value="taskId") String taskId
+    ){
+        System.out.println("task assign controller method called.");
+        List<UserWrapper> usersList = null;
+        UserWrapper userWrapper = new UserWrapper();
+        if(ValidationUtility.isExists(taskId)){
+            result = userService.getTaskUsersList(Long.valueOf(taskId));
+            userWrapper.setUserList((List<UserWrapper>) result.getObject());
+            System.out.println("\n\nuser List size in assign task: " + userWrapper.getUserList().size() +"\n\n");
+        }
+        //viewBoard(model,request, session, "3", userWrapper);
+        System.out.println("\n\nuser List size in assign task 2: " + userWrapper.getUserList().size() +"\n\n");
+        if (result.getIsSuccessful()) {
+            model.put("successMessages", result.getMessageList());
+            System.out.println("task assign list populated success------------------");
+            return "success";//queued - send model message also (if needed)
+        }else{
+            System.out.println("task assign list populated failed ---------------");
+            model.put("errorMessages", result.getMessageList());
+            return "failure";//queued - send model message also (if needed)
+        }
+    }
 }
 
 
