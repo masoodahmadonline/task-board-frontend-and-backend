@@ -146,6 +146,9 @@ function ajaxCreateTask(parentBox){
             $('#taskid-'+fetchedTaskId+' .delete-task-wizard').click(function () {
                 ajaxDeleteTask(     $(this).parents(".task").first()      );
             });
+            $('#taskid-'+fetchedTaskId+' .task-assign-unassign-wizard').click(function () {
+                ajaxAssignTask($(this).parents(".task").first());
+            });
 
         },
         error: function(){
@@ -204,6 +207,23 @@ function ajaxDeleteTask(task){
             alert('Error while request..');
         }
 
+    });
+}
+
+function ajaxAssignTask(task){
+
+    var taskId = task.attr('id').split("-")[1];
+    $.ajax({
+        url: "${pageContext.request.contextPath}/task/assign/"+taskId,
+        cache: false,
+        success: function(response){
+            $('#task-assign-unassign-form').trigger("create");
+            $("#task-assign-unassign-form").dialog("open");
+            window["parentTask"] = $(this).parents(".task").first();
+        },
+        error: function(){
+            alert('Error while request..');
+        }
     });
 }
 
@@ -391,8 +411,8 @@ $(function() {
     });
 
     $(".task-assign-unassign-wizard").click(function () {
-        $("#task-assign-unassign-form").dialog("open");
-        window["parentTask"] = $(this).parents(".task").first();
+        ajaxAssignTask(     $(this).parents(".task").first()      );
+
     });
 
     $(".task-assign-unassign-wizard-submit").click(function () {
@@ -464,42 +484,41 @@ $(function() {
     </form>
 </div>
 
-<div id="task-assign-unassign-form" class="forms-for-board" style="max-height: 600px; overflow-x: visible;" title="Assign or Unassign this task">
-    <springform:form action="${pageContext.request.contextPath}/task/assign-task" method="POST" commandName="uWrapper">
-        <table>
-            <tr>
-                <td></td>
-                <td></td>
-                <td style="text-align: right;">Assign?</td>
-            </tr>
-            <springform:hidden id="taskIdForAssignUser" path="taskId" />
-            <c:forEach items="${uWrapper.userList}" var="wrapper" varStatus="idx">
-                <springform:hidden path="userList[${idx.index}].userId"></springform:hidden>
+<c:if test="${viewAssignForm}">
+    <div id="task-assign-unassign-form" class="forms-for-board" style="max-height: 600px; overflow-x: visible;" title="Assign or Unassign this task">
+        <springform:form action="${pageContext.request.contextPath}/task/assign-task" method="POST" commandName="uWrapper">
+            <table>
                 <tr>
-                    <td>
-                        <img src="${resourcesDir}/images/avatar-small.png"/>
-                    </td>
-                    <td style="width: 200px;">
-                        <span style="display:inline-block; text-align: left; font-weight: bold">${wrapper.firstName}&nbsp;${wrapper.lastName}</span> <br />
-                        <span style="display:inline-block; text-align: left;">${wrapper.email}</span>
-                    </td>
-                    <td style="text-align: right;">
-                        <springform:checkbox id="1" path="userList[${idx.index}].enableUserId" cssStyle="display: block;"></springform:checkbox>
-
-                    </td>
+                    <td></td>
+                    <td></td>
+                    <td style="text-align: right;">Assign?</td>
                 </tr>
+                <springform:hidden id="taskIdForAssignUser" path="taskId" />
+                <c:forEach items="${uWrapper.userList}" var="wrapper" varStatus="idx">
+                    <springform:hidden path="userList[${idx.index}].userId"></springform:hidden>
+                    <tr>
+                        <td>
+                            <img src="${resourcesDir}/images/avatar-small.png"/>
+                        </td>
+                        <td style="width: 200px;">
+                            <span style="display:inline-block; text-align: left; font-weight: bold">${wrapper.firstName}&nbsp;${wrapper.lastName}</span> <br />
+                            <span style="display:inline-block; text-align: left;">${wrapper.email}</span>
+                        </td>
+                        <td style="text-align: right;">
+                            <springform:checkbox id="1" path="userList[${idx.index}].enableUserAssignId" cssStyle="display: block;"></springform:checkbox>
 
-            </c:forEach>
+                        </td>
+                    </tr>
 
-            <tr>
-                <td><input type="reset" /></td><td><input type="submit" value="Create" class="task-assign-unassign-wizard-submit" /></td>
-            </tr>
-        </table>
+                </c:forEach>
 
-
-
-    </springform:form>
-</div>
+                <tr>
+                    <td><input type="reset" /></td><td><input type="submit" value="Create" class="task-assign-unassign-wizard-submit" /></td>
+                </tr>
+            </table>
+        </springform:form>
+    </div>
+</c:if>
 
 <div id="file-attachment-form" class="forms-for-board" title="Attach a file to this task">
     <form action="${pageContext.request.contextPath}/task/attach-file" method="POST" enctype="multipart/form-data">

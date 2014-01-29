@@ -19,8 +19,10 @@ import web.service.TasksService;
 import web.service.BoxesService;
 import web.service.UsersService;
 import web.service.common.Result;
+import web.service.common.ValidationUtility;
 import web.wrapper.UserWrapper;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -99,6 +101,8 @@ public class TaskController {
             return "failure";//queued - send model message also (if needed)
         }
     }
+
+
 
     //ajax
     @RequestMapping (value = "/task/set-priority/{taskId}/{priority}", method=RequestMethod.GET)
@@ -226,6 +230,7 @@ public class TaskController {
             model.put("success", true);
             model.put("successMsg", result.getMessage());
             System.out.println("\n********** Success message from controller ***************\n");
+
         }else{
             model.put("errorMsg", result.getMessage());
             System.out.println("\n********** error message from controller ***************\n");

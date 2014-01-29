@@ -28,8 +28,11 @@ public class Tasks {
     private String description;
     private String priority; // high , low, critical, normal
     private String status; //completed, working, pending/queued, in problems.
-    @ManyToMany 
+
+    @ManyToMany(mappedBy = "taskList")
     private Collection <Users> userList = new ArrayList<Users>();
+
+
     @OneToMany   (cascade = CascadeType.REMOVE, mappedBy = "parentTask")
     private  Collection <Attachment> attachmentList = new ArrayList<Attachment>();
     /**

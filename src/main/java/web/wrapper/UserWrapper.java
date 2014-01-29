@@ -22,7 +22,9 @@ public class UserWrapper implements Serializable {
     private String enableUser;
     private String wip;
     private String taskId;
-    private boolean enableUserId = true;
+    private boolean enableUserId = false;
+    private boolean enableUserEditId = false;
+    private boolean enableUserAssignId = false;
 
     private String roleId;
     private String roleName;
@@ -40,6 +42,8 @@ public class UserWrapper implements Serializable {
         this.setEnableUser("");
         this.setWip("");
         this.setTaskId("");
+        this.setEnableUserAssignId(false);
+        this.setEnableUserEditId(false);
         this.setEnableUserId(false);
 
         this.setRoleId("");
@@ -150,23 +154,35 @@ public class UserWrapper implements Serializable {
         this.wip = wip;
     }
 
-    public boolean isEnableUserId() {
-        return enableUserId;
-    }
-
-    public void setEnableUserId(boolean enableUserId) {
-        this.enableUserId = enableUserId;
-    }
-
-    public boolean getEnableUserId() {
-        return enableUserId;
-    }
-
     public String getTaskId() {
         return taskId;
     }
 
     public void setTaskId(String taskId) {
         this.taskId = taskId;
+    }
+
+    public boolean isEnableUserEditId() {
+        return enableUserEditId;
+    }
+
+    public void setEnableUserEditId(boolean enableUserEditId) {
+        this.enableUserEditId = enableUserEditId;
+    }
+
+    public boolean isEnableUserAssignId() {
+        return enableUserAssignId;
+    }
+
+    public void setEnableUserAssignId(boolean enableUserAssignId) {
+        this.enableUserAssignId = enableUserAssignId;
+    }
+
+    public boolean isEnableUserId() {
+        return enableUserId;
+    }
+
+    public void setEnableUserId(boolean enableUserId) {
+        this.enableUserId = enableUserId;
     }
 }

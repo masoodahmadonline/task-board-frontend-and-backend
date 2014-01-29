@@ -130,7 +130,6 @@ public class UserController {
         //wrapper.setRoleList(roleList);
         wrapper.setUserList(usersList);
         model.put("roleList", roleMap);
-        model.put("checkEnableUser", wrapper.getEnableUserId());
         model.put("editUserWrapper", wrapper);
 
         return "/users/edit";

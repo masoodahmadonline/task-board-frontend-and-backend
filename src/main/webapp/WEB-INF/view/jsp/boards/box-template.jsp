@@ -76,6 +76,11 @@
                             </div>
                         </c:if>
                         <div class="task-priority task-priority-${task.priority}" id="priorityId-${task.id}"></div>
+                        <%--<c:if test="${not empty task.userList}">
+                            <c:forEach var="user" items="${task.userList}">
+                                <div class="user-icon" id="userId-${user.id}"></div>
+                            </c:forEach>
+                        </c:if>--%>
                         ${task.description}
                     </div>
                 </div>

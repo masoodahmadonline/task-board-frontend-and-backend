@@ -59,7 +59,7 @@
                                     <form:hidden path="userList[${idx.index}].userId"></form:hidden>
                                     <tr>
                                         <td>
-                                            <form:checkbox id="1" path="userList[${idx.index}].enableUserId" cssStyle="display: inline-block; background-color: #fcefa1; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.7) inset;"></form:checkbox>
+                                            <form:checkbox id="1" path="userList[${idx.index}].enableUserEditId" cssStyle="display: inline-block; background-color: #fcefa1; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.7) inset;"></form:checkbox>
                                         </td>
                                         <td>
                                             <img src="${resourcesDir}/images/avatar-small.png" height="40px;" />
