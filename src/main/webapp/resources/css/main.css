@@ -688,19 +688,6 @@ input[type=checkbox]:checked + label {
   max-height: 250px;
   overflow-x: hidden; }
 
-.user-icon {
-    cursor: pointer;
-    background-image: url("../images/avatar-small.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    position: absolute;
-    left: 45px;
-    bottom: -10px;
-    width: 15px;
-    height: 15px;
-}
-
 .attachment {
   cursor: pointer;
   background-image: url("../images/attachment-icon1.png");
@@ -762,3 +749,15 @@ input[type=checkbox]:checked + label {
 
 .task-priority-low {
   background-image: url("../images/task-priority-low.png"); }
+
+.user-icon {
+  cursor: pointer;
+  background-image: url("../images/avatar-small.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  position: absolute;
+  left: 45px;
+  bottom: -10px;
+  width: 15px;
+  height: 15px; }
