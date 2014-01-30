@@ -159,29 +159,58 @@ public class UserController {
         //return null;
     }
 
-    @RequestMapping(value = "/users/{userId}")
-    public String editUser(HttpSession session, ModelMap model, @PathVariable(value="userId") String id){
+    @RequestMapping(value = "/users/profile-edit", method = RequestMethod.GET)
+    public String editUserProfile(HttpSession session, @RequestParam(required=false) String uId, ModelMap model){
         System.out.println("\n Edit User Info method \n");
-
-        /*User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String loginId = springUser.getUsername(); //get logged in username (email)
-        result = userService.getUserByLoginId(loginId);
-        Users user = (Users)result.getObject();*/
-
-        result = userService.editUserInfo(id);
-        //System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
-        if(result.getIsSuccessful()){
-            model.put("error", false);
-            model.put("success", true);
-            model.put("successMsg", result.getMessage());
-            System.out.println("\n********** Success message from controller ***************\n");
+        String returnPage = "/users/profile-edit";
+        if(ValidationUtility.isExists(uId)){
+            result = userService.populateUserInfo(uId);
+            model.put("editUserProfileWrapper", result.getObject());
+            //System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
+            if(result.getIsSuccessful()){
+                model.put("error", false);
+                model.put("success", true);
+                model.put("successMsg", result.getMessage());
+                System.out.println("\n********** Success message from controller ***************\n");
+            }else{
+                model.put("errorMsg", result.getMessage());
+                System.out.println("\n********** error message from controller ***************\n");
+            }
         }else{
-            model.put("errorMsg", result.getMessage());
-            System.out.println("\n********** error message from controller ***************\n");
+            model.put("errorMsg", "Please select user before edit user's profile information");
+            returnPage = "/users/edit";
         }
 
-        return "/users/edit";
+
+        return returnPage;
     }
+
+    @RequestMapping(value = "/users/profile-edit", method = RequestMethod.POST)
+    public String editUserProfile(HttpSession session,
+                           @ModelAttribute("editUserProfileWrapper")UserWrapper userWrapper, ModelMap model){
+        System.out.println("\n Edit User Info POST method \n");
+        String returnPage = "/users/edit";
+        if(ValidationUtility.isExists(userWrapper.getUserId())){
+            result = userService.updateUserInfo(userWrapper);
+            //System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
+            if(result.getIsSuccessful()){
+                model.put("error", false);
+                model.put("success", true);
+                model.put("successMsg", result.getMessage());
+                System.out.println("\n********** Success message from controller ***************\n");
+            }else{
+                model.put("errorMsg", result.getMessage());
+                System.out.println("\n********** error message from controller ***************\n");
+            }
+        }else{
+            model.put("errorMsg", "User Profile not updated. Please select user first");
+            //returnPage = "/users/profile-edit";
+            returnPage = "/users/edit";
+        }
+
+        return "redirect:"+returnPage;// If we redirect, whole page populated and error/success message not displayed
+    }
+
     @RequestMapping(value = "/users/home" )
     public String userHome(ModelMap model, HttpServletRequest request) {
         User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -266,10 +295,6 @@ public class UserController {
         return "/users/profile-view";
     }
 
-    @RequestMapping(value = "/users/profile-edit", method = RequestMethod.GET)
-    public String editUserProfile(ModelMap model){
-        return "/users/profile-edit";
-    }
 
 }
 

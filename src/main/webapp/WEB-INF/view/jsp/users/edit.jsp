@@ -75,8 +75,8 @@
                                             <span style="width: 40px;  display:inline-block; text-align: center;padding: 5px;">WIP: ${wrapper.wip}</span>
                                         </td>
                                         <td>
-                                            <c:url var="uId" value="${pageContext.request.contextPath}/users/edit/${wrapper.userId}">
-                                                <%--<c:param name="uId" value="${offWrapper.offerId}" />--%>
+                                            <c:url var="uId" value="profile-edit">
+                                                <c:param name="uId" value="${wrapper.userId}" />
                                             </c:url>
                                             <a href='<c:out value="${uId}"/>'>Edit User</a>
                                         </td>

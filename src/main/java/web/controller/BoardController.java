@@ -108,11 +108,8 @@ public class BoardController {
    }
 
     //ajax
-    @RequestMapping (value = "/task/assign/{taskId}", method= RequestMethod.GET)
-    public @ResponseBody
-    String assignTask(ModelMap model,
-                      @PathVariable(value="taskId") String taskId
-    ){
+    /*@RequestMapping (value = "/task/assign/{taskId}", method= RequestMethod.GET)
+    public @ResponseBody String assignTask(ModelMap model, @PathVariable(value="taskId") String taskId){
         System.out.println("task assign controller method called.");
         List<UserWrapper> usersList = null;
         UserWrapper userWrapper = new UserWrapper();
@@ -125,6 +122,7 @@ public class BoardController {
         System.out.println("\n\nuser List size in assign task 2: " + userWrapper.getUserList().size() +"\n\n");
         if (result.getIsSuccessful()) {
             model.put("successMessages", result.getMessageList());
+            model.put("uWrapper", userWrapper);
             System.out.println("task assign list populated success------------------");
             return "success";//queued - send model message also (if needed)
         }else{
@@ -132,7 +130,7 @@ public class BoardController {
             model.put("errorMessages", result.getMessageList());
             return "failure";//queued - send model message also (if needed)
         }
-    }
+    }*/
 }
 
 

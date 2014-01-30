@@ -107,7 +107,7 @@ public class UsersServiceImpl implements UsersService{
     @Transactional(readOnly = false)
     public ResultImpl saveUser(UserWrapper wrapper) {
 
-        if( userDAO.doesLoginIdExists(wrapper.getEmail()) ){
+        if(userDAO.doesLoginIdExists(wrapper.getEmail()) ){
             result.setIsSuccessful(false);
             result.setObject(null);
             result.setMessage("The email address supplied is already taken.");
@@ -139,6 +139,39 @@ public class UsersServiceImpl implements UsersService{
             }
         }
     }
+
+    @Transactional(readOnly = false)
+    public ResultImpl updateUserInfo(UserWrapper wrapper) {
+
+        Users userTable = new Users();
+        if(ValidationUtility.isExists(wrapper.getUserId())){
+            userTable = (Users) userDAO.findById(userTable, Long.valueOf(wrapper.getUserId()));
+            userTable = populateUsersFromWrapper(wrapper, userTable);
+            userDAO.save(userTable);
+
+            if(userTable == null){
+                result.setIsSuccessful(false);
+                result.setObject(null);
+                result.setMessage("There was an unknown error while updating user.");
+                //result.setMessageList(Arrays.asList("error.userCreationErrorUnknown"/*,"string"*/));
+                System.out.println("\n********** Error message from ServiceImpl 2 ***************\n");
+                return result;
+            }else{
+                result.setIsSuccessful(true);
+                result.setObject(wrapper);
+                result.setMessage("User updated successfully.");
+                //result.setMessageList(Arrays.asList("success.userCreated"/*,"string"*/));
+                System.out.println("\n********** Success message from ServiceImpl ***************\n");
+                return result;
+            }
+        }else{
+            result.setIsSuccessful(false);
+            result.setObject(null);
+            result.setMessage("Error: User does not exist");
+            return result;
+        }
+    }
+
 
     @Transactional(readOnly = false)
     public ResultImpl editUserAccess(UserWrapper wrapper) {
@@ -224,9 +257,11 @@ public class UsersServiceImpl implements UsersService{
                                 result.setIsSuccessful(false);
                                 result.setObject(null);
                                 result.setMessage("There was an unknown error while assigning task to users");
+                                result.setMessageList(Arrays.asList("There was an unknown error while assigning task to users"));
                             }else{
                                 result.setIsSuccessful(true);
                                 result.setObject(uWrapper);
+                                result.setMessageList(Arrays.asList("The selected users assigned to the task successfully."));
                                 result.setMessage("The selected users assigned to the task successfully.");
                             }
                         }
@@ -238,7 +273,7 @@ public class UsersServiceImpl implements UsersService{
         return result;
     }
 
-    public ResultImpl editUserInfo(String userId){
+    public ResultImpl populateUserInfo(String userId){
         Users uTable = new Users();
         if(!ValidationUtility.isExists(userId)){
             result.setIsSuccessful(false);
@@ -271,7 +306,9 @@ public class UsersServiceImpl implements UsersService{
         table.setEmail(wrapper.getEmail());
         table.setFirstName(wrapper.getFirstName());
         table.setLastName(wrapper.getLastName());
-        table.setPassword(wrapper.getPassword1());
+        if(ValidationUtility.isExists(wrapper.getPassword1())){
+            table.setPassword(wrapper.getPassword1());
+        }
         if(ValidationUtility.isExists(wrapper.isEnableUserId())){
             table.setEnabled(wrapper.isEnableUserId());
         }
@@ -354,7 +391,9 @@ public class UsersServiceImpl implements UsersService{
         wrapper.setEnableUserEditId(false);
         wrapper.setEnableUserAssignId(false);
         wrapper.setEnableUserId(false);
-        /**/
+        //wrapper.setAddress();
+        //wrapper.setContactNumber();
+
 
         return wrapper;
     }
