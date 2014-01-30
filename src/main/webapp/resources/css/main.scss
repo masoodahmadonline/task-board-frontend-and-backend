@@ -661,6 +661,8 @@ border-bottom-left-radius: 20px;
  
 }
 
+
+
 .box-title{
   text-align:center;
   width:100%;
@@ -675,7 +677,7 @@ border-bottom-left-radius: 20px;
 -moz-border-radius-topright: 20px;
 border-top-left-radius: 20px;
 border-top-right-radius: 20px;
-  background-color: rgba(159,182,205, 0.9);    //
+
 box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.7);
 }
 
@@ -692,7 +694,7 @@ width:100%;
 -moz-border-radius-topright: 30px;
 border-top-left-radius: 30px;
 border-top-right-radius: 30px;
-background-color: rgba(159,182,205, 0.9);
+//background-color: rgba(159,182,205, 0.9);
 
 }
 
@@ -715,11 +717,6 @@ background-color: lighten(rgba(159,182,205, 0.7), 20%);
   min-height:150px;
   height:100%;
   width:100%;
-  
-  
-
-
-
  
 }
 .box-body-highlighted{
@@ -727,12 +724,12 @@ background-color: lighten(rgba(159,182,205, 0.7), 20%);
 }
 
 .box-vertical .box-body{
-    max-width: 200px;
+
 }
 
 .box-vertical .box-title{
 
-  max-width: 200px;
+
 
 }
 
@@ -752,6 +749,12 @@ background-color: lighten(rgba(159,182,205, 0.7), 20%);
   /**min-height:500px;**/
   /**min-width:160px;**/
   height:100%;
+  max-width: 200px;
+
+}
+
+.max-width-auto{
+  max-width:auto;
 }
 
 .box-horizontal{
@@ -764,11 +767,21 @@ background-color: lighten(rgba(159,182,205, 0.7), 20%);
   margin-bottom:10px;
   /**  border: blue solid 20px; **/
   /**min-height:500px;**/
-  width:97%;
+  width:auto;
   
  
   
 }
+
+.box-horizontal .box-title{
+  background-color: rgba(182, 155, 81, 0.89);
+}
+
+
+.box-vertical .box-title{
+  background-color: rgba(159,182,205, 0.9);    //
+}
+
 
 
 
@@ -991,6 +1004,7 @@ z-index:11;
   background-image: url('../images/task-priority-low.png');
 }
 
+
 .user-icon {
   cursor: pointer;
   background-image: url("../images/avatar-small.png");
@@ -1003,5 +1017,3 @@ z-index:11;
   width: 15px;
   height: 15px;
 }
-
-

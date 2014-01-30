@@ -89,7 +89,7 @@ function ajaxCreateBox(parent){
 
 
     });
-    $('#box-creation-form').children('form').reset();
+    $('#box-creation-form').children('form').reset;
 
 }
 
@@ -1002,6 +1002,34 @@ $(document).ready(function(){
 
 
 
+
+
+    $(document).on('mouseenter', '.box', function(e) {
+
+
+        if ( $(this).find(".box").length > 0 ){
+            $(this).css({
+
+                'max-width': 'none'
+            });
+        }
+
+    });
+
+    $('.box').each(function(){
+        if ($(this).find(".box").length > 0) {
+            $(this).css({
+                'max-width': 'none'
+            });
+        }
+    });
+
+
+
+
+
+
+
 });
 
 
@@ -1105,3 +1133,19 @@ Quest> dom element createion event
 $('.class').on('click', '.board', function(){/* this code will execute when you click on anything
 <duch_kazatel> with class board */})
 -->
+
+
+
+<%--$(document).on('mouseenter', '.box', function(e) {--%>
+<%--var $this = $(this),--%>
+<%--parentWidth = $this.parent('.box').width() - 60,--%>
+<%--thisElementWidth = $this.width();--%>
+
+<%--if ( thisElementWidth >= parentWidth ){--%>
+<%--$this.parent('.box').css({--%>
+<%--'width': thisElementWidth + 65 + 'px',--%>
+<%--'max-width': thisElementWidth + 65 + 'px'--%>
+<%--});--%>
+<%--}--%>
+
+<%--});--%>

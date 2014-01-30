@@ -529,7 +529,6 @@ input[type=checkbox]:checked + label {
   -moz-border-radius-topright: 20px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  background-color: rgba(159, 182, 205, 0.9);
   box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.7); }
 
 .box-title span {
@@ -544,8 +543,7 @@ input[type=checkbox]:checked + label {
   -moz-border-radius-topleft: 30px;
   -moz-border-radius-topright: 30px;
   border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
-  background-color: rgba(159, 182, 205, 0.9); }
+  border-top-right-radius: 30px; }
 
 .box-body {
   display: inline-block;
@@ -566,12 +564,6 @@ input[type=checkbox]:checked + label {
 .box-body-highlighted {
   box-shadow: 0px 2px 5px 1px rgba(20, 20, 20, 0.7); }
 
-.box-vertical .box-body {
-  max-width: 200px; }
-
-.box-vertical .box-title {
-  max-width: 200px; }
-
 .box-vertical {
   display: table-cell;
   vertical-align: top;
@@ -582,7 +574,11 @@ input[type=checkbox]:checked + label {
   /**  border: blue solid thin;**/
   /**min-height:500px;**/
   /**min-width:160px;**/
-  height: 100%; }
+  height: 100%;
+  max-width: 200px; }
+
+.max-width-auto {
+  max-width: auto; }
 
 .box-horizontal {
   display: inline-block;
@@ -593,7 +589,13 @@ input[type=checkbox]:checked + label {
   margin-bottom: 10px;
   /**  border: blue solid 20px; **/
   /**min-height:500px;**/
-  width: 97%; }
+  width: auto; }
+
+.box-horizontal .box-title {
+  background-color: rgba(182, 155, 81, 0.89); }
+
+.box-vertical .box-title {
+  background-color: rgba(159, 182, 205, 0.9); }
 
 .task {
   position: relative;
@@ -688,19 +690,6 @@ input[type=checkbox]:checked + label {
   max-height: 250px;
   overflow-x: hidden; }
 
-.user-icon {
-    cursor: pointer;
-    background-image: url("../images/avatar-small.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    position: absolute;
-    left: 45px;
-    bottom: -10px;
-    width: 15px;
-    height: 15px;
-}
-
 .attachment {
   cursor: pointer;
   background-image: url("../images/attachment-icon1.png");
@@ -762,3 +751,15 @@ input[type=checkbox]:checked + label {
 
 .task-priority-low {
   background-image: url("../images/task-priority-low.png"); }
+
+.user-icon {
+  cursor: pointer;
+  background-image: url("../images/avatar-small.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  position: absolute;
+  left: 45px;
+  bottom: -10px;
+  width: 15px;
+  height: 15px; }
