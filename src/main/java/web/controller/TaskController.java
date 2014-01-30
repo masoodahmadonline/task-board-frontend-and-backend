@@ -225,17 +225,22 @@ public class TaskController {
         System.out.println("\n Task Id after POST method (for user assignment): "+userWrapper.getTaskId()+"\n");
         result = userService.taskAssignment(userWrapper);
         System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
-        if(result.getIsSuccessful()){
+        /*if(result.getIsSuccessful()){
             model.put("error", false);
             model.put("success", true);
             model.put("successMsg", result.getMessage());
+            //model.put("successMessages", result.getMessageList());
             System.out.println("\n********** Success message from controller ***************\n");
 
         }else{
+            model.put("error", true);
+            model.put("success", false);
             model.put("errorMsg", result.getMessage());
+            model.put("errorMessages", result.getMessageList());
             System.out.println("\n********** error message from controller ***************\n");
-        }
+        }*/
         return "redirect:"+session.getAttribute("previous_page").toString();
+        //return "boards/board";
     }
 
 }

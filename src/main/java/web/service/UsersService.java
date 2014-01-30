@@ -24,8 +24,9 @@ public interface UsersService {
     public List<UserWrapper> populateRoleList(); // For populating user roles for board
     public List<UserWrapper> listUsersWithDetail();  // To display list of all users with detail
     ResultImpl editUserAccess(UserWrapper wrapper);  // Edit list of user's access
-    ResultImpl editUserInfo(String userId);  // Edit User Info
+    ResultImpl populateUserInfo(String userId);  // Edit User Info
     ResultImpl taskAssignment(UserWrapper wrapper);  // Assign/ Un-assign task to users
     ResultImpl getTaskUsersList(Long taskId);  // get list of users for each task
+    ResultImpl updateUserInfo(UserWrapper wrapper);     // Farhan - added for updating user profile information
   
 }

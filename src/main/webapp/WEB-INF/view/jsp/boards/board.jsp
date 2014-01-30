@@ -147,7 +147,9 @@ function ajaxCreateTask(parentBox){
                 ajaxDeleteTask(     $(this).parents(".task").first()      );
             });
             $('#taskid-'+fetchedTaskId+' .task-assign-unassign-wizard').click(function () {
-                ajaxAssignTask($(this).parents(".task").first());
+                //ajaxAssignTask($(this).parents(".task").first());
+                $("#task-assign-unassign-form").dialog("open");
+                window["parentTask"] = $(this).parents(".task").first();
             });
 
         },
@@ -210,22 +212,6 @@ function ajaxDeleteTask(task){
     });
 }
 
-function ajaxAssignTask(task){
-
-    var taskId = task.attr('id').split("-")[1];
-    $.ajax({
-        url: "${pageContext.request.contextPath}/task/assign/"+taskId,
-        cache: false,
-        success: function(response){
-            $('#task-assign-unassign-form').trigger("create");
-            $("#task-assign-unassign-form").dialog("open");
-            window["parentTask"] = $(this).parents(".task").first();
-        },
-        error: function(){
-            alert('Error while request..');
-        }
-    });
-}
 
 
 function ajaxChangeTaskPriority(taskId, priority, success, error){
@@ -416,6 +402,7 @@ $(function() {
     });
 
     $(".task-assign-unassign-wizard-submit").click(function () {
+        //ajaxAssignTaskSubmit($(this).parents(".task").first());
         //$("#task-assign-unassign-form").dialog("close");
 
     });
@@ -487,7 +474,7 @@ $(function() {
 <c:if test="${viewAssignForm}">
     <div id="task-assign-unassign-form" class="forms-for-board" style="max-height: 600px; overflow-x: visible;" title="Assign or Unassign this task">
         <springform:form action="${pageContext.request.contextPath}/task/assign-task" method="POST" commandName="uWrapper">
-            <table>
+            <table id="task-assign-unassign-table">
                 <tr>
                     <td></td>
                     <td></td>
@@ -513,7 +500,7 @@ $(function() {
                 </c:forEach>
 
                 <tr>
-                    <td><input type="reset" /></td><td><input type="submit" value="Create" class="task-assign-unassign-wizard-submit" /></td>
+                    <td><input type="reset" value="Reset" /></td><td><input type="submit" value="Submit" class="task-assign-unassign-wizard-submit" /></td>
                 </tr>
             </table>
         </springform:form>
@@ -1032,7 +1019,95 @@ $(document).ready(function(){
 
 });
 
+function ajaxAssignTask(task){
 
+    var taskId = task.attr('id').split("-")[1];
+    $.ajax({
+
+        url: "${pageContext.request.contextPath}/task/assign/"+taskId,
+        cache: false,
+        success: function(response){
+            //$("#task-assign-unassign-form").load(".forms-for-board");
+            //$( "#task-assign-unassign-form" ).load( "${pageContext.request.contextPath}/task/assign/"+taskId+" #task-assign-unassign-table" );
+            $("#task-assign-unassign-form").dialog("open");
+            window["parentTask"] = $(this).parents(".task").first();
+            //$("#task-assign-unassign-form").load(".forms-for-board");
+        },
+        error: function(){
+            alert('Error while request..');
+        }
+    });
+}
+
+/*function ajaxAssignTaskSubmit(result){
+
+    $.ajax({
+        url: "${pageContext.request.contextPath}/task/assign-task",
+        cache: false,
+        success: function(response){
+            showSuccessMessage(response);
+        },
+        error: function(response){
+            showErrorMessage(response);
+            alert('Error while request..');
+        }
+    });
+}*/
+
+/*function createDialog(abc) {
+    return $("<div id='task-assign-unassign-form-1' class='forms-for-board' style='max-height: 600px; overflow-x: visible;' title='"+abc+"'>" +
+            "<springform:form action='${pageContext.request.contextPath}/task/assign-task' method='POST' commandName='uWrapper'>" +
+            "   <table id='task-assign-unassign-table-1'>" +
+            "       <tr><td></td><td></td><td style='text-align: right;'>Assign?</td></tr>" +
+            "           <springform:hidden id='taskIdForAssignUser-1' path='taskId' />" +
+            "           <c:forEach items='${uWrapper.userList}' var='wrapper' varStatus='idx'>" +
+            "               <springform:hidden path='userList[${idx.index}].userId'></springform:hidden>" +
+            "               <tr><td>" +
+            "                   <img src='${resourcesDir}/images/avatar-small.png'/></td>" +
+            "                   <td style='width: 200px;'>" +
+            "                       <span style='display:inline-block; text-align: left; font-weight: bold'>${wrapper.firstName}&nbsp;${wrapper.lastName}</span> <br />" +
+            "                       <span style='display:inline-block; text-align: left;'>${wrapper.email}</span></td>"+
+            "                    <td style='text-align: right;'>" +
+            "                       <springform:checkbox id='1-1' path='userList[${idx.index}].enableUserAssignId' cssStyle='display: block;'></springform:checkbox>" +
+            "                    </td></tr>"+
+            "           </c:forEach>"+
+            "       <tr>" +
+            "           <td><input type='reset' value='Reset' /></td><td><input type='submit' value='Submit' class='task-assign-unassign-wizard-submit' /></td>" +
+            "       </tr>" +
+            "   </table>"+
+            "</springform:form>"+
+            "</div>")
+            .dialog({
+                resizable: false,
+                height:340,
+                modal: true,
+                buttons: {
+                    "Confirm": function() {
+                        $( this ).dialog( "close" );
+                    },
+                    Cancel: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            });
+}*/
+
+function createDialog(title, text) {
+    return $("<div class='dialog' title='" + title + "'><p>" + text + "</p></div>")
+            .dialog({
+                resizable: false,
+                height:140,
+                modal: true,
+                buttons: {
+                    "Confirm": function() {
+                        $( this ).dialog( "close" );
+                    },
+                    Cancel: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            });
+}
 
 </script>
 </div>

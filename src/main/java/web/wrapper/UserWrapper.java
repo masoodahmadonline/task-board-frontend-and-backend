@@ -15,6 +15,8 @@ import java.util.List;
 public class UserWrapper implements Serializable {
     private String userId;
     private String email;
+    private String address;
+    private String contactNumber;
     private String firstName;
     private String lastName;
     private String password1;
@@ -35,6 +37,8 @@ public class UserWrapper implements Serializable {
     public void clearAll(){
         this.setUserId("");
         this.setEmail("");
+        this.setAddress("");
+        this.setContactNumber("");
         this.setFirstName("");
         this.setLastName("");
         this.setPassword1("");
@@ -184,5 +188,21 @@ public class UserWrapper implements Serializable {
 
     public void setEnableUserId(boolean enableUserId) {
         this.enableUserId = enableUserId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 }

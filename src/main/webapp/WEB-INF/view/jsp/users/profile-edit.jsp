@@ -1,6 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" />
 <c:set var="pageTitle" scope="request" >
@@ -36,13 +37,13 @@
                 </c:if>
             </div>
             <div>
-                 <form>
+                <form:form action="${pageContext.request.contextPath}/users/profile-edit" method="post" commandName="editUserProfileWrapper" >
                     <div class="form-wrapper jQeffect-show-clip" >
 
                         <div class="inner-form-wrapper" >
 
                              <h2>Personal</h2>
-                            <input type="hidden" name="userIdhere" />
+                            <form:hidden path="userId"/>
                             <table>
                                 <tbody>
                                 <tr>
@@ -61,7 +62,7 @@
                                     </td>
 
                                     <td>
-                                        <input  class="form-input" type="text" value="Masood" />
+                                        <form:input path="firstName" cssClass="form-input"/>
                                     </td>
 
                                 </tr>
@@ -71,7 +72,7 @@
                                     </td>
 
                                     <td>
-                                        <input  class="form-input" type="text" value="Ahmad" />
+                                        <form:input path="lastName" cssClass="form-input" />
                                     </td>
 
                                 </tr>
@@ -81,7 +82,7 @@
                                     </td>
 
                                     <td>
-                                        <input  class="form-input" type="email" value="masood@syncsysllc.com" />
+                                        <form:input path="email"  cssClass="form-input"/>
                                     </td>
 
                                 </tr>
@@ -91,115 +92,22 @@
                                     </td>
 
                                     <td>
-                                        <input  class="form-input" type="text" value="256c Model Town" />
+                                        <form:input path="address"  cssClass="form-input"/>
                                     </td>
 
                                 </tr>
                                 <tr>
                                     <td class="form-input-description">
-                                        City:
+                                        Contact Number:
                                     </td>
 
                                     <td>
-                                        <input  class="form-input" type="text" value="Lahore" />
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td class="form-input-description">
-                                        State/Province:
-                                    </td>
-
-                                    <td>
-                                        <input  class="form-input" type="text" value="Punjab" />
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td class="form-input-description">
-                                        Country:
-                                    </td>
-
-                                    <td>
-                                        <input  class="form-input" type="text" value="Pakistan" />
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td class="form-input-description">
-                                        Phone (landline):
-                                    </td>
-
-                                    <td>
-                                        <input  class="form-input" type="text" value="042 123456789" />
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-                                    <td class="form-input-description">
-                                        Phone (office):
-                                    </td>
-
-                                    <td>
-                                        <input  class="form-input" type="text" value="042 987654321" />
-                                    </td>
-
-                                </tr>
-                                    <td class="form-input-description">
-                                        Phone (Cell):
-                                    </td>
-
-                                    <td>
-                                        <input  class="form-input" type="text" value="03134955672" />
+                                        <form:input path="contactNumber"  cssClass="form-input"/>
                                     </td>
 
                                 </tr>
                                 </tbody>
                             </table>
-                            <hr />
-                            <h2>Technical</h2>
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td class="form-input-description">
-                                         Role:
-                                    </td>
-                                    <td>
-                                        <select name="role" required="required">
-                                            <option value="organizationAdmin">Organization Admin</option>
-                                            <option value="admin" selected="selected">Admin</option>
-                                            <option value="manager">Manager</option>
-                                            <option value="user">User</option>
-                                            <option value="reader">Reader</option>
-                                            <option value="noaccess">No Access</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="form-input-description">
-                                        WIP limit:
-                                    </td>
-                                    <td>
-                                        <input  class="form-input" type="text" value="10" />
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="form-input-description">
-                                        Enabled:
-                                    </td>
-                                    <td>
-                                        <select class="form-input" name="enabled" required="required">
-                                            <option value="yes" selected="selected">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-
                         </div>
 
                     </div>
@@ -209,7 +117,7 @@
                         <input type="reset" value="Reset" />
 
                     </div>
-                 </form>
+                 </form:form>
             </div>
         </div>
 
