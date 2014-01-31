@@ -19,14 +19,14 @@ function showSuccessMessage(message) {
     $("#message-box").addClass("success-message");
     $("#message-box").html(message);
     $("#message-box").effect( "highlight",
-            {color:"#669966"}, 10000 );
+            {color:"#669966"}, 1000 );
 
 }
 function showErrorMessage(message) {
     $("#message-box").addClass("error-message");
     $("#message-box").html(message);
     $("#message-box").effect( "highlight",
-            {color:"#669966"}, 10000 );
+            {color:"#669966"}, 1000 );
 
 }
 

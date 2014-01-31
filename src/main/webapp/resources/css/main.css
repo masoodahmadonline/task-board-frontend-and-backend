@@ -589,12 +589,13 @@ input[type=checkbox]:checked + label {
   margin-bottom: 10px;
   /**  border: blue solid 20px; **/
   /**min-height:500px;**/
-  width: auto; }
+  width: auto;
+  max-width: 1000px; }
 
-.box-horizontal .box-title {
+.box-horizontal > .box-title {
   background-color: rgba(182, 155, 81, 0.89); }
 
-.box-vertical .box-title {
+.box-vertical > .box-title {
   background-color: rgba(159, 182, 205, 0.9); }
 
 .task {
@@ -663,9 +664,11 @@ input[type=checkbox]:checked + label {
 #message-box {
   display: block;
   position: absolute;
-  top: 50px;
+  top: 0px;
   right: 30%;
   left: 30%;
+  max-height: 50px;
+  vertical-align: middle;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   -o-border-radius: 20px;
