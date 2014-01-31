@@ -57,7 +57,7 @@ function ajaxCreateBox(parent){
             //alert(fetchedBoxType+" "+fetchedBoxTitle+" "+fetchedBoxDescription);
             $('#result').html(fetchedBoxId+" "+fetchedBoxType+" "+fetchedBoxTitle+" "+fetchedBoxDescription);
             // createBoxInDom();
-            $("#"+parentElementId+" ."+parentType+"-body").append(
+            $("#"+parentElementId+" > ."+parentType+"-body").append(
                     '<div id="boxid-'+fetchedBoxId+'" class="box box-'+fetchedBoxType+'" >'+
                             '    <div class="box-title" title="'+fetchedBoxDescription+'">'+
                             '          <span>'+
