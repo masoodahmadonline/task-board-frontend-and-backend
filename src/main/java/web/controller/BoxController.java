@@ -94,7 +94,28 @@ public class BoxController {
         }
         return boxToBeReturned; //queued - send model message also (if needed)
     }
-    
+
+    //ajax
+    @RequestMapping (value = "/box/edit/{boxId}/{boxType}/{boxTitle}/{boxDescription}", method=RequestMethod.GET)
+    public @ResponseBody  boolean editBox(ModelMap model,
+                                          @PathVariable(value="boxId") String boxId,
+                                          @PathVariable(value="boxType") String boxType,
+                                          @PathVariable(value="boxTitle") String boxTitle,
+                                          @PathVariable(value="boxDescription") String boxDescription
+    ){
+        //queue {user-module}
+        //get user id from session (save id in session first)
+        //verify for privs of user if he can edit box or not.
+
+        result = boxService.editBox(Long.valueOf(boxId), boxType, boxTitle, boxDescription);
+        if(result.getIsSuccessful()){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
     //ajax
     @RequestMapping (value = "/box/delete/{boxId}", method=RequestMethod.GET)
     public @ResponseBody  String deleteBox(ModelMap model,

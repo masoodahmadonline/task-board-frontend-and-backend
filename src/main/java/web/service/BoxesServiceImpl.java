@@ -116,6 +116,23 @@ public class BoxesServiceImpl implements BoxesService{
         childBox.setParentBox(parentBox);
         return childBox;
     }
+
+
+    @Transactional(readOnly = false)
+    public ResultImpl editBox(Long id, String type, String title, String description){
+        result = getBoxById(id);
+        if(result.getIsSuccessful()){
+            Boxes box = (Boxes)result.getObject();
+            box.setType(type);
+            box.setTitle(title);
+            box.setDescription(description);
+            result.setObject(box);
+            result.setMessageList(Arrays.asList("success.boxEdited"));
+        }else{
+            result.setMessageList(Arrays.asList("error.boxEditFailed"));
+        }
+        return result;
+    }
     
     
 }
