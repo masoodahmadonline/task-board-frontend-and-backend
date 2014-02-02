@@ -200,7 +200,7 @@ public class UserController {
                 System.out.println("\n********** Success message from controller ***************\n");
             }else{
                 model.put("errorMsg", result.getMessage());
-                System.out.println("\n********** error message from controller ***************\n");
+                System.out.println("\n**********  error message from controller ***************\n");
             }
         }else{
             model.put("errorMsg", "User Profile not updated. Please select user first");
