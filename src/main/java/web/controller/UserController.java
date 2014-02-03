@@ -155,8 +155,8 @@ public class UserController {
             model.put("errorMsg", result.getMessage());
             System.out.println("\n********** error message from controller ***************\n");
         }
-        return "redirect:"+session.getAttribute("previous_page").toString();
-        //return null;
+        //return "redirect:"+session.getAttribute("previous_page").toString();
+        return "redirect:/users/edit";
     }
 
     @RequestMapping(value = "/users/profile-edit", method = RequestMethod.GET)

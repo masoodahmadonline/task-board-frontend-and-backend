@@ -28,6 +28,10 @@ public class UserWrapper implements Serializable {
     private boolean enableUserEditId = false;
     private boolean enableUserAssignId = false;
 
+    private boolean taskUserExistSingle = false;
+    private boolean taskUserExistMultiple = false;
+    private String taskUserSize;
+
     private String roleId;
     private String roleName;
 
@@ -49,6 +53,10 @@ public class UserWrapper implements Serializable {
         this.setEnableUserAssignId(false);
         this.setEnableUserEditId(false);
         this.setEnableUserId(false);
+
+        this.setTaskUserSize("");
+        this.setTaskUserExistSingle(false);
+        this.setTaskUserExistMultiple(false);
 
         this.setRoleId("");
         this.setRoleName("");
@@ -204,5 +212,29 @@ public class UserWrapper implements Serializable {
 
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
+    }
+
+    public String getTaskUserSize() {
+        return taskUserSize;
+    }
+
+    public void setTaskUserSize(String taskUserSize) {
+        this.taskUserSize = taskUserSize;
+    }
+
+    public boolean isTaskUserExistSingle() {
+        return taskUserExistSingle;
+    }
+
+    public void setTaskUserExistSingle(boolean taskUserExistSingle) {
+        this.taskUserExistSingle = taskUserExistSingle;
+    }
+
+    public boolean isTaskUserExistMultiple() {
+        return taskUserExistMultiple;
+    }
+
+    public void setTaskUserExistMultiple(boolean taskUserExistMultiple) {
+        this.taskUserExistMultiple = taskUserExistMultiple;
     }
 }

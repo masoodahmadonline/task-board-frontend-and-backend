@@ -397,7 +397,9 @@ $(function() {
     });
 
     $(".task-assign-unassign-wizard").click(function () {
-        ajaxAssignTask(     $(this).parents(".task").first()      );
+        //ajaxAssignTask(     $(this).parents(".task").first()      );
+        $("#task-assign-unassign-form").dialog("open");
+        window["parentTask"] = $(this).parents(".task").first();
 
     });
 
