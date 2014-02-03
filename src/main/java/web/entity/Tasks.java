@@ -28,6 +28,7 @@ public class Tasks {
     private String description;
     private String priority; // high , low, critical, normal
     private String status; //completed, working, pending/queued, in problems.
+    private String userSize; // just for checking how many users assigned to this task (no backend functionality)
 
     @ManyToMany(mappedBy = "taskList")
     private Collection <Users> userList = new ArrayList<Users>();
@@ -168,5 +169,13 @@ public class Tasks {
 
     public void setAttachmentList(Collection<Attachment> attachmentList) {
         this.attachmentList = attachmentList;
+    }
+
+    public String getUserSize() {
+        return userSize;
+    }
+
+    public void setUserSize(String userSize) {
+        this.userSize = userSize;
     }
 }

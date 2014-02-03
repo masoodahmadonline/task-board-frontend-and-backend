@@ -1,6 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" />
 <c:set var="pageTitle" scope="request" >
@@ -36,31 +37,38 @@
                 </c:if>
             </div>
             <div>
-                <form>
+                <form:form action="${pageContext.request.contextPath}/users/edit" method="post" commandName="editUserTechnicalWrapper" >
                     <div class="form-wrapper jQeffect-show-clip" >
-
                         <div class="inner-form-wrapper" >
-
-
-                            <input type="hidden" name="userIdhere" />
-
-
-
                             <table>
                                 <tbody>
+                                <tr>
+                                    <td colspan="2" style="max-width: 600px;">
+                                        <c:forEach items="${editUserTechnicalWrapper.userList}" var="wrapper" varStatus="idx">
+                                            <span style="background-color: #bfbfbf; -moz-border-radius: 15px; border-radius: 15px; font-size: 14px; width: 100px; max-width: 100px;">
+                                                &nbsp;${wrapper.firstName}&nbsp;${wrapper.lastName}&nbsp;
+                                            </span>&nbsp;
+                                        </c:forEach>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-wrapper jQeffect-show-clip" >
+                        <div class="inner-form-wrapper" >
+                            <table>
+                                <tbody>
+
+
                                 <tr>
                                     <td class="form-input-description">
                                         Role:
                                     </td>
                                     <td>
-                                        <select name="role" required="required">
-                                            <option value="organizationAdmin">Organization Admin</option>
-                                            <option value="admin" selected="selected">Admin</option>
-                                            <option value="manager">Manager</option>
-                                            <option value="user">User</option>
-                                            <option value="reader">Reader</option>
-                                            <option value="noaccess">No Access</option>
-                                        </select>
+                                        <form:select path="roleId" >
+                                            <form:options items="${roleList}" />
+                                        </form:select>
                                     </td>
                                 </tr>
                                 <tr>
@@ -68,25 +76,11 @@
                                         WIP limit:
                                     </td>
                                     <td>
-                                        <input class="form-input" type="text" value="10" />
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td class="form-input-description">
-                                        Enabled:
-                                    </td>
-                                    <td>
-                                        <select class="form-input" name="enabled" required="required">
-                                            <option value="yes" selected="selected">Yes</option>
-                                            <option value="no">No</option>
-                                        </select>
+                                        <form:input path="wip" size="5" maxlength="4" cssStyle="text-align: left;"/>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
-
-
                         </div>
 
                     </div>
@@ -96,7 +90,7 @@
                         <input type="reset" value="Reset" />
 
                     </div>
-                </form>
+                </form:form>
             </div>
         </div>
 

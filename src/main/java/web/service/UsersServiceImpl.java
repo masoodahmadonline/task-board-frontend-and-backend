@@ -371,6 +371,32 @@ public class UsersServiceImpl implements UsersService{
         return userList;
     }
 
+    @Transactional
+    public ResultImpl listUsersWithDetail(UserWrapper uWrapper) {
+        List<UserWrapper> userList = new ArrayList<UserWrapper>();
+        Users userTable = null;
+        if(ValidationUtility.isExists(uWrapper.getUserList())){
+            for (UserWrapper wrapper : uWrapper.getUserList()) {
+                if(wrapper.isEnableUserEditId()){
+                    userTable = new Users();
+                    userTable = (Users)userDAO.findById(userTable, Long.valueOf(wrapper.getUserId()));
+                    wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
+                    userList.add(wrapper);
+                }
+            }
+        }
+
+        if(!userList.isEmpty() && userList.size()>0){
+            result.setIsSuccessful(true);
+            result.setObject(userList);
+        }else{
+            result.setIsSuccessful(false);
+            result.setObject(null);
+        }
+
+        return result;
+    }
+
     private UserWrapper populateWrapperFromRoleTable(UserWrapper wrapper, UserRoleForBoard table){
         wrapper.setRoleId("" + table.getId());
         wrapper.setRoleName(table.getRole());
@@ -398,19 +424,20 @@ public class UsersServiceImpl implements UsersService{
         return wrapper;
     }
 
-    public ResultImpl getTaskUsersList(Long taskId){
+    public UserWrapper getTaskUsersList(Long taskId){
         Tasks tTable = new Tasks();
 
         tTable = (Tasks)userDAO.findById(tTable, taskId);
         List<UserWrapper> userList = new ArrayList<UserWrapper>();
         Users userTable = new Users();
         List list = new ArrayList();
-        UserWrapper wrapper = null;
+        UserWrapper returnWrapper = null;
 
         list = userDAO.findAll(userTable);
 
         for (int i = 0; i < list.size(); i++) {
             userTable = (Users) list.get(i);
+            UserWrapper wrapper = null;
             wrapper = new UserWrapper();
             wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
             System.out.println("\n ---- Task exist for User Id : " + userTable.getId());
@@ -419,20 +446,25 @@ public class UsersServiceImpl implements UsersService{
                 System.out.println("\n ---- Assigned Task Id: " + tTable.getId());
                 System.out.println("\n ---- Assigned User Id: " + userTable.getId());
                 wrapper.setEnableUserAssignId(true);
+                userList.add(wrapper);
             }else{
-                wrapper.setEnableUserAssignId(false);
+                userList.remove(wrapper);
             }
-            userList.add(wrapper);
+
         }
 
         if(userList.size()>0){
-            result.setObject(userList);
-            result.setIsSuccessful(true);
-        }else{
-            result.setIsSuccessful(false);
+            returnWrapper = new UserWrapper();
+            returnWrapper.setTaskUserSize("" + userList.size());
+            returnWrapper.setTaskUserExistSingle(true);
+            if(userList.size()==1){
+                returnWrapper.setTaskUserExistMultiple(false);
+            }else{
+                returnWrapper.setTaskUserExistMultiple(true);
+            }
         }
 
-        return result;
+        return returnWrapper;
     }
     
  
