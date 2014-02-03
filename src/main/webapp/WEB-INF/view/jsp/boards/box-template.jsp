@@ -10,11 +10,11 @@
                               <ul class="drop-menu-options">
                                   <li style="width: auto;" class="create-task-wizard"><a href="#">Create a task</a></li>
                                   <li style="width: auto;"><a href="#" class="create-box-wizard">Create child box</a></li>
-                                  <li class="ui-state-disabled"><a href="#">Edit this box</a></li>
+                                  <li style="width: auto;"><a href="#" class="edit-box-wizard">Edit this box</a></li>
                                   <li><a href="#" class="delete-box-wizard">Delete this box</a></li>
                               </ul>
                           </div>
-                          ${box.title}
+                          <span class="box-title-text">${box.title}</span>
                       </span>
         </div>
         <div class="box-body">

@@ -295,6 +295,16 @@ public class UserController {
         return "/users/profile-view";
     }
 
+    @RequestMapping(value = "/users/edit/profile/personal", method = RequestMethod.GET)
+    public String editUserProfilePersonal(ModelMap model){
+        return "/users/profile-edit-personal";
+    }
+
+    @RequestMapping(value = "/users/edit/profile/technical", method = RequestMethod.GET)
+    public String editUserProfileTechnical(ModelMap model){
+        return "/users/profile-edit-technical";
+    }
+
 
 }
 

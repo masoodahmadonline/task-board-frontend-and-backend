@@ -57,19 +57,19 @@ function ajaxCreateBox(parent){
             //alert(fetchedBoxType+" "+fetchedBoxTitle+" "+fetchedBoxDescription);
             $('#result').html(fetchedBoxId+" "+fetchedBoxType+" "+fetchedBoxTitle+" "+fetchedBoxDescription);
             // createBoxInDom();
-            $("#"+parentElementId+" ."+parentType+"-body").append(
+            $("#"+parentElementId+" > ."+parentType+"-body").append(
                     '<div id="boxid-'+fetchedBoxId+'" class="box box-'+fetchedBoxType+'" >'+
                             '    <div class="box-title" title="'+fetchedBoxDescription+'">'+
                             '          <span>'+
                             '                <div class="drop-menu-button">&#x25be; &nbsp;'+
                             '                    <ul class="drop-menu-options">'+
                             '                              <li style="width: auto;"><a href="#">Create a task</a></li>'+
-                            '                              <li><a href="#" class="create-box-wizard">Create child box</a></li>'+
-                            '                              <li class="ui-state-disabled"><a href="#">Edit this box</a></li>'+
+                            '                              <li style="width: auto;"><a href="#" class="create-box-wizard">Create child box</a></li>'+
+                            '                              <li style="width: auto;"><a href="#" class="edit-box-wizard">Edit this box</a></li>'+
                             '                              <li><a href="#" class="delete-box-wizard">Delete this box</a></li>'+
                             '                      </ul>'+
                             '                  </div>'+
-                            '                '+fetchedBoxTitle+''+
+                            '                <span class="box-title-text">'+fetchedBoxTitle+'</span>'+
                             '            </span> '+
                             '        </div>'+
                             '        <div class="box-body">'+
@@ -187,62 +187,46 @@ function ajaxDeleteBox(box){
 }
 
 
-
-function ajaxDeleteTask(task){
-
-    var taskId = task.attr('id').split("-")[1];
-    alert("task id to be sent for deletion by ajax call: "+taskId);
+function ajaxEditBox(box, boxType, boxTitle, boxDescription, success, error){
+    var boxId = box.attr('id').split("-")[1];
+    alert("box id to be sent to edit by ajax call: "+boxId +" type:"+boxType+" title:"+boxTitle+" desc"+boxDescription);
 
     $.ajax({
-
-        url: "${pageContext.request.contextPath}/task/delete/"+taskId,
-
+        url: "${pageContext.request.contextPath}/box/edit/"+boxId+"/"+boxType+"/"+boxTitle+"/"+boxDescription,
         cache: false,
+        success: success,
+        error: error
+    });
+}
 
+
+
+function ajaxDeleteTask(task){
+    var taskId = task.attr('id').split("-")[1];
+    alert("task id to be sent for deletion by ajax call: "+taskId);
+    $.ajax({
+        url: "${pageContext.request.contextPath}/task/delete/"+taskId,
+        cache: false,
         success: function(response){
-
             task.remove();
-
-
         },
         error: function(){
             alert('Error while request..');
         }
-
     });
 }
 
-
-
 function ajaxChangeTaskPriority(taskId, priority, success, error){
-
     console.log("task id to be changed for setting priority: "+taskId);
-
     $.ajax({
-
         url: "${pageContext.request.contextPath}/task/set-priority/"+taskId+"/"+priority,
-
         cache: false,
         success: success,
-
-        //                    success: function(response){
-        //
-        //                        console.log("success move");
-        //                        b= true;
-        //
-        //                    },
-        //                    error: function(){
-        //                        console.log('Error while request..');
-        //                        b= false;
-        //                    }
         error: error
-
     });
-
 }
 
 function ajaxMoveTask(taskId, initialParentBoxId, destinationParentBoxId, success, error){
-    var b = false;
 //                var taskId = task.attr('id').split("-")[1];
 //                var initialParentBox = task.parents(".box").first();
 //                var initialParentBoxId = initialParentBox.attr('id').split("-")[1];
@@ -255,52 +239,23 @@ function ajaxMoveTask(taskId, initialParentBoxId, destinationParentBoxId, succes
 
         cache: false,
         success: success,
-
-//                    success: function(response){
-//
-//                        console.log("success move");
-//                        b= true;
-//
-//                    },
-//                    error: function(){
-//                        console.log('Error while request..');
-//                        b= false;
-//                    }
         error: error
-
     });
-    return b;
 }
 
 function ajaxDeleteAttachment(attachmentId, success, error){
-    var b = false;
     //                var taskId = task.attr('id').split("-")[1];
     //                var initialParentBox = task.parents(".box").first();
     //                var initialParentBoxId = initialParentBox.attr('id').split("-")[1];
 
     console.log("attachmentId id to be sent for deletion by ajax call: "+attachmentId);
-
     $.ajax({
-
         url: "${pageContext.request.contextPath}/attachment/delete/"+attachmentId,
-
         cache: false,
         success: success,
-
-        //                    success: function(response){
-        //
-        //                        console.log("success move");
-        //                        b= true;
-        //
-        //                    },
-        //                    error: function(){
-        //                        console.log('Error while request..');
-        //                        b= false;
-        //                    }
         error: error
 
     });
-    return b;
 }
 
 $(function() {
@@ -308,7 +263,7 @@ $(function() {
     //form
     //wizard-submit
 
-
+    ////////////////////////// box creation ///////////////////////////////
     $( "#box-creation-form" ).dialog({
         autoOpen: false,
         dialogClass: 'forms-for-board'
@@ -340,9 +295,45 @@ $(function() {
 
 
 
+    ////////////////////////// box editing ///////////////////////////////
+    $( "#box-editing-form" ).dialog({
+        autoOpen: false,
+        dialogClass: 'forms-for-board'
+    });
+    $(".edit-box-wizard").click(function () {
+        $( "#box-editing-form").dialog( "open" );
+        window["box"]      =  $(this).parents(".box").first() ;
+
+
+    });
 
 
 
+
+    $(".edit-box-wizard-submit").click(function () {
+
+        var boxType = $('input[name="box-editing-form-type"]:checked').val();
+        var boxTitle = $("#box-editing-form-title").val();
+        var boxDescription = $("#box-editing-form-description").val();
+        console.log("type:"+boxType+" title:"+boxTitle+" desc"+boxDescription)
+        ajaxEditBox(window.box, boxType, boxTitle, boxDescription, function(){
+            alert("boo");
+            $(window.box).removeClass("box-vertical");
+            $(window.box).removeClass("box-horizontal");
+            $(window.box).addClass("box-"+boxType);
+            $(window.box).find(".box-title-text").first().html(boxTitle);
+                    //description change/edit is pending.
+
+
+        },
+        function(){
+            alert("ooh");
+        });
+        $( "#box-editing-form" ).dialog( "close" );
+    });
+
+
+    ////////////////////////// task creation ///////////////////////////////
     $( "#task-creation-form" ).dialog({
         autoOpen: false,
         dialogClass: 'forms-for-board'
@@ -369,7 +360,7 @@ $(function() {
 
 
 
-
+    ////////////////////////// attachment creation ///////////////////////////////
     $("#file-attachment-form").dialog({
         autoOpen: false,
         dialogClass: 'forms-for-board'
@@ -390,7 +381,7 @@ $(function() {
 
 
 
-
+    ////////////////////////// task assigning ///////////////////////////////
     $("#task-assign-unassign-form").dialog({
         autoOpen: false,
         dialogClass: 'forms-for-board'
@@ -445,6 +436,34 @@ $(function() {
             <tr>
 
                 <td><input type="reset" /></td><td><input type="button" value="Create" class="create-box-wizard-submit" onClick="ajaxCreateBox(parentOfBox);" /></td>
+            </tr>
+        </table>
+
+
+
+    </form>
+</div>
+
+<div id="box-editing-form" class="forms-for-board" title="Edit this box">
+    <form >
+        <table>
+            <tr>
+                <td>Box Type (if changed required):</td>
+                <td>
+                    <input name="box-editing-form-type" value="vertical" type="radio" checked="checked" />Vertical Box
+                    <br />
+                    <input name="box-editing-form-type" value="horizontal" type="radio" />Horizontal Box
+                </td>
+            </tr>
+            <tr>
+                <td>Box title:</td><td><input id="box-editing-form-title" type="text" />
+            </tr>
+            <tr>
+                <td>Box description</td><td><textarea id="box-editing-form-description" style="min-height: 100px;"></textarea></td>
+            </tr>
+            <tr>
+
+                <td><input type="reset" /></td><td><input type="button" value="Edit" class="edit-box-wizard-submit" /></td>
             </tr>
         </table>
 

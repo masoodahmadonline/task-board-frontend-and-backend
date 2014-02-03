@@ -681,7 +681,7 @@ border-top-right-radius: 20px;
 box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.7);
 }
 
-.box-title span{
+.box-title > span{
 display:inline-block;
   overflow:hidden;
   white-space:nowrap;
