@@ -391,6 +391,7 @@ $(function() {
         //ajaxAssignTask(     $(this).parents(".task").first()      );
         $("#task-assign-unassign-form").dialog("open");
         window["parentTask"] = $(this).parents(".task").first();
+        window["parentBoard"] = $(this).parents(".board").first();
 
     });
 
@@ -496,29 +497,25 @@ $(function() {
     <div id="task-assign-unassign-form" class="forms-for-board" style="max-height: 600px; overflow-x: visible;" title="Assign or Unassign this task">
         <springform:form action="${pageContext.request.contextPath}/task/assign-task" method="POST" commandName="uWrapper">
             <table id="task-assign-unassign-table">
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td style="text-align: right;">Assign?</td>
-                </tr>
+
                 <springform:hidden id="taskIdForAssignUser" path="taskId" />
-                <c:forEach items="${uWrapper.userList}" var="wrapper" varStatus="idx">
-                    <springform:hidden path="userList[${idx.index}].userId"></springform:hidden>
-                    <tr>
-                        <td>
-                            <img src="${resourcesDir}/images/avatar-small.png"/>
-                        </td>
-                        <td style="width: 200px;">
-                            <span style="display:inline-block; text-align: left; font-weight: bold">${wrapper.firstName}&nbsp;${wrapper.lastName}</span> <br />
-                            <span style="display:inline-block; text-align: left;">${wrapper.email}</span>
-                        </td>
-                        <td style="text-align: right;">
-                            <springform:checkbox id="1" path="userList[${idx.index}].enableUserAssignId" cssStyle="display: block;"></springform:checkbox>
+                <%--<c:forEach items="${uWrapper.userList}" var="wrapper" varStatus="idx">--%>
+                    <%--<springform:hidden path="userList[${idx.index}].userId"></springform:hidden>--%>
+                    <%--<tr>--%>
+                        <%--<td>--%>
+                            <%--<img src="${resourcesDir}/images/avatar-small.png"/>--%>
+                        <%--</td>--%>
+                        <%--<td style="width: 200px;">--%>
+                            <%--<span style="display:inline-block; text-align: left; font-weight: bold">${wrapper.firstName}&nbsp;${wrapper.lastName}</span> <br />--%>
+                            <%--<span style="display:inline-block; text-align: left;">${wrapper.email}</span>--%>
+                        <%--</td>--%>
+                        <%--<td style="text-align: right;">--%>
+                            <%--<springform:checkbox id="1" path="userList[${idx.index}].enableUserAssignId" cssStyle="display: block;"></springform:checkbox>--%>
 
-                        </td>
-                    </tr>
+                        <%--</td>--%>
+                    <%--</tr>--%>
 
-                </c:forEach>
+                <%--</c:forEach>--%>
 
                 <tr>
                     <td><input type="reset" value="Reset" /></td><td><input type="submit" value="Submit" class="task-assign-unassign-wizard-submit" /></td>
@@ -732,6 +729,7 @@ $(document).ready(function(){
     $(document).on('click', '.task-assign-unassign-wizard', function(e) {
         //   $('#taskId-input-field').val(  $(this).parents(".task").first().attr('id') );
         $('#taskIdForAssignUser').val(  $(this).parents(".task").first().attr('id').split("-")[1] );
+        $('#task-assign-unassign-table').prepend('<tr><td></td><td style="text-align: right;">Assign?</td></tr>     <tr><td>User 1</td><td><input id="1" type="checkbox"/><label for="1" class="priv-checkbox-this"></label></td></tr>   <tr><td>User 1</td><td><input id="2" type="checkbox"/><label for="2" class="priv-checkbox-this"></label></td></tr>     <tr><td>User 3</td><td><input id="3" type="checkbox"/><label for="3" class="priv-checkbox-this"></label></td></tr>  ');
         console.log("task id for user assignment is :" +  $('#taskIdForAssignUser').val());
 //                    alert("hello "+$('#taskid-input-field').val());
     });
