@@ -75,47 +75,20 @@
                                             <span style="width: 40px;  display:inline-block; text-align: center;padding: 5px;">WIP: ${wrapper.wip}</span>
                                         </td>
                                         <td>
-                                            <c:url var="uId" value="profile-edit">
+                                            <c:url var="uId" value="profile-edit-personal">
                                                 <c:param name="uId" value="${wrapper.userId}" />
                                             </c:url>
                                             <a href='<c:out value="${uId}"/>'>Edit User</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
-                                <%--<tr>
-                                    <td>
-                                        <input id="1" type="checkbox" /><label for="1" class="priv-checkbox-this"></label>
-                                    </td>
 
-                                    <td>
-                                        <img src="${resourcesDir}/images/avatar-small.png" />
-                                    </td>
-                                    <td>
-                                        <span style="width:200px;  display:inline-block; text-align: left;">Masood Ahmad</span> <br />
-                                        <span style="width:200px;  display:inline-block; text-align: left;">masood@syncsysllc.com</span> <br />
-
-                                    </td>
-                                    <td>
-                                        <span style="width:100px;  display:inline-block; text-align: right; padding: 5px;">Admin</span>
-                                    </td>
-                                    <td>
-                                        <span style="width: 40px;  display:inline-block; text-align: center;padding: 5px;">WIP: 10</span>
-                                    </td>
-
-                                    <td>
-                                        <a href="#" style="display:inline-block; text-align: center;padding: 5px;">Edit User</a> <br />
-                                    </td>
-                                </tr>--%>
 
                             </table>
                         </div>
 
                     </div>
                     <div class="form-wrapper jQeffect-show-clip">
-
-                        <a href="#">1</a> &nbsp;&nbsp; <a href="#">2</a> &nbsp;&nbsp; <a href="#">3</a> &nbsp;&nbsp;
-                        <a href="#">4</a> &nbsp;&nbsp; <a href="#">5</a> &nbsp;&nbsp; <a href="#">6</a> &nbsp;&nbsp;
-                        <a href="#">7</a> &nbsp;&nbsp;
 
                         <br />
                         <br />

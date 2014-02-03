@@ -371,6 +371,32 @@ public class UsersServiceImpl implements UsersService{
         return userList;
     }
 
+    @Transactional
+    public ResultImpl listUsersWithDetail(UserWrapper uWrapper) {
+        List<UserWrapper> userList = new ArrayList<UserWrapper>();
+        Users userTable = null;
+        if(ValidationUtility.isExists(uWrapper.getUserList())){
+            for (UserWrapper wrapper : uWrapper.getUserList()) {
+                if(wrapper.isEnableUserEditId()){
+                    userTable = new Users();
+                    userTable = (Users)userDAO.findById(userTable, Long.valueOf(wrapper.getUserId()));
+                    wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
+                    userList.add(wrapper);
+                }
+            }
+        }
+
+        if(!userList.isEmpty() && userList.size()>0){
+            result.setIsSuccessful(true);
+            result.setObject(userList);
+        }else{
+            result.setIsSuccessful(false);
+            result.setObject(null);
+        }
+
+        return result;
+    }
+
     private UserWrapper populateWrapperFromRoleTable(UserWrapper wrapper, UserRoleForBoard table){
         wrapper.setRoleId("" + table.getId());
         wrapper.setRoleName(table.getRole());

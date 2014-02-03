@@ -48,6 +48,7 @@ public class UserController {
     private MessageSource messages;
     @Autowired
     private Result result;
+    private UserWrapper tempUserListWrapper = new UserWrapper();
     
     
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -115,21 +116,11 @@ public class UserController {
         System.out.println("\n Edit User GET method \n");
         UserWrapper wrapper = new UserWrapper();
         List<UserWrapper> usersList = null;
-        List<UserWrapper> roleList = null;
 
+        this.setTempUserListWrapper(null);
         usersList = userService.listUsersWithDetail();
-        roleList = userService.populateRoleList();
-
-        Map<String,String> roleMap = new LinkedHashMap<String, String>();
-        if (roleList != null && roleList.size() > 0) {
-            for (UserWrapper uWrapper : roleList) {
-                roleMap.put(uWrapper.getRoleId(), uWrapper.getRoleName());
-            }
-        }
-
-        //wrapper.setRoleList(roleList);
         wrapper.setUserList(usersList);
-        model.put("roleList", roleMap);
+
         model.put("editUserWrapper", wrapper);
 
         return "/users/edit";
@@ -138,31 +129,31 @@ public class UserController {
     @RequestMapping(value = "/users/edit", method = RequestMethod.POST)
     public String editUser(HttpSession session, @ModelAttribute("editUserWrapper")UserWrapper userWrapper, ModelMap model){
         System.out.println("\n Edit User POST method \n");
-
-        /*User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String loginId = springUser.getUsername(); //get logged in username (email)
-        result = userService.getUserByLoginId(loginId);
-        Users user = (Users)result.getObject();*/
-
-        result = userService.editUserAccess(userWrapper);
-        System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
-        if(result.getIsSuccessful()){
-            model.put("error", false);
-            model.put("success", true);
-            model.put("successMsg", result.getMessage());
-            System.out.println("\n********** Success message from controller ***************\n");
-        }else{
-            model.put("errorMsg", result.getMessage());
-            System.out.println("\n********** error message from controller ***************\n");
+        String returnString = "redirect:/users/edit";
+        model.put("error", true);
+        model.put("success", false);
+        model.put("errorMsg", "Please select user before edit technical information");
+        this.setTempUserListWrapper(null);
+        if (userWrapper.getUserList() != null && userWrapper.getUserList().size() > 0) {
+            for (UserWrapper uWrapper : userWrapper.getUserList()) {
+                if(uWrapper.isEnableUserEditId()){
+                    System.out.println("\n UserID: "+uWrapper.getUserId()+" Name:" + uWrapper.getFirstName());
+                    this.setTempUserListWrapper(userWrapper);
+                    model.put("error", false);
+                    model.put("success", false);
+                    returnString = "redirect:/users/profile-edit-technical";
+                }
+            }
         }
+
         //return "redirect:"+session.getAttribute("previous_page").toString();
-        return "redirect:/users/edit";
+        return returnString;
     }
 
-    @RequestMapping(value = "/users/profile-edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/profile-edit-personal", method = RequestMethod.GET)
     public String editUserProfile(HttpSession session, @RequestParam(required=false) String uId, ModelMap model){
         System.out.println("\n Edit User Info method \n");
-        String returnPage = "/users/profile-edit";
+        String returnPage = "/users/profile-edit-personal";
         if(ValidationUtility.isExists(uId)){
             result = userService.populateUserInfo(uId);
             model.put("editUserProfileWrapper", result.getObject());
@@ -185,7 +176,7 @@ public class UserController {
         return returnPage;
     }
 
-    @RequestMapping(value = "/users/profile-edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/profile-edit-personal", method = RequestMethod.POST)
     public String editUserProfile(HttpSession session,
                            @ModelAttribute("editUserProfileWrapper")UserWrapper userWrapper, ModelMap model){
         System.out.println("\n Edit User Info POST method \n");
@@ -204,11 +195,40 @@ public class UserController {
             }
         }else{
             model.put("errorMsg", "User Profile not updated. Please select user first");
-            //returnPage = "/users/profile-edit";
+            //returnPage = "/users/profile-edit-personal";
             returnPage = "/users/edit";
         }
 
         return "redirect:"+returnPage;// If we redirect, whole page populated and error/success message not displayed
+    }
+
+    @RequestMapping(value = "/users/profile-edit-technical", method = RequestMethod.GET)
+    public String editUserProfileTechnical(HttpSession session, ModelMap model){
+        System.out.println("\n Edit User Technical method \n");
+        UserWrapper wrapper = new UserWrapper();
+        List<UserWrapper> roleList = null;
+        roleList = userService.populateRoleList();
+
+        Map<String,String> roleMap = new LinkedHashMap<String, String>();
+        if (roleList != null && roleList.size() > 0) {
+            for (UserWrapper uWrapper : roleList) {
+                roleMap.put(uWrapper.getRoleId(), uWrapper.getRoleName());
+            }
+        }
+        model.put("roleList", roleMap);
+        String returnPage = "/users/profile-edit-technical";
+
+        if(ValidationUtility.isExists(this.tempUserListWrapper)){
+            result = userService.listUsersWithDetail(tempUserListWrapper);
+            wrapper.setUserList((List<UserWrapper>) result.getObject());
+            model.put("editUserTechnicalWrapper", wrapper);
+        }else{
+            model.put("errorMsg", "Please select user before edit user's technical information");
+            returnPage = "redirect:/users/edit";
+        }
+
+
+        return returnPage;
     }
 
     @RequestMapping(value = "/users/home" )
@@ -295,17 +315,14 @@ public class UserController {
         return "/users/profile-view";
     }
 
-    @RequestMapping(value = "/users/edit/profile/personal", method = RequestMethod.GET)
-    public String editUserProfilePersonal(ModelMap model){
-        return "/users/profile-edit-personal";
+
+    public UserWrapper getTempUserListWrapper() {
+        return tempUserListWrapper;
     }
 
-    @RequestMapping(value = "/users/edit/profile/technical", method = RequestMethod.GET)
-    public String editUserProfileTechnical(ModelMap model){
-        return "/users/profile-edit-technical";
+    public void setTempUserListWrapper(UserWrapper tempUserListWrapper) {
+        this.tempUserListWrapper = tempUserListWrapper;
     }
-
-
 }
 
 

@@ -1,6 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" />
 <c:set var="pageTitle" scope="request" >
@@ -23,9 +24,9 @@
 <div class="wrapper-for-form-block">
     <div class="form-block">
 
-        <div style="display: block; ">
+        <div style="display: block;  ">
             <div class="form-messages">
-                <span class="form-title">Edit Profile - Personal Information</span>
+                <span class="form-title">Edit Profile</span>
 
                 <c:if test="${param.error}">
                     <span class="message-error">${replace this with server side message}</span>
@@ -36,13 +37,12 @@
                 </c:if>
             </div>
             <div>
-                <form>
+                <form:form action="${pageContext.request.contextPath}/users/profile-edit-personal" method="post" commandName="editUserProfileWrapper" >
                     <div class="form-wrapper jQeffect-show-clip" >
-
                         <div class="inner-form-wrapper" >
 
-
-                            <input type="hidden" name="userIdhere" />
+                            <h2>Personal</h2>
+                            <form:hidden path="userId"/>
                             <table>
                                 <tbody>
                                 <tr>
@@ -61,7 +61,7 @@
                                     </td>
 
                                     <td>
-                                        <input class="form-input" type="text" value="Masood" />
+                                        <form:input path="firstName" cssClass="form-input"/>
                                     </td>
 
                                 </tr>
@@ -71,7 +71,7 @@
                                     </td>
 
                                     <td>
-                                        <input class="form-input" type="text" value="Ahmad" />
+                                        <form:input path="lastName" cssClass="form-input" />
                                     </td>
 
                                 </tr>
@@ -81,7 +81,7 @@
                                     </td>
 
                                     <td>
-                                        <input class="form-input" type="email" value="masood@syncsysllc.com" />
+                                        <form:input path="email"  cssClass="form-input"/>
                                     </td>
 
                                 </tr>
@@ -91,85 +91,32 @@
                                     </td>
 
                                     <td>
-                                        <input class="form-input" type="text" value="256c Model Town" />
+                                        <form:input path="address"  cssClass="form-input"/>
                                     </td>
 
                                 </tr>
                                 <tr>
                                     <td class="form-input-description">
-                                        City:
+                                        Contact Number:
                                     </td>
 
                                     <td>
-                                        <input class="form-input" type="text" value="Lahore" />
+                                        <form:input path="contactNumber"  cssClass="form-input"/>
                                     </td>
-
-                                </tr>
-                                <tr>
-                                    <td class="form-input-description">
-                                        State/Province:
-                                    </td>
-
-                                    <td>
-                                        <input class="form-input" type="text" value="Punjab" />
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td class="form-input-description">
-                                        Country:
-                                    </td>
-
-                                    <td>
-                                        <input class="form-input" type="text" value="Pakistan" />
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td class="form-input-description">
-                                        Phone (landline):
-                                    </td>
-
-                                    <td>
-                                        <input class="form-input" type="text" value="042 123456789" />
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-                                    <td class="form-input-description">
-                                        Phone (office):
-                                    </td>
-
-                                    <td>
-                                        <input class="form-input" type="text" value="042 987654321" />
-                                    </td>
-
-                                </tr>
-                                <td class="form-input-description">
-                                    Phone (Cell):
-                                </td>
-
-                                <td>
-                                    <input class="form-input" type="text" value="03134955672" />
-                                </td>
 
                                 </tr>
                                 </tbody>
                             </table>
-
-
-
                         </div>
 
                     </div>
                     <div class="form-wrapper jQeffect-show-clip">
 
-                        <input type="submit" value="Update" />&nbsp; &nbsp;
+                        <input type="submit" value="Update" />&nbsp;   &nbsp;
                         <input type="reset" value="Reset" />
 
                     </div>
-                </form>
+                </form:form>
             </div>
         </div>
 
@@ -189,5 +136,3 @@
 
 
 <c:import url="${mainDir}/common/footer.jsp" />
-
-
