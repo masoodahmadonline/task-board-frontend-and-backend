@@ -1070,10 +1070,10 @@ function ajaxAssignTask(task){
             //$( "#task-assign-unassign-form" ).load( "${pageContext.request.contextPath}/task/assign/"+taskId+" #task-assign-unassign-table" );
             alert("1");
             var userList = response;
-            alert(userList);
+            /*alert(userList);
             $.each(userList, function( index, value ) {
                 alert( index + ": " + value );
-            });
+            });*/
             window["parentTask"] = $(this).parents(".task").first();
             $('#taskIdForAssignUser').val(  $(this).parents(".task").first().attr('id').split("-")[1] );
             $('#task-assign-unassign-table').prepend(+
