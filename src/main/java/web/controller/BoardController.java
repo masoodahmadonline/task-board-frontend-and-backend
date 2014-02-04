@@ -98,6 +98,7 @@ public class BoardController {
                             task.setUserSize("0");
                         }
                     }
+
                 }
             }
         }else{
