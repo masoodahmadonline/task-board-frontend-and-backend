@@ -67,13 +67,13 @@ public class BoardController {
        List<UserWrapper> usersList = null;
        usersList = userService.listUsersWithDetail();
        //UserWrapper userWrapper = new UserWrapper();
-       userWrapper.setUserList(usersList);
+       //userWrapper.setUserList(usersList);
        //model.put("uWrapper", userWrapper);
        model.put("viewAssignForm", true);
        if(ValidationUtility.isExists(userWrapper.getUserList()))
-       System.out.println("\n\nuser List size in view board: " + userWrapper.getUserList().size() + "\n\n");
-       //System.out.println("\nDuring Board population: No. of Users: " + usersList.size() +"\n");
-
+           for(UserWrapper wr : userWrapper.getUserList()){
+               System.out.println("User enabled Initial: " + wr.isEnableUserAssignId());
+           }
        String[] uriArray = request.getRequestURI().toString().split("/");
         int uriArraySize = uriArray.length;
         session.setAttribute("previous_page", "/"+uriArray[uriArraySize-2]+"/"+uriArray[uriArraySize-1]);
@@ -108,29 +108,17 @@ public class BoardController {
    }
 
     //ajax
-    /*@RequestMapping (value = "/task/assign/{taskId}", method= RequestMethod.GET)
-    public @ResponseBody String assignTask(ModelMap model, @PathVariable(value="taskId") String taskId){
+    @RequestMapping (value = "/task/assign/{taskId}", method= RequestMethod.GET)
+    public @ResponseBody List<UserWrapper> assignTask(ModelMap model, @PathVariable(value="taskId") String taskId){
         System.out.println("task assign controller method called.");
-        List<UserWrapper> usersList = null;
-        UserWrapper userWrapper = new UserWrapper();
         if(ValidationUtility.isExists(taskId)){
-            result = userService.getTaskUsersList(Long.valueOf(taskId));
-            userWrapper.setUserList((List<UserWrapper>) result.getObject());
-            System.out.println("\n\nuser List size in assign task: " + userWrapper.getUserList().size() +"\n\n");
+            result = userService.getTaskUsersListAll(Long.valueOf(taskId));
         }
-        //viewBoard(model,request, session, "3", userWrapper);
-        System.out.println("\n\nuser List size in assign task 2: " + userWrapper.getUserList().size() +"\n\n");
-        if (result.getIsSuccessful()) {
-            model.put("successMessages", result.getMessageList());
-            model.put("uWrapper", userWrapper);
-            System.out.println("task assign list populated success------------------");
-            return "success";//queued - send model message also (if needed)
-        }else{
-            System.out.println("task assign list populated failed ---------------");
-            model.put("errorMessages", result.getMessageList());
-            return "failure";//queued - send model message also (if needed)
+        for(UserWrapper wr : (List<UserWrapper>) result.getObject()){
+            System.out.println("User enabled : " + wr.isEnableUserAssignId());
         }
-    }*/
+        return (List<UserWrapper>) result.getObject();
+    }
 }
 
 

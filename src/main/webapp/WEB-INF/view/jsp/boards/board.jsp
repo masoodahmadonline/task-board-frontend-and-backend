@@ -147,9 +147,9 @@ function ajaxCreateTask(parentBox){
                 ajaxDeleteTask(     $(this).parents(".task").first()      );
             });
             $('#taskid-'+fetchedTaskId+' .task-assign-unassign-wizard').click(function () {
-                //ajaxAssignTask($(this).parents(".task").first());
-                $("#task-assign-unassign-form").dialog("open");
-                window["parentTask"] = $(this).parents(".task").first();
+                ajaxAssignTask($(this).parents(".task").first());
+                //$("#task-assign-unassign-form").dialog("open");
+                //window["parentTask"] = $(this).parents(".task").first();
             });
 
         },
@@ -388,8 +388,8 @@ $(function() {
     });
 
     $(".task-assign-unassign-wizard").click(function () {
-        //ajaxAssignTask(     $(this).parents(".task").first()      );
-        $("#task-assign-unassign-form").dialog("open");
+        ajaxAssignTask(     $(this).parents(".task").first()      );
+        //$("#task-assign-unassign-form").dialog("open");
         window["parentTask"] = $(this).parents(".task").first();
         window["parentBoard"] = $(this).parents(".board").first();
 
@@ -496,9 +496,9 @@ $(function() {
 <c:if test="${viewAssignForm}">
     <div id="task-assign-unassign-form" class="forms-for-board" style="max-height: 600px; overflow-x: visible;" title="Assign or Unassign this task">
         <springform:form action="${pageContext.request.contextPath}/task/assign-task" method="POST" commandName="uWrapper">
-            <table id="task-assign-unassign-table">
-
-                <springform:hidden id="taskIdForAssignUser" path="taskId" />
+        <table id="task-assign-unassign-table">
+            <%--<springform:form action="${pageContext.request.contextPath}/task/assign-task" method="POST" commandName="uWrapper">
+                <springform:hidden id="taskIdForAssignUser" path="taskId" />--%>
                 <%--<c:forEach items="${uWrapper.userList}" var="wrapper" varStatus="idx">--%>
                     <%--<springform:hidden path="userList[${idx.index}].userId"></springform:hidden>--%>
                     <%--<tr>--%>
@@ -512,29 +512,29 @@ $(function() {
                         <%--<td style="text-align: right;">--%>
                             <%--<springform:checkbox id="1" path="userList[${idx.index}].enableUserAssignId" cssStyle="display: block;"></springform:checkbox>--%>
 
+
                         <%--</td>--%>
                     <%--</tr>--%>
 
                 <%--</c:forEach>--%>
 
-                <tr>
-                    <td><input type="reset" value="Reset" /></td><td><input type="submit" value="Submit" class="task-assign-unassign-wizard-submit" /></td>
-                </tr>
-            </table>
+            <%--<tr><td><input type="reset" value="Reset" /></td><td><input type="submit" value="Submit" class="task-assign-unassign-wizard-submit" /></td></tr>
+            --%>
+        </table>
         </springform:form>
     </div>
 </c:if>
 
 <div id="file-attachment-form" class="forms-for-board" title="Attach a file to this task">
-    <form action="${pageContext.request.contextPath}/task/attach-file" method="POST" enctype="multipart/form-data">
-        <table>
-            <input type="file" name="file" id="file">
-            <tr>
-                <td>File description</td>
-                <td><textarea id="fileDescription" name="fileDescription" style="min-height: 100px;"></textarea></td>
-            </tr>
-            <input id="taskIdForFileUpload" type="hidden" name="taskIdForFileUpload" value="" />
-            <%--<input id="taskIdForFileUpload" type="hidden" name="taskIdForFileUpload" value="233" />--%>
+<form action="${pageContext.request.contextPath}/task/attach-file" method="POST" enctype="multipart/form-data">
+<table>
+<input type="file" name="file" id="file">
+<tr>
+    <td>File description</td>
+    <td><textarea id="fileDescription" name="fileDescription" style="min-height: 100px;"></textarea></td>
+</tr>
+<input id="taskIdForFileUpload" type="hidden" name="taskIdForFileUpload" value="" />
+<%--<input id="taskIdForFileUpload" type="hidden" name="taskIdForFileUpload" value="233" />--%>
 
             <%--<tr>--%>
             <%--<td><input type="file" name="file" id="file"> </td>--%>
@@ -726,13 +726,33 @@ $(document).ready(function(){
 //                    alert("hello "+$('#taskid-input-field').val());
     });
 
-    $(document).on('click', '.task-assign-unassign-wizard', function(e) {
+    /*$(document).on('click', '.task-assign-unassign-wizard', function(e) {
         //   $('#taskId-input-field').val(  $(this).parents(".task").first().attr('id') );
+        ajaxAssignTask($(this).parents(".task").first());
         $('#taskIdForAssignUser').val(  $(this).parents(".task").first().attr('id').split("-")[1] );
-        $('#task-assign-unassign-table').prepend('<tr><td></td><td style="text-align: right;">Assign?</td></tr>     <tr><td>User 1</td><td><input id="1" type="checkbox"/><label for="1" class="priv-checkbox-this"></label></td></tr>   <tr><td>User 1</td><td><input id="2" type="checkbox"/><label for="2" class="priv-checkbox-this"></label></td></tr>     <tr><td>User 3</td><td><input id="3" type="checkbox"/><label for="3" class="priv-checkbox-this"></label></td></tr>  ');
+        $('#task-assign-unassign-table').prepend(+
+            ''+
+            '<c:forEach items="${uWrapper.userList}" var="wrapper" varStatus="idx">' +
+            '   ' +
+            '   <tr>' +
+            '       <td>' +
+            '           <img src="${resourcesDir}/images/avatar-small.png"/>' +
+            '       </td>' +
+            '       <td style="width: 200px;">' +
+            '           <span style="display:inline-block; text-align: left; font-weight: bold">${wrapper.firstName}&nbsp;${wrapper.lastName}</span> <br />' +
+            '           <span style="display:inline-block; text-align: left;">${wrapper.email}${wrapper.enableUserAssignId}</span>' +
+            '       </td>' +
+            '       <td style="text-align: right;">' +
+            '           <input id="1" type="checkbox" name="userList[${idx.index}].enableUserAssignId" cssStyle="display: block;"/>' +
+            '       </td>' +
+            '   </tr>' +
+            '</c:forEach>'+
+            '<tr><td><input type="reset" value="Reset" /></td><td><input type="submit" value="Submit" class="task-assign-unassign-wizard-submit" /></td></tr>'+
+            ''
+        );
         console.log("task id for user assignment is :" +  $('#taskIdForAssignUser').val());
 //                    alert("hello "+$('#taskid-input-field').val());
-    });
+    });*/
 
 //            $( ".attachment-content" ).dialog({
 ////                     autoOpen: false,
@@ -1048,9 +1068,37 @@ function ajaxAssignTask(task){
         success: function(response){
             //$("#task-assign-unassign-form").load(".forms-for-board");
             //$( "#task-assign-unassign-form" ).load( "${pageContext.request.contextPath}/task/assign/"+taskId+" #task-assign-unassign-table" );
-            $("#task-assign-unassign-form").dialog("open");
+            alert("1");
+            var userList = response;
+            alert(userList);
+            $.each(userList, function( index, value ) {
+                alert( index + ": " + value );
+            });
             window["parentTask"] = $(this).parents(".task").first();
-            //$("#task-assign-unassign-form").load(".forms-for-board");
+            $('#taskIdForAssignUser').val(  $(this).parents(".task").first().attr('id').split("-")[1] );
+            $('#task-assign-unassign-table').prepend(+
+                    ''+
+                    '<c:forEach items="${userList}" var="wrapper" varStatus="idx">' +
+                    '   ' +
+                    '   <tr>' +
+                    '       <td>' +
+                    '           <img src="${resourcesDir}/images/avatar-small.png"/>' +
+                    '       </td>' +
+                    '       <td style="width: 200px;">' +
+                    '           <span style="display:inline-block; text-align: left; font-weight: bold">${wrapper.firstName}&nbsp;${wrapper.lastName}</span> <br />' +
+                    '           <span style="display:inline-block; text-align: left;">${wrapper.email}${wrapper.enableUserAssignId}</span>' +
+                    '       </td>' +
+                    '       <td style="text-align: right;">' +
+                    '           <input id="1" type="checkbox" name="userList[${idx.index}].enableUserAssignId" cssStyle="display: block;"/>' +
+                    '       </td>' +
+                    '   </tr>' +
+                    '</c:forEach>'+
+                    '<tr><td><input type="reset" value="Reset" /></td><td><input type="submit" value="Submit" class="task-assign-unassign-wizard-submit" /></td></tr>'+
+                    ''
+            );
+            alert("2");
+            $("#task-assign-unassign-form").dialog("open");
+            console.log("task id for user assignment is :" +  $('#taskIdForAssignUser').val());
         },
         error: function(){
             alert('Error while request..');
@@ -1073,60 +1121,6 @@ function ajaxAssignTask(task){
     });
 }*/
 
-/*function createDialog(abc) {
-    return $("<div id='task-assign-unassign-form-1' class='forms-for-board' style='max-height: 600px; overflow-x: visible;' title='"+abc+"'>" +
-            "<springform:form action='${pageContext.request.contextPath}/task/assign-task' method='POST' commandName='uWrapper'>" +
-            "   <table id='task-assign-unassign-table-1'>" +
-            "       <tr><td></td><td></td><td style='text-align: right;'>Assign?</td></tr>" +
-            "           <springform:hidden id='taskIdForAssignUser-1' path='taskId' />" +
-            "           <c:forEach items='${uWrapper.userList}' var='wrapper' varStatus='idx'>" +
-            "               <springform:hidden path='userList[${idx.index}].userId'></springform:hidden>" +
-            "               <tr><td>" +
-            "                   <img src='${resourcesDir}/images/avatar-small.png'/></td>" +
-            "                   <td style='width: 200px;'>" +
-            "                       <span style='display:inline-block; text-align: left; font-weight: bold'>${wrapper.firstName}&nbsp;${wrapper.lastName}</span> <br />" +
-            "                       <span style='display:inline-block; text-align: left;'>${wrapper.email}</span></td>"+
-            "                    <td style='text-align: right;'>" +
-            "                       <springform:checkbox id='1-1' path='userList[${idx.index}].enableUserAssignId' cssStyle='display: block;'></springform:checkbox>" +
-            "                    </td></tr>"+
-            "           </c:forEach>"+
-            "       <tr>" +
-            "           <td><input type='reset' value='Reset' /></td><td><input type='submit' value='Submit' class='task-assign-unassign-wizard-submit' /></td>" +
-            "       </tr>" +
-            "   </table>"+
-            "</springform:form>"+
-            "</div>")
-            .dialog({
-                resizable: false,
-                height:340,
-                modal: true,
-                buttons: {
-                    "Confirm": function() {
-                        $( this ).dialog( "close" );
-                    },
-                    Cancel: function() {
-                        $( this ).dialog( "close" );
-                    }
-                }
-            });
-}*/
-
-function createDialog(title, text) {
-    return $("<div class='dialog' title='" + title + "'><p>" + text + "</p></div>")
-            .dialog({
-                resizable: false,
-                height:140,
-                modal: true,
-                buttons: {
-                    "Confirm": function() {
-                        $( this ).dialog( "close" );
-                    },
-                    Cancel: function() {
-                        $( this ).dialog( "close" );
-                    }
-                }
-            });
-}
 
 </script>
 </div>
