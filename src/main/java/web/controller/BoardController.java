@@ -69,7 +69,6 @@ public class BoardController {
        //UserWrapper userWrapper = new UserWrapper();
        //userWrapper.setUserList(usersList);
        //model.put("uWrapper", userWrapper);
-
        model.put("viewAssignForm", true);
        if(ValidationUtility.isExists(userWrapper.getUserList()))
            for(UserWrapper wr : userWrapper.getUserList()){
