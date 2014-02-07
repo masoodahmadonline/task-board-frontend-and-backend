@@ -108,6 +108,31 @@ body {
 
 
 
+.menu-items-row-for-top{
+  margin: 90px 100px 5px 50px;
+  text-align: center;
+
+}
+
+
+.menu-items-row-for-middle{
+  margin: 5px 80px 5px 25px;
+  text-align: center;
+}
+
+.menu-items-row-for-bottom{
+  margin: 5px 110px 110px 75px;
+  text-align: center;
+}
+
+.menu-item-wrapper{
+  border: thin red solid;
+  display: inline-block;
+  width:50px;
+  height: 40px;
+  margin: 0px 5px;
+}
+
 
 .ui-draggable, .ui-droppable {
 	background-position: top;
