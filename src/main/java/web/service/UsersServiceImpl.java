@@ -451,6 +451,7 @@ public class UsersServiceImpl implements UsersService{
                 userList.remove(wrapper);
             }
 
+
         }
 
         if(userList.size()>0){
@@ -466,6 +467,63 @@ public class UsersServiceImpl implements UsersService{
 
         return returnWrapper;
     }
-    
- 
+
+    public ResultImpl getTaskUsersListAll(Long taskId){
+        Tasks tTable = new Tasks();
+
+        tTable = (Tasks)userDAO.findById(tTable, taskId);
+        List<UserWrapper> userList = new ArrayList<UserWrapper>();
+        Users userTable = new Users();
+        List list = new ArrayList();
+        UserWrapper returnWrapper = null;
+
+        list = userDAO.findAll(userTable);
+
+        for (int i = 0; i < list.size(); i++) {
+            userTable = (Users) list.get(i);
+            UserWrapper wrapper = null;
+            wrapper = new UserWrapper();
+            wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
+            if(userTable.getTaskList().contains(tTable)){
+                System.out.println("\n ---- User exist for Task: " + tTable.getId());
+                System.out.println("---- Task exist for User: " + userTable.getId()+"\n");
+                wrapper.setEnableUserAssignId(true);
+            }
+            userList.add(wrapper);
+        }
+
+        if(!userList.isEmpty() && userList.size()>0){
+            result.setIsSuccessful(true);
+            result.setObject(userList);
+        }else{
+            result.setIsSuccessful(false);
+            result.setObject(null);
+        }
+
+        return result;
+    }
+
+    @Transactional(readOnly = false)
+    public ResultImpl changePassword(UserWrapper wrapper) {
+
+        Users userTable = new Users();
+        userTable = (Users)userDAO.findById(userTable, Long.valueOf(wrapper.getUserId()));
+        if(userTable.getPassword().equals(wrapper.getOldPassword())){
+            userTable.setPassword(wrapper.getPassword1());
+            userDAO.save(userTable);
+            result.setIsSuccessful(true);
+            result.setObject(wrapper);
+            result.setMessage("Your Password has been changed successfully");
+            return result;
+        }else{
+            result.setIsSuccessful(false);
+            result.setObject(null);
+            result.setMessage("Password not changed. Your old Password does not exist in database");
+            return result;
+        }
+    }
+
+
+
+
 }

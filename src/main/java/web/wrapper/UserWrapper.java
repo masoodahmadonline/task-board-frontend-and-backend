@@ -19,6 +19,7 @@ public class UserWrapper implements Serializable {
     private String contactNumber;
     private String firstName;
     private String lastName;
+    private String oldPassword;
     private String password1;
     private String password2;
     private String enableUser;
@@ -45,6 +46,7 @@ public class UserWrapper implements Serializable {
         this.setContactNumber("");
         this.setFirstName("");
         this.setLastName("");
+        this.setOldPassword("");
         this.setPassword1("");
         this.setPassword2("");
         this.setEnableUser("");
@@ -236,5 +238,18 @@ public class UserWrapper implements Serializable {
 
     public void setTaskUserExistMultiple(boolean taskUserExistMultiple) {
         this.taskUserExistMultiple = taskUserExistMultiple;
+    }
+
+    @Override
+    public String toString() {
+        return "User [Email=" + email +"]";
+    }
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
     }
 }

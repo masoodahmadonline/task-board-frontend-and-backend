@@ -27,7 +27,9 @@ public interface UsersService {
     ResultImpl editUserAccess(UserWrapper wrapper);  // Edit list of user's access
     ResultImpl populateUserInfo(String userId);  // Edit User Info
     ResultImpl taskAssignment(UserWrapper wrapper);  // Assign/ Un-assign task to users
-    UserWrapper getTaskUsersList(Long taskId);  // get list of users for each task
+    UserWrapper getTaskUsersList(Long taskId);  // get list of user-icons for each task
     ResultImpl updateUserInfo(UserWrapper wrapper);     // Farhan - added for updating user profile information
+    ResultImpl getTaskUsersListAll(Long taskId);   // get list of all user for each task
+    ResultImpl changePassword(UserWrapper wrapper);     // Farhan - added for changing a user's password
   
 }
