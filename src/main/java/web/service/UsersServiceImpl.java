@@ -502,6 +502,28 @@ public class UsersServiceImpl implements UsersService{
 
         return result;
     }
-    
- 
+
+    @Transactional(readOnly = false)
+    public ResultImpl changePassword(UserWrapper wrapper) {
+
+        Users userTable = new Users();
+        userTable = (Users)userDAO.findById(userTable, Long.valueOf(wrapper.getUserId()));
+        if(userTable.getPassword().equals(wrapper.getOldPassword())){
+            userTable.setPassword(wrapper.getPassword1());
+            userDAO.save(userTable);
+            result.setIsSuccessful(true);
+            result.setObject(wrapper);
+            result.setMessage("Your Password has been changed successfully");
+            return result;
+        }else{
+            result.setIsSuccessful(false);
+            result.setObject(null);
+            result.setMessage("Password not changed. Your old Password does not exist in database");
+            return result;
+        }
+    }
+
+
+
+
 }

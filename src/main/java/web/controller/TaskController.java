@@ -5,6 +5,11 @@
 package web.controller;
 
 import org.apache.commons.io.FileUtils;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpRequest;
@@ -27,7 +32,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
+
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpSession;
 
@@ -48,8 +54,8 @@ public class TaskController {
     private MessageSource messages;
     @Autowired
     private Result result;
-    
-    
+
+
     //ajax
     @RequestMapping (value = "/task/create/{parentBoxId}/{taskTitle}/{taskDescription}", method=RequestMethod.GET)
     public @ResponseBody  Tasks createTask(ModelMap model,
@@ -218,13 +224,82 @@ public class TaskController {
         }
     } //queued - send model message also (if needed)
 
+    @RequestMapping (value = "/task/assign-task/{tId}", method=RequestMethod.POST)
+    public @ResponseBody String taskAssignment(HttpServletRequest request, ModelMap model,
+                                 @PathVariable(value="tId") String tId
 
-    @RequestMapping (value = "/task/assign-task", method=RequestMethod.POST)
-    public String taskAssignment( HttpSession session, @ModelAttribute("uWrapper")UserWrapper userWrapper, ModelMap model) throws IOException {
+    ) throws IOException {
 
-        System.out.println("\n Task Id after POST method (for user assignment): "+userWrapper.getTaskId()+"\n");
-        result = userService.taskAssignment(userWrapper);
-        System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
+        System.out.println("\n Task Id after POST method (for user assignment) : "+tId+"\n");
+        //List<UserWrapper> names;
+        String[] names2 = request.getParameterValues("ulist");
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        System.out.println("List: "+ names2);
+        List<String> lList = Arrays.asList(names2);
+        //List<UserWrapper> names = (List<UserWrapper>) lList.toArray();
+        /*Object array = lList;
+        List<UserWrapper> namesss = (List<UserWrapper>) array;
+        System.out.println(namesss);*/
+        /*for(UserWrapper w: namesss){
+            System.out.println("Email:" + w.getEmail());
+            System.out.println("Assign? " + w.isEnableUserAssignId());
+        }*/
+
+        /*System.out.println("#2 for");
+        for (int i = 0; i < lList.size(); i++) {
+
+            System.out.println(lList.get(i));
+        }
+        System.out.println("#1 iterator");
+        Iterator<String> iterator = lList.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }*/
+        // for loop advance
+        System.out.println("#3 for advance");
+        String jsonInput = "{\"JObjects\":{\"JArray1\":[{\"A\":\"a\",\"B\":\"b\",\"C\":\"c\"},{\"A\":\"a1\",\"B\":\"b2\",\"C\":\"c3\",\"D\":\"d4\",\"E\":\"e5\"},{\"A\":\"aa\",\"B\":\"bb\",\"C\":\"cc\",\"D\":\"dd\"}]}}";
+
+        for (String s : lList) {
+            //UserWrapper uWrapper2 = mapper.readValue(temp, UserWrapper.class);
+            System.out.println("String # 3" + s);
+            JSONParser parser=new JSONParser();
+            Object obj = null;
+            try {
+                obj = parser.parse(s);
+                JSONArray array = (JSONArray)obj;
+                for(int i = 0; i < array.size(); i++){
+                    JSONObject jObject = (JSONObject)array.get(i);
+                    Set elementNames = jObject.keySet();
+                    Iterator iter = elementNames.iterator();
+                    while(iter.hasNext()){
+                        Object ob = iter.next();
+                        System.out.println("Key:"+ ob + "Value:" +jObject.get(ob));
+
+                    }
+                    Collection elementValues = jObject.values();
+                    System.out.printf("%d ELEMENTS IN CURRENT OBJECT:\n", elementNames.size());
+                    System.out.printf("name=%s\n", elementNames);
+                    System.out.printf("value=%s\n", elementValues);
+
+
+                    /*for (String elementName : elementNames)
+                    {
+                        String value = (String) jObject.get(elementName);
+                        System.out.printf("name=%s, value=%s\n", elementName, value);
+                    }*/
+                }
+
+
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
+
+
+        //result = userService.taskAssignment(userWrapper);
+        //System.out.println("\n size of user's list: "+ulist.size()+"\n");
         /*if(result.getIsSuccessful()){
             model.put("error", false);
             model.put("success", true);
@@ -239,8 +314,8 @@ public class TaskController {
             model.put("errorMessages", result.getMessageList());
             System.out.println("\n********** error message from controller ***************\n");
         }*/
-        return "redirect:"+session.getAttribute("previous_page").toString();
-        //return "boards/board";
+        //return "redirect:"+session.getAttribute("previous_page").toString();
+        return "success";
     }
 
 }

@@ -231,6 +231,55 @@ public class UserController {
         return returnPage;
     }
 
+    @RequestMapping(value = "/users/change-password", method = RequestMethod.GET)
+    public String changeUserPassword(HttpSession session, @RequestParam(required=false) String uId, ModelMap model){
+        System.out.println("\n Change Password Get method \n");
+        String returnPage = "/users/change-password";
+        if(ValidationUtility.isExists(uId)){
+            UserWrapper wrapper = new UserWrapper();
+            wrapper.setUserId(uId);
+            model.put("changePasswordWrapper", wrapper);
+
+        }else{
+            model.put("errorMsg", "Please select user before edit user's profile information");
+            returnPage = "/users/edit";
+        }
+
+
+        return returnPage;
+    }
+
+    @RequestMapping(value = "/users/change-password", method = RequestMethod.POST)
+    public String changePassword(HttpSession session,
+                                  @ModelAttribute("changePasswordWrapper")UserWrapper userWrapper, ModelMap model){
+        System.out.println("\n Change Password POST method \n");
+        String returnPage = "/users/change-password";
+        model.put("error", true);
+        model.put("success", false);
+        if(!ValidationUtility.isExists(userWrapper.getOldPassword())){
+            model.put("errorMsg", "Please enter your old password first");
+        }else if(!ValidationUtility.isExists(userWrapper.getPassword1())){
+            model.put("errorMsg", "Please enter both Passwords");
+        }else if(!ValidationUtility.isExists(userWrapper.getPassword2())){
+            model.put("errorMsg", "Please enter both Passwords");
+        }else if(!userWrapper.getPassword1().equals(userWrapper.getPassword2())){
+            model.put("errorMsg", "New Passwords don't match");
+        }else {
+            result = userService.changePassword(userWrapper);
+            if(result.getIsSuccessful()){
+                model.put("error", false);
+                model.put("success", true);
+                model.put("successMsg", result.getMessage());
+                System.out.println("\n********** Success message from controller ***************\n");
+            }else{
+                model.put("errorMsg", result.getMessage());
+                System.out.println("\n********** error message from controller ***************\n");
+            }
+        }
+
+        return returnPage;// If we redirect, whole page populated and error/success message not displayed
+    }
+
     @RequestMapping(value = "/users/home" )
     public String userHome(ModelMap model, HttpServletRequest request) {
         User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -249,6 +298,12 @@ public class UserController {
 //        model.addAttribute("username", user.getName());
         System.out.println("user-home shown--------------------");
         return "/users/home";       
+    }
+
+    @RequestMapping(value = "/users/back-to-edit-user" )
+    public String usersBackPage(HttpSession session) {
+        //return "redirect:"+session.getAttribute("previous_page").toString();
+        return "redirect:/users/edit";
     }
     
     @RequestMapping(value = "/logoutfail" )

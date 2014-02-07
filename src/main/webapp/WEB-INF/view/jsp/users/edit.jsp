@@ -80,6 +80,12 @@
                                             </c:url>
                                             <a href='<c:out value="${uId}"/>'>Edit User</a>
                                         </td>
+                                        <td>
+                                            <c:url var="uId" value="change-password">
+                                                <c:param name="uId" value="${wrapper.userId}" />
+                                            </c:url>
+                                            <a href='<c:out value="${uId}"/>'>Change Password</a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
 

@@ -21,6 +21,16 @@
  
 	<dependencies>
                 <dependency>
+                    <groupId>org.json</groupId>
+                    <artifactId>json</artifactId>
+                    <version>20140107</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.clerezza.ext</groupId>
+                    <artifactId>org.json.simple</artifactId>
+                    <version>0.3-incubating</version>
+                </dependency>
+                <dependency>
                     <groupId>org.hibernate</groupId>
                     <artifactId>hibernate-core</artifactId>
                     <version>4.2.3.Final</version>

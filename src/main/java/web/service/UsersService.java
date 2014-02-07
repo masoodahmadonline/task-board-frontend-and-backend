@@ -30,5 +30,6 @@ public interface UsersService {
     UserWrapper getTaskUsersList(Long taskId);  // get list of user-icons for each task
     ResultImpl updateUserInfo(UserWrapper wrapper);     // Farhan - added for updating user profile information
     ResultImpl getTaskUsersListAll(Long taskId);   // get list of all user for each task
+    ResultImpl changePassword(UserWrapper wrapper);     // Farhan - added for changing a user's password
   
 }
