@@ -50,6 +50,25 @@ body {
   /**background-color: opacify(lighten( rgba($baseColorRed,$baseColorGreen,$baseColorBlue, 0.3), 10%),0.8);**/
   background-color: rgba(160, 191, 218, 0.9); }
 
+.menu-items-row-for-top {
+  margin: 90px 100px 5px 50px;
+  text-align: center; }
+
+.menu-items-row-for-middle {
+  margin: 5px 80px 5px 25px;
+  text-align: center; }
+
+.menu-items-row-for-bottom {
+  margin: 5px 110px 110px 75px;
+  text-align: center; }
+
+.menu-item-wrapper {
+  border: thin red solid;
+  display: inline-block;
+  width: 50px;
+  height: 40px;
+  margin: 0px 5px; }
+
 .ui-draggable, .ui-droppable {
   background-position: top; }
 
@@ -768,14 +787,13 @@ input[type=checkbox]:checked + label {
   height: 15px; }
 
 .user-icon2 {
-    cursor: pointer;
-    background-image: url("../images/avatar-small.png");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    position: absolute;
-    left: 60px;
-    bottom: -10px;
-    width: 15px;
-    height: 15px;
-}
+  cursor: pointer;
+  background-image: url("../images/avatar-small.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  position: absolute;
+  left: 60px;
+  bottom: -10px;
+  width: 15px;
+  height: 15px; }
