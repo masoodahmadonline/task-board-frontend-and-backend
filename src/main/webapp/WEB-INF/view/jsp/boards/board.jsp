@@ -1047,7 +1047,7 @@ function ajaxAssignTask(task){
                     '           <span style="display:inline-block; text-align: left;">'+value.email+'&nbsp;'+value.enableUserAssignId+'</span>' +
                     '       </td>'+
 
-                    '        <td><input id="checkBoxId" type="checkbox" name="enableUserAssignId" checked=no value='+value.enableUserAssignId+' style="display: block;" /></td>'+
+                    '        <td><input id="checkBoxId" type="checkbox" name="enableUserAssignId" value='+value.enableUserAssignId+' style="display: block;" /></td>'+
                     '   </tr>' +
                     ''
                 );
