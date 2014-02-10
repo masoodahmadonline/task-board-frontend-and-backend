@@ -28,16 +28,15 @@
             <div class="form-messages">
                 <span class="form-title">Edit Profile - Technical Information</span>
 
-                <c:if test="${param.error}">
-                    <span class="message-error">${replace this with server side message}</span>
+                <c:if test="${error}">
+                    <span class="message-error">${errorMsg}</span>
                 </c:if>
-
-                <c:if test="${param.success}">
-                    <span class="message-success"> ${replace this with server side message}</span>
+                <c:if test="${success}">
+                    <span class="message-success">${successMsg}</span>
                 </c:if>
             </div>
             <div>
-                <form:form action="${pageContext.request.contextPath}/users/edit" method="post" commandName="editUserTechnicalWrapper" >
+                <form:form action="${pageContext.request.contextPath}/users/profile-edit-technical" method="post" commandName="editUserTechnicalWrapper" >
                     <div class="form-wrapper jQeffect-show-clip" >
                         <div class="inner-form-wrapper" >
                             <table>

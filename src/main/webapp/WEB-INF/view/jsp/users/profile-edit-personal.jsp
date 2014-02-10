@@ -28,12 +28,11 @@
             <div class="form-messages">
                 <span class="form-title">Edit Profile</span>
 
-                <c:if test="${param.error}">
-                    <span class="message-error">${replace this with server side message}</span>
+                <c:if test="${error}">
+                    <span class="message-error">${errorMsg}</span>
                 </c:if>
-
-                <c:if test="${param.success}">
-                    <span class="message-success"> ${replace this with server side message}</span>
+                <c:if test="${success}">
+                    <span class="message-success">${successMsg}</span>
                 </c:if>
             </div>
             <div>
@@ -41,20 +40,10 @@
                     <div class="form-wrapper jQeffect-show-clip" >
                         <div class="inner-form-wrapper" >
 
-                            <h2>Personal</h2>
+                            <h2>Personal Information</h2>
                             <form:hidden path="userId"/>
                             <table>
                                 <tbody>
-                                <tr>
-                                    <td class="form-input-description">
-                                        Avatar:
-                                    </td>
-                                    <td class="form-input-view">
-                                        <img src="${resourcesDir}/images/avatar-small.png" />
-                                        <br />
-                                        <input type="file" />
-                                    </td>
-                                </tr>
                                 <tr>
                                     <td class="form-input-description">
                                         First Name:
@@ -85,26 +74,8 @@
                                     </td>
 
                                 </tr>
-                                <tr>
-                                    <td class="form-input-description">
-                                        Address:
-                                    </td>
+                                <tr><td colspan="2">&nbsp;</td></tr>
 
-                                    <td>
-                                        <form:input path="address"  cssClass="form-input"/>
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td class="form-input-description">
-                                        Contact Number:
-                                    </td>
-
-                                    <td>
-                                        <form:input path="contactNumber"  cssClass="form-input"/>
-                                    </td>
-
-                                </tr>
                                 </tbody>
                             </table>
                         </div>

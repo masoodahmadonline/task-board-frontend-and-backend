@@ -157,16 +157,6 @@ public class UserController {
         if(ValidationUtility.isExists(uId)){
             result = userService.populateUserInfo(uId);
             model.put("editUserProfileWrapper", result.getObject());
-            //System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
-            if(result.getIsSuccessful()){
-                model.put("error", false);
-                model.put("success", true);
-                model.put("successMsg", result.getMessage());
-                System.out.println("\n********** Success message from controller ***************\n");
-            }else{
-                model.put("errorMsg", result.getMessage());
-                System.out.println("\n********** error message from controller ***************\n");
-            }
         }else{
             model.put("errorMsg", "Please select user before edit user's profile information");
             returnPage = "/users/edit";
@@ -180,26 +170,35 @@ public class UserController {
     public String editUserProfile(HttpSession session,
                            @ModelAttribute("editUserProfileWrapper")UserWrapper userWrapper, ModelMap model){
         System.out.println("\n Edit User Info POST method \n");
-        String returnPage = "/users/edit";
+        String returnPage = "/users/profile-edit-personal";
+        model.put("error", true);
+        model.put("success", false);
         if(ValidationUtility.isExists(userWrapper.getUserId())){
-            result = userService.updateUserInfo(userWrapper);
-            //System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
-            if(result.getIsSuccessful()){
-                model.put("error", false);
-                model.put("success", true);
-                model.put("successMsg", result.getMessage());
-                System.out.println("\n********** Success message from controller ***************\n");
+            if(!ValidationUtility.isExists(userWrapper.getEmail())){
+                model.put("errorMsg", "Please enter your Login ID (Email)");
+            }else if(!ValidationUtility.isValidEmail(userWrapper.getEmail())){
+                model.put("errorMsg", "Please enter Valid Email");
+            }else if(!ValidationUtility.isExists(userWrapper.getFirstName())){
+                model.put("errorMsg", "Please enter your First Name");
+            }else if(!ValidationUtility.isExists(userWrapper.getLastName())){
+                model.put("errorMsg", "Please enter your Last Name");
             }else{
-                model.put("errorMsg", result.getMessage());
-                System.out.println("\n**********  error message from controller ***************\n");
+                result = userService.updateUserInfo(userWrapper);
+                if(result.getIsSuccessful()){
+                    model.put("error", false);
+                    model.put("success", true);
+                    model.put("successMsg", result.getMessage());
+                }else{
+                    model.put("errorMsg", result.getMessage());
+                }
             }
         }else{
             model.put("errorMsg", "User Profile not updated. Please select user first");
             //returnPage = "/users/profile-edit-personal";
-            returnPage = "/users/edit";
+            returnPage = "redirect:/users/edit";
         }
 
-        return "redirect:"+returnPage;// If we redirect, whole page populated and error/success message not displayed
+        return returnPage;// If we redirect, whole page populated and error/success message not displayed
     }
 
     @RequestMapping(value = "/users/profile-edit-technical", method = RequestMethod.GET)
@@ -229,6 +228,32 @@ public class UserController {
 
 
         return returnPage;
+    }
+
+    @RequestMapping(value = "/users/profile-edit-technical", method = RequestMethod.POST)
+    public String editUserProfileTechnical(HttpSession session, @ModelAttribute("editUserTechnicalWrapper")UserWrapper userWrapper, ModelMap model){
+        System.out.println("\n Edit User Technical POST method \n");
+        String returnPage = "/users/profile-edit-technical";
+        if(ValidationUtility.isExists(this.tempUserListWrapper)){
+            userWrapper.setUserList(this.tempUserListWrapper.getUserList());
+            result = userService.editUserAccess(userWrapper);
+            //System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
+            if(result.getIsSuccessful()){
+                model.put("error", false);
+                model.put("success", true);
+                model.put("successMsg", result.getMessage());
+            }else{
+                model.put("error", true);
+                model.put("success", false);
+                model.put("errorMsg", result.getMessage());
+            }
+        }else{
+            model.put("errorMsg", "User Profile not updated. Please select user first");
+            //returnPage = "/users/profile-edit-personal";
+            returnPage = "redirect:/users/edit";
+        }
+
+        return returnPage;// If we redirect, whole page populated and error/success message not displayed
     }
 
     @RequestMapping(value = "/users/change-password", method = RequestMethod.GET)
