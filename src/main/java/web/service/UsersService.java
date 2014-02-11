@@ -31,5 +31,6 @@ public interface UsersService {
     ResultImpl updateUserInfo(UserWrapper wrapper);     // Farhan - added for updating user profile information
     ResultImpl getTaskUsersListAll(Long taskId);   // get list of all user for each task
     ResultImpl changePassword(UserWrapper wrapper);     // Farhan - added for changing a user's password
+    public String getUserId(String email);
   
 }

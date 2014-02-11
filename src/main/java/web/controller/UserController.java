@@ -130,17 +130,15 @@ public class UserController {
     public String editUser(HttpSession session, @ModelAttribute("editUserWrapper")UserWrapper userWrapper, ModelMap model){
         System.out.println("\n Edit User POST method \n");
         String returnString = "redirect:/users/edit";
-        model.put("error", true);
+        /*model.put("error", true);
         model.put("success", false);
-        model.put("errorMsg", "Please select user before edit technical information");
+        model.put("errorMsg", "Please select user before edit technical information");*/
         this.setTempUserListWrapper(null);
         if (userWrapper.getUserList() != null && userWrapper.getUserList().size() > 0) {
             for (UserWrapper uWrapper : userWrapper.getUserList()) {
                 if(uWrapper.isEnableUserEditId()){
                     System.out.println("\n UserID: "+uWrapper.getUserId()+" Name:" + uWrapper.getFirstName());
                     this.setTempUserListWrapper(userWrapper);
-                    model.put("error", false);
-                    model.put("success", false);
                     returnString = "redirect:/users/profile-edit-technical";
                 }
             }
@@ -153,6 +151,10 @@ public class UserController {
     @RequestMapping(value = "/users/profile-edit-personal", method = RequestMethod.GET)
     public String editUserProfile(HttpSession session, @RequestParam(required=false) String uId, ModelMap model){
         System.out.println("\n Edit User Info method \n");
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername(); //get logged in username
+        uId = userService.getUserId(loginId); /////////////   to be edited
+
         String returnPage = "/users/profile-edit-personal";
         if(ValidationUtility.isExists(uId)){
             result = userService.populateUserInfo(uId);
@@ -259,6 +261,10 @@ public class UserController {
     @RequestMapping(value = "/users/change-password", method = RequestMethod.GET)
     public String changeUserPassword(HttpSession session, @RequestParam(required=false) String uId, ModelMap model){
         System.out.println("\n Change Password Get method \n");
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername(); //get logged in username
+        uId = userService.getUserId(loginId);
+
         String returnPage = "/users/change-password";
         if(ValidationUtility.isExists(uId)){
             UserWrapper wrapper = new UserWrapper();

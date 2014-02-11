@@ -2,6 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="springform"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%--test--%>
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" />
 <c:set var="pageTitle" scope="request" >
@@ -497,8 +498,12 @@ $(function() {
 
 
 <div id="task-assign-unassign-form" class="forms-for-board" style="max-height: 600px; overflow-x: visible;" title="Assign or Unassign this task">
+    <form id="live-search" action="" class="styled" method="post" style="text-align: center;">
+        <input type="text" class="form-input" style="width: 150px;" id="filter" placeholder="Search" value="" />
+        <span id="filter-count"></span>
+    </form>
     <form><table><tr><td colspan="2">
-        <table id="task-assign-unassign-table">
+        <table id="task-assign-unassign-table" class="usersListClass">
 
         </table>
         </td></tr><tr><td><input type="hidden" id="taskIdForAssignUser" /><input type="reset" value="Reset" /></td>
@@ -541,6 +546,7 @@ $(function() {
 
 <div class="board" id="boardid-${board.id}">
     <div class="board-title">
+        <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')">
             <span class="drop-menu-button">&#x25be;
                 <span>
                     <ul class="drop-menu-options" >
@@ -550,6 +556,7 @@ $(function() {
                     </ul>
                 </span>
             </span>
+        </security:authorize>
             <span class="title" >
                 ${board.title}
             </span>
@@ -637,8 +644,9 @@ $(document).ready(function(){
                             console.log("3");
                         },
                         function(){
-                            ui.draggable.draggable({ revert: "valid"  });
-                            showErrorMessage("Task move failed. Check permissions and/or network connectivity !");
+                            ui.draggable.animate({ top: 0, left: 0 }, 'slow');
+                            //ui.draggable.draggable({ revert: "valid"  });
+                            showErrorMessage("Task move failed. You are not authorized to move task !");
                         }
                 );
             }
@@ -1006,6 +1014,18 @@ $(document).ready(function(){
         }
     });
 
+    $("#filter").keyup(function(){
+        var filter = $(this).val(), count = 0;
+        $(".usersListClass tr").each(function(){
+            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                $(this).fadeOut();
+            } else {
+                $(this).show();
+                count++;
+            }
+        });
+    });
+
 
 
 
@@ -1118,6 +1138,7 @@ function ajaxAssignTaskSubmit(ulist){
             if(response.isSuccessful){
                 showSuccessMessage(response.message);
                 $("#task-assign-unassign-form").dialog("close");
+                //$("#taskid-"+tId).find(".user-icon").first().addClass("user-icon1");
                 setTimeout("location.reload(true);",2000);
             }else{
                 showErrorMessage(response.message);

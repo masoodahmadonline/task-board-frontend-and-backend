@@ -95,13 +95,18 @@ public class BoardsServiceImpl implements BoardsService{
     @Transactional
     public ResultImpl getBoardListByUser(Users user){
         Users  u =  userDAO.getUserByLoginId(user.getEmail());
-        List<Boards> boardList = new ArrayList<Boards>(u.getBoardList());
+        //List<Boards> boardList = new ArrayList<Boards>(u.getBoardList());
+        /*Since only one board, so no need to add all users to this board
+        * Currently users are being created without taking board consideration (similar to LeanKit)*/
+        Boards board = new Boards();
+        List<Boards> boardList = userDAO.findAll(board);
         if(!boardList.isEmpty()){
             result.setIsSuccessful(true);
             result.setObject(boardList);
             result.setMessageList(Arrays.asList("success.boardLoadedSuccessfully"));
         }else{
             result.setIsSuccessful(false);
+            result.setObject(boardList);//added this because exception occurs if user not assigned to board
             result.setMessageList(Arrays.asList("error.noBoardFoundForUser"));
         }
         return result;

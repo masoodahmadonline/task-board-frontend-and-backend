@@ -17,10 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import web.dao.BoardsDAO;
 import web.dao.TasksDAO;
 import web.dao.UsersDAO;
-import web.entity.Tasks;
-import web.entity.UserRoleForBoard;
-import web.entity.Users;
-import web.entity.Boards;
+import web.entity.*;
 import web.service.common.ResultImpl;
 import web.service.common.ValidationUtility;
 import web.wrapper.UserWrapper;
@@ -76,6 +73,17 @@ public class UsersServiceImpl implements UsersService{
         
     }
 
+    @Transactional
+    public String getUserId(String email){
+        Users user = userDAO.getUserByLoginId(email);
+        String userID = null;
+        if (user != null){
+            userID = "" + user.getId();
+        }
+        return userID;
+
+    }
+
     @Deprecated
     @Transactional(readOnly = false)
     //changeable with full authority by other peer developers{M-A}
@@ -106,7 +114,8 @@ public class UsersServiceImpl implements UsersService{
 
     @Transactional(readOnly = false)
     public ResultImpl saveUser(UserWrapper wrapper) {
-
+        Users userTable = null;
+        Boards board = null;
         if(userDAO.doesLoginIdExists(wrapper.getEmail()) ){
             result.setIsSuccessful(false);
             result.setObject(null);
@@ -116,11 +125,27 @@ public class UsersServiceImpl implements UsersService{
             // setResult(false,null,Arrays.asList("error.emailAlreadyExists"/*,"string"*/) );
             return result;
         }else{
-            Users userTable = new Users();
+            userTable = new Users();
             userTable = populateUsersFromWrapper(wrapper, userTable);
             System.out.println("\nuser id before:" + userTable.getId());
             userDAO.save(userTable);
             System.out.println("\nuser id after:" + userTable.getId());
+
+            /*User inserted in all boards as well
+            board = new Boards();
+            List boardList = new ArrayList();
+            boardList = userDAO.findAll(board);
+            for (int j = 0; j < boardList.size(); j++) {
+                board = (Boards) boardList.get(j);
+                if(!board.getUserList().contains(userTable)){
+                    board.getUserList().add(userTable);
+                }
+                System.out.println("\nuser id 1:" + userTable.getId());
+                boardDAO.save(board);
+                System.out.println("\nuser id 2:" + userTable.getId());
+            }
+            System.out.println("\nuser id 3:" + userTable.getId());*/
+
 
             if(userTable == null){
                 result.setIsSuccessful(false);
@@ -216,6 +241,8 @@ public class UsersServiceImpl implements UsersService{
     public ResultImpl taskAssignment(UserWrapper wrapper) {
         Users uTable = null;
         Tasks tTable = null;
+        Boxes boxTable = null;
+        Boards boardTable = null;
         UserWrapper tempW = new UserWrapper();
         tempW =  checkWip(wrapper);
         if(tempW.isTempWipValue()){
@@ -226,6 +253,19 @@ public class UsersServiceImpl implements UsersService{
             if(ValidationUtility.isExists(wrapper.getTaskId())){
                 tTable = new Tasks();
                 tTable = (Tasks)userDAO.findById(tTable, Long.valueOf(wrapper.getTaskId()));
+                /*if(ValidationUtility.isExists(tTable.getParentBox())){
+                    boxTable = tTable.getParentBox();
+                    while(boxTable != null){
+                        if(boxTable.getIsFirstLevelBox()){
+                            boardTable = boxTable.getParentBoard();
+                            break;
+                        }
+                    }
+
+
+
+                }*/
+
                 if(ValidationUtility.isExists(wrapper.getUserList())){
                     if (wrapper.getUserList().size() > 0) {
                         for (UserWrapper uWrapper : wrapper.getUserList()) {

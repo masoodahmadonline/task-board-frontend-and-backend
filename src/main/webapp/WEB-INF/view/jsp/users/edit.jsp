@@ -36,25 +36,17 @@
                 </c:if>
             </div>
             <div>
+                <div class="form-wrapper jQeffect-show-clip">
+                    <form id="live-search" action="" class="styled" method="post">
+                        <input type="text" class="form-input" id="filter" placeholder="Search" value="" />
+                        <span id="filter-count"></span>
+                    </form>
+                </div>
                 <form:form action="${pageContext.request.contextPath}/users/edit" method="post" commandName="editUserWrapper" >
                     <div class="form-wrapper jQeffect-show-clip" >
-
                         <div class="inner-form-wrapper" >
-                            <a href="#">a</a> &nbsp;&nbsp; <a href="#">b</a> &nbsp;&nbsp; <a href="#">c</a> &nbsp;&nbsp;
-                            <a href="#">d</a> &nbsp;&nbsp; <a href="#">e</a> &nbsp;&nbsp; <a href="#">f</a> &nbsp;&nbsp;
-                            <a href="#">g</a> &nbsp;&nbsp; <a href="#">h</a> &nbsp;&nbsp; <a href="#">i</a> &nbsp;&nbsp;
-                            <a href="#">j</a> &nbsp;&nbsp; <a href="#">k</a> &nbsp;&nbsp; <a href="#">l</a> &nbsp;&nbsp;
-                            <a href="#">m</a> &nbsp;&nbsp; <a href="#">n</a> &nbsp;&nbsp; <a href="#">o</a> &nbsp;&nbsp;
-                            <a href="#">p</a> &nbsp;&nbsp; <a href="#">q</a> &nbsp;&nbsp; <a href="#">r</a> &nbsp;&nbsp;
-                            <a href="#">s</a> &nbsp;&nbsp; <a href="#">t</a> &nbsp;&nbsp; <a href="#">u</a> &nbsp;&nbsp;
-                            <a href="#">v</a> &nbsp;&nbsp; <a href="#">x</a> &nbsp;&nbsp; <a href="#">y</a> &nbsp;&nbsp;
-                            <a href="#">z</a>
-
                             <br />
-                            <br />
-
-
-                            <table>
+                            <table class="usersListClass">
                                 <c:forEach items="${editUserWrapper.userList}" var="wrapper" varStatus="idx">
                                     <form:hidden path="userList[${idx.index}].userId"></form:hidden>
                                     <tr>
@@ -81,7 +73,7 @@
                                             <a href='<c:out value="${uId}"/>'>Edit User</a>
                                         </td>
                                         <td>
-                                            <c:url var="uId" value="change-password">
+                                            <c:url var="uId" value="profile-edit-personal">
                                                 <c:param name="uId" value="${wrapper.userId}" />
                                             </c:url>
                                             <a href='<c:out value="${uId}"/>'>Change Password</a>
@@ -96,7 +88,6 @@
                     </div>
                     <div class="form-wrapper jQeffect-show-clip">
 
-                        <br />
                         <br />
                         <input type="submit" value="Edit Role/WIP" />&nbsp;   &nbsp;
                         <input id="resetId" type="reset" value="Reset" />
@@ -119,6 +110,24 @@
         });
         $("#resetId").click(function () {
             $("input[type=checkbox]").prop('checked', false)
+        });
+        $("#filter").keyup(function(){
+            // Retrieve the input field text and reset the count to zero
+            var filter = $(this).val(), count = 0;
+            // Loop through the users list
+            $(".usersListClass tr").each(function(){
+                // If the table row does not contain the text phrase fade it out
+                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                    $(this).fadeOut();
+                    // Show the table row if the phrase matches and increase the count by 1
+                } else {
+                    $(this).show();
+                    count++;
+                }
+            });
+            // Update the count
+            //var numberItems = count;
+            //$("#filter-count").text("Number of Users = "+count);
         });
     });
 </script>
