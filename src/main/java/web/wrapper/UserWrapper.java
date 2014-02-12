@@ -33,6 +33,9 @@ public class UserWrapper implements Serializable {
     private boolean taskUserExistMultiple = false;
     private String taskUserSize;
 
+    private boolean tempWipValue = false;
+    private String tempWipMessage;
+
     private String roleId;
     private String roleName;
 
@@ -62,6 +65,9 @@ public class UserWrapper implements Serializable {
 
         this.setRoleId("");
         this.setRoleName("");
+
+        this.setTempWipValue(false);
+        this.setTempWipMessage("");
 
         if(ValidationUtility.isExists(getUserList())){
             getUserList().clear();
@@ -251,5 +257,21 @@ public class UserWrapper implements Serializable {
 
     public void setOldPassword(String oldPassword) {
         this.oldPassword = oldPassword;
+    }
+
+    public boolean isTempWipValue() {
+        return tempWipValue;
+    }
+
+    public void setTempWipValue(boolean tempWipValue) {
+        this.tempWipValue = tempWipValue;
+    }
+
+    public String getTempWipMessage() {
+        return tempWipMessage;
+    }
+
+    public void setTempWipMessage(String tempWipMessage) {
+        this.tempWipMessage = tempWipMessage;
     }
 }

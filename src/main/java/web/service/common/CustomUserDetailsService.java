@@ -56,6 +56,10 @@ public class CustomUserDetailsService implements UserDetailsService{
    Users dbUser = userDAO.getUserByLoginId(email);
       System.out.println("dbUser email: "+dbUser.getEmail());
       System.out.println("dbUser password: "+dbUser.getPassword());
+      Integer authId = 0;
+      if(ValidationUtility.isExists(dbUser.getUserRoleForBoard())){
+          authId =  Integer.valueOf("" + dbUser.getUserRoleForBoard().getId());
+      }
     
    // Populate the Spring User object with details from the dbUser
    // Here we just pass the email, password, and access level
@@ -68,8 +72,8 @@ public class CustomUserDetailsService implements UserDetailsService{
      true,
      true,
      true,
-     //getAuthorities(dbUser.getAccess()) );
-     getAuthorities(2) );
+     //getAuthorities("2");
+     getAuthorities(authId));
  System.out.println("debug ---- 3");
   } catch (Exception e) {
    System.out.println("print Error in retrieving user");
@@ -92,25 +96,36 @@ public class CustomUserDetailsService implements UserDetailsService{
   * @return collection of granted authorities
   */
   public Collection<GrantedAuthority> getAuthorities(Integer access) {
-   // Create a list of grants for this springUser
-   List<GrantedAuthority> authList = (List<GrantedAuthority>) new ArrayList<GrantedAuthority>(2);
-    
-   // All users are granted with ROLE_USER access
-   // Therefore this springUser gets a ROLE_USER by default
-   System.out.println("Grant ROLE_USER to this user");
-   authList.add(new GrantedAuthorityImpl("ROLE_USER"));
-    
-   // Check if this springUser has admin access
-   // We interpret Integer(1) as an admin springUser
-   
-//   if ( access.compareTo(1) == 0) {
-//    // User has admin access
-//    logger.debug("Grant ROLE_ADMIN to this user");
-//    authList.add(new GrantedAuthorityImpl("ROLE_ADMIN"));
-//   }
- 
-   // Return list of granted authorities
-   return authList;
-   }
-    
-}
+      // Create a list of grants for this springUser
+      List<GrantedAuthority> authList = (List<GrantedAuthority>) new ArrayList<GrantedAuthority>(access);
+
+      // All users are granted with ROLE_USER access
+      // Therefore this springUser gets a ROLE_USER by default
+      //System.out.println("Grant ROLE_USER to this user");
+      //authList.add(new GrantedAuthorityImpl("ROLE_USER"));
+
+      // Check if this springUser has admin access
+      // We interpret Integer(1) as an admin springUser
+
+      if (access.equals(ProjectDBConstants.ADMIN_ROLE_ID)) {
+          authList.add(new GrantedAuthorityImpl("ROLE_ADMIN"));
+          System.out.println("Grant ROLE_ADMIN to this user");
+      }else if (access.equals(ProjectDBConstants.MANAGER_ROLE_ID)) {
+          authList.add(new GrantedAuthorityImpl("ROLE_MANAGER"));
+          System.out.println("Grant ROLE_MANAGER to this user");
+      }else if (access.equals(ProjectDBConstants.READER_ROLE_ID)) {
+          authList.add(new GrantedAuthorityImpl("ROLE_READER"));
+          System.out.println("Grant ROLE_READER to this user");
+      }else if (access.equals(ProjectDBConstants.NO_ACCESS_ROLE_ID)) {
+          authList.add(new GrantedAuthorityImpl("ROLE_NO_ACCESS"));
+          System.out.println("Grant ROLE_NO_ACCESS to this user");
+      }else{
+          authList.add(new GrantedAuthorityImpl("ROLE_USER"));
+          System.out.println("Grant ROLE_USER to this user");
+      }
+      return authList;
+  }
+
+
+
+  }

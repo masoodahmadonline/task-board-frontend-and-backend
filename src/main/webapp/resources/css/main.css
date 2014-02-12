@@ -774,7 +774,7 @@ input[type=checkbox]:checked + label {
 .task-priority-low {
   background-image: url("../images/task-priority-low.png"); }
 
-.user-icon {
+.user-icon1 {
   cursor: pointer;
   background-image: url("../images/avatar-small.png");
   background-repeat: no-repeat;

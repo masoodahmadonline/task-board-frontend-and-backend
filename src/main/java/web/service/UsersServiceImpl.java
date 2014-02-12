@@ -17,10 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import web.dao.BoardsDAO;
 import web.dao.TasksDAO;
 import web.dao.UsersDAO;
-import web.entity.Tasks;
-import web.entity.UserRoleForBoard;
-import web.entity.Users;
-import web.entity.Boards;
+import web.entity.*;
 import web.service.common.ResultImpl;
 import web.service.common.ValidationUtility;
 import web.wrapper.UserWrapper;
@@ -76,6 +73,17 @@ public class UsersServiceImpl implements UsersService{
         
     }
 
+    @Transactional
+    public String getUserId(String email){
+        Users user = userDAO.getUserByLoginId(email);
+        String userID = null;
+        if (user != null){
+            userID = "" + user.getId();
+        }
+        return userID;
+
+    }
+
     @Deprecated
     @Transactional(readOnly = false)
     //changeable with full authority by other peer developers{M-A}
@@ -106,7 +114,8 @@ public class UsersServiceImpl implements UsersService{
 
     @Transactional(readOnly = false)
     public ResultImpl saveUser(UserWrapper wrapper) {
-
+        Users userTable = null;
+        Boards board = null;
         if(userDAO.doesLoginIdExists(wrapper.getEmail()) ){
             result.setIsSuccessful(false);
             result.setObject(null);
@@ -116,11 +125,27 @@ public class UsersServiceImpl implements UsersService{
             // setResult(false,null,Arrays.asList("error.emailAlreadyExists"/*,"string"*/) );
             return result;
         }else{
-            Users userTable = new Users();
+            userTable = new Users();
             userTable = populateUsersFromWrapper(wrapper, userTable);
             System.out.println("\nuser id before:" + userTable.getId());
             userDAO.save(userTable);
             System.out.println("\nuser id after:" + userTable.getId());
+
+            /*User inserted in all boards as well
+            board = new Boards();
+            List boardList = new ArrayList();
+            boardList = userDAO.findAll(board);
+            for (int j = 0; j < boardList.size(); j++) {
+                board = (Boards) boardList.get(j);
+                if(!board.getUserList().contains(userTable)){
+                    board.getUserList().add(userTable);
+                }
+                System.out.println("\nuser id 1:" + userTable.getId());
+                boardDAO.save(board);
+                System.out.println("\nuser id 2:" + userTable.getId());
+            }
+            System.out.println("\nuser id 3:" + userTable.getId());*/
+
 
             if(userTable == null){
                 result.setIsSuccessful(false);
@@ -179,34 +204,33 @@ public class UsersServiceImpl implements UsersService{
         if(ValidationUtility.isExists(wrapper.getUserList())){
             if (wrapper.getUserList().size() > 0) {
                 for (UserWrapper uWrapper : wrapper.getUserList()) {
-                    if(uWrapper.isEnableUserEditId()){
-                        if(ValidationUtility.isExists(uWrapper.getUserId())){
-                            uTable = new Users();
-                            uTable = (Users)userDAO.findById(uTable, Long.valueOf(uWrapper.getUserId()));
-                            if(ValidationUtility.isExists(uWrapper.getRoleId())){
-                                UserRoleForBoard uRoleTable = new UserRoleForBoard();
-                                uRoleTable.setId(Long.valueOf(uWrapper.getRoleId()));
-                                uTable.setUserRoleForBoard(uRoleTable);
-                            }
-                            if(ValidationUtility.isExists(uWrapper.getWip())){
-                                uTable.setWip(Long.valueOf(uWrapper.getWip()));
-                            }else{
-                                uTable.setWip(Long.valueOf(0));
-                            }
-                            userDAO.save(uTable);
-                            if(uTable == null){
-                                result.setIsSuccessful(false);
-                                result.setObject(null);
-                                result.setMessage("There was an unknown error while updating selected users' access levels");
-                                //return result;
-                            }else{
-                                result.setIsSuccessful(true);
-                                result.setObject(uWrapper);
-                                result.setMessage("The selected users' access levels updated successfully.");
-                                //return result;
-                            }
+                    if(ValidationUtility.isExists(uWrapper.getEmail())){
+                        uTable = new Users();
+                        uTable = (Users)userDAO.findById(uTable, Long.valueOf(uWrapper.getUserId()));
+                        if(ValidationUtility.isExists(wrapper.getRoleId())){
+                            UserRoleForBoard uRoleTable = new UserRoleForBoard();
+                            uRoleTable.setId(Long.valueOf(wrapper.getRoleId()));
+                            uTable.setUserRoleForBoard(uRoleTable);
+                        }
+                        if(ValidationUtility.isExists(wrapper.getWip())){
+                            uTable.setWip(Long.valueOf(wrapper.getWip()));
+                        }else{
+                            uTable.setWip(Long.valueOf(0));
+                        }
+                        userDAO.save(uTable);
+                        if(uTable == null){
+                            result.setIsSuccessful(false);
+                            result.setObject(null);
+                            result.setMessage("There was an unknown error while updating selected users' access levels");
+                            //return result;
+                        }else{
+                            result.setIsSuccessful(true);
+                            result.setObject(uWrapper);
+                            result.setMessage("The selected users' access levels updated successfully.");
+                            //return result;
                         }
                     }
+
                 }
             }
         }
@@ -217,52 +241,58 @@ public class UsersServiceImpl implements UsersService{
     public ResultImpl taskAssignment(UserWrapper wrapper) {
         Users uTable = null;
         Tasks tTable = null;
-        if(ValidationUtility.isExists(wrapper.getTaskId())){
-            tTable = new Tasks();
-            tTable = (Tasks)userDAO.findById(tTable, Long.valueOf(wrapper.getTaskId()));
+        Boxes boxTable = null;
+        Boards boardTable = null;
+        UserWrapper tempW = new UserWrapper();
+        tempW =  checkWip(wrapper);
+        if(tempW.isTempWipValue()){
+            result.setIsSuccessful(false);
+            result.setObject(null);
+            result.setMessage(tempW.getTempWipMessage());
+        }else{
+            if(ValidationUtility.isExists(wrapper.getTaskId())){
+                tTable = new Tasks();
+                tTable = (Tasks)userDAO.findById(tTable, Long.valueOf(wrapper.getTaskId()));
+                /*if(ValidationUtility.isExists(tTable.getParentBox())){
+                    boxTable = tTable.getParentBox();
+                    while(boxTable != null){
+                        if(boxTable.getIsFirstLevelBox()){
+                            boardTable = boxTable.getParentBoard();
+                            break;
+                        }
+                    }
 
-            if(ValidationUtility.isExists(wrapper.getUserList())){
-                if (wrapper.getUserList().size() > 0) {
-                    for (UserWrapper uWrapper : wrapper.getUserList()) {
-                        if(ValidationUtility.isExists(uWrapper.getUserId())){
-                            uTable = new Users();
-                            uTable = (Users)userDAO.findById(uTable, Long.valueOf(uWrapper.getUserId()));
-                            if(uWrapper.isEnableUserAssignId()){
-                                if(!uTable.getTaskList().contains(tTable)){
-                                    uTable.getTaskList().add(tTable);
+
+
+                }*/
+
+                if(ValidationUtility.isExists(wrapper.getUserList())){
+                    if (wrapper.getUserList().size() > 0) {
+                        for (UserWrapper uWrapper : wrapper.getUserList()) {
+                            if(ValidationUtility.isExists(uWrapper.getUserId())){
+                                uTable = new Users();
+                                uTable = (Users)userDAO.findById(uTable, Long.valueOf(uWrapper.getUserId()));
+                                if(uWrapper.isEnableUserAssignId()){
+                                    if(!uTable.getTaskList().contains(tTable)){
+                                        uTable.getTaskList().add(tTable);
+                                    }
+                                }else{
+                                    if(uTable.getTaskList().contains(tTable)){
+                                        uTable.getTaskList().remove(tTable);
+                                    }
                                 }
-                            }else{
-                                if(uTable.getTaskList().contains(tTable)){
-                                    uTable.getTaskList().remove(tTable);
+                                userDAO.save(uTable);
+                                if(uTable == null){
+                                    result.setIsSuccessful(false);
+                                    result.setObject(null);
+                                    result.setMessage("There was an unknown error while assigning task to users");
+                                    result.setMessageList(Arrays.asList("There was an unknown error while assigning task to users"));
+                                }else{
+                                    result.setIsSuccessful(true);
+                                    result.setObject(uWrapper);
+                                    result.setMessageList(Arrays.asList("The selected users assigned to the task successfully."));
+                                    result.setMessage("The selected users assigned to the task successfully.");
                                 }
-                            }
-                            userDAO.save(uTable);
-                            //uTable.getTaskList().add(tTable);
-                            System.out.println("\n\n\n\nUser ID: " + uTable.getId());
-                            System.out.println("Task ID: " + tTable.getId() +"\n\n\n\n");
-                            //uTable.setTaskList(tasksList);
-
-                            /*if(ValidationUtility.isExists(uWrapper.getRoleId())){
-                                UserRoleForBoard uRoleTable = new UserRoleForBoard();
-                                uRoleTable.setId(Long.valueOf(uWrapper.getRoleId()));
-                                uTable.setUserRoleForBoard(uRoleTable);
-                            }
-                            if(ValidationUtility.isExists(uWrapper.getWip())){
-                                uTable.setWip(Long.valueOf(uWrapper.getWip()));
-                            }else{
-                                uTable.setWip(Long.valueOf(10));
-                            }*/
-
-                            if(uTable == null){
-                                result.setIsSuccessful(false);
-                                result.setObject(null);
-                                result.setMessage("There was an unknown error while assigning task to users");
-                                result.setMessageList(Arrays.asList("There was an unknown error while assigning task to users"));
-                            }else{
-                                result.setIsSuccessful(true);
-                                result.setObject(uWrapper);
-                                result.setMessageList(Arrays.asList("The selected users assigned to the task successfully."));
-                                result.setMessage("The selected users assigned to the task successfully.");
                             }
                         }
                     }
@@ -271,6 +301,48 @@ public class UsersServiceImpl implements UsersService{
         }
 
         return result;
+    }
+
+    public UserWrapper checkWip(UserWrapper wrapper) {
+        Users uTable = null;
+        Tasks tTable = null;
+        UserWrapper retWrapper = new UserWrapper();
+        retWrapper.setTempWipValue(false);
+        if(ValidationUtility.isExists(wrapper.getTaskId())){
+            tTable = new Tasks();
+            tTable = (Tasks)userDAO.findById(tTable, Long.valueOf(wrapper.getTaskId()));
+            if(ValidationUtility.isExists(wrapper.getUserList())){
+                if (wrapper.getUserList().size() > 0) {
+                    for (UserWrapper uWrapper : wrapper.getUserList()) {
+                        if(ValidationUtility.isExists(uWrapper.getUserId())){
+                            uTable = new Users();
+                            uTable = (Users)userDAO.findById(uTable, Long.valueOf(uWrapper.getUserId()));
+                            if(uWrapper.isEnableUserAssignId()){
+                                Long wipValue = Long.valueOf("0");
+                                if(ValidationUtility.isExists(uTable.getWip())){
+                                    wipValue = uTable.getWip();
+                                }
+                                Long tasksSize = Long.valueOf(uTable.getTaskList().size());
+                                System.out.println("\n User: "+ uTable.getFirstName() + " - Wip: " + wipValue + " - Task Size: " + tasksSize+ "");
+                                if(wipValue > 0){
+                                    if(wipValue <= tasksSize){
+                                        retWrapper.setTempWipValue(true);
+                                        retWrapper.setTempWipMessage("Tasks not assigned. User ["+uTable.getFirstName()+" "+uTable.getLastName()+"] exceeds WIP limit.");
+                                        return retWrapper;
+                                    }else{
+                                        retWrapper.setTempWipValue(false);
+                                    }
+                                }else{
+                                    retWrapper.setTempWipValue(false);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("Result: " + retWrapper.isTempWipValue());
+        return retWrapper;
     }
 
     public ResultImpl populateUserInfo(String userId){

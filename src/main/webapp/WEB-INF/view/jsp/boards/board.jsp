@@ -2,6 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="springform"%>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%--test--%>
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" />
 <c:set var="pageTitle" scope="request" >
@@ -399,7 +400,7 @@ $(function() {
 
     $(".task-assign-unassign-wizard-submit").click(function () {
         ajaxAssignTaskSubmit(window.taskUsersList);
-        $("#task-assign-unassign-form").dialog("close");
+
 
     });
 
@@ -497,8 +498,12 @@ $(function() {
 
 
 <div id="task-assign-unassign-form" class="forms-for-board" style="max-height: 600px; overflow-x: visible;" title="Assign or Unassign this task">
+    <form id="live-search" action="" class="styled" method="post" style="text-align: center;">
+        <input type="text" class="form-input" style="width: 150px;" id="filter" placeholder="Search" value="" />
+        <span id="filter-count"></span>
+    </form>
     <form><table><tr><td colspan="2">
-        <table id="task-assign-unassign-table">
+        <table id="task-assign-unassign-table" class="usersListClass">
 
         </table>
         </td></tr><tr><td><input type="hidden" id="taskIdForAssignUser" /><input type="reset" value="Reset" /></td>
@@ -541,6 +546,7 @@ $(function() {
 
 <div class="board" id="boardid-${board.id}">
     <div class="board-title">
+        <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')">
             <span class="drop-menu-button">&#x25be;
                 <span>
                     <ul class="drop-menu-options" >
@@ -550,6 +556,7 @@ $(function() {
                     </ul>
                 </span>
             </span>
+        </security:authorize>
             <span class="title" >
                 ${board.title}
             </span>
@@ -637,8 +644,9 @@ $(document).ready(function(){
                             console.log("3");
                         },
                         function(){
-                            ui.draggable.draggable({ revert: "valid"  });
-                            showErrorMessage("Task move failed. Check permissions and/or network connectivity !");
+                            ui.draggable.animate({ top: 0, left: 0 }, 'slow');
+                            //ui.draggable.draggable({ revert: "valid"  });
+                            showErrorMessage("Task move failed. You are not authorized to move task !");
                         }
                 );
             }
@@ -1006,6 +1014,18 @@ $(document).ready(function(){
         }
     });
 
+    $("#filter").keyup(function(){
+        var filter = $(this).val(), count = 0;
+        $(".usersListClass tr").each(function(){
+            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                $(this).fadeOut();
+            } else {
+                $(this).show();
+                count++;
+            }
+        });
+    });
+
 
 
 
@@ -1036,21 +1056,39 @@ function ajaxAssignTask(task){
             );--%>
             $('#task-assign-unassign-table').empty();
             $.each(userList, function( index, value ) {
-                $('#task-assign-unassign-table').prepend(+
-                    '<input type="hidden" id="task-assign-userId" value='+value.userId+' />'+
-                    '   <tr>' +
-                    '       <td>' +
-                    '           <img src="${resourcesDir}/images/avatar-small.png"/>' +
-                    '       </td>' +
-                    '       <td style="width: 200px;">' +
-                    '           <span style="display:inline-block; text-align: left; font-weight: bold">'+value.firstName+'&nbsp;'+value.lastName+'</span> <br />' +
-                    '           <span style="display:inline-block; text-align: left;">'+value.email+'&nbsp;'+value.enableUserAssignId+'</span>' +
-                    '       </td>'+
-
-                    '        <td><input id="checkBoxId" type="checkbox" name="enableUserAssignId" checked=no value='+value.enableUserAssignId+' style="display: block;" /></td>'+
-                    '   </tr>' +
-                    ''
-                );
+                if(value.enableUserAssignId == true){
+                    $('#task-assign-unassign-table').prepend(+
+                            '<input type="hidden" id="task-assign-userId2" value='+value.userId+' />'+
+                            '   <tr>' +
+                            '       <td>' +
+                            '           <img src="${resourcesDir}/images/avatar-small.png"/>' +
+                            '       </td>' +
+                            '       <td style="width: 200px;">' +
+                            '           <input type="hidden" id="task-assign-userId" name="user-id-'+index+'" value='+value.userId+' />'+
+                            '           <span style="display:inline-block; text-align: left; font-weight: bold">'+value.firstName+'&nbsp;'+value.lastName+'</span> <br />' +
+                            '           <span style="display:inline-block; text-align: left;">'+value.email+'</span>' +
+                            '       </td>'+
+                            '        <td><input id="checkBoxId" name="checkBoxName'+index+'" type="checkbox" checked style="display: block;" /></td>'+
+                            '   </tr>' +
+                            ''
+                    );
+                }else{
+                    $('#task-assign-unassign-table').prepend(+
+                            '<input type="hidden" id="task-assign-userId2" value='+value.userId+' />'+
+                            '   <tr>' +
+                            '       <td>' +
+                            '           <img src="${resourcesDir}/images/avatar-small.png"/>' +
+                            '       </td>' +
+                            '       <td class="user-id2" style="width: 200px;">' +
+                            '           <input type="hidden" id="task-assign-userId" name="user-id-'+index+'" value='+value.userId+' />'+
+                            '           <span style="display:inline-block; text-align: left; font-weight: bold">'+value.firstName+'&nbsp;'+value.lastName+'</span> <br />' +
+                            '           <span style="display:inline-block; text-align: left;">'+value.email+'</span>' +
+                            '       </td>'+
+                            '        <td><input id="checkBoxId" name="checkBoxName'+index+'" type="checkbox" style="display: block;" /></td>'+
+                            '   </tr>' +
+                            ''
+                    );
+                }
             });
             window["taskUsersList"] = userList;
             $("#task-assign-unassign-form").dialog("open");
@@ -1066,29 +1104,46 @@ function ajaxAssignTaskSubmit(ulist){
 
 
     var tId = $("#taskIdForAssignUser").val();
-    var v = $("input[type='checkbox']").val();
-    var res;
-
+    var objList = [];
     $.each(ulist, function( index, value ) {
+        var checkBoxVar = $('input[name=checkBoxName'+index+']:checked');
+        var userNameVar = $('input[name=user-id-'+index+']');
+        //alert("Index:"+index+" UserID: "+$(userNameVar).val()+" Length: "+$(checkBoxVar).length);
+        var enableUserCheck = false;
+        if($(checkBoxVar).length == 1){
+            enableUserCheck = true;
+        }else{
+            enableUserCheck = false;
+        }
+        var obj = {};
+        var userID = "userId";
+        var enableUser = "enableUserAssignId";
+        obj[userID] = $(userNameVar).val();
+        obj[enableUser] = enableUserCheck;
+        objList.push(obj);
 
-        res += value.firstName+' - '+value.enableUserAssignId+'\n';
-
-    });
-    alert(res);
-
+    })
     $.ajax({
         url: "${pageContext.request.contextPath}/task/assign-task/"+tId,
         type:"POST",
         cache: false,
         data : {
-            ulist : JSON.stringify(ulist)
+            ulist : JSON.stringify(objList)
             //ulist : ulist
         },
         async: false,
 
 
         success: function(response){
-            alert(response);
+            if(response.isSuccessful){
+                showSuccessMessage(response.message);
+                $("#task-assign-unassign-form").dialog("close");
+                //$("#taskid-"+tId).find(".user-icon").first().addClass("user-icon1");
+                setTimeout("location.reload(true);",2000);
+            }else{
+                showErrorMessage(response.message);
+                $("#task-assign-unassign-form").dialog("close");
+            }
         },
         error: function(){
             alert('Error while request..');
