@@ -14,6 +14,8 @@ import web.entity.Boxes;
 import web.entity.Tasks;
 import web.entity.Users;
 import web.service.common.ResultImpl;
+import web.service.common.ValidationUtility;
+import web.wrapper.UserWrapper;
 
 @Service
 @Transactional(readOnly = true)
@@ -81,7 +83,21 @@ public class BoardsServiceImpl implements BoardsService{
            System.out.println( "The task List size is  ========= " +box.getTaskList().size() );
            for(Object t : box.getTaskList()){
                Tasks task = (Tasks)t;
-               System.out.println( "The Attachment List size is  ========= " +task.getAttachmentList().size() );;
+               System.out.println( "The Attachment List size is  ========= " +task.getAttachmentList().size() );
+               UserWrapper tempWrapper = new UserWrapper();
+               tempWrapper = getTaskUsersList(task.getId());
+               task.setUserSize("0");
+               if(ValidationUtility.isExists(tempWrapper)){
+                   if(tempWrapper.isTaskUserExistSingle() && tempWrapper.isTaskUserExistMultiple()){
+                       task.setUserSize("2");
+                   }else if(tempWrapper.isTaskUserExistSingle() && !tempWrapper.isTaskUserExistMultiple()){
+                       task.setUserSize("1");
+                   }else{
+                       task.setUserSize("0");
+                   }
+               }
+               System.out.println( "Task ID: " +task.getId());
+               System.out.println( "User Size: " +task.getUserSize());
            }
            List<Boxes> childBoxList = new ArrayList<Boxes> ( box.getChildBoxList() ); // list of sub child boxes of this box
            System.out.println(" ======================== boxid : "+box.getId()+" and its childBoxList size: "+ childBoxList.size());
@@ -110,6 +126,70 @@ public class BoardsServiceImpl implements BoardsService{
             result.setMessageList(Arrays.asList("error.noBoardFoundForUser"));
         }
         return result;
+    }
+
+    public UserWrapper getTaskUsersList(Long taskId){
+        Tasks tTable = new Tasks();
+
+        tTable = (Tasks)userDAO.findById(tTable, taskId);
+        List<UserWrapper> userList = new ArrayList<UserWrapper>();
+        Users userTable = new Users();
+        List list = new ArrayList();
+        UserWrapper returnWrapper = null;
+
+        list = userDAO.findAll(userTable);
+
+        for (int i = 0; i < list.size(); i++) {
+            userTable = (Users) list.get(i);
+            UserWrapper wrapper = null;
+            wrapper = new UserWrapper();
+            wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
+            System.out.println("\n ---- Task exist for User Id : " + userTable.getId());
+            System.out.println(" ---- Task exist for User Size : " + userTable.getTaskList().size() + "\n");
+            if(userTable.getTaskList().contains(tTable)){
+                System.out.println("\n ---- Assigned Task Id: " + tTable.getId());
+                System.out.println("\n ---- Assigned User Id: " + userTable.getId());
+                wrapper.setEnableUserAssignId(true);
+                userList.add(wrapper);
+            }else{
+                userList.remove(wrapper);
+            }
+
+
+        }
+
+        if(userList.size()>0){
+            returnWrapper = new UserWrapper();
+            returnWrapper.setTaskUserSize("" + userList.size());
+            returnWrapper.setTaskUserExistSingle(true);
+            if(userList.size()==1){
+                returnWrapper.setTaskUserExistMultiple(false);
+            }else{
+                returnWrapper.setTaskUserExistMultiple(true);
+            }
+        }
+
+        return returnWrapper;
+    }
+
+    private UserWrapper populateUserWrapperFromUserTable(UserWrapper wrapper, Users table){
+        wrapper.setUserId("" + table.getId());
+        wrapper.setFirstName(table.getFirstName());
+        wrapper.setLastName(table.getLastName());
+        wrapper.setEmail(table.getEmail());
+        if(ValidationUtility.isExists(table.getUserRoleForBoard())){
+            wrapper.setRoleName(table.getUserRoleForBoard().getRole());
+            wrapper.setRoleId("" + table.getUserRoleForBoard().getId());
+        }
+        wrapper.setWip("" + table.getWip());
+        wrapper.setEnableUserEditId(false);
+        wrapper.setEnableUserAssignId(false);
+        wrapper.setEnableUserId(false);
+        //wrapper.setAddress();
+        //wrapper.setContactNumber();
+
+
+        return wrapper;
     }
     
     

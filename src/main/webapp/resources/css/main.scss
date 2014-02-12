@@ -1034,8 +1034,9 @@ z-index:11;
 }
 
 
-.user-icon {
+.user-icon1 {
   cursor: pointer;
+  background-image: url("../images/avatar-small.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
@@ -1043,12 +1044,18 @@ z-index:11;
   left: 45px;
   bottom: -10px;
   width: 15px;
-  height: 15px; }
-
-.user-icon1 {
-  background-image: url("../images/avatar-small.png");
+  height: 15px;
 }
 
 .user-icon2 {
+  cursor: pointer;
   background-image: url("../images/avatar-small.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  position: absolute;
+  left: 60px;
+  bottom: -10px;
+  width: 15px;
+  height: 15px;
 }

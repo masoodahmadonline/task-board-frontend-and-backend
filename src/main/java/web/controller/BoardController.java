@@ -86,19 +86,6 @@ public class BoardController {
             for (Boxes box: boxList){
                 System.out.println(box.getId());
                 for(Tasks task : box.getTaskList()){
-                    UserWrapper tempWrapper = new UserWrapper();
-                    tempWrapper = userService.getTaskUsersList(task.getId());
-                    task.setUserSize("0");
-                    if(ValidationUtility.isExists(tempWrapper)){
-                        if(tempWrapper.isTaskUserExistSingle() && tempWrapper.isTaskUserExistMultiple()){
-                            task.setUserSize("2");
-                        }else if(tempWrapper.isTaskUserExistSingle() && !tempWrapper.isTaskUserExistMultiple()){
-                            task.setUserSize("1");
-                        }else{
-                            task.setUserSize("0");
-                        }
-                    }
-
                 }
             }
         }else{

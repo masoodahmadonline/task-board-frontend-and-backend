@@ -86,11 +86,11 @@
                         <c:set var="uSize" value="${task.userSize}" scope="request" />
                         <c:if test="${uSize != null }">
                             <c:if test="${uSize == '1' }">
-                                <div class="user-icon user-icon1" id="userIconId1"></div>
+                                <div class="user-icon1" id="userIconId1"></div>
                             </c:if>
                             <c:if test="${uSize == '2' }">
-                                <div class="user-icon user-icon1" id="userIconId1"></div>
-                                <div class="user-icon user-icon2" id="userIconId2"></div>
+                                <div class="user-icon1" id="userIconId1"></div>
+                                <div class="user-icon2" id="userIconId2"></div>
                             </c:if>
                         </c:if>
 
