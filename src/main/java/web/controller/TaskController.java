@@ -224,6 +224,19 @@ public class TaskController {
         }
     } //queued - send model message also (if needed)
 
+    //ajax
+    @RequestMapping (value = "/task/assign/{taskId}", method= RequestMethod.GET)
+    public @ResponseBody List<UserWrapper> assignTask(ModelMap model, @PathVariable(value="taskId") String taskId){
+        System.out.println("task assign controller method called.");
+        if(ValidationUtility.isExists(taskId)){
+            result = userService.getTaskUsersListAll(Long.valueOf(taskId));
+        }
+        for(UserWrapper wr : (List<UserWrapper>) result.getObject()){
+            System.out.println("User enabled : " + wr.isEnableUserAssignId());
+        }
+        return (List<UserWrapper>) result.getObject();
+    }
+
     @RequestMapping (value = "/task/assign-task/{tId}", method=RequestMethod.POST)
     public @ResponseBody Result taskAssignment(HttpServletRequest request, ModelMap model,
                                  @PathVariable(value="tId") String tId) throws IOException {

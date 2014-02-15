@@ -453,6 +453,7 @@ public class UsersServiceImpl implements UsersService{
                     userTable = new Users();
                     userTable = (Users)userDAO.findById(userTable, Long.valueOf(wrapper.getUserId()));
                     wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
+                    wrapper.setEnableUserEditId(true);
                     userList.add(wrapper);
                 }
             }
