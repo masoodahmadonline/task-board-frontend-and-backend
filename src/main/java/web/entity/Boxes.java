@@ -6,6 +6,7 @@ package web.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import javax.persistence.*;
 
 /**
@@ -13,7 +14,7 @@ import javax.persistence.*;
  * @author syncsys
  */
 @Entity
-public class Boxes {
+public class Boxes{
     @Id
     @GeneratedValue
     private Long id;
@@ -209,5 +210,6 @@ public class Boxes {
     public void setUserList(Collection <Users> userList) {
         this.userList = userList;
     }
-    
+
+
 }

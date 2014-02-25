@@ -131,6 +131,26 @@ public class TaskController {
     }
 
     //ajax
+    @RequestMapping (value = "/task/set-status/{taskId}/{status}", method=RequestMethod.GET)
+    public @ResponseBody  String setStatus(ModelMap model,
+                                             @PathVariable(value="taskId") String taskId,
+                                             @PathVariable(value="status") String status
+    ){
+        System.out.println("task status controller method called.");
+        result = taskService.changeTaskStatus(Long.parseLong(taskId), status);
+        if (result.getIsSuccessful()) {
+            model.put("successMessages", result.getMessageList());
+            System.out.println("task status changed ------------------");
+            return "success";
+        }else{
+            model.put("errorMessages", result.getMessageList());
+            System.out.println("result for ask status change was false");
+            return "failure";
+        }
+        //queued - send model message also (if needed)
+    }
+
+    //ajax
     @RequestMapping (value = "/task/move/{taskId}/{initialParentBoxId}/{destinationParentBoxId}", method=RequestMethod.GET)
     public @ResponseBody  String moveTask(ModelMap model,
                                            @PathVariable(value="taskId") String taskId,

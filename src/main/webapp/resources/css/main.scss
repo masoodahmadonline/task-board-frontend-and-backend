@@ -1033,6 +1033,11 @@ z-index:11;
   background-image: url('../images/task-priority-low.png');
 }
 
+.task-status-new{}
+.task-status-in-process{background: rgba(255,255,0,0.3)}
+.task-status-in-issues{background: rgba(255,0,0,0.3)}
+.task-status-completed{background: rgba(0,128,0,0.3)}
+
 
 .user-icon1 {
   cursor: pointer;
