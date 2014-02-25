@@ -11,6 +11,8 @@ package web.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,9 @@ import web.entity.*;
 import web.service.common.ResultImpl;
 import web.service.common.ValidationUtility;
 import web.wrapper.UserWrapper;
+
+import javax.mail.*;
+import javax.mail.internet.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -155,12 +160,17 @@ public class UsersServiceImpl implements UsersService{
                 System.out.println("\n********** Error message from ServiceImpl 2 ***************\n");
                 return result;
             }else{
-                result.setIsSuccessful(true);
-                result.setObject(wrapper);
-                result.setMessage("The user was created successfully.");
-                //result.setMessageList(Arrays.asList("success.userCreated"/*,"string"*/));
-                System.out.println("\n********** Success message from ServiceImpl ***************\n");
-                return result;
+                if(sendEmail(userTable)){
+                    result.setIsSuccessful(true);
+                    result.setObject(wrapper);
+                    result.setMessage("User created successfully and email sent to the new user");
+                    return result;
+                }else{
+                    result.setIsSuccessful(true);
+                    result.setObject(wrapper);
+                    result.setMessage("User created successfully but email not sent. Please check your SMTP settings or firewall.");
+                    return result;
+                }
             }
         }
     }
@@ -453,6 +463,7 @@ public class UsersServiceImpl implements UsersService{
                     userTable = new Users();
                     userTable = (Users)userDAO.findById(userTable, Long.valueOf(wrapper.getUserId()));
                     wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
+                    wrapper.setEnableUserEditId(true);
                     userList.add(wrapper);
                 }
             }
@@ -593,6 +604,111 @@ public class UsersServiceImpl implements UsersService{
             result.setMessage("Password not changed. Your old Password does not exist in database");
             return result;
         }
+    }
+
+    private boolean sendEmailUsingGmail(Users userTable){
+        boolean result = false;
+        String to = userTable.getEmail();
+        String from = "farhan.bajwa@hotmail.com";
+        String smtpHost = "smtp.gmail.com";
+        String smtpPort = "587";
+        final String gmailUsername = "onlinetaskboard@gmail.com";
+        final String gmailPassword = "Onlinetaskboard123";
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", smtpHost);
+        props.put("mail.smtp.port", smtpPort);
+        Session session = Session.getDefaultInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(gmailUsername, gmailPassword);
+                    }
+                });
+        try{
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject("Welcome to OnlineTaskBoard");
+            message.setContent("<h1>Hi"+userTable.getFirstName()+"</h1>",
+                    "text/html" );
+            Transport.send(message);
+            result = true;
+            System.out.println("Sent message successfully....");
+
+        }catch (MessagingException mex) {
+            mex.printStackTrace();
+        }finally {
+            return result;
+        }
+    }
+
+    private boolean sendEmailLocal(Users userTable){
+        boolean result = false;
+        String from = "farhan.bajwa@gmail.com";
+        String to = "farhan.bajwa@hotmail.com";
+        String smtpHost = "smtp.emailsrvr.com";
+        Properties props = new Properties();
+        props.put("mail.smtp.host", smtpHost);
+        Session session = Session.getDefaultInstance(props);
+        try{
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject("Welcome to OnlineTaskBoard");
+            message.setContent("<h1>Hi"+userTable.getFirstName()+"</h1>",
+                    "text/html" );
+            Transport.send(message);
+            result = true;
+            System.out.println("Sent message successfully....");
+        }catch (MessagingException mex) {
+            mex.printStackTrace();
+        }finally {
+            return result;
+        }
+    }
+
+    private boolean sendEmail(Users userTable){
+        boolean result = false;
+        final String SMTP_OUT_SERVER = "smtp.gmail.com"; // gmail smtp server
+        final String USER = "onlinetaskboard@gmail.com";
+        final String PASSWORD = "Onlinetaskboard123";
+
+        Properties props = System.getProperties();
+        props.setProperty("mail.transport.protocol", "smtp");
+        props.setProperty("mail.host", SMTP_OUT_SERVER);
+
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.setProperty("mail.user", USER);
+        props.setProperty("mail.password", PASSWORD);
+
+        try{
+            Session mailSession = Session.getDefaultInstance(props, null);
+            Transport transport = mailSession.getTransport("smtp");
+            MimeMessage message = new MimeMessage(mailSession);
+            message.setSentDate(new java.util.Date());
+            message.setSubject("Welcome to OnlineTaskBoard");
+            message.setFrom(new InternetAddress(USER));
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(userTable.getEmail()));
+            message.setContent("<h3>Hi "+userTable.getFirstName()+",</h3><br /><br />" +
+                    "Thanks for using OnlineTaskBoard!<br />We are glad you are on board!<br /><br />" +
+                    "<h4>Thanks,<br />The OnlineTaskBoard Team</h4>", "text/html");
+
+            transport.connect(SMTP_OUT_SERVER, USER, PASSWORD);
+            transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
+            transport.close();
+            result = true;
+        } catch (AddressException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (MessagingException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }finally {
+            return result;
+        }
+
     }
 
 

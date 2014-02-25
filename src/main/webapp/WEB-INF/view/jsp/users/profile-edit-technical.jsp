@@ -44,9 +44,11 @@
                                 <tr>
                                     <td colspan="2" style="max-width: 600px;">
                                         <c:forEach items="${editUserTechnicalWrapper.userList}" var="wrapper" varStatus="idx">
-                                            <span style="background-color: #bfbfbf; -moz-border-radius: 15px; border-radius: 15px; font-size: 14px; width: 100px; max-width: 100px;">
-                                                &nbsp;${wrapper.firstName}&nbsp;${wrapper.lastName}&nbsp;
-                                            </span>&nbsp;
+                                            <c:if test="${wrapper.enableUserEditId}">
+                                                <span style="background-color: #bfbfbf; -moz-border-radius: 15px; border-radius: 15px; font-size: 14px; width: 100px; max-width: 100px;">
+                                                    &nbsp;${wrapper.firstName}&nbsp;${wrapper.lastName}&nbsp;
+                                                </span>&nbsp;
+                                            </c:if>
                                         </c:forEach>
                                     </td>
                                 </tr>
@@ -85,7 +87,7 @@
                     </div>
                     <div class="form-wrapper jQeffect-show-clip">
 
-                        <input type="submit" value="Update" />&nbsp; &nbsp;
+                        <input type="submit" value="Update"/>&nbsp; &nbsp;
                         <input type="reset" value="Reset" />
 
                     </div>
@@ -105,6 +107,53 @@
             $("input[type=checkbox]").prop('checked', true)
         });
     });
+
+    $(".profile-edit-technical-submit").click(function () {
+        ajaxTechProfileSubmit();
+    });
+
+    function ajaxTechProfileSubmit(){
+        $.ajax({
+            url: "${pageContext.request.contextPath}/users/profile-edit-technical",
+            type:"POST",
+            cache: false,
+
+            async: false,
+
+
+            success: function(response){
+                if(response.isSuccessful){
+                    showSuccessMessage(response.message);
+                    //$("#task-assign-unassign-form").dialog("close");
+                    //$("#taskid-"+tId).find(".user-icon").first().addClass("user-icon1");
+                    //setTimeout("location.reload(true);",2000);
+                }else{
+                    showErrorMessage(response.message);
+                    //$("#task-assign-unassign-form").dialog("close");
+                }
+            },
+            error: function(){
+                alert('Error while request..');
+            }
+
+        });
+    }
+
+    function showSuccessMessage(message) {
+        $("#message-box").addClass("success-message");
+        $("#message-box").html(message);
+        $("#message-box").effect( "highlight",
+                {color:"#669966"}, 1000 );
+
+    }
+    function showErrorMessage(message) {
+        $("#message-box").addClass("error-message");
+        $("#message-box").html(message);
+        $("#message-box").effect( "highlight",
+                {color:"#669966"}, 1000 );
+
+    }
+
 </script>
 
 

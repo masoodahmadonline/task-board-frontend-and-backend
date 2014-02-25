@@ -50,7 +50,7 @@
 
   
  <!-- Declare an authentication-manager to use a custom userDetailsService -->
- <security:authentication-manager>
+ <security:authentication-manager alias="authenticationManager">
          <security:authentication-provider user-service-ref="customUserDetailsService">
   <!--         <security:password-encoder ref="passwordEncoder"/>-->
          </security:authentication-provider>

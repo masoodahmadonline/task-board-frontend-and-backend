@@ -12,9 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +28,7 @@ import web.entity.Users;
 import web.service.BoardsService;
 import web.service.CompaniesService;
 import web.service.UsersService;
+import web.service.common.CustomUserDetailsService;
 import web.service.common.Result;
 import web.service.common.ResultImpl;
 import web.service.common.ValidationUtility;
@@ -48,9 +53,13 @@ public class UserController {
     private MessageSource messages;
     @Autowired
     private Result result;
+    @Autowired
+    private ProviderManager authenticationManager;
+
     private UserWrapper tempUserListWrapper = new UserWrapper();
-    
-    
+    Map<String,String> roleMap = new LinkedHashMap<String, String>();
+    private String message = "";
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLoginPage(@RequestParam(value="error",required=false) boolean error,
                                                 ModelMap model) {
@@ -112,7 +121,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users/edit", method = RequestMethod.GET)
-    public String editUser(HttpSession session, ModelMap model){
+    public String editUser(HttpServletRequest req, HttpSession session, ModelMap model){
         System.out.println("\n Edit User GET method \n");
         UserWrapper wrapper = new UserWrapper();
         List<UserWrapper> usersList = null;
@@ -120,8 +129,13 @@ public class UserController {
         this.setTempUserListWrapper(null);
         usersList = userService.listUsersWithDetail();
         wrapper.setUserList(usersList);
-
         model.put("editUserWrapper", wrapper);
+
+        String successParam = req.getParameter("success");
+        System.out.println("Parameter Value: " + successParam);
+        if(ValidationUtility.isExists(successParam)){
+            getPageMessages(successParam, model);
+        }
 
         return "/users/edit";
     }
@@ -130,9 +144,7 @@ public class UserController {
     public String editUser(HttpSession session, @ModelAttribute("editUserWrapper")UserWrapper userWrapper, ModelMap model){
         System.out.println("\n Edit User POST method \n");
         String returnString = "redirect:/users/edit";
-        /*model.put("error", true);
-        model.put("success", false);
-        model.put("errorMsg", "Please select user before edit technical information");*/
+        this.setMessage("");
         this.setTempUserListWrapper(null);
         if (userWrapper.getUserList() != null && userWrapper.getUserList().size() > 0) {
             for (UserWrapper uWrapper : userWrapper.getUserList()) {
@@ -140,8 +152,12 @@ public class UserController {
                     System.out.println("\n UserID: "+uWrapper.getUserId()+" Name:" + uWrapper.getFirstName());
                     this.setTempUserListWrapper(userWrapper);
                     returnString = "redirect:/users/profile-edit-technical";
+                }else{
+                    this.setPageMessages("Please select user before edit user's access", true, model);
                 }
             }
+        }else{
+            this.setPageMessages("Please select user before edit user's access", true, model);
         }
 
         //return "redirect:"+session.getAttribute("previous_page").toString();
@@ -206,49 +222,32 @@ public class UserController {
     @RequestMapping(value = "/users/profile-edit-technical", method = RequestMethod.GET)
     public String editUserProfileTechnical(HttpSession session, ModelMap model){
         System.out.println("\n Edit User Technical method \n");
-        UserWrapper wrapper = new UserWrapper();
-        List<UserWrapper> roleList = null;
-        roleList = userService.populateRoleList();
-
-        Map<String,String> roleMap = new LinkedHashMap<String, String>();
-        if (roleList != null && roleList.size() > 0) {
-            for (UserWrapper uWrapper : roleList) {
-                roleMap.put(uWrapper.getRoleId(), uWrapper.getRoleName());
-            }
-        }
-        model.put("roleList", roleMap);
         String returnPage = "/users/profile-edit-technical";
 
-        if(ValidationUtility.isExists(this.tempUserListWrapper)){
-            result = userService.listUsersWithDetail(tempUserListWrapper);
-            wrapper.setUserList((List<UserWrapper>) result.getObject());
-            model.put("editUserTechnicalWrapper", wrapper);
-        }else{
+        model = populateUserTechnicalInfo(model);
+        if(model.isEmpty()){
             model.put("errorMsg", "Please select user before edit user's technical information");
             returnPage = "redirect:/users/edit";
         }
-
 
         return returnPage;
     }
 
     @RequestMapping(value = "/users/profile-edit-technical", method = RequestMethod.POST)
-    public String editUserProfileTechnical(HttpSession session, @ModelAttribute("editUserTechnicalWrapper")UserWrapper userWrapper, ModelMap model){
+    public String editUserProfileTechnical(HttpServletRequest req, HttpSession session, @ModelAttribute("editUserTechnicalWrapper")UserWrapper userWrapper, ModelMap model){
         System.out.println("\n Edit User Technical POST method \n");
         String returnPage = "/users/profile-edit-technical";
+        returnPage = "redirect:/users/edit";
+        this.setMessage("");
         if(ValidationUtility.isExists(this.tempUserListWrapper)){
             userWrapper.setUserList(this.tempUserListWrapper.getUserList());
             result = userService.editUserAccess(userWrapper);
             //System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
-            if(result.getIsSuccessful()){
-                model.put("error", false);
-                model.put("success", true);
-                model.put("successMsg", result.getMessage());
-            }else{
-                model.put("error", true);
-                model.put("success", false);
-                model.put("errorMsg", result.getMessage());
-            }
+            setPageMessages(result, model);
+            this.roleMap = populateUserRoleCombo();
+            model.put("roleList", roleMap);
+            doAutoLogin(req);
+
         }else{
             model.put("errorMsg", "User Profile not updated. Please select user first");
             //returnPage = "/users/profile-edit-personal";
@@ -409,6 +408,100 @@ public class UserController {
     public void setTempUserListWrapper(UserWrapper tempUserListWrapper) {
         this.tempUserListWrapper = tempUserListWrapper;
     }
+
+    private Map populateUserRoleCombo(){
+        List<UserWrapper> roleList = null;
+        roleList = userService.populateRoleList();
+        Map<String,String> roleMap = new LinkedHashMap<String, String>();
+        if (roleList != null && roleList.size() > 0) {
+            for (UserWrapper uWrapper : roleList) {
+                roleMap.put(uWrapper.getRoleId(), uWrapper.getRoleName());
+            }
+        }
+        return roleMap;
+    }
+
+    private ModelMap populateUserTechnicalInfo(ModelMap model){
+        UserWrapper wrapper = new UserWrapper();
+        this.roleMap = populateUserRoleCombo();
+        model.put("roleList", roleMap);
+
+        if(ValidationUtility.isExists(this.tempUserListWrapper)){
+            result = userService.listUsersWithDetail(tempUserListWrapper);
+            wrapper.setUserList((List<UserWrapper>) result.getObject());
+            model.put("editUserTechnicalWrapper", wrapper);
+        }else{
+            model.clear();
+            return model;
+        }
+
+        return model;
+    }
+
+    private void doAutoLogin(HttpServletRequest request) {
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        result = userService.getUserByLoginId(loginId);
+        Users user = (Users)result.getObject();
+
+        try {
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+            token.setDetails(new WebAuthenticationDetails(request));
+            Authentication authentication = this.authenticationManager.authenticate(token);
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+            securityContext.setAuthentication(authentication);
+
+            HttpSession session = request.getSession(true);
+            session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+        } catch (Exception e) {
+            SecurityContextHolder.getContext().setAuthentication(null);
+            System.out.println("---------------Authentication  exception-------------- ");
+        }
+
+    }
+
+    private ModelMap setPageMessages(Result result, ModelMap model){
+        if(result.getIsSuccessful()){
+            model.put("success", "1");
+        }else{
+            model.put("success", "0");
+        }
+        this.setMessage(result.getMessage());
+        return model;
+    }
+
+    private ModelMap setPageMessages(String message, boolean error, ModelMap model){
+        if(error){
+            model.put("success", "0");
+        }else{
+            model.put("success", "1");
+        }
+        this.setMessage(message);
+        return model;
+    }
+
+    private ModelMap getPageMessages(String param, ModelMap model){
+        if(param.equalsIgnoreCase("1")){
+            model.put("error", false);
+            model.put("success", true);
+            model.put("successMsg", this.getMessage());
+        }
+        if(param.equalsIgnoreCase("0")){
+            model.put("error", true);
+            model.put("success", false);
+            model.put("errorMsg",this.getMessage());
+        }
+        return model;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
 }
 
 

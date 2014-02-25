@@ -94,18 +94,6 @@ public class BoardController {
         return "/boards/board";
    }
 
-    //ajax
-    @RequestMapping (value = "/task/assign/{taskId}", method= RequestMethod.GET)
-    public @ResponseBody List<UserWrapper> assignTask(ModelMap model, @PathVariable(value="taskId") String taskId){
-        System.out.println("task assign controller method called.");
-        if(ValidationUtility.isExists(taskId)){
-            result = userService.getTaskUsersListAll(Long.valueOf(taskId));
-        }
-        for(UserWrapper wr : (List<UserWrapper>) result.getObject()){
-            System.out.println("User enabled : " + wr.isEnableUserAssignId());
-        }
-        return (List<UserWrapper>) result.getObject();
-    }
 }
 
 
