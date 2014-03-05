@@ -197,6 +197,14 @@
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="50000000"/>
     </bean>
+    
+    
+    <!-- Jasper -->
+    
+    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location" value="/WEB-INF/jasper-views.xml"/>
+        <property name="order" value="0"/>
+    </bean> 
         
         
         
