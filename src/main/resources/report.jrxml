@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="36aebe15-67dc-4ec3-b43b-c7545f8804c7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="title" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="creationDateTime" class="java.util.Date"/>
+	<field name="priority" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<textField pattern="HH:mm">
+				<reportElement x="380" y="0" width="100" height="30" uuid="a8726255-1d90-403a-88b5-99c0de0a6248"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="380" y="40" width="100" height="30" uuid="41bc4628-e794-4842-aaed-ec9b829a560c"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="70" y="0" width="100" height="20" uuid="412d0321-79b3-4426-bf51-c981c0978ac4"/>
+				<text><![CDATA[title]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="0" width="70" height="20" uuid="230586aa-3ea4-4654-b94b-7f1cedc1f4e3"/>
+				<text><![CDATA[status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="60" height="20" uuid="60d67f7b-1971-41d8-816e-8716e7899eae"/>
+				<text><![CDATA[creationDateTime]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="288" y="0" width="100" height="20" uuid="235b1ab9-471d-4334-9f5e-cb2679fa791b"/>
+				<text><![CDATA[priority]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="74" splitType="Stretch">
+			<textField>
+				<reportElement x="70" y="10" width="100" height="20" uuid="a338ab24-a4df-4748-8b56-b36bf481446a"/>
+				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="10" width="70" height="20" uuid="cd882111-3415-4454-9efc-bf1a5636d798"/>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="10" width="60" height="20" uuid="0990888a-7cd1-4ad5-a774-4a8f5744e937"/>
+				<textFieldExpression><![CDATA[$F{creationDateTime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="10" width="80" height="20" uuid="2168093e-2031-4070-8955-ad81d7e5225c"/>
+				<textFieldExpression><![CDATA[$F{priority}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
