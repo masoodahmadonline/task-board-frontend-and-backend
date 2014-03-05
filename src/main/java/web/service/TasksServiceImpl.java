@@ -12,6 +12,7 @@ package web.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import web.dao.BoxesDAO;
 import web.dao.TasksDAO;
 import web.entity.Attachment;
@@ -22,6 +23,7 @@ import web.service.common.ResultImpl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,7 +38,10 @@ public class TasksServiceImpl implements TasksService{
     private ResultImpl result;
     
    
-    
+    @Transactional(readOnly = false)
+    public List<Tasks> getAllTasks(Long boardId, String groupBy, Date startDate, Date endDate){
+    	return taskDAO.getAllTasks( boardId,  groupBy,  startDate,  endDate);
+    }
     @Transactional(readOnly = false)
     public ResultImpl save(Tasks task){
         Tasks taskToBeReturned = taskDAO.save(task);
@@ -57,7 +62,7 @@ public class TasksServiceImpl implements TasksService{
         Tasks task = taskDAO.getTaskById(taskId);
         //save attachment while making the task as its parent
         Attachment savedAttachment = taskDAO.saveAttachment(attachment);
-        savedAttachment.setParentTask(task);
+        savedAttachment.setParentTask(task);//should move in else block {M-A}
         if(savedAttachment == null){
             result.setIsSuccessful(false);
             result.setObject(null);

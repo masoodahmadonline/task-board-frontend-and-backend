@@ -6,6 +6,8 @@ package web.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+
 import javax.persistence.*;
 
 /**
@@ -17,6 +19,9 @@ public class Tasks {
     @Id
     @GeneratedValue
     private Long id;
+    @ManyToOne
+    private Users creater;
+    private Date creationDateTime;
     @ManyToOne
     private Boxes parentBox;
     @ManyToMany
@@ -178,4 +183,20 @@ public class Tasks {
     public void setUserSize(String userSize) {
         this.userSize = userSize;
     }
+
+	public Users getCreater() {
+		return creater;
+	}
+
+	public void setCreater(Users creater) {
+		this.creater = creater;
+	}
+
+	public Date getCreationDateTime() {
+		return creationDateTime;
+	}
+
+	public void setCreationDateTime(Date creationDateTime) {
+		this.creationDateTime = creationDateTime;
+	}
 }

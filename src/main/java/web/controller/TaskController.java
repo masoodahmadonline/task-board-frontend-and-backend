@@ -13,13 +13,17 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import web.entity.Attachment;
 import web.entity.Boxes;
 import web.entity.Tasks;
+import web.entity.Users;
 import web.service.TasksService;
 import web.service.BoxesService;
 import web.service.UsersService;
@@ -30,6 +34,7 @@ import web.wrapper.UserWrapper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -68,11 +73,20 @@ public class TaskController {
         //queue
         //get user id from session (save id in session first)
         //verify for privs of user if he can create box or not.
-
+    	User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername(); //get logged in username id
+        result = userService.getUserByLoginId(loginId); 
+        Users user = (Users)result.getObject();
+        
         Tasks taskToBeReturned = null;
         Tasks task = new Tasks();
         task.setTitle(taskTitle);
         task.setDescription(taskDescription);
+        task.setCreater(user);
+        task.setStatus("new");
+        task.setPriority("normal");
+        task.setCreationDateTime(new Date());
+        
         Boxes parentBox = (Boxes)( boxService.getBoxById(Long.valueOf(parentBoxId)) ).getObject();
         taskService.setParent(task, parentBox);
         result = taskService.save(task);

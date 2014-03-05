@@ -4,6 +4,7 @@ package web.dao.impl.jpa;
 import org.hibernate.Session;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
+
 import web.dao.BoxesDAO;
 import web.dao.TasksDAO;
 import web.entity.Attachment;
@@ -14,6 +15,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TransactionRequiredException;
+
+import java.util.Date;
 import java.util.List;
 
 
@@ -63,6 +66,8 @@ public class TasksDAOImpl implements TasksDAO {
         System.out.println("task id supplied to fetch task in dao was ======== "+ id);
         return entityManager.find(Tasks.class, id);
     }
+    
+    
 
     public Attachment getAttachmentById(Long id){
         System.out.println("attachment id supplied to fetch task in dao was ======== "+ id);
