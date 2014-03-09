@@ -127,7 +127,7 @@ public class TaskReportController {
         result = userService.getUserByLoginId(loginId); /////////////   to be edited
         Users user = (Users)result.getObject();
         HttpSession session = request.getSession(true);
-        session.setAttribute("userName", user.getName());
+        session.setAttribute("userName", user.getFirstName());
         result = boardService.getBoardListByUser(user);
         List<Boards> boardList = new ArrayList<Boards>((List)result.getObject());
         model.put("boards",boardList);
