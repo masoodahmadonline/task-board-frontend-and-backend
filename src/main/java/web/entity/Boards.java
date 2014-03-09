@@ -4,8 +4,7 @@
  */
 package web.entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 import javax.persistence.*;
 
 /**
@@ -25,12 +24,15 @@ public class Boards {
     private Collection<Boxes> childBoxList = new ArrayList<Boxes>();
     private String title;
     private String description;
+    private Long createdBy;
+    private Date createdDate;
+    private Long updatedBy;
+    private Date updatedDate;
     @ManyToOne
     private Companies company;
-    @ManyToMany
-    private Collection<BoardPrivileges> boardPrivilegesList = new ArrayList<BoardPrivileges>();
-    @ManyToMany 
-    private Collection <Users> userList = new ArrayList<Users>();
+    @OneToMany(cascade=CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "boardlist")
+    private Collection<Boards_Users> boardUsers = new ArrayList<Boards_Users>();
+
 
     /**
      * @return the id
@@ -89,20 +91,6 @@ public class Boards {
     }
 
     /**
-     * @return the boardPrivilegesList
-     */
-    public Collection<BoardPrivileges> getBoardPrivilegesList() {
-        return boardPrivilegesList;
-    }
-
-    /**
-     * @param boardPrivilegesList the boardPrivilegesList to set
-     */
-    public void setBoardPrivilegesList(Collection<BoardPrivileges> boardPrivilegesList) {
-        this.boardPrivilegesList = boardPrivilegesList;
-    }
-
-    /**
      * @return the company
      */
     public Companies getCompany() {
@@ -116,24 +104,43 @@ public class Boards {
         this.company = company;
     }
 
-    /**
-     * @return the userList
-     */
-    public Collection <Users> getUserList() {
-        return userList;
+    public Collection<Boards_Users> getBoardUsers() {
+        return boardUsers;
     }
 
-    /**
-     * @param userList the userList to set
-     */
-    public void setUserList(Collection <Users> userList) {
-        this.userList = userList;
+    public void setBoardUsers(Collection<Boards_Users> boardUsers) {
+        this.boardUsers = boardUsers;
     }
-    
-        /**
-     * @return the company
-     */
 
+    public Long getCreatedBy() {
+        return createdBy;
+    }
 
-   
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Long getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Long updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
 }

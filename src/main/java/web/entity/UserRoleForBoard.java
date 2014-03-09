@@ -16,7 +16,7 @@ public class UserRoleForBoard {
 
     //users
     @OneToMany (mappedBy = "userRoleForBoard")
-    private Collection<Users> userList = new ArrayList<Users>();
+    private Collection<Boards_Users> boardUsersList = new ArrayList<Boards_Users>();
 
     public Long getId() {
         return id;
@@ -42,11 +42,12 @@ public class UserRoleForBoard {
         this.role = role;
     }
 
-    public Collection<Users> getUserList() {
-        return userList;
+
+    public Collection<Boards_Users> getBoardUsersList() {
+        return boardUsersList;
     }
 
-    public void setUserList(Collection<Users> userList) {
-        this.userList = userList;
+    public void setBoardUsersList(Collection<Boards_Users> boardUsersList) {
+        this.boardUsersList = boardUsersList;
     }
 }

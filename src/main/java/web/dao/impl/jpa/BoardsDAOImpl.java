@@ -21,7 +21,9 @@ public class BoardsDAOImpl implements BoardsDAO {
 	private EntityManager entityManager;
 
 	public Boards save(Boards board) {
-        return entityManager.merge(board);
+        Session session = getHibernateSession();
+        session.saveOrUpdate(board);
+        return board;
 	}
 
     public Boards getBoardById(Long id){

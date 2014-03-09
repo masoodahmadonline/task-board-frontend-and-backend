@@ -1033,6 +1033,26 @@ z-index:11;
   background-image: url('../images/task-priority-low.png');
 }
 
+.user-content {
+  display: none;
+  position: absolute;
+  border: thin #d3d3d3 solid;
+  background: #ccddee; }
+
+.delete-user-icon {
+  cursor: pointer;
+  background-image: url("../images/avatar-small.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  position: absolute;
+  left: 60px;
+  bottom: -10px;
+  width: 15px;
+  height: 15px;
+}
+
+
 
 .user-icon1 {
   cursor: pointer;

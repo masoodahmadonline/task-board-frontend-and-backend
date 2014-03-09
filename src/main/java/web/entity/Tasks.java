@@ -19,10 +19,6 @@ public class Tasks {
     private Long id;
     @ManyToOne
     private Boxes parentBox;
-    @ManyToMany
-    private Collection<TaskPrivileges> taskPrivilegesList = new ArrayList<TaskPrivileges>();
-    @ManyToOne
-    private Companies company;
     private String title;
     @Lob
     private String description;
@@ -30,9 +26,14 @@ public class Tasks {
     private String status; //completed, working, pending/queued, in problems.
     private String userSize; // just for checking how many users assigned to this task (no backend functionality)
 
-    @ManyToMany(mappedBy = "taskList")
-    private Collection <Users> userList = new ArrayList<Users>();
+    @OneToMany(cascade=CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "tasklist")
+    private Collection<Tasks_Users_Updated> taskUsers = new ArrayList<Tasks_Users_Updated>();
 
+    @ManyToMany(cascade = {CascadeType.PERSIST})
+    @JoinTable(name="tasks_users", joinColumns={@JoinColumn(name="tasklist_id")}, inverseJoinColumns={@JoinColumn(name="userlist_id")})
+    private Collection<Users> userList = new ArrayList<Users>();
+    /*@ManyToMany(mappedBy = "taskList")
+    private Collection <Users> userList = new ArrayList<Users>();*/
 
     @OneToMany   (cascade = CascadeType.REMOVE, mappedBy = "parentTask")
     private  Collection <Attachment> attachmentList = new ArrayList<Attachment>();
@@ -62,20 +63,6 @@ public class Tasks {
      */
     public void setParentBox(Boxes parentBox) {
         this.parentBox = parentBox;
-    }
-
-    /**
-     * @return the taskPrivilegesList
-     */
-    public Collection<TaskPrivileges> getTaskPrivilegesList() {
-        return taskPrivilegesList;
-    }
-
-    /**
-     * @param taskPrivilegesList the taskPrivilegesList to set
-     */
-    public void setTaskPrivilegesList(Collection<TaskPrivileges> taskPrivilegesList) {
-        this.taskPrivilegesList = taskPrivilegesList;
     }
 
     /**
@@ -133,35 +120,6 @@ public class Tasks {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-        /**
-     * @return the company
-     */
-    public Companies getCompany() {
-        return company;
-    }
-
-    /**
-     * @param company the company to set
-     */
-    public void setCompany(Companies company) {
-        this.company = company;
-    }
-
-    /**
-     * @return the userList
-     */
-    public Collection <Users> getUserList() {
-        return userList;
-    }
-
-    /**
-     * @param userList the userList to set
-     */
-    public void setUserList(Collection <Users> userList) {
-        this.userList = userList;
-    }
-
 
     public Collection<Attachment> getAttachmentList() {
         return attachmentList;
@@ -177,5 +135,21 @@ public class Tasks {
 
     public void setUserSize(String userSize) {
         this.userSize = userSize;
+    }
+
+    public Collection<Tasks_Users_Updated> getTaskUsers() {
+        return taskUsers;
+    }
+
+    public void setTaskUsers(Collection<Tasks_Users_Updated> taskUsers) {
+        this.taskUsers = taskUsers;
+    }
+
+    public Collection<Users> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(Collection<Users> userList) {
+        this.userList = userList;
     }
 }

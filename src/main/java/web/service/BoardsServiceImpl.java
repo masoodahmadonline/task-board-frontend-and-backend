@@ -1,18 +1,14 @@
 package web.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.dao.BoardsDAO;
 import web.dao.UsersDAO;
-import web.entity.Boards;
-import web.entity.Boxes;
-import web.entity.Tasks;
-import web.entity.Users;
+import web.entity.*;
+import web.service.common.ProjectDBConstants;
 import web.service.common.ResultImpl;
 import web.service.common.ValidationUtility;
 import web.wrapper.UserWrapper;
@@ -34,13 +30,115 @@ public class BoardsServiceImpl implements BoardsService{
         if(boardToBeReturned == null){
             result.setIsSuccessful(false);
             result.setObject(null);
+            result.setMessage("Board not created. There was an unknown error while creating a board");
             result.setMessageList(Arrays.asList("error.boardCreationErrorUnknown"/*,"second message (if any)"*/));
         }else{
             result.setIsSuccessful(true);
+            result.setMessage("Board created successfully.");
             result.setObject(boardToBeReturned);
             result.setMessageList(Arrays.asList("success.boardCreated"));
         }
         return result;
+    }
+
+    @Transactional(readOnly = false)
+    public ResultImpl saveBoard(UserWrapper wrapper){
+        Boards board = new Boards();
+        Users users = new Users();
+        Boards_Users boardUsers = null;
+        board = populateBoardsFromWrapper(wrapper, board);
+        Boards boardToBeReturned = boardDAO.save(board);
+
+        // Insert in Boards_Users (ADMINISTRATOR Role and default WIP for current user)
+        if(ValidationUtility.isExists(boardToBeReturned.getId()) && ValidationUtility.isExists(wrapper.getUserId())){
+            boardUsers = new Boards_Users();
+            boardUsers = (Boards_Users) userDAO.findByTwoPropertiesUnique(boardUsers, "boardlist.id", boardToBeReturned.getId(), "userlist.id", Long.valueOf(wrapper.getUserId()));
+            if(!ValidationUtility.isExists(boardUsers)){
+                boardUsers = new Boards_Users();
+                Users u = new Users();
+                u.setId(Long.valueOf(wrapper.getUserId()));
+                UserRoleForBoard uRoleTable = new UserRoleForBoard();
+                uRoleTable.setId(Long.valueOf(ProjectDBConstants.ADMIN_ROLE_ID));
+                boardUsers.setBoardlist(boardToBeReturned);
+                boardUsers.setUserlist(u);
+                boardUsers.setUserRoleForBoard(uRoleTable);
+                if(ValidationUtility.isExists(wrapper.getCreatedBy())){
+                    boardUsers.setCreatedBy(Long.valueOf(wrapper.getCreatedBy()));
+                }
+                boardUsers.setCreatedDate(new Date());
+                if(ValidationUtility.isExists(wrapper.getWip())){
+                    boardUsers.setWip(Long.valueOf(wrapper.getWip()));
+                }else{
+                    boardUsers.setWip(Long.valueOf(0));
+                }
+                userDAO.save(boardUsers);
+            }
+        }
+
+        // Insert in Boards_Users for all other users in given company (NO ACCESS Role and default WIP)
+
+        List usersList = new ArrayList();
+        List boardUsersList = new ArrayList();
+        usersList = userDAO.findByProperty(users, "company.id", Long.valueOf(wrapper.getCompanyId()));
+        for (int i = 0; i < usersList.size(); i++) {
+            users = (Users) usersList.get(i);
+            boardUsers = new Boards_Users();
+            boardUsers = (Boards_Users) userDAO.findByTwoPropertiesUnique(boardUsers, "boardlist.id", boardToBeReturned.getId(), "userlist.id", users.getId());
+            if(!ValidationUtility.isExists(boardUsers)){
+                boardUsers = new Boards_Users();
+                UserRoleForBoard uRoleTable = new UserRoleForBoard();
+                uRoleTable.setId(Long.valueOf(ProjectDBConstants.NO_ACCESS_ROLE_ID));
+                Users u = new Users();
+                u.setId(users.getId());
+                boardUsers.setUserlist(u);
+                boardUsers.setBoardlist(boardToBeReturned);
+                boardUsers.setUserRoleForBoard(uRoleTable);
+                if(ValidationUtility.isExists(wrapper.getCreatedBy())){
+                    boardUsers.setCreatedBy(Long.valueOf(wrapper.getCreatedBy()));
+                }
+                boardUsers.setCreatedDate(new Date());
+                if(ValidationUtility.isExists(wrapper.getWip())){
+                    boardUsers.setWip(Long.valueOf(wrapper.getWip()));
+                }else{
+                    boardUsers.setWip(Long.valueOf(0));
+                }
+                userDAO.save(boardUsers);
+            }
+        }
+
+
+        if(boardToBeReturned == null){
+            result.setIsSuccessful(false);
+            result.setObject(null);
+            result.setMessage("Board not created. There was an unknown error while creating a board");
+            result.setMessageList(Arrays.asList("error.boardCreationErrorUnknown"/*,"second message (if any)"*/));
+        }else{
+            result.setIsSuccessful(true);
+            result.setMessage("Board created successfully.");
+            result.setObject(boardToBeReturned);
+            result.setMessageList(Arrays.asList("success.boardCreated"));
+        }
+        return result;
+    }
+
+    private Boards populateBoardsFromWrapper(UserWrapper wrapper, Boards table){
+
+        if(ValidationUtility.isExists(wrapper.getBoardId())){
+            table.setId(Long.valueOf(wrapper.getBoardId()));
+        }
+        table.setTitle(wrapper.getBoardName());
+        table.setDescription(wrapper.getBoardDesc());
+        if(ValidationUtility.isExists(wrapper.getUserId())){
+            table.setCreatedBy(Long.valueOf(wrapper.getUserId()));
+        }
+        table.setCreatedDate(new Date());
+        if(ValidationUtility.isExists(wrapper.getCompanyId())){
+            Companies comp = new Companies();
+            comp.setId(Long.valueOf(wrapper.getCompanyId()));
+            table.setCompany(comp);
+        }
+
+        return table;
     }
     
     @Transactional
@@ -84,6 +182,7 @@ public class BoardsServiceImpl implements BoardsService{
            for(Object t : box.getTaskList()){
                Tasks task = (Tasks)t;
                System.out.println( "The Attachment List size is  ========= " +task.getAttachmentList().size() );
+               System.out.println( "The User List size is  ========= " +task.getUserList().size() );
                UserWrapper tempWrapper = new UserWrapper();
                tempWrapper = getTaskUsersList(task.getId());
                task.setUserSize("0");
@@ -134,6 +233,7 @@ public class BoardsServiceImpl implements BoardsService{
         tTable = (Tasks)userDAO.findById(tTable, taskId);
         List<UserWrapper> userList = new ArrayList<UserWrapper>();
         Users userTable = new Users();
+        Tasks_Users_Updated taskUsers = null;
         List list = new ArrayList();
         UserWrapper returnWrapper = null;
 
@@ -144,7 +244,19 @@ public class BoardsServiceImpl implements BoardsService{
             UserWrapper wrapper = null;
             wrapper = new UserWrapper();
             wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
-            System.out.println("\n ---- Task exist for User Id : " + userTable.getId());
+
+            // Implementation for manually generated tasks_users_updated join table (for extra columns)
+            taskUsers = new Tasks_Users_Updated();
+            taskUsers = (Tasks_Users_Updated) userDAO.findByTwoPropertiesUnique(taskUsers, "tasklist.id", tTable.getId(), "userlist.id", userTable.getId());
+            if(ValidationUtility.isExists(taskUsers)){
+                wrapper.setEnableUserAssignId(true);
+                userList.add(wrapper);
+            }else{
+                userList.remove(wrapper);
+            }
+
+            /* Implementation for auto generated tasks_users join table*/
+            /*System.out.println("\n ---- Task exist for User Id : " + userTable.getId());
             System.out.println(" ---- Task exist for User Size : " + userTable.getTaskList().size() + "\n");
             if(userTable.getTaskList().contains(tTable)){
                 System.out.println("\n ---- Assigned Task Id: " + tTable.getId());
@@ -153,7 +265,7 @@ public class BoardsServiceImpl implements BoardsService{
                 userList.add(wrapper);
             }else{
                 userList.remove(wrapper);
-            }
+            }*/
 
 
         }
@@ -177,11 +289,12 @@ public class BoardsServiceImpl implements BoardsService{
         wrapper.setFirstName(table.getFirstName());
         wrapper.setLastName(table.getLastName());
         wrapper.setEmail(table.getEmail());
-        if(ValidationUtility.isExists(table.getUserRoleForBoard())){
+        //Implement for Boards_Users role
+        /*if(ValidationUtility.isExists(table.getUserRoleForBoard())){
             wrapper.setRoleName(table.getUserRoleForBoard().getRole());
             wrapper.setRoleId("" + table.getUserRoleForBoard().getId());
         }
-        wrapper.setWip("" + table.getWip());
+        wrapper.setWip("" + table.getWip());*/
         wrapper.setEnableUserEditId(false);
         wrapper.setEnableUserAssignId(false);
         wrapper.setEnableUserId(false);

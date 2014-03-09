@@ -44,35 +44,43 @@
                             <table>
                                 <tbody>
                                 <tr>
-                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px;"></td>
+                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; text-align: right">User Name:&nbsp;&nbsp;&nbsp;</td>
                                     <td>
                                         <form:input cssClass="form-input" path="email" tabindex="1" autocomplete="false" placeholder="Email Address (Will be login ID)" maxlength="100" />
                                     </td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px;"></td>
+                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; text-align: right">First Name:&nbsp;&nbsp;&nbsp;</td>
                                     <td>
                                         <form:input cssClass="form-input" path="firstName" autocomplete="false" maxlength="100" placeholder="First Name" tabindex="2" />
                                     </td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px;"></td>
+                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; text-align: right">Last Name:&nbsp;&nbsp;&nbsp;</td>
                                     <td>
                                         <form:input cssClass="form-input" path="lastName" autocomplete="false" maxlength="100" placeholder="Last Name" tabindex="3" />
                                     </td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px;"></td>
+                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; text-align: right">Company:&nbsp;&nbsp;&nbsp;</td>
+                                    <td>
+                                        <form:select path="companyId" cssClass="form-input" >
+                                            <form:options items="${companyList}" />
+                                        </form:select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; text-align: right">Password:&nbsp;&nbsp;&nbsp;</td>
                                     <td>
                                         <form:password id="password1" path="password1" autocomplete="false" cssClass="form-input" placeholder="Password" maxlength="100" tabindex="4" />
                                     </td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px;"></td>
+                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; text-align: right">Confirm Password:&nbsp;&nbsp;&nbsp;</td>
                                     <td>
                                         <form:password id="password2" path="password2" autocomplete="false" cssClass="form-input" placeholder="Re-type Password" maxlength="100" tabindex="5" />
                                     </td>
@@ -87,10 +95,26 @@
                                     <td></td>
                                 </tr>
                                 <tr>
+                                    <td style="text-align: right"></td>
+                                    <td style="text-align: left">
+                                        <form:checkbox path="canCreateBoard" cssStyle="display: inline-block;" tabindex="7" placeholder="Chekcbox" />
+                                        <spring:message code="form.text.checkbox.isBoardCreator"/>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right"></td>
+                                    <td style="text-align: left">
+                                        <form:checkbox path="accountAdmin" cssStyle="display: inline-block;" tabindex="8" placeholder="Chekcbox" />
+                                        <spring:message code="form.text.checkbox.isAdmin"/>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
                                     <td></td>
                                     <td>
                                         <input type="submit" value="<spring:message code="form.text.button.creatUser"/>" tabindex="7"/>
-                                        <input type="<spring:message code="form.text.button.reset"/>" tabindex="8"/>
+                                        <input type="<spring:message code="form.text.button.reset"/>" tabindex="9"/>
                                     </td>
                                     <td></td>
                                 </tr>

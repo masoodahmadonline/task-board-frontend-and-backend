@@ -35,8 +35,6 @@ public class Boards {
     @ManyToOne
     private Companies company;
     @ManyToMany
-    private Collection<BoardPrivileges> boardPrivilegesList = new ArrayList<BoardPrivileges>();
-    @ManyToMany 
     private Collection <Users> userList = new ArrayList<Users>();
 
     /**
@@ -95,19 +93,6 @@ public class Boards {
         this.description = description;
     }
 
-    /**
-     * @return the boardPrivilegesList
-     */
-    public Collection<BoardPrivileges> getBoardPrivilegesList() {
-        return boardPrivilegesList;
-    }
-
-    /**
-     * @param boardPrivilegesList the boardPrivilegesList to set
-     */
-    public void setBoardPrivilegesList(Collection<BoardPrivileges> boardPrivilegesList) {
-        this.boardPrivilegesList = boardPrivilegesList;
-    }
 
     /**
      * @return the company

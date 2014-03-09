@@ -8,18 +8,21 @@ package web.service;
  *
  * @author syncsys
  */
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import web.dao.BoardsDAO;
 import web.dao.TasksDAO;
 import web.dao.UsersDAO;
 import web.entity.*;
+import web.service.common.ProjectDBConstants;
 import web.service.common.ResultImpl;
 import web.service.common.ValidationUtility;
 import web.wrapper.UserWrapper;
@@ -49,14 +52,14 @@ public class UsersServiceImpl implements UsersService{
             result.setObject(null);
             result.setMessageList(Arrays.asList("error.emailAlreadyExists"/*,"some.other.message"*/));
         }else{
-            Users userToBeReturned = userDAO.save(user);
-            if(userToBeReturned == null){
+            userDAO.save(user);
+            if(user == null){
                 result.setIsSuccessful(false);
                 result.setObject(null);
                 result.setMessageList(Arrays.asList("error.userCreationErrorUnknown"));
             }else{
                 result.setIsSuccessful(true);
-                result.setObject(userToBeReturned);
+                result.setObject(user);
                 result.setMessageList(Arrays.asList("success.userCreated"));
             }
         }
@@ -89,6 +92,19 @@ public class UsersServiceImpl implements UsersService{
 
     }
 
+    @Transactional
+    public String getCompanyId(String email){
+        Users user = userDAO.getUserByLoginId(email);
+        String companyID = null;
+        if (ValidationUtility.isExists(user)){
+            if(ValidationUtility.isExists(user.getCompany())){
+                companyID = "" + user.getCompany().getId();
+            }
+        }
+        return companyID;
+
+    }
+
     @Deprecated
     @Transactional(readOnly = false)
     //changeable with full authority by other peer developers{M-A}
@@ -118,9 +134,37 @@ public class UsersServiceImpl implements UsersService{
     }
 
     @Transactional(readOnly = false)
+    public ResultImpl deleteBoard(Long id){
+        int size = 0;
+        Boards board = new Boards();
+        board = (Boards) userDAO.findById(board, id);
+
+        userDAO.remove(board);
+        if(board == null){
+            result.setIsSuccessful(false);
+            result.setMessage("Board not deleted");
+
+        }else{
+            result.setIsSuccessful(true);
+            result.setMessage("Board deleted successfully");
+
+        }
+
+        /*
+        if(taskDAO.deleteTask(id)){
+            result.setIsSuccessful(true);
+            result.setMessageList(Arrays.asList("success.taskDeleted"));
+        }else{
+            result.setIsSuccessful(false);
+            result.setMessageList(Arrays.asList("error.taskDeletionFailed"));
+        }*/
+        return result;
+    }
+
+    @Transactional(readOnly = false)
     public ResultImpl saveUser(UserWrapper wrapper) {
         Users userTable = null;
-        Boards board = null;
+
         if(userDAO.doesLoginIdExists(wrapper.getEmail()) ){
             result.setIsSuccessful(false);
             result.setObject(null);
@@ -135,7 +179,36 @@ public class UsersServiceImpl implements UsersService{
             System.out.println("\nuser id before:" + userTable.getId());
             userDAO.save(userTable);
             System.out.println("\nuser id after:" + userTable.getId());
+            //Implement for Boards_Users role
+            if(ValidationUtility.isExists(userTable.getId())){
+                Boards_Users boardUsers = new Boards_Users();
+                Boards board = new Boards();
+                UserRoleForBoard role = new UserRoleForBoard();
+                role.setId(Long.valueOf(ProjectDBConstants.NO_ACCESS_ROLE_ID)); // For New User: assign no-access to all boards of the given company
+                List boardUsersList = new ArrayList();
+                List boardsList = new ArrayList();
+                boardUsersList = userDAO.findByProperty(boardUsers, "userlist.id", userTable.getId());
+                if(boardUsersList.isEmpty()){//double check for New User
+                    if(ValidationUtility.isExists(wrapper.getCompanyId())){
+                        boardsList = userDAO.findByProperty(board, "company.id", Long.valueOf(wrapper.getCompanyId()));
+                        for (int i = 0; i < boardsList.size(); i++) {
+                            board = (Boards) boardsList.get(i);
+                            boardUsers = new Boards_Users();
+                            boardUsers.setBoardlist(board);
+                            boardUsers.setUserlist(userTable);
+                            boardUsers.setUserRoleForBoard(role);
+                            boardUsers.setWip(Long.valueOf(0));
+                            if(ValidationUtility.isExists(wrapper.getCreatedBy())){
+                                boardUsers.setCreatedBy(Long.valueOf(wrapper.getCreatedBy()));
+                            }
+                            boardUsers.setCreatedDate(new Date());
+                            userDAO.save(boardUsers);
+                        }
+                    }
+                }
 
+
+            }
             /*User inserted in all boards as well
             board = new Boards();
             List boardList = new ArrayList();
@@ -210,25 +283,37 @@ public class UsersServiceImpl implements UsersService{
 
     @Transactional(readOnly = false)
     public ResultImpl editUserAccess(UserWrapper wrapper) {
-        Users uTable = null;
+        Boards_Users boardUsers = null;
         if(ValidationUtility.isExists(wrapper.getUserList())){
             if (wrapper.getUserList().size() > 0) {
                 for (UserWrapper uWrapper : wrapper.getUserList()) {
                     if(ValidationUtility.isExists(uWrapper.getEmail())){
-                        uTable = new Users();
+                        /*uTable = new Users();
                         uTable = (Users)userDAO.findById(uTable, Long.valueOf(uWrapper.getUserId()));
                         if(ValidationUtility.isExists(wrapper.getRoleId())){
                             UserRoleForBoard uRoleTable = new UserRoleForBoard();
                             uRoleTable.setId(Long.valueOf(wrapper.getRoleId()));
                             uTable.setUserRoleForBoard(uRoleTable);
+                        }*/
+                        //Implement for Boards_Users role
+                        if(ValidationUtility.isExists(wrapper.getBoardId()) && ValidationUtility.isExists(uWrapper.getUserId())){
+                            boardUsers = new Boards_Users();
+                            boardUsers = (Boards_Users) userDAO.findByTwoPropertiesUnique(boardUsers, "boardlist.id", Long.valueOf(wrapper.getBoardId()), "userlist.id", Long.valueOf(uWrapper.getUserId()));
+                            UserRoleForBoard uRoleTable = new UserRoleForBoard();
+                            uRoleTable.setId(Long.valueOf(wrapper.getRoleId()));
+                            boardUsers.setUserRoleForBoard(uRoleTable);
+                            if(ValidationUtility.isExists(wrapper.getUpdatedBy())){
+                                boardUsers.setUpdatedBy(Long.valueOf(wrapper.getUpdatedBy()));
+                            }
+                            boardUsers.setUpdatedDate(new Date());
+                            if(ValidationUtility.isExists(wrapper.getWip())){
+                                boardUsers.setWip(Long.valueOf(wrapper.getWip()));
+                            }else{
+                                boardUsers.setWip(Long.valueOf(0));
+                            }
+                            userDAO.save(boardUsers);
                         }
-                        if(ValidationUtility.isExists(wrapper.getWip())){
-                            uTable.setWip(Long.valueOf(wrapper.getWip()));
-                        }else{
-                            uTable.setWip(Long.valueOf(0));
-                        }
-                        userDAO.save(uTable);
-                        if(uTable == null){
+                        if(boardUsers == null){
                             result.setIsSuccessful(false);
                             result.setObject(null);
                             result.setMessage("There was an unknown error while updating selected users' access levels");
@@ -248,11 +333,107 @@ public class UsersServiceImpl implements UsersService{
     }
 
     @Transactional(readOnly = false)
+    public ResultImpl deleteUser(UserWrapper wrapper) {
+        int size = 0;
+        Users user = new Users();
+        Tasks_Users_Updated taskUser = new Tasks_Users_Updated();
+        Boards_Users boardUser = new Boards_Users();
+        if(ValidationUtility.isExists(wrapper.getUserId())){
+            user = (Users) userDAO.findById(user, Long.valueOf(wrapper.getUserId()));
+
+            // Implementation for manually generated tasks_users_updated join table (for extra columns)
+            List taskUsersList = new ArrayList();
+            taskUsersList = userDAO.findByProperty(taskUser, "userlist.id", Long.valueOf(wrapper.getUserId()));
+            List boardUsersList = new ArrayList();
+            boardUsersList = userDAO.findByProperty(boardUser, "userlist.id", Long.valueOf(wrapper.getUserId()));
+            for (int i = 0; i < taskUsersList.size(); i++) {
+                taskUser = new Tasks_Users_Updated();
+                taskUser = (Tasks_Users_Updated) taskUsersList.get(i);
+                userDAO.remove(taskUser);
+            }
+            for (int i = 0; i < boardUsersList.size(); i++) {
+                boardUser = new Boards_Users();
+                boardUser = (Boards_Users) boardUsersList.get(i);
+                userDAO.remove(boardUser);
+            }
+            userDAO.remove(user);
+
+
+            /* Implementation for auto generated tasks_users join table*/
+            if(user.getTaskList().isEmpty()){
+                userDAO.remove(user);
+            }else{
+
+                Iterator<Tasks> it = user.getTaskList().iterator();
+                size = user.getTaskList().size();
+                while(it.hasNext()){
+                    Tasks task = it.next();
+                    if(ValidationUtility.isExists(task.getId())){
+                        it.remove(); // To solve concurrentmodificationexception exception, add this line and comment out following lines
+                        //user.getTaskList().remove(task);
+                        //userDAO.save(user);
+                    }
+                }
+                userDAO.remove(user);
+            }
+
+            if(user == null){
+                result.setIsSuccessful(false);
+                result.setObject(null);
+                result.setMessage("There was an unknown error while removing user.");
+                return result;
+            }else{
+                result.setIsSuccessful(true);
+                result.setMessage("User removed successfully.");
+                return result;
+            }
+        }else{
+            result.setIsSuccessful(false);
+            result.setObject(null);
+            result.setMessage("Error: User does not exist");
+            return result;
+        }
+    }
+
+    @Transactional(readOnly = false)
+    public ResultImpl deleteUserAccess(UserWrapper wrapper) {
+        Users user = new Users();
+        Tasks_Users_Updated taskUser = new Tasks_Users_Updated();
+        Boards_Users boardUser = new Boards_Users();
+        if(ValidationUtility.isExists(wrapper.getUserId())){
+            user = (Users) userDAO.findById(user, Long.valueOf(wrapper.getUserId()));
+            user.setEnabled(false);
+            if(ValidationUtility.isExists(wrapper.getUpdatedBy())){
+                user.setUpdatedBy(Long.valueOf(wrapper.getUpdatedBy()));
+            }
+            user.setUpdatedDate(new Date());
+            userDAO.save(user);
+
+            if(user == null){
+                result.setIsSuccessful(false);
+                result.setObject(null);
+                result.setMessage("There was an unknown error while disabling user.");
+                return result;
+            }else{
+                result.setIsSuccessful(true);
+                result.setMessage("User disabled successfully.");
+                return result;
+            }
+        }else{
+            result.setIsSuccessful(false);
+            result.setObject(null);
+            result.setMessage("Error: User does not exist");
+            return result;
+        }
+    }
+
+    @Transactional(readOnly = false)
     public ResultImpl taskAssignment(UserWrapper wrapper) {
         Users uTable = null;
         Tasks tTable = null;
         Boxes boxTable = null;
         Boards boardTable = null;
+        Tasks_Users_Updated taskUsers = null;
         UserWrapper tempW = new UserWrapper();
         tempW =  checkWip(wrapper);
         if(tempW.isTempWipValue()){
@@ -282,6 +463,34 @@ public class UsersServiceImpl implements UsersService{
                             if(ValidationUtility.isExists(uWrapper.getUserId())){
                                 uTable = new Users();
                                 uTable = (Users)userDAO.findById(uTable, Long.valueOf(uWrapper.getUserId()));
+
+                                //Implementation for manually generated tasks_users_updated table (insert createdBy, createdDate columns)
+                                taskUsers = new Tasks_Users_Updated();
+                                taskUsers = (Tasks_Users_Updated) userDAO.findByTwoPropertiesUnique(taskUsers, "tasklist.id", tTable.getId(), "userlist.id", Long.valueOf(uWrapper.getUserId()));
+
+                                if(uWrapper.isEnableUserAssignId()){
+                                    if(!ValidationUtility.isExists(taskUsers)){
+                                        taskUsers = new Tasks_Users_Updated();
+                                        taskUsers.setUserlist(uTable);
+                                        taskUsers.setTasklist(tTable);
+                                        if(ValidationUtility.isExists(wrapper.getCreatedBy())){
+                                            taskUsers.setCreatedBy(Long.valueOf(wrapper.getCreatedBy()));
+                                        }
+                                        taskUsers.setCreatedDate(new Date());
+                                    }else{
+                                        if(ValidationUtility.isExists(wrapper.getUpdatedBy())){
+                                            taskUsers.setUpdatedBy(Long.valueOf(wrapper.getUpdatedBy()));
+                                        }
+                                        taskUsers.setUpdatedDate(new Date());
+                                    }
+                                    userDAO.save(taskUsers);
+                                }else{
+                                    if(ValidationUtility.isExists(taskUsers)){
+                                        userDAO.remove(taskUsers);
+                                    }
+                                }
+
+                                /* Implementation for auto generated tasks_users join table*/
                                 if(uWrapper.isEnableUserAssignId()){
                                     if(!uTable.getTaskList().contains(tTable)){
                                         uTable.getTaskList().add(tTable);
@@ -292,6 +501,8 @@ public class UsersServiceImpl implements UsersService{
                                     }
                                 }
                                 userDAO.save(uTable);
+
+
                                 if(uTable == null){
                                     result.setIsSuccessful(false);
                                     result.setObject(null);
@@ -316,6 +527,8 @@ public class UsersServiceImpl implements UsersService{
     public UserWrapper checkWip(UserWrapper wrapper) {
         Users uTable = null;
         Tasks tTable = null;
+        Boards_Users boardUsers = null;
+        Tasks_Users_Updated taskUsers = new Tasks_Users_Updated();
         UserWrapper retWrapper = new UserWrapper();
         retWrapper.setTempWipValue(false);
         if(ValidationUtility.isExists(wrapper.getTaskId())){
@@ -329,10 +542,20 @@ public class UsersServiceImpl implements UsersService{
                             uTable = (Users)userDAO.findById(uTable, Long.valueOf(uWrapper.getUserId()));
                             if(uWrapper.isEnableUserAssignId()){
                                 Long wipValue = Long.valueOf("0");
-                                if(ValidationUtility.isExists(uTable.getWip())){
-                                    wipValue = uTable.getWip();
+                                if(ValidationUtility.isExists(wrapper.getBoardId()) && ValidationUtility.isExists(uWrapper.getUserId())){
+                                    boardUsers = new Boards_Users();//Implement for Boards_Users role
+                                    boardUsers = (Boards_Users) userDAO.findByTwoPropertiesUnique(boardUsers, "boardlist.id", Long.valueOf(wrapper.getBoardId()), "userlist.id", Long.valueOf(uWrapper.getUserId()));
+                                    if(ValidationUtility.isExists(boardUsers.getWip())){
+                                       wipValue = boardUsers.getWip();
+                                    }
                                 }
+                                // Implementation for manually generated tasks_users_updated join table (for extra columns)
+                                List usersList = new ArrayList();
+                                usersList = userDAO.findByProperty(taskUsers, "userlist.id", Long.valueOf(uWrapper.getUserId()));
+                                Long tasksSize = Long.valueOf(usersList.size());
+                                /* Implementation for auto generated tasks_users join table
                                 Long tasksSize = Long.valueOf(uTable.getTaskList().size());
+                                 */
                                 System.out.println("\n User: "+ uTable.getFirstName() + " - Wip: " + wipValue + " - Task Size: " + tasksSize+ "");
                                 if(wipValue > 0){
                                     if(wipValue <= tasksSize){
@@ -384,6 +607,15 @@ public class UsersServiceImpl implements UsersService{
 
         if(ValidationUtility.isExists(wrapper.getUserId())){
             table.setId(Long.valueOf(wrapper.getUserId()));
+            if(ValidationUtility.isExists(wrapper.getUpdatedBy())){
+                table.setUpdatedBy(Long.valueOf(wrapper.getUpdatedBy()));
+            }
+            table.setUpdatedDate(new Date());
+        }else{
+            if(ValidationUtility.isExists(wrapper.getCreatedBy())){
+                table.setCreatedBy(Long.valueOf(wrapper.getCreatedBy()));
+            }
+            table.setCreatedDate(new Date());
         }
         table.setEmail(wrapper.getEmail());
         table.setFirstName(wrapper.getFirstName());
@@ -394,21 +626,45 @@ public class UsersServiceImpl implements UsersService{
         if(ValidationUtility.isExists(wrapper.isEnableUserId())){
             table.setEnabled(wrapper.isEnableUserId());
         }
-        if(ValidationUtility.isExists(wrapper.getEnableUser())){
-            if(wrapper.getEnableUser().equalsIgnoreCase("on")){
-                table.setEnabled(true);
-            }else{
-                table.setEnabled(false);
-            }
+        if(ValidationUtility.isExists(wrapper.isAccountAdmin())){
+            table.setAccountAdmin(wrapper.isAccountAdmin());
+        }
+        if(ValidationUtility.isExists(wrapper.isCanCreateBoard())){
+            table.setBoardCreator(wrapper.isCanCreateBoard());
         }
 
-        if(!ValidationUtility.isExists(table.getUserRoleForBoard())){
+        if(ValidationUtility.isExists(wrapper.getCompanyId())){
+            Companies comp = new Companies();
+            comp.setId(Long.valueOf(wrapper.getCompanyId()));
+            table.setCompany(comp);
+        }
+
+        /*if(!ValidationUtility.isExists(table.getUserRoleForBoard())){
             UserRoleForBoard role = new UserRoleForBoard();
-            role.setId(Long.valueOf(2)); // For New User: assign role of user
+            role.setId(Long.valueOf(ProjectDBConstants.USER_ROLE_ID)); // For New User: assign role of user
             table.setUserRoleForBoard(role);
         }
         if(!ValidationUtility.isExists(table.getWip())){
             table.setWip(Long.valueOf(0));  // For new User: assign Wip = 0
+        }*/
+
+        if(ValidationUtility.isExists(wrapper.getImageName())){
+            table.setImageName(wrapper.getImageName());
+        }
+        if(!ValidationUtility.isExists(table.getImageName())){
+            table.setImageName("/images/user/avatar-small.png");
+        }
+
+        if(ValidationUtility.isExists(wrapper.getImageData())){
+            if(wrapper.getImageData().getSize() > 0){
+                MultipartFile file = wrapper.getImageData();
+                try{
+                    table.setPersonimage(file.getBytes());
+                } catch (Exception e) {
+                    System.out.println("------------- File Info exception ----------------");
+                    e.printStackTrace();
+                }
+            }
         }
 
 
@@ -434,7 +690,25 @@ public class UsersServiceImpl implements UsersService{
     }
 
     @Transactional
-    public List<UserWrapper> listUsersWithDetail() {
+    public List<UserWrapper> populateCompanyList() {
+        List<UserWrapper> list = new ArrayList<UserWrapper>();
+        Companies table = new Companies();
+        UserWrapper wrapper = null;
+
+        List qList = new ArrayList();
+        qList = userDAO.findAll(table);
+        for (int j = 0; j < qList.size(); j++) {
+            table = (Companies) qList.get(j);
+            wrapper = new UserWrapper();
+            wrapper = populateWrapperFromCompanyTable(wrapper, table);
+            list.add(wrapper);
+        }
+
+        return list;
+    }
+
+    @Transactional
+    public List<UserWrapper> listAllUsersWithDetail() {
         List<UserWrapper> userList = new ArrayList<UserWrapper>();
         Users userTable = new Users();
         List list = new ArrayList();
@@ -452,6 +726,52 @@ public class UsersServiceImpl implements UsersService{
 
         return userList;
     }
+
+    @Transactional
+    public List<UserWrapper> listUsersWithDetail(String companyId, String boardId) {
+        List<UserWrapper> userList = new ArrayList<UserWrapper>();
+        Users userTable = new Users();
+        List list = new ArrayList();
+        UserWrapper wrapper = null;
+        if(ValidationUtility.isExists(companyId)){
+            list = userDAO.findByProperty(userTable, "company.id", Long.valueOf(companyId));
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            userTable = (Users) list.get(i);
+            if(userTable.isEnabled()){ // get list of enabled users
+                wrapper = new UserWrapper();
+                wrapper.setBoardId(boardId);
+                wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
+                userList.add(wrapper);
+            }
+        }
+
+
+        return userList;
+    }
+
+    @Transactional
+    public List<UserWrapper> listUsersWithDetail(String companyId) {
+        List<UserWrapper> userList = new ArrayList<UserWrapper>();
+        Users userTable = new Users();
+        List list = new ArrayList();
+        UserWrapper wrapper = null;
+        if(ValidationUtility.isExists(companyId)){
+            list = userDAO.findByProperty(userTable, "company.id", Long.valueOf(companyId));
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            userTable = (Users) list.get(i);
+            wrapper = new UserWrapper();
+            wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
+            userList.add(wrapper);
+        }
+
+
+        return userList;
+    }
+
 
     @Transactional
     public ResultImpl listUsersWithDetail(UserWrapper uWrapper) {
@@ -487,19 +807,55 @@ public class UsersServiceImpl implements UsersService{
         return wrapper;
     }
 
+    private UserWrapper populateWrapperFromCompanyTable(UserWrapper wrapper, Companies table){
+        wrapper.setCompanyId("" + table.getId());
+        wrapper.setCompanyName(table.getName());
+
+        return wrapper;
+    }
+
+
     private UserWrapper populateUserWrapperFromUserTable(UserWrapper wrapper, Users table){
         wrapper.setUserId("" + table.getId());
         wrapper.setFirstName(table.getFirstName());
         wrapper.setLastName(table.getLastName());
         wrapper.setEmail(table.getEmail());
-        if(ValidationUtility.isExists(table.getUserRoleForBoard())){
+
+        //Implement for Boards_Users role
+        /*if(ValidationUtility.isExists(table.getUserRoleForBoard())){
             wrapper.setRoleName(table.getUserRoleForBoard().getRole());
             wrapper.setRoleId("" + table.getUserRoleForBoard().getId());
         }
-        wrapper.setWip("" + table.getWip());
+        wrapper.setWip("" + table.getWip());*/
+        if(ValidationUtility.isExists(wrapper.getBoardId()) && ValidationUtility.isExists(table.getId())){
+            Boards_Users boardUsers = new Boards_Users();//Implement for Boards_Users role
+            boardUsers = (Boards_Users) userDAO.findByTwoPropertiesUnique(boardUsers, "boardlist.id", Long.valueOf(wrapper.getBoardId()), "userlist.id", table.getId());
+            if(ValidationUtility.isExists(boardUsers)){
+                if(ValidationUtility.isExists(boardUsers.getWip())){
+                    wrapper.setWip("" + boardUsers.getWip());
+                }
+                if(ValidationUtility.isExists(boardUsers.getUserRoleForBoard())){
+                    wrapper.setRoleName(boardUsers.getUserRoleForBoard().getRole());
+                    wrapper.setRoleId("" + boardUsers.getUserRoleForBoard().getId());
+                }
+            }
+        }
         wrapper.setEnableUserEditId(false);
         wrapper.setEnableUserAssignId(false);
-        wrapper.setEnableUserId(false);
+        if(ValidationUtility.isExists(table.isAccountAdmin())){
+            wrapper.setAccountAdmin(table.isAccountAdmin());
+        }
+        if(ValidationUtility.isExists(table.isEnabled())){
+            wrapper.setEnableUserId(table.isEnabled());
+            if(table.isEnabled()){
+                wrapper.setEnableUser("Enabled");
+            }else{
+                wrapper.setEnableUser("Disabled");
+            }
+        }
+        if(ValidationUtility.isExists(table.isBoardCreator())){
+            wrapper.setCanCreateBoard(table.isBoardCreator());
+        }
         //wrapper.setAddress();
         //wrapper.setContactNumber();
 
@@ -509,6 +865,7 @@ public class UsersServiceImpl implements UsersService{
 
     public UserWrapper getTaskUsersList(Long taskId){
         Tasks tTable = new Tasks();
+        Tasks_Users_Updated taskUsers = null;
 
         tTable = (Tasks)userDAO.findById(tTable, taskId);
         List<UserWrapper> userList = new ArrayList<UserWrapper>();
@@ -523,6 +880,18 @@ public class UsersServiceImpl implements UsersService{
             UserWrapper wrapper = null;
             wrapper = new UserWrapper();
             wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
+
+            // Implementation for manually generated tasks_users join table (for extra columns)
+            taskUsers = new Tasks_Users_Updated();
+            taskUsers = (Tasks_Users_Updated) userDAO.findByTwoPropertiesUnique(taskUsers, "tasklist.id", tTable.getId(), "userlist.id", userTable.getId());
+            if(ValidationUtility.isExists(taskUsers)){
+                wrapper.setEnableUserAssignId(true);
+                userList.add(wrapper);
+            }else{
+                userList.remove(wrapper);
+            }
+
+            /* Implementation for auto generated tasks_users join table
             System.out.println("\n ---- Task exist for User Id : " + userTable.getId());
             System.out.println(" ---- Task exist for User Size : " + userTable.getTaskList().size() + "\n");
             if(userTable.getTaskList().contains(tTable)){
@@ -532,7 +901,7 @@ public class UsersServiceImpl implements UsersService{
                 userList.add(wrapper);
             }else{
                 userList.remove(wrapper);
-            }
+            }*/
 
 
         }
@@ -551,28 +920,48 @@ public class UsersServiceImpl implements UsersService{
         return returnWrapper;
     }
 
-    public ResultImpl getTaskUsersListAll(Long taskId){
+    public ResultImpl getTaskUsersListAll(Long boardId, Long taskId, String companyId){
         Tasks tTable = new Tasks();
 
         tTable = (Tasks)userDAO.findById(tTable, taskId);
         List<UserWrapper> userList = new ArrayList<UserWrapper>();
         Users userTable = new Users();
+        Boards_Users buTable = new Boards_Users();
+        Tasks_Users_Updated taskUsers = null;
         List list = new ArrayList();
         UserWrapper returnWrapper = null;
-
-        list = userDAO.findAll(userTable);
+        if(ValidationUtility.isExists(companyId)){
+            list = userDAO.findByProperty(userTable, "company.id", Long.valueOf(companyId));
+        }
 
         for (int i = 0; i < list.size(); i++) {
             userTable = (Users) list.get(i);
             UserWrapper wrapper = null;
             wrapper = new UserWrapper();
-            wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
-            if(userTable.getTaskList().contains(tTable)){
-                System.out.println("\n ---- User exist for Task: " + tTable.getId());
-                System.out.println("---- Task exist for User: " + userTable.getId()+"\n");
-                wrapper.setEnableUserAssignId(true);
+            buTable = new Boards_Users();
+            buTable = (Boards_Users)userDAO.findByTwoPropertiesUnique(buTable, "boardlist.id", boardId, "userlist.id", userTable.getId());
+            if(ValidationUtility.isExists(buTable)){
+                if(ValidationUtility.isExists(buTable.getUserRoleForBoard())){
+                    if(!(buTable.getUserRoleForBoard().getId() == ProjectDBConstants.NO_ACCESS_ROLE_ID.intValue()) &&
+                       !(buTable.getUserRoleForBoard().getId() == ProjectDBConstants.READER_ROLE_ID.intValue())){
+                        wrapper = populateUserWrapperFromUserTable(wrapper, userTable);
+                        // Implementation for manually generated tasks_users_updated join table (for extra columns)
+                        taskUsers = new Tasks_Users_Updated();
+                        taskUsers = (Tasks_Users_Updated) userDAO.findByTwoPropertiesUnique(taskUsers, "tasklist.id", tTable.getId(), "userlist.id", userTable.getId());
+                        if(ValidationUtility.isExists(taskUsers)){
+                            wrapper.setEnableUserAssignId(true);
+                        }
+
+                        /* Implementation for auto generated tasks_users join table
+                        if(userTable.getTaskList().contains(tTable)){
+                            System.out.println("\n ---- User exist for Task: " + tTable.getId());
+                            System.out.println("---- Task exist for User: " + userTable.getId()+"\n");
+                            wrapper.setEnableUserAssignId(true);
+                        }*/
+                        userList.add(wrapper);
+                    }
+                }
             }
-            userList.add(wrapper);
         }
 
         if(!userList.isEmpty() && userList.size()>0){
@@ -593,6 +982,10 @@ public class UsersServiceImpl implements UsersService{
         userTable = (Users)userDAO.findById(userTable, Long.valueOf(wrapper.getUserId()));
         if(userTable.getPassword().equals(wrapper.getOldPassword())){
             userTable.setPassword(wrapper.getPassword1());
+            if(ValidationUtility.isExists(wrapper.getUpdatedBy())){
+                userTable.setUpdatedBy(Long.valueOf(wrapper.getUpdatedBy()));
+            }
+            userTable.setUpdatedDate(new Date());
             userDAO.save(userTable);
             result.setIsSuccessful(true);
             result.setObject(wrapper);
@@ -603,6 +996,59 @@ public class UsersServiceImpl implements UsersService{
             result.setObject(null);
             result.setMessage("Password not changed. Your old Password does not exist in database");
             return result;
+        }
+    }
+
+    @Transactional
+    public String populatePersonImage(String userId, String path){
+        String fileNameToSave = "";
+        UserWrapper wrapper = new UserWrapper();
+        Users table = new Users();
+        if(ValidationUtility.isExists(userId)){
+            table = (Users)userDAO.findById(table, Long.valueOf(userId));
+            if(ValidationUtility.isExists(table.getPersonimage())){
+                fileNameToSave = File.separator + "images"+ File.separator + "user" + File.separator + table.getId() + ".png";
+                fileNameToSave = fileNameToSave.replace("\\", "/");
+                wrapper.setImageName(fileNameToSave);
+                try {
+                    populatePersonImages(table, fileNameToSave, path);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }else{
+                fileNameToSave = File.separator + "images"+ File.separator + "user" + File.separator + "avatar-small.png";
+                fileNameToSave = fileNameToSave.replace("\\", "/");
+                wrapper.setImageName(fileNameToSave);
+            }
+
+        }
+
+        return fileNameToSave;
+    }
+
+    private void populatePersonImages(Users personTable, String fileNameToSave, String path) throws Exception {
+        if (personTable != null) {
+
+            byte imageBytes[] = null;
+            FileOutputStream fos = null;
+            try {
+                imageBytes = personTable.getPersonimage();
+                fos = new FileOutputStream(path + File.separator + "resources"+ fileNameToSave);
+                fos.write(imageBytes);
+
+            } catch (FileNotFoundException fileNotFoundException) {
+                throw new Exception(fileNotFoundException);
+            } catch (IOException ioException) {
+                throw new Exception(ioException);
+            } finally {
+                if (fos != null) {
+                    try {
+                        fos.close();
+                    } catch (IOException ioException) {
+                        throw new Exception(ioException);
+                    }
+                }
+            }
         }
     }
 
@@ -700,11 +1146,11 @@ public class UsersServiceImpl implements UsersService{
             transport.close();
             result = true;
         } catch (AddressException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (NoSuchProviderException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (MessagingException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }finally {
             return result;
         }

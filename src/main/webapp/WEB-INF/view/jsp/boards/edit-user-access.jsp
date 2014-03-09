@@ -26,7 +26,7 @@
 
         <div style="display: block;  ">
             <div class="form-messages">
-                <span class="form-title"><spring:message code="title.editeUserAccess"/></span>
+                <span class="form-title"><spring:message code="title.editeUserBoardAccess"/></span>
 
                 <c:if test="${error}">
                     <span class="message-error">${errorMsg}</span>
@@ -42,7 +42,7 @@
                         <span id="filter-count"></span>
                     </form>
                 </div>
-                <form:form action="${pageContext.request.contextPath}/users/edit" commandName="editUserWrapper" >
+                <form:form action="${pageContext.request.contextPath}/boards/${boardId}/edit-user-access" method="post" commandName="editUserWrapper" >
                     <div class="form-wrapper jQeffect-show-clip" >
                         <div class="inner-form-wrapper" >
                             <br />
@@ -51,6 +51,9 @@
                                     <form:hidden path="userList[${idx.index}].userId"></form:hidden>
                                     <tr>
                                         <td>
+                                            <form:checkbox id="1" path="userList[${idx.index}].enableUserEditId" cssStyle="display: inline-block; background-color: #fcefa1; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.7) inset;"></form:checkbox>
+                                        </td>
+                                        <td>
                                             <img src="${resourcesDir}/images/avatar-small.png" height="40px;" />
                                         </td>
                                         <td>
@@ -58,26 +61,17 @@
                                             <span style="width:200px;  display:inline-block; text-align: left;">${wrapper.email}</span>
                                         </td>
                                         <td>
-                                            <span style="width:100px;  display:inline-block; text-align: right; padding: 5px;">${wrapper.enableUser}</span>
+                                            <span style="width:150px;  display:inline-block; text-align: right; padding: 5px;">${wrapper.roleName}</span>
                                         </td>
                                         <td>
-                                            <c:url var="uId1" value="change-password">
+                                            <span style="width: 40px;  display:inline-block; text-align: center;padding: 5px;">WIP: ${wrapper.wip}</span>
+                                        </td>
+                                        <%--<td>
+                                            <c:url var="uId" value="delete-user">
                                                 <c:param name="uId" value="${wrapper.userId}" />
                                             </c:url>
-                                            <a title="Change Password" href='<c:out value="${uId1}"/>'>Change Password</a>
-                                        </td>
-                                        <td>
-                                            <c:url var="uId2" value="profile-edit-personal">
-                                                <c:param name="uId" value="${wrapper.userId}" />
-                                            </c:url>
-                                            <a title="Edit user" href='<c:out value="${uId2}"/>'>Edit</a>
-                                        </td>
-                                        <td>
-                                            <c:url var="uId3" value="delete-user">
-                                                <c:param name="uId" value="${wrapper.userId}" />
-                                            </c:url>
-                                            <a title="Delete user" class="delete-button" href='<c:out value="${uId3}"/>'></a>
-                                        </td>
+                                            <a title="Delete user" class="delete-button" href='<c:out value="${uId}"/>'></a>
+                                        </td>--%>
                                     </tr>
                                 </c:forEach>
 
@@ -86,7 +80,13 @@
                         </div>
 
                     </div>
+                    <div class="form-wrapper jQeffect-show-clip">
 
+                        <br />
+                        <input type="submit" value="Edit Role/WIP" />&nbsp;   &nbsp;
+                        <input id="resetId" type="reset" value="Reset" />
+                        <input id="selectAll" type="button" value="Select All">
+                    </div>
                  </form:form>
             </div>
         </div>

@@ -14,20 +14,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.dao.BoxesDAO;
 import web.dao.TasksDAO;
+import web.dao.UsersDAO;
 import web.entity.Attachment;
 import web.entity.Boxes;
 import web.entity.Tasks;
+import web.entity.Users;
 import web.service.common.ResultImpl;
+import web.service.common.ValidationUtility;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
 public class TasksServiceImpl implements TasksService{
-    
+
+    @Autowired
+    private UsersDAO userDAO;
     @Autowired
     private BoxesDAO boxDAO;
     @Autowired
@@ -72,13 +74,40 @@ public class TasksServiceImpl implements TasksService{
     
     @Transactional(readOnly = false)
     public ResultImpl deleteTask(Long id){
+        // Implementation for removing associated user to each task
+        int size = 0;
+        Tasks task = new Tasks();
+        task = (Tasks) userDAO.findById(task, id);
+        /*if(task.getUserList().isEmpty()){
+            userDAO.remove(task);
+        }else{
+            Iterator<Users> it = task.getUserList().iterator();
+            size = task.getUserList().size();
+            while(it.hasNext()){
+                Users user = it.next();
+                if(ValidationUtility.isExists(user.getId())){
+                    it.remove();
+                }
+            }
+            userDAO.remove(task);
+        }*/
+        userDAO.remove(task);
+        if(task == null){
+            result.setIsSuccessful(false);
+            result.setMessageList(Arrays.asList("error.taskDeletionFailed"));
+        }else{
+            result.setIsSuccessful(true);
+            result.setMessageList(Arrays.asList("success.taskDeleted"));
+        }
+
+        /*
         if(taskDAO.deleteTask(id)){
             result.setIsSuccessful(true);
             result.setMessageList(Arrays.asList("success.taskDeleted"));
         }else{
             result.setIsSuccessful(false);
             result.setMessageList(Arrays.asList("error.taskDeletionFailed"));
-        }
+        }*/
         return result;
     }
 

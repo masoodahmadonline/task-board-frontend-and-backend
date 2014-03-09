@@ -7,7 +7,7 @@
     <div id="boxid-${box.id}" class="box box-${box.type}" >
         <div class="box-title" title="${box.description}">
                       <span>
-                          <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')">
+                          <security:authorize access="@securityService.hasBoxTaskEditPermission(${box.id})">
                           <div class="drop-menu-button">&#x25be;&nbsp;
                               <ul class="drop-menu-options">
                                   <li style="width: auto;" class="create-task-wizard"><a href="#">Create a task</a></li>
@@ -30,7 +30,7 @@
                 <div class="task" id="taskid-${task.id}">
                     <div class="task-title" title="${task.title}">
                        <span>
-                          <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')">
+                          <security:authorize access="@securityService.hasBoxTaskEditPermission(${box.id})">
                           <div class="drop-menu-button">&#x25be;&nbsp;
                               <ul class="drop-menu-options">
                                   <li><a href="#" class="task-assign-unassign-wizard">Assign/Unassign</a></li>
@@ -54,7 +54,7 @@
                     <div class="task-body">
                         <c:if test="${not empty task.attachmentList}">
                             <div class="attachment">
-                                <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')">
+                                <security:authorize access="@securityService.hasBoxTaskEditPermission(${box.id})">
                                 <div id="boo" class="attachment-content" class="forms-for-board" title="Files attached to this task">
                                     <form>
                                         <table>
@@ -83,17 +83,33 @@
                             </div>
                         </c:if>
                         <div class="task-priority task-priority-${task.priority}" id="priorityId-${task.id}"></div>
-                        <c:set var="uSize" value="${task.userSize}" scope="request" />
-                        <c:if test="${uSize != null }">
-                            <c:if test="${uSize == '1' }">
-                                <div class="user-icon1" id="userIconId1"></div>
-                            </c:if>
-                            <c:if test="${uSize == '2' }">
-                                <div class="user-icon1" id="userIconId1"></div>
-                                <div class="user-icon2" id="userIconId2"></div>
-                            </c:if>
+                        <c:if test="${not empty task.userList}">
+                            <div class="user-icon1" id="userIconId1">
+                                <security:authorize access="@securityService.hasBoxTaskEditPermission(${box.id})">
+                                    <div id="boo2" class="user-content" class="forms-for-board" title="Users assigned to this task">
+                                        <form>
+                                            <table>
+                                                <tbody style="margin-right:5px;margin-left: 15px; border: red thin solid background: blue;">
+                                                <c:forEach var="user" items="${task.userList}">
+                                                    <tr id="userid-${user.id}">
+                                                        <td>
+                                                            ${user.firstName}&nbsp;${user.lastName}
+                                                        </td>
+                                                        <td style="min-width: 5px;">
+                                                            &nbsp;
+                                                        </td>
+                                                        <td>
+                                                            <img alt="${resourcesDir}${user.imageName}" class="top-header-image" src="${resourcesDir}${user.imageName}" height="50" width="80"/>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </security:authorize>
+                            </div>
                         </c:if>
-
                         ${task.description}
                     </div>
                 </div>

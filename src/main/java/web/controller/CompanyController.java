@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -38,9 +39,9 @@ public class CompanyController {
     private MessageSource messages;
     @Autowired
     private Result result;
-    
-    
 
+    //@PreAuthorize("@securityService.hasCompanyCreatePermission()")  /*Needs to add a new field in Users table if required functionality*/
+    @PreAuthorize("@securityService.hasBoardCreatePermission()")
     @RequestMapping (value = "/companies/create")
     public String createCompany(ModelMap model){
         Companies company = new Companies();

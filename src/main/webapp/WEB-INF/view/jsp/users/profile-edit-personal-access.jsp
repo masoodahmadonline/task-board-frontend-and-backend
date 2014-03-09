@@ -36,7 +36,7 @@
                 </c:if>
             </div>
             <div>
-                <form:form action="${pageContext.request.contextPath}/users/profile-edit-personal" method="post" commandName="editUserProfileWrapper" enctype="multipart/form-data" >
+                <form:form action="${pageContext.request.contextPath}/users/profile-edit-personal-access" method="post" commandName="editUserProfileWrapper" enctype="multipart/form-data" >
                     <div class="form-wrapper jQeffect-show-clip" >
                         <div class="inner-form-wrapper" >
 
@@ -86,6 +86,29 @@
 
                                     <td>
                                         <form:input path="email"  cssClass="form-input"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right"></td>
+                                    <td style="text-align: left">
+                                        <form:checkbox path="enableUserId" cssStyle="display: inline-block;" tabindex="6" placeholder="Chekcbox" />
+                                        <spring:message code="form.text.checkbox.enableUser"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right"></td>
+                                    <td style="text-align: left">
+                                        <form:checkbox path="canCreateBoard" cssStyle="display: inline-block;" tabindex="7" placeholder="Chekcbox" />
+                                        <spring:message code="form.text.checkbox.isBoardCreator"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right"></td>
+                                    <td style="text-align: left">
+                                        <form:checkbox path="accountAdmin" cssStyle="display: inline-block;" tabindex="8" placeholder="Chekcbox" />
+                                        <spring:message code="form.text.checkbox.isAdmin"/>
                                     </td>
 
                                 </tr>

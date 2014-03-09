@@ -57,9 +57,10 @@ public class CustomUserDetailsService implements UserDetailsService{
       System.out.println("dbUser email: "+dbUser.getEmail());
       System.out.println("dbUser password: "+dbUser.getPassword());
       Integer authId = 0;
-      if(ValidationUtility.isExists(dbUser.getUserRoleForBoard())){
+      //Implement for Boards_Users role
+      /*if(ValidationUtility.isExists(dbUser.getUserRoleForBoard())){
           authId =  Integer.valueOf("" + dbUser.getUserRoleForBoard().getId());
-      }
+      }*/
     
    // Populate the Spring User object with details from the dbUser
    // Here we just pass the email, password, and access level
@@ -72,8 +73,8 @@ public class CustomUserDetailsService implements UserDetailsService{
      true,
      true,
      true,
-     //getAuthorities("2");
-     getAuthorities(authId));
+     //getAuthorities(authId));
+     getAuthorities(dbUser.isAccountAdmin()));
  System.out.println("debug ---- 3");
   } catch (Exception e) {
    System.out.println("print Error in retrieving user");
@@ -95,7 +96,7 @@ public class CustomUserDetailsService implements UserDetailsService{
   * @param access an integer value representing the access of the springUser
   * @return collection of granted authorities
   */
-  public Collection<GrantedAuthority> getAuthorities(Integer access) {
+  /*public Collection<GrantedAuthority> getAuthorities(Integer access) {
       // Create a list of grants for this springUser
       List<GrantedAuthority> authList = (List<GrantedAuthority>) new ArrayList<GrantedAuthority>(access);
 
@@ -107,7 +108,10 @@ public class CustomUserDetailsService implements UserDetailsService{
       // Check if this springUser has admin access
       // We interpret Integer(1) as an admin springUser
 
-      if (access.equals(ProjectDBConstants.ADMIN_ROLE_ID)) {
+      if (access.equals(ProjectDBConstants.COMPANY_ADMIN_ROLE_ID)) {
+          authList.add(new GrantedAuthorityImpl("ROLE_COMPANY_ADMIN"));
+          System.out.println("Grant ROLE_COMPANY_ADMIN to this user");
+      }else if (access.equals(ProjectDBConstants.ADMIN_ROLE_ID)) {
           authList.add(new GrantedAuthorityImpl("ROLE_ADMIN"));
           System.out.println("Grant ROLE_ADMIN to this user");
       }else if (access.equals(ProjectDBConstants.MANAGER_ROLE_ID)) {
@@ -124,7 +128,19 @@ public class CustomUserDetailsService implements UserDetailsService{
           System.out.println("Grant ROLE_USER to this user");
       }
       return authList;
-  }
+  }*/
+
+    public Collection<GrantedAuthority> getAuthorities(boolean access) {
+        List<GrantedAuthority> authList = (List<GrantedAuthority>) new ArrayList<GrantedAuthority>();
+        if (access) {
+            authList.add(new GrantedAuthorityImpl("ACCOUNT_ADMIN_ROLE"));
+            System.out.println("Grant ACCOUNT_ADMIN_ROLE to this user");
+        }else{
+            authList.add(new GrantedAuthorityImpl("ACCOUNT_USER_ROLE"));
+            System.out.println("Grant ACCOUNT_USER_ROLE to this user");
+        }
+        return authList;
+    }
 
 
 

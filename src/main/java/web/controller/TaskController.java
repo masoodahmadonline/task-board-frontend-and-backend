@@ -13,6 +13,9 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -57,6 +60,7 @@ public class TaskController {
 
 
     //ajax
+    @PreAuthorize("@securityService.hasBoxTaskEditPermission(#parentBoxId)")
     @RequestMapping (value = "/task/create/{parentBoxId}/{taskTitle}/{taskDescription}", method=RequestMethod.GET)
     public @ResponseBody  Tasks createTask(ModelMap model,
                                           @PathVariable(value="parentBoxId") String parentBoxId,
@@ -111,8 +115,10 @@ public class TaskController {
 
 
     //ajax
-    @RequestMapping (value = "/task/set-priority/{taskId}/{priority}", method=RequestMethod.GET)
+    @PreAuthorize("@securityService.hasBoardEditPermission(#boardId)")
+    @RequestMapping (value = "/task/set-priority/{boardId}/{taskId}/{priority}", method=RequestMethod.GET)
     public @ResponseBody  String setPriority(ModelMap model,
+                                            @PathVariable(value="boardId") String boardId,
                                             @PathVariable(value="taskId") String taskId,
                                             @PathVariable(value="priority") String priority
     ){
@@ -131,6 +137,7 @@ public class TaskController {
     }
 
     //ajax
+    @PreAuthorize("@securityService.hasBoxTaskEditPermission(#initialParentBoxId)")
     @RequestMapping (value = "/task/move/{taskId}/{initialParentBoxId}/{destinationParentBoxId}", method=RequestMethod.GET)
     public @ResponseBody  String moveTask(ModelMap model,
                                            @PathVariable(value="taskId") String taskId,
@@ -225,11 +232,17 @@ public class TaskController {
     } //queued - send model message also (if needed)
 
     //ajax
-    @RequestMapping (value = "/task/assign/{taskId}", method= RequestMethod.GET)
-    public @ResponseBody List<UserWrapper> assignTask(ModelMap model, @PathVariable(value="taskId") String taskId){
+    @PreAuthorize("@securityService.hasBoardEditPermission(#boardId)")
+    @RequestMapping (value = "/task/assign/{boardId}/{taskId}", method= RequestMethod.GET)
+    public @ResponseBody List<UserWrapper> assignTask(ModelMap model, @PathVariable(value="boardId") String boardId, @PathVariable(value="taskId") String taskId){
         System.out.println("task assign controller method called.");
-        if(ValidationUtility.isExists(taskId)){
-            result = userService.getTaskUsersListAll(Long.valueOf(taskId));
+        User springUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        String companyId = null;
+        companyId = userService.getCompanyId(loginId);
+
+        if(ValidationUtility.isExists(taskId) && ValidationUtility.isExists(boardId)){
+            result = userService.getTaskUsersListAll(Long.valueOf(boardId), Long.valueOf(taskId), companyId);
         }
         for(UserWrapper wr : (List<UserWrapper>) result.getObject()){
             System.out.println("User enabled : " + wr.isEnableUserAssignId());
@@ -237,8 +250,9 @@ public class TaskController {
         return (List<UserWrapper>) result.getObject();
     }
 
-    @RequestMapping (value = "/task/assign-task/{tId}", method=RequestMethod.POST)
-    public @ResponseBody Result taskAssignment(HttpServletRequest request, ModelMap model,
+    @PreAuthorize("@securityService.hasBoardEditPermission(#bId)")
+    @RequestMapping (value = "/task/assign-task/{bId}/{tId}", method=RequestMethod.POST)
+    public @ResponseBody Result taskAssignment(HttpServletRequest request, ModelMap model, @PathVariable(value="bId") String bId,
                                  @PathVariable(value="tId") String tId) throws IOException {
         System.out.println("\n Task Id after POST method (for user assignment) : "+tId+"\n");
         UserWrapper wrapper = new UserWrapper();
@@ -274,7 +288,13 @@ public class TaskController {
             }
         }
         wrapper.setTaskId(tId);
+        wrapper.setBoardId(bId);
         wrapper.setUserList(userList);
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        loginId = userService.getUserId(loginId);
+        wrapper.setCreatedBy(loginId);
+        wrapper.setUpdatedBy(loginId);
         result = userService.taskAssignment(wrapper);
         //System.out.println("\n size of user's list: "+ulist.size()+"\n");
         /*if(result.getIsSuccessful()){

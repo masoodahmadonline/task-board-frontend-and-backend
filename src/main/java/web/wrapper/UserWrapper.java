@@ -1,5 +1,6 @@
 package web.wrapper;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import web.service.common.ValidationUtility;
 
 import java.io.Serializable;
@@ -13,6 +14,13 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class UserWrapper implements Serializable {
+    private String boardId;
+    private String boardName;
+    private String boardDesc;
+    private String createdBy;
+    private String createdDate;
+    private String updatedBy;
+    private String updatedDate;
     private String userId;
     private String email;
     private String address;
@@ -24,10 +32,14 @@ public class UserWrapper implements Serializable {
     private String password2;
     private String enableUser;
     private String wip;
+    private CommonsMultipartFile imageData = null;
+    private String imageName;
     private String taskId;
     private boolean enableUserId = false;
     private boolean enableUserEditId = false;
     private boolean enableUserAssignId = false;
+    private boolean canCreateBoard = false;
+    private boolean accountAdmin = false;
 
     private boolean taskUserExistSingle = false;
     private boolean taskUserExistMultiple = false;
@@ -39,10 +51,20 @@ public class UserWrapper implements Serializable {
     private String roleId;
     private String roleName;
 
+    private String companyId;
+    private String companyName;
+
     private List<UserWrapper> userList = null;
     private List<UserWrapper> roleList = null;
 
     public void clearAll(){
+        this.setBoardId("");
+        this.setBoardName("");
+        this.setBoardDesc("");
+        this.setCreatedBy("");
+        this.setCreatedDate("");
+        this.setUpdatedBy("");
+        this.setUpdatedDate("");
         this.setUserId("");
         this.setEmail("");
         this.setAddress("");
@@ -54,6 +76,8 @@ public class UserWrapper implements Serializable {
         this.setPassword2("");
         this.setEnableUser("");
         this.setWip("");
+        this.setImageName("");
+        this.setImageData(null);
         this.setTaskId("");
         this.setEnableUserAssignId(false);
         this.setEnableUserEditId(false);
@@ -65,6 +89,8 @@ public class UserWrapper implements Serializable {
 
         this.setRoleId("");
         this.setRoleName("");
+        this.setCompanyId("");
+        this.setCompanyName("");
 
         this.setTempWipValue(false);
         this.setTempWipMessage("");
@@ -273,5 +299,110 @@ public class UserWrapper implements Serializable {
 
     public void setTempWipMessage(String tempWipMessage) {
         this.tempWipMessage = tempWipMessage;
+    }
+
+    public CommonsMultipartFile getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(CommonsMultipartFile imageData) {
+        this.imageData = imageData;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getBoardId() {
+        return boardId;
+    }
+
+    public void setBoardId(String boardId) {
+        this.boardId = boardId;
+    }
+
+    public String getBoardName() {
+        return boardName;
+    }
+
+    public void setBoardName(String boardName) {
+        this.boardName = boardName;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public String getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(String updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public String getBoardDesc() {
+        return boardDesc;
+    }
+
+    public void setBoardDesc(String boardDesc) {
+        this.boardDesc = boardDesc;
+    }
+
+    public boolean isCanCreateBoard() {
+        return canCreateBoard;
+    }
+
+    public void setCanCreateBoard(boolean canCreateBoard) {
+        this.canCreateBoard = canCreateBoard;
+    }
+
+
+    public boolean isAccountAdmin() {
+        return accountAdmin;
+    }
+
+    public void setAccountAdmin(boolean accountAdmin) {
+        this.accountAdmin = accountAdmin;
     }
 }

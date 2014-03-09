@@ -786,6 +786,12 @@ input[type=checkbox]:checked + label {
   width: 15px;
   height: 15px; }
 
+.user-content {
+    display: none;
+    position: absolute;
+    border: thin #d3d3d3 solid;
+    background: #ccddee; }
+
 .user-icon2 {
   cursor: pointer;
   background-image: url("../images/avatar-small.png");
@@ -797,3 +803,16 @@ input[type=checkbox]:checked + label {
   bottom: -10px;
   width: 15px;
   height: 15px; }
+
+.delete-user-icon {
+    cursor: pointer;
+    background-image: url("../images/avatar-small.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    position: absolute;
+    left: 60px;
+    bottom: -10px;
+    width: 15px;
+    height: 15px;
+}
