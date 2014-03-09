@@ -113,7 +113,6 @@ public class TaskController {
     }
 
 
-
     //ajax
     @PreAuthorize("@securityService.hasBoardEditPermission(#boardId)")
     @RequestMapping (value = "/task/set-priority/{boardId}/{taskId}/{priority}", method=RequestMethod.GET)
