@@ -11,6 +11,8 @@ import web.entity.*;
 import web.service.common.ProjectDBConstants;
 import web.service.common.ResultImpl;
 import web.service.common.ValidationUtility;
+import web.utils.BoxComparator;
+import web.utils.TaskComparator;
 import web.wrapper.UserWrapper;
 
 @Service
@@ -164,9 +166,11 @@ public class BoardsServiceImpl implements BoardsService{
             board = (Boards)result.getObject();
             Collection<Boxes> childBoxList = board.getChildBoxList();
             if(childBoxList == null || childBoxList.isEmpty()){
+
                System.out.println("child boxes for getBoardByIdToDisplay() are null---");
             }else{
                System.out.println("childbox list size for getBoardByIdToDisplay(): "+ childBoxList.size());
+               Collections.sort((List) childBoxList, new BoxComparator());
                crawlBoxes(childBoxList);
             }
         }
@@ -178,8 +182,11 @@ public class BoardsServiceImpl implements BoardsService{
         for( Object o : boxList ){
            Boxes box = (Boxes)o;    
            System.out.println("box crawled was: "+ box.getId());
-           System.out.println( "The task List size is  ========= " +box.getTaskList().size() );
-           for(Object t : box.getTaskList()){
+           List<Tasks> taskList = (List<Tasks>) box.getTaskList();
+           System.out.println( "The task List size is  ========= " +taskList.size() );
+           Collections.sort(taskList, new TaskComparator());
+
+           for(Object t : taskList){
                Tasks task = (Tasks)t;
                System.out.println( "The Attachment List size is  ========= " +task.getAttachmentList().size() );
                System.out.println( "The User List size is  ========= " +task.getUserList().size() );
@@ -199,6 +206,7 @@ public class BoardsServiceImpl implements BoardsService{
                System.out.println( "User Size: " +task.getUserSize());
            }
            List<Boxes> childBoxList = new ArrayList<Boxes> ( box.getChildBoxList() ); // list of sub child boxes of this box
+           Collections.sort((List)childBoxList, new BoxComparator());
            System.out.println(" ======================== boxid : "+box.getId()+" and its childBoxList size: "+ childBoxList.size());
            if(!childBoxList.isEmpty()){
                crawlBoxes(childBoxList);

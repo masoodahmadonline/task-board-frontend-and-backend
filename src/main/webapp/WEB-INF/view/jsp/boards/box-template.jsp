@@ -27,7 +27,7 @@
                 <jsp:param name="box" value="${box}" />
             </jsp:include>
             <c:forEach var="task" items="${box.taskList}">
-                <div class="task" id="taskid-${task.id}">
+                <div class="task task-status-${task.status}" id="taskid-${task.id}">
                     <div class="task-title" title="${task.title}">
                        <span>
                           <security:authorize access="@securityService.hasBoxTaskEditPermission(${box.id})">
@@ -42,6 +42,14 @@
                                           <li><a href="#" class="task-priority-high-button">High</a></li>
                                           <li><a href="#" class="task-priority-normal-button">Normal</a></li>
                                           <li><a href="#" class="task-priority-low-button">Low</a></li>
+                                      </ul>
+                                  </li>
+                                  <li><a href="#">Set status</a>
+                                      <ul>
+                                          <li><a href="#" class="task-status-new-button">New</a></li>
+                                          <li><a href="#" class="task-status-in-process-button">In-process</a></li>
+                                          <li><a href="#" class="task-status-in-issues-button">In-issues</a></li>
+                                          <li><a href="#" class="task-status-completed-button">Completed</a></li>
                                       </ul>
                                   </li>
                                   <li><a href="#" class="delete-task-wizard">Delete this task</a></li>

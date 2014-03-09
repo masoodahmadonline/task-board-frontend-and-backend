@@ -44,6 +44,9 @@ public class Users {
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name="tasks_users", joinColumns={@JoinColumn(name="userlist_id")}, inverseJoinColumns={@JoinColumn(name="tasklist_id")})
     private Collection<Tasks> taskList = new ArrayList<Tasks>();
+    
+    @OneToMany (mappedBy = "creater")
+    private Collection<Tasks> createdTaskList =  new ArrayList<Tasks>(); // tasks that were created by user
 
 
 
@@ -230,4 +233,12 @@ public class Users {
     public void setTaskList(Collection<Tasks> taskList) {
         this.taskList = taskList;
     }
+
+	public Collection<Tasks> getCreatedTaskList() {
+		return createdTaskList;
+	}
+
+	public void setCreatedTaskList(Collection<Tasks> createdTaskList) {
+		this.createdTaskList = createdTaskList;
+	}
 }

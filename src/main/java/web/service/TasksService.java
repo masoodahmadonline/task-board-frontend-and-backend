@@ -4,6 +4,9 @@
  */
 package web.service;
 
+import java.util.Date;
+import java.util.List;
+
 import web.entity.Attachment;
 import web.entity.Boards;
 import web.entity.Boxes;
@@ -24,4 +27,7 @@ public interface TasksService {
     public ResultImpl getAttachmentById(Long id);
     public ResultImpl deleteAttachment(Long id);
     public ResultImpl changeTaskPriority(Long id, String priority);
+    public ResultImpl changeTaskStatus(Long id, String status);
+    
+
 }                               
