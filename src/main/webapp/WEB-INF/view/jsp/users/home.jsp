@@ -12,26 +12,6 @@
 
 <body>
     <c:import url="${mainDir}/common/inner-header.jsp" />
-<<<<<<< HEAD
-    
-   
-    
-     
-            Welcome, ${sessionScope.userName}. <br />
-
-            You are authorized to access the following boards: <br /><br />
-        <c:forEach var="board" items="${boards}">
-            <a href="${pageContext.request.contextPath}/boards/${board.id}" >${board.title}</a>
-        </c:forEach><br /><br />
-    <a href="${pageContext.request.contextPath}/users/create" >Create a new User</a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="${pageContext.request.contextPath}/users/edit" >Edit Users Access </a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="${pageContext.request.contextPath}/users/profile-edit-personal" >Edit Personal Information</a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="${pageContext.request.contextPath}/users/change-password" >Change Password</a>
-    <br />
-    <a href="${pageContext.request.contextPath}/reports/cards/by-status" >See reports for tasks by their status</a>
-=======
->>>>>>> 8f78a5254026f7c7540782ba8b45b1b4a1058260
-
 
 
     <c:if test="${error}">
@@ -68,6 +48,9 @@
     <security:authorize access="@securityService.hasBoardCreatePermission()">
         <a href="${pageContext.request.contextPath}/boards/create" >Create a new Board</a>
     </security:authorize>
+
+    <br />
+    <a href="${pageContext.request.contextPath}/reports/cards/by-status" >See reports for tasks by their status</a>
                
   <c:import url="${mainDir}/common/footer.jsp" />
 

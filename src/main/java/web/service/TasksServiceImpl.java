@@ -36,14 +36,9 @@ public class TasksServiceImpl implements TasksService{
     private TasksDAO taskDAO;
     @Autowired
     private ResultImpl result;
-<<<<<<< HEAD
     
    
-//    @Transactional(readOnly = false)
-//    public List<Tasks> getAllTasks(Long boardId, String groupBy, Date startDate, Date endDate){
-//    	return taskDAO.getAllTasks( boardId,  groupBy,  startDate,  endDate);
-//    }
-=======
+
 
 
     @Transactional (readOnly = false)
@@ -67,7 +62,7 @@ public class TasksServiceImpl implements TasksService{
         return task;
     }
     
->>>>>>> 8f78a5254026f7c7540782ba8b45b1b4a1058260
+
     @Transactional(readOnly = false)
     public ResultImpl save(Tasks task){
         Tasks taskToBeReturned = taskDAO.save(task);
