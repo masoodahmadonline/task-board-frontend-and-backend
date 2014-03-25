@@ -1,6 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" />
 <c:set var="pageTitle" scope="request" >
@@ -27,378 +28,61 @@
             <div class="form-messages">
                 <span class="form-title"><spring:message code="title.editeUser"/></span>
 
-                <c:if test="${param.error}">
-                    <span class="message-error">${replace this with server side message}</span>
+                <c:if test="${error}">
+                    <span class="message-error">${errorMsg}</span>
                 </c:if>
-
-                <c:if test="${param.success}">
-                    <span class="message-success">User(s) edited successfully. ${replace this with server side message}</span>
+                <c:if test="${success}">
+                    <span class="message-success">${successMsg}</span>
                 </c:if>
             </div>
             <div>
-
-                <div class="form-wrapper jQeffect-show-clip" >
-
-                    <div class="inner-form-wrapper" >
-                        <a href="#">a</a> &nbsp;&nbsp; <a href="#">b</a> &nbsp;&nbsp; <a href="#">c</a> &nbsp;&nbsp;
-                        <a href="#">d</a> &nbsp;&nbsp; <a href="#">e</a> &nbsp;&nbsp; <a href="#">f</a> &nbsp;&nbsp;
-                        <a href="#">g</a> &nbsp;&nbsp; <a href="#">h</a> &nbsp;&nbsp; <a href="#">i</a> &nbsp;&nbsp;
-                        <a href="#">j</a> &nbsp;&nbsp; <a href="#">k</a> &nbsp;&nbsp; <a href="#">l</a> &nbsp;&nbsp;
-                        <a href="#">m</a> &nbsp;&nbsp; <a href="#">n</a> &nbsp;&nbsp; <a href="#">o</a> &nbsp;&nbsp;
-                        <a href="#">p</a> &nbsp;&nbsp; <a href="#">q</a> &nbsp;&nbsp; <a href="#">r</a> &nbsp;&nbsp;
-                        <a href="#">s</a> &nbsp;&nbsp; <a href="#">t</a> &nbsp;&nbsp; <a href="#">u</a> &nbsp;&nbsp;
-                        <a href="#">v</a> &nbsp;&nbsp; <a href="#">x</a> &nbsp;&nbsp; <a href="#">y</a> &nbsp;&nbsp;
-                        <a href="#">z</a>
-
-                        <br />
-                        <br />
-
-
-
-
-
-
-
-                        <form action="${pageContext.request.contextPath}/users/edit" method="post">
-                            <table>
-                                <tbody>
+                <div class="form-wrapper jQeffect-show-clip">
+                    <form id="live-search" action="" class="styled" method="post">
+                        <input type="text" class="form-input" id="filter" placeholder="Search" value="" />
+                        <span id="filter-count"></span>
+                    </form>
+                </div>
+                <form:form action="${pageContext.request.contextPath}/users/edit" method="post" commandName="editUserWrapper" >
+                    <div class="form-wrapper jQeffect-show-clip" >
+                        <div class="inner-form-wrapper" >
+                            <br />
+                            <table class="usersListClass">
+                                <c:forEach items="${editUserWrapper.userList}" var="wrapper" varStatus="idx">
+                                    <form:hidden path="userList[${idx.index}].userId"></form:hidden>
                                     <tr>
-                                        <td style="width:40px;">
-
-                                        </td>
-                                        <td style="width:200px;">
-                                              First Name, Last Name
-                                        </td>
-                                        <td style="width:200px;">
-                                            Email, Role
+                                        <td>
+                                            <form:checkbox id="1" path="userList[${idx.index}].enableUserEditId" cssStyle="display: inline-block; background-color: #fcefa1; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.7) inset;"></form:checkbox>
                                         </td>
                                         <td>
-                                            WIP
+                                            <img src="${resourcesDir}/images/avatar-small.png" height="40px;" />
                                         </td>
                                         <td>
-
+                                            <span style="width:200px;  display:inline-block; text-align: left; font-weight: bold">${wrapper.firstName}&nbsp;${wrapper.lastName}</span> <br />
+                                            <span style="width:200px;  display:inline-block; text-align: left;">${wrapper.email}</span>
                                         </td>
                                         <td>
-
+                                            <span style="width:100px;  display:inline-block; text-align: right; padding: 5px;">${wrapper.roleName}</span>
                                         </td>
+                                        <td>
+                                            <span style="width: 40px;  display:inline-block; text-align: center;padding: 5px;">WIP: ${wrapper.wip}</span>
+                                        </td>
+
                                     </tr>
-                                </tbody>
+                                </c:forEach>
+
+
                             </table>
-                        </form>
-
-
-
-                        <form action="${pageContext.request.contextPath}/users/edit" method="post">
-                            <input type="hidden" name="userIdhere" />
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="${resourcesDir}/images/avatar-small.png" />
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="text" name="firstName" value="Masood" required="required" placeholder="<spring:message code="placeholder.firstName"/>"/> <br />
-                                        <input class="form-input" type="text" name="lastName" value="Ahmad" placeholder="<spring:message code="placeholder.lastName"/>"/> <br />
-
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="email" name="email" value="masood@template.com" required="required" placeholder="<spring:message code="placeholder.email"/>"/> <br />
-                                        <select name="role" required="required">
-                                            <option value="organizationAdmin">Organization Admin</option>
-                                            <option value="admin" selected="selected">Admin</option>
-                                            <option value="manager">Manager</option>
-                                            <option value="user">User</option>
-                                            <option value="reader">Reader</option>
-                                            <option value="noaccess">No Access</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input class="form-input" style="width: 20px;" type="number" name="wip" value="10" /><br />
-                                    </td>
-
-                                    <td>
-                                        <input type="submit" value="<spring:message code="form.text.button.update"/>" tabindex="7"/> <br />
-                                        <input type="<spring:message code="form.text.button.reset"/>" tabindex="8"/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                        <hr />
-
-                        <form action="${pageContext.request.contextPath}/users/edit" method="post">
-                            <input type="hidden" name="userIdhere" />
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="${resourcesDir}/images/avatar-small.png" />
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="text" name="firstName" value="Masood" required="required" placeholder="<spring:message code="placeholder.firstName"/>"/> <br />
-                                        <input class="form-input" type="text" name="lastName" value="Ahmad" placeholder="<spring:message code="placeholder.lastName"/>"/> <br />
-
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="email" name="email" value="masood@template.com" required="required" placeholder="<spring:message code="placeholder.email"/>"/> <br />
-                                        <select name="role" required="required">
-                                            <option value="organizationAdmin">Organization Admin</option>
-                                            <option value="admin" selected="selected">Admin</option>
-                                            <option value="manager">Manager</option>
-                                            <option value="user">User</option>
-                                            <option value="reader">Reader</option>
-                                            <option value="noaccess">No Access</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input class="form-input" style="width: 20px;" type="number" name="wip" value="10" /><br />
-                                    </td>
-
-                                    <td>
-                                        <input type="submit" value="<spring:message code="form.text.button.update"/>" tabindex="7"/> <br />
-                                        <input type="<spring:message code="form.text.button.reset"/>" tabindex="8"/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                        <hr />
-
-                        <form action="${pageContext.request.contextPath}/users/edit" method="post">
-                            <input type="hidden" name="userIdhere" />
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="${resourcesDir}/images/avatar-small.png" />
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="text" name="firstName" value="Masood" required="required" placeholder="<spring:message code="placeholder.firstName"/>"/> <br />
-                                        <input class="form-input" type="text" name="lastName" value="Ahmad" placeholder="<spring:message code="placeholder.lastName"/>"/> <br />
-
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="email" name="email" value="masood@template.com" required="required" placeholder="<spring:message code="placeholder.email"/>"/> <br />
-                                        <select name="role" required="required">
-                                            <option value="organizationAdmin">Organization Admin</option>
-                                            <option value="admin" selected="selected">Admin</option>
-                                            <option value="manager">Manager</option>
-                                            <option value="user">User</option>
-                                            <option value="reader">Reader</option>
-                                            <option value="noaccess">No Access</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input class="form-input" style="width: 20px;" type="number" name="wip" value="10" /><br />
-                                    </td>
-
-                                    <td>
-                                        <input type="submit" value="<spring:message code="form.text.button.update"/>" tabindex="7"/> <br />
-                                        <input type="<spring:message code="form.text.button.reset"/>" tabindex="8"/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                        <hr />
-
-
-                        <form action="${pageContext.request.contextPath}/users/edit" method="post">
-                            <input type="hidden" name="userIdhere" />
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="${resourcesDir}/images/avatar-small.png" />
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="text" name="firstName" value="Masood" required="required" placeholder="<spring:message code="placeholder.firstName"/>"/> <br />
-                                        <input class="form-input" type="text" name="lastName" value="Ahmad" placeholder="<spring:message code="placeholder.lastName"/>"/> <br />
-
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="email" name="email" value="masood@template.com" required="required" placeholder="<spring:message code="placeholder.email"/>"/> <br />
-                                        <select name="role" required="required">
-                                            <option value="organizationAdmin">Organization Admin</option>
-                                            <option value="admin" selected="selected">Admin</option>
-                                            <option value="manager">Manager</option>
-                                            <option value="user">User</option>
-                                            <option value="reader">Reader</option>
-                                            <option value="noaccess">No Access</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input class="form-input" style="width: 20px;" type="number" name="wip" value="10" /><br />
-                                    </td>
-
-                                    <td>
-                                        <input type="submit" value="<spring:message code="form.text.button.update"/>" tabindex="7"/> <br />
-                                        <input type="<spring:message code="form.text.button.reset"/>" tabindex="8"/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                        <hr />
-
-                        <form action="${pageContext.request.contextPath}/users/edit" method="post">
-                            <input type="hidden" name="userIdhere" />
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="${resourcesDir}/images/avatar-small.png" />
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="text" name="firstName" value="Masood" required="required" placeholder="<spring:message code="placeholder.firstName"/>"/> <br />
-                                        <input class="form-input" type="text" name="lastName" value="Ahmad" placeholder="<spring:message code="placeholder.lastName"/>"/> <br />
-
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="email" name="email" value="masood@template.com" required="required" placeholder="<spring:message code="placeholder.email"/>"/> <br />
-                                        <select name="role" required="required">
-                                            <option value="organizationAdmin">Organization Admin</option>
-                                            <option value="admin" selected="selected">Admin</option>
-                                            <option value="manager">Manager</option>
-                                            <option value="user">User</option>
-                                            <option value="reader">Reader</option>
-                                            <option value="noaccess">No Access</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input class="form-input" style="width: 20px;" type="number" name="wip" value="10" /><br />
-                                    </td>
-
-                                    <td>
-                                        <input type="submit" value="<spring:message code="form.text.button.update"/>" tabindex="7"/> <br />
-                                        <input type="<spring:message code="form.text.button.reset"/>" tabindex="8"/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                        <hr />
-
-
-                        <form action="${pageContext.request.contextPath}/users/edit" method="post">
-                            <input type="hidden" name="userIdhere" />
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="${resourcesDir}/images/avatar-small.png" />
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="text" name="firstName" value="Masood" required="required" placeholder="<spring:message code="placeholder.firstName"/>"/> <br />
-                                        <input class="form-input" type="text" name="lastName" value="Ahmad" placeholder="<spring:message code="placeholder.lastName"/>"/> <br />
-
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="email" name="email" value="masood@template.com" required="required" placeholder="<spring:message code="placeholder.email"/>"/> <br />
-                                        <select name="role" required="required">
-                                            <option value="organizationAdmin">Organization Admin</option>
-                                            <option value="admin" selected="selected">Admin</option>
-                                            <option value="manager">Manager</option>
-                                            <option value="user">User</option>
-                                            <option value="reader">Reader</option>
-                                            <option value="noaccess">No Access</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input class="form-input" style="width: 20px;" type="number" name="wip" value="10" /><br />
-                                    </td>
-
-                                    <td>
-                                        <input type="submit" value="<spring:message code="form.text.button.update"/>" tabindex="7"/> <br />
-                                        <input type="<spring:message code="form.text.button.reset"/>" tabindex="8"/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                        <hr />
-
-                        <form action="${pageContext.request.contextPath}/users/edit" method="post">
-                            <input type="hidden" name="userIdhere" />
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="${resourcesDir}/images/avatar-small.png" />
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="text" name="firstName" value="Masood" required="required" placeholder="<spring:message code="placeholder.firstName"/>"/> <br />
-                                        <input class="form-input" type="text" name="lastName" value="Ahmad" placeholder="<spring:message code="placeholder.lastName"/>"/> <br />
-
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="email" name="email" value="masood@template.com" required="required" placeholder="<spring:message code="placeholder.email"/>"/> <br />
-                                        <select name="role" required="required">
-                                            <option value="organizationAdmin">Organization Admin</option>
-                                            <option value="admin" selected="selected">Admin</option>
-                                            <option value="manager">Manager</option>
-                                            <option value="user">User</option>
-                                            <option value="reader">Reader</option>
-                                            <option value="noaccess">No Access</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input class="form-input" style="width: 20px;" type="number" name="wip" value="10" /><br />
-                                    </td>
-
-                                    <td>
-                                        <input type="submit" value="<spring:message code="form.text.button.update"/>" tabindex="7"/> <br />
-                                        <input type="<spring:message code="form.text.button.reset"/>" tabindex="8"/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                        <hr />
-
-                        <form action="${pageContext.request.contextPath}/users/edit" method="post">
-                            <input type="hidden" name="userIdhere" />
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="${resourcesDir}/images/avatar-small.png" />
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="text" name="firstName" value="Masood" required="required" placeholder="<spring:message code="placeholder.firstName"/>"/> <br />
-                                        <input class="form-input" type="text" name="lastName" value="Ahmad" placeholder="<spring:message code="placeholder.lastName"/>"/> <br />
-
-                                    </td>
-                                    <td>
-                                        <input class="form-input" type="email" name="email" value="masood@template.com" required="required" placeholder="<spring:message code="placeholder.email"/>"/> <br />
-                                        <select name="role" required="required">
-                                            <option value="organizationAdmin">Organization Admin</option>
-                                            <option value="admin" selected="selected">Admin</option>
-                                            <option value="manager">Manager</option>
-                                            <option value="user">User</option>
-                                            <option value="reader">Reader</option>
-                                            <option value="noaccess">No Access</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input class="form-input" style="width: 20px;" type="number" name="wip" value="10" /><br />
-                                    </td>
-
-                                    <td>
-                                        <input type="submit" value="<spring:message code="form.text.button.update"/>" tabindex="7"/> <br />
-                                        <input type="<spring:message code="form.text.button.reset"/>" tabindex="8"/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                        <hr />
-
+                        </div>
 
                     </div>
+                    <div class="form-wrapper jQeffect-show-clip">
 
-                </div>
-
+                        <br />
+                        <input type="submit" value="Edit Role/WIP" />&nbsp;   &nbsp;
+                        <input id="resetId" type="reset" value="Reset" />
+                        <input id="selectAll" type="button" value="Select All">
+                    </div>
+                 </form:form>
             </div>
         </div>
 
@@ -410,28 +94,30 @@
 </div>
 <script>
     $(document).ready(function(){
-        $('form').on('submit', function(e){
-            var message = "";
-            var show = false;
-            if(  $("#password1").val() != $("#password2").val() ){
-                show = true;
-                message += "<spring:message code="error.confirmPassowordMissmatch"/>";
-                e.preventDefault();
-            }
-
-            if($("#password1").empty() || $("#password1").val().length < 5){
-                show = true;
-                message += "<spring:message code="error.emptyOrShortPassword"/>";
-                e.preventDefault();
-            }
-
-            if(show){
-//                alert(message);
-                $(".form-messages").append('<span class="message-error">'+message+'</span>');
-            }
-
+        $("#selectAll").click(function () {
+            $("input[type=checkbox]").prop('checked', true)
         });
-
+        $("#resetId").click(function () {
+            $("input[type=checkbox]").prop('checked', false)
+        });
+        $("#filter").keyup(function(){
+            // Retrieve the input field text and reset the count to zero
+            var filter = $(this).val(), count = 0;
+            // Loop through the users list
+            $(".usersListClass tr").each(function(){
+                // If the table row does not contain the text phrase fade it out
+                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                    $(this).fadeOut();
+                    // Show the table row if the phrase matches and increase the count by 1
+                } else {
+                    $(this).show();
+                    count++;
+                }
+            });
+            // Update the count
+            //var numberItems = count;
+            //$("#filter-count").text("Number of Users = "+count);
+        });
     });
 </script>
 
