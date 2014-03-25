@@ -25,6 +25,8 @@
     <a href="${pageContext.request.contextPath}/users/edit" >Edit Users Access </a>&nbsp;&nbsp;&nbsp;&nbsp;
     <a href="${pageContext.request.contextPath}/users/profile-edit-personal" >Edit Personal Information</a>&nbsp;&nbsp;&nbsp;&nbsp;
     <a href="${pageContext.request.contextPath}/users/change-password" >Change Password</a>
+    <br />
+    <a href="${pageContext.request.contextPath}/reports/cards/by-status" >See reports for tasks by their status</a>
 
                
   <c:import url="${mainDir}/common/footer.jsp" />

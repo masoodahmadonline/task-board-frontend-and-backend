@@ -1,9 +1,5 @@
 package web.controller;
 
-
-
-
- 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
@@ -43,16 +39,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
- 
- 
- 
 @Controller
-
 public class TaskReportController {
-	
-	
- 
  
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
  
@@ -73,7 +61,7 @@ public class TaskReportController {
     					@RequestParam("boardId") Long boardId,
 			    		@RequestParam("startDate") String startDateString,
 			    		@RequestParam("endDate") String endDateString,
-			    		@RequestParam("orderByStatus") String orderByStatus){
+			    		@RequestParam(value = "orderByStatus",required = false, defaultValue = "off") String orderByStatus){
  
         logger.debug("--------------generate PDF report----------");
         

@@ -38,10 +38,10 @@ public class TasksServiceImpl implements TasksService{
     private ResultImpl result;
     
    
-    @Transactional(readOnly = false)
-    public List<Tasks> getAllTasks(Long boardId, String groupBy, Date startDate, Date endDate){
-    	return taskDAO.getAllTasks( boardId,  groupBy,  startDate,  endDate);
-    }
+//    @Transactional(readOnly = false)
+//    public List<Tasks> getAllTasks(Long boardId, String groupBy, Date startDate, Date endDate){
+//    	return taskDAO.getAllTasks( boardId,  groupBy,  startDate,  endDate);
+//    }
     @Transactional(readOnly = false)
     public ResultImpl save(Tasks task){
         Tasks taskToBeReturned = taskDAO.save(task);
