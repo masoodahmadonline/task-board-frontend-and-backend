@@ -14,7 +14,6 @@
     <c:import url="${mainDir}/common/inner-header.jsp" />
 
 
-
     <c:if test="${error}">
     <span class="message-error">${errorMsg}</span><br /><br />
     </c:if>
@@ -49,6 +48,9 @@
     <security:authorize access="@securityService.hasBoardCreatePermission()">
         <a href="${pageContext.request.contextPath}/boards/create" >Create a new Board</a>
     </security:authorize>
+
+    <br />
+    <a href="${pageContext.request.contextPath}/reports/cards/by-status" >See reports for tasks by their status</a>
                
   <c:import url="${mainDir}/common/footer.jsp" />
 

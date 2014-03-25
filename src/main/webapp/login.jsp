@@ -9,6 +9,7 @@
 
 <c:import url="${mainDir}/common/header.jsp" />
 
+
 <body
     style=" border: transparent 1px solid;
 	background-image: url('${resourcesDir}/images/handprint.png');

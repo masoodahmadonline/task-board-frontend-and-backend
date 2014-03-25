@@ -36,6 +36,9 @@ public class TasksServiceImpl implements TasksService{
     private TasksDAO taskDAO;
     @Autowired
     private ResultImpl result;
+    
+   
+
 
 
     @Transactional (readOnly = false)
@@ -59,6 +62,7 @@ public class TasksServiceImpl implements TasksService{
         return task;
     }
     
+
     @Transactional(readOnly = false)
     public ResultImpl save(Tasks task){
         Tasks taskToBeReturned = taskDAO.save(task);
