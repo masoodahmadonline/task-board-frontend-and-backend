@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import web.dao.UsersDAO;
+import web.entity.Boards_Users;
 import web.entity.Users;
 
 
@@ -22,9 +23,17 @@ public class UsersDAOImpl implements UsersDAO {
 //        @Autowired
 	private EntityManager entityManager;
 
-	public Users save(Users user) {
-        return entityManager.merge(user);
+	public void save(Object entity) {
+        Session session = getHibernateSession();
+        //session.beginTransaction();
+        session.saveOrUpdate(entity);
+        //session.getTransaction().commit();
+        //return entity;
 	}
+
+    public void remove(Object entity) {
+        entityManager.remove(entity);
+    }
 
     public boolean doesLoginIdExists(String email){
         email = email.toLowerCase();
@@ -81,6 +90,58 @@ public class UsersDAOImpl implements UsersDAO {
         Object instance = null;
         instance = session.get(object.getClass().getName(), id);
         return instance;
+    }
+
+    public List findByProperty(Object hibernateObject, String propertyName,
+                               Object value) {
+        Session session = getHibernateSession();
+        List results = new ArrayList();
+        String queryString = "select model from "
+                + hibernateObject.getClass().getName()
+                + " as model where model." + propertyName + "=:Qparam";
+        Query queryObject = entityManager.createQuery(queryString);
+        queryObject.setParameter("Qparam", value);
+        results = queryObject.getResultList();
+        return results;
+    }
+
+    public Object findByTwoPropertiesUnique(Object hibernateObject,String propertyName, Object value,
+                                            String secondPropertyName, Object secondValue)
+    {
+        Session session = getHibernateSession();
+        List results = new ArrayList();
+        Object objectResultant = null;
+        String queryString = "select model from "
+                + hibernateObject.getClass().getName()
+                + " as model where model." + propertyName + "= :Qparam and model." + secondPropertyName + "=:secondQparam";
+        Query queryObject = entityManager.createQuery(queryString);
+        queryObject.setParameter("Qparam", value);
+        queryObject.setParameter("secondQparam", secondValue);
+
+        results = queryObject.getResultList();
+
+        if (results.size() > 0) {
+            objectResultant = results.get(0);
+        }
+
+        return objectResultant;
+    }
+
+    public List findByTwoProperties(Object hibernateObject,String propertyName, Object value,
+                                    String secondPropertyName, Object secondValue)
+    {
+        Session session = getHibernateSession();
+        List results = new ArrayList();
+        Object objectResultant = null;
+        String queryString = "select model from "
+                + hibernateObject.getClass().getName()
+                + " as model where model." + propertyName + "= :Qparam and model." + secondPropertyName + "=:secondQparam";
+        Query queryObject = entityManager.createQuery(queryString);
+        queryObject.setParameter("Qparam", value);
+        queryObject.setParameter("secondQparam", secondValue);
+
+        results = queryObject.getResultList();
+        return results;
     }
 
     public List findAll(Object hibernateObject) {

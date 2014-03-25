@@ -8,10 +8,7 @@ package web.service;
  *
  * @author syncsys
  */
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +18,10 @@ import web.dao.BoxesDAO;
 import web.dao.UsersDAO;
 import web.entity.Boards;
 import web.entity.Boxes;
+import web.entity.Tasks;
 import web.entity.Users;
 import web.service.common.ResultImpl;
+import web.service.common.ValidationUtility;
 
 @Service
 @Transactional(readOnly = true)
@@ -54,12 +53,43 @@ public class BoxesServiceImpl implements BoxesService{
     
     @Transactional(readOnly = false)
     public ResultImpl deleteBox(Long id){
-        if(boxDAO.deleteBox(id)){
+        Tasks task = new Tasks();
+        int size = 0;
+        List taskList = new ArrayList();
+        Boxes box = new Boxes();
+        box = (Boxes) userDAO.findById(box, id);
+
+        /*taskList = userDAO.findByProperty(task, "parentBox.id", id);
+        for (int i = 0; i < taskList.size(); i++) {
+            task = (Tasks) taskList.get(i);
+            if(task.getUserList().isEmpty()){
+                userDAO.remove(task);
+            }else{
+                Iterator<Users> it = task.getUserList().iterator();
+                size = task.getUserList().size();
+                while(it.hasNext()){
+                    Users user = it.next();
+                    if(ValidationUtility.isExists(user.getId())){
+                        it.remove();
+                    }
+                }
+                userDAO.remove(task);
+            }
+        }*/
+        userDAO.remove(box);
+        /*if(boxDAO.deleteBox(id)){
             result.setIsSuccessful(true);
             result.setMessageList(Arrays.asList("success.boxDeleted"));
         }else{
             result.setIsSuccessful(false);
-        }   result.setMessageList(Arrays.asList("error.boxDeletionFailed"));
+        }   result.setMessageList(Arrays.asList("error.boxDeletionFailed"));*/
+        if(box == null){
+            result.setIsSuccessful(false);
+            result.setMessageList(Arrays.asList("error.boxDeletionFailed"));
+        }else{
+            result.setIsSuccessful(true);
+            result.setMessageList(Arrays.asList("success.boxDeleted"));
+        }
         return result;
     }
     

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -50,6 +51,7 @@ public class BoxController {
     
     
     //ajax
+    @PreAuthorize("@securityService.hasBoxCreatePermission(#parent, #parentId)")
     @RequestMapping (value = "/box/create/{parent}/{parentId}/{boxType}/{boxTitle}/{boxDescription}", method=RequestMethod.GET)
     public @ResponseBody  Boxes createBox(ModelMap model,
                                           @PathVariable(value="parent") String parent,
@@ -96,6 +98,7 @@ public class BoxController {
     }
 
     //ajax
+    @PreAuthorize("@securityService.hasBoxTaskEditPermission(#boxId)")
     @RequestMapping (value = "/box/edit/{boxId}/{boxType}/{boxTitle}/{boxDescription}", method=RequestMethod.GET)
     public @ResponseBody  boolean editBox(ModelMap model,
                                           @PathVariable(value="boxId") String boxId,
@@ -117,6 +120,7 @@ public class BoxController {
     }
 
     //ajax
+    @PreAuthorize("@securityService.hasBoxTaskEditPermission(#boxId)")
     @RequestMapping (value = "/box/delete/{boxId}", method=RequestMethod.GET)
     public @ResponseBody  String deleteBox(ModelMap model,
                                           @PathVariable(value="boxId") String boxId

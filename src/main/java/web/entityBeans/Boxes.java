@@ -40,8 +40,6 @@ public class Boxes {
     private Collection<Tasks> taskList = new ArrayList<Tasks>();
     @ManyToOne
     private Companies company;
-    @ManyToMany
-    private Collection<BoxPrivileges> boxPrivilegesList = new ArrayList<BoxPrivileges>();
     private String type; // vertical / horizontal
     private String title;
     @Lob
@@ -120,19 +118,7 @@ public class Boxes {
         this.taskList = taskList;
     }
 
-    /**
-     * @return the boxPrivilegesList
-     */
-    public Collection<BoxPrivileges> getBoxPrivilegesList() {
-        return boxPrivilegesList;
-    }
 
-    /**
-     * @param boxPrivilegesList the boxPrivilegesList to set
-     */
-    public void setBoxPrivilegesList(Collection<BoxPrivileges> boxPrivilegesList) {
-        this.boxPrivilegesList = boxPrivilegesList;
-    }
 
     /**
      * @return the type

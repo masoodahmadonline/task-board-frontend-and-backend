@@ -34,13 +34,7 @@ public class Users {
 
     @ManyToOne
     private Companies company;
-    @OneToMany
-    private Collection<BoardPrivileges> boardPrivilegsList =  new ArrayList<BoardPrivileges>();
-    @OneToMany
-    private Collection<BoxPrivileges> boxPrivilegsList =  new ArrayList<BoxPrivileges>();
-    @OneToMany
-    private Collection<TaskPrivileges> taskPrivilegsList =  new ArrayList<TaskPrivileges>();
-    
+
     @ManyToMany (mappedBy = "userList")
     private Collection<Boards> boardList = new ArrayList<Boards>();
     @ManyToMany (mappedBy = "userList")
@@ -146,47 +140,6 @@ public class Users {
         this.isEnabled = isEnabled;
     }
 
-    /**
-     * @return the boardPrivilegsList
-     */
-    public Collection<BoardPrivileges> getBoardPrivilegsList() {
-        return boardPrivilegsList;
-    }
-
-    /**
-     * @param boardPrivilegsList the boardPrivilegsList to set
-     */
-    public void setBoardPrivilegsList(Collection<BoardPrivileges> boardPrivilegsList) {
-        this.boardPrivilegsList = boardPrivilegsList;
-    }
-
-    /**
-     * @return the boxPrivilegsList
-     */
-    public Collection<BoxPrivileges> getBoxPrivilegsList() {
-        return boxPrivilegsList;
-    }
-
-    /**
-     * @param boxPrivilegsList the boxPrivilegsList to set
-     */
-    public void setBoxPrivilegsList(Collection<BoxPrivileges> boxPrivilegsList) {
-        this.boxPrivilegsList = boxPrivilegsList;
-    }
-
-    /**
-     * @return the taskPrivilegsList
-     */
-    public Collection<TaskPrivileges> getTaskPrivilegsList() {
-        return taskPrivilegsList;
-    }
-
-    /**
-     * @param taskPrivilegsList the taskPrivilegsList to set
-     */
-    public void setTaskPrivilegsList(Collection<TaskPrivileges> taskPrivilegsList) {
-        this.taskPrivilegsList = taskPrivilegsList;
-    }
 
     /**
      * @return the company

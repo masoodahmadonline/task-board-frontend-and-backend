@@ -24,8 +24,6 @@ public class Tasks {
     private Long id;
     @ManyToOne
     private Boxes parentBox;
-    @ManyToMany
-    private Collection<TaskPrivileges> taskPrivilegesList = new ArrayList<TaskPrivileges>();
     @ManyToOne
     private Companies company;
     private String title;
@@ -63,19 +61,6 @@ public class Tasks {
         this.parentBox = parentBox;
     }
 
-    /**
-     * @return the taskPrivilegesList
-     */
-    public Collection<TaskPrivileges> getTaskPrivilegesList() {
-        return taskPrivilegesList;
-    }
-
-    /**
-     * @param taskPrivilegesList the taskPrivilegesList to set
-     */
-    public void setTaskPrivilegesList(Collection<TaskPrivileges> taskPrivilegesList) {
-        this.taskPrivilegesList = taskPrivilegesList;
-    }
 
     /**
      * @return the title

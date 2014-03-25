@@ -4,8 +4,7 @@
  */
 package web.entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 import javax.persistence.*;
 
 
@@ -20,40 +19,33 @@ public class Users {
     private Long id;
     private String firstName;
     private String lastName;
-    private String name;//to be depricated
+
     private String email;
     private String password;
     private boolean isEnabled; // have to log in first time with given password (when user was invited)
-    private String role;
-    private Long wip;
+    private byte[] personimage;
+    private String imageName;
+    private boolean boardCreator;
+    private boolean accountAdmin;
+    private Long createdBy;
+    private Date createdDate;
+    private Long updatedBy;
+    private Date updatedDate;
     
     @ManyToOne
     private Companies company;
-    @OneToMany
-    private Collection<BoardPrivileges> boardPrivilegsList =  new ArrayList<BoardPrivileges>();
-    @OneToMany
-    private Collection<BoxPrivileges> boxPrivilegsList =  new ArrayList<BoxPrivileges>();
-    @OneToMany
-    private Collection<TaskPrivileges> taskPrivilegsList =  new ArrayList<TaskPrivileges>();
-    
-    @ManyToMany (mappedBy = "userList")
-    private Collection<Boards> boardList = new ArrayList<Boards>();
-    @ManyToMany (mappedBy = "userList")
-    private Collection<Boxes> BoxList = new ArrayList<Boxes>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userlist", cascade=CascadeType.ALL)
+    private Collection<Boards_Users> boardUsers = new ArrayList<Boards_Users>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userlist", cascade=CascadeType.ALL)
+    private Collection<Tasks_Users_Updated> taskUsers = new ArrayList<Tasks_Users_Updated>();
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name="tasks_users", joinColumns={@JoinColumn(name="userlist_id")}, inverseJoinColumns={@JoinColumn(name="tasklist_id")})
     private Collection<Tasks> taskList = new ArrayList<Tasks>();
-    
-    @OneToMany (mappedBy = "creater")
-    private Collection<Tasks> createdTaskList =  new ArrayList<Tasks>(); // tasks that were created by user
 
-    @ManyToOne
-    private UserRoleForBoard userRoleForBoard;
 
-    /*@ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name="users_tasks", joinColumns={@JoinColumn(name="tasklist_id")}, inverseJoinColumns={@JoinColumn(name="userlist_id")})
-    private Collection <Users> userList = new ArrayList<Users>();*/
 
     /**
      * @return the id
@@ -111,50 +103,6 @@ public class Users {
         this.setEnabled(isEnabled);
     }
 
-
-
-    /**
-     * @return the boardPrivilegsList
-     */
-    public Collection<BoardPrivileges> getBoardPrivilegsList() {
-        return boardPrivilegsList;
-    }
-
-    /**
-     * @param boardPrivilegsList the boardPrivilegsList to set
-     */
-    public void setBoardPrivilegsList(Collection<BoardPrivileges> boardPrivilegsList) {
-        this.boardPrivilegsList = boardPrivilegsList;
-    }
-
-    /**
-     * @return the boxPrivilegsList
-     */
-    public Collection<BoxPrivileges> getBoxPrivilegsList() {
-        return boxPrivilegsList;
-    }
-
-    /**
-     * @param boxPrivilegsList the boxPrivilegsList to set
-     */
-    public void setBoxPrivilegsList(Collection<BoxPrivileges> boxPrivilegsList) {
-        this.boxPrivilegsList = boxPrivilegsList;
-    }
-
-    /**
-     * @return the taskPrivilegsList
-     */
-    public Collection<TaskPrivileges> getTaskPrivilegsList() {
-        return taskPrivilegsList;
-    }
-
-    /**
-     * @param taskPrivilegsList the taskPrivilegsList to set
-     */
-    public void setTaskPrivilegsList(Collection<TaskPrivileges> taskPrivilegsList) {
-        this.taskPrivilegsList = taskPrivilegsList;
-    }
-
     /**
      * @return the company
      */
@@ -167,57 +115,6 @@ public class Users {
      */
     public void setCompany(Companies company) {
         this.company = company;
-    }
-
-    /**
-     * @return the boardList
-     */
-    public Collection<Boards> getBoardList() {
-        return boardList;
-    }
-
-    /**
-     * @param boardList the boardList to set
-     */
-    public void setBoardList(Collection<Boards> boardList) {
-        this.boardList = boardList;
-    }
-
-    /**
-     * @return the BoxList
-     */
-    public Collection<Boxes> getBoxList() {
-        return BoxList;
-    }
-
-    /**
-     * @param BoxList the BoxList to set
-     */
-    public void setBoxList(Collection<Boxes> BoxList) {
-        this.BoxList = BoxList;
-    }
-
-    /**
-     * @return the taskList
-     */
-    public Collection<Tasks> getTaskList() {
-        return taskList;
-    }
-
-    /**
-     * @param taskList the taskList to set
-     */
-    public void setTaskList(Collection<Tasks> taskList) {
-        this.taskList = taskList;
-    }
-
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public String getFirstName() {
@@ -244,36 +141,94 @@ public class Users {
         isEnabled = enabled;
     }
 
-    public String getName() {
-        return name;
+
+    public byte[] getPersonimage() {
+        return this.personimage;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPersonimage(byte[] personimage) {
+        this.personimage = personimage;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
 
-    public UserRoleForBoard getUserRoleForBoard() {
-        return userRoleForBoard;
+    public Collection<Boards_Users> getBoardUsers() {
+        return boardUsers;
     }
 
-    public void setUserRoleForBoard(UserRoleForBoard userRoleForBoard) {
-        this.userRoleForBoard = userRoleForBoard;
+    public void setBoardUsers(Collection<Boards_Users> boardUsers) {
+        this.boardUsers = boardUsers;
     }
 
-    public Long getWip() {
-        return wip;
+    public boolean isBoardCreator() {
+        return boardCreator;
     }
 
-    public void setWip(Long wip) {
-        this.wip = wip;
+    public void setBoardCreator(boolean boardCreator) {
+        this.boardCreator = boardCreator;
     }
 
-	public Collection<Tasks> getCreatedTaskList() {
-		return createdTaskList;
-	}
+    public boolean isAccountAdmin() {
+        return accountAdmin;
+    }
 
-	public void setCreatedTaskList(Collection<Tasks> createdTaskList) {
-		this.createdTaskList = createdTaskList;
-	}
+    public void setAccountAdmin(boolean accountAdmin) {
+        this.accountAdmin = accountAdmin;
+    }
+
+    public Long getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Long getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Long updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public Collection<Tasks_Users_Updated> getTaskUsers() {
+        return taskUsers;
+    }
+
+    public void setTaskUsers(Collection<Tasks_Users_Updated> taskUsers) {
+        this.taskUsers = taskUsers;
+    }
+
+    public Collection<Tasks> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(Collection<Tasks> taskList) {
+        this.taskList = taskList;
+    }
+
 }

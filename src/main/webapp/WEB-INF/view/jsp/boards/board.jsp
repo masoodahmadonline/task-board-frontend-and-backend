@@ -33,7 +33,7 @@ function showErrorMessage(message) {
 
 function ajaxCreateBox(parent){
 
-    alert("parent of box is: "+ parent.attr("id"));
+    //alert("parent of box is: "+ parent.attr("id"));
     var parentElementId =   parent.attr("id");
     var parentId =  parentElementId.split("-")[1];
     var parentType;
@@ -157,7 +157,8 @@ function ajaxCreateTask(parentBox){
             });
             $('#taskid-'+fetchedTaskId+' .task-assign-unassign-wizard').click(function () {
                 $('#taskIdForAssignUser').val(  $(this).parents(".task").first().attr('id').split("-")[1] );
-                ajaxAssignTask($(this).parents(".task").first());
+                $('#boardIdForAssignUser').val(  $(this).parents(".board").first().attr('id').split("-")[1] );
+                ajaxAssignTask($(this).parents(".board").first(), $(this).parents(".task").first());
                 //$("#task-assign-unassign-form").dialog("open");
                 //window["parentTask"] = $(this).parents(".task").first();
             });
@@ -199,7 +200,7 @@ function ajaxDeleteBox(box){
 
 function ajaxEditBox(box, boxType, boxTitle, boxDescription, success, error){
     var boxId = box.attr('id').split("-")[1];
-    alert("box id to be sent to edit by ajax call: "+boxId +" type:"+boxType+" title:"+boxTitle+" desc"+boxDescription);
+    //alert("box id to be sent to edit by ajax call: "+boxId +" type:"+boxType+" title:"+boxTitle+" desc"+boxDescription);
 
     $.ajax({
         url: "${pageContext.request.contextPath}/box/edit/"+boxId+"/"+boxType+"/"+boxTitle+"/"+boxDescription,
@@ -213,7 +214,6 @@ function ajaxEditBox(box, boxType, boxTitle, boxDescription, success, error){
 
 function ajaxDeleteTask(task){
     var taskId = task.attr('id').split("-")[1];
-    alert("task id to be sent for deletion by ajax call: "+taskId);
     $.ajax({
         url: "${pageContext.request.contextPath}/task/delete/"+taskId,
         cache: false,
@@ -226,10 +226,10 @@ function ajaxDeleteTask(task){
     });
 }
 
-function ajaxChangeTaskPriority(taskId, priority, success, error){
+function ajaxChangeTaskPriority(boardId, taskId, priority, success, error){
     console.log("task id to be changed for setting priority: "+taskId);
     $.ajax({
-        url: "${pageContext.request.contextPath}/task/set-priority/"+taskId+"/"+priority,
+        url: "${pageContext.request.contextPath}/task/set-priority/"+boardId+"/"+taskId+"/"+priority,
         cache: false,
         success: success,
         error: error
@@ -409,7 +409,8 @@ $(function() {
 
     $(".task-assign-unassign-wizard").click(function () {
         $('#taskIdForAssignUser').val(  $(this).parents(".task").first().attr('id').split("-")[1] );
-        ajaxAssignTask(     $(this).parents(".task").first()      );
+        $('#boardIdForAssignUser').val(  $(this).parents(".board").first().attr('id').split("-")[1] );
+        ajaxAssignTask($(this).parents(".board").first(), $(this).parents(".task").first()      );
         //$("#task-assign-unassign-form").dialog("open");
         window["parentTask"] = $(this).parents(".task").first();
         window["parentBoard"] = $(this).parents(".board").first();
@@ -524,7 +525,7 @@ $(function() {
         <table id="task-assign-unassign-table" class="usersListClass">
 
         </table>
-        </td></tr><tr><td><input type="hidden" id="taskIdForAssignUser" /><input type="reset" value="Reset" /></td>
+        </td></tr><tr><td><input type="hidden" id="taskIdForAssignUser" /><input type="hidden" id="boardIdForAssignUser" /><input type="reset" value="Reset" /></td>
         <td><input type="button" value="Submit" class="task-assign-unassign-wizard-submit" /></td></tr></table>
     </form>
 </div>
@@ -561,10 +562,18 @@ $(function() {
 
 
 <div id="result"></div>
+<security:authorize access="@securityService.hasUserAccessPermission(${board.id})">
+    <div id="edit-user-div-id">
+        <c:url var="boardUserId" value="${board.id}/edit-user-access">
+            <c:param name="id" value="${board.id}" />
+        </c:url>
+        <a href='<c:out value="${boardUserId}"/>'>Edit Users Access</a>
+    </div>
+</security:authorize>
 
 <div class="board" id="boardid-${board.id}">
     <div class="board-title">
-        <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')">
+        <security:authorize access="@securityService.hasBoardEditPermission(${board.id})">
             <span class="drop-menu-button">&#x25be;
                 <span>
                     <ul class="drop-menu-options" >
@@ -600,6 +609,9 @@ $(function() {
 $(document).ready(function(){
     $('.attachment tbody tr:nth-child(2n)').css({backgroundColor:'#dadada' ,  'padding': '1px'});
     $('.attachment table').css({'border-spacing':'0px'});
+
+    $('.user-icon1 tbody tr:nth-child(2n)').css({backgroundColor:'#dadada' ,  'padding': '1px'});
+    $('.user-icon1 table').css({'border-spacing':'0px'});
 
     $('.drop-menu-options').menu().hide();
 
@@ -754,6 +766,19 @@ $(document).ready(function(){
 
     });
 
+    $(document).on('click', '.user-icon1', function(e) {
+
+        $(this).children('.user-content').first().dialog({
+
+            appentTo: $(this),
+            dialogClass: 'forms-for-board',
+            close: function(){
+                $(this).dialog('destroy');
+            }
+        });
+
+    });
+
     $(document).on('click', '.delete-attachment', function(e) {
         var id = $(this).parents('tr').first().attr("id").split("-")[1];
         ajaxDeleteAttachment(id,
@@ -781,10 +806,11 @@ $(document).ready(function(){
 
     $(document).on('click', '.task-priority-critical-button', function(e) {
         var id = $(this).parents('.task').first().attr("id").split("-")[1];
+        var bId = $(this).parents('.board').first().attr("id").split("-")[1];
         console.log("task " +id);
         var priority = "critical";
 
-        ajaxChangeTaskPriority(id, priority,
+        ajaxChangeTaskPriority(bId, id, priority,
                 function(){
                     console.log("1");
 
@@ -813,10 +839,11 @@ $(document).ready(function(){
 
     $(document).on('click', '.task-priority-high-button', function(e) {
         var id = $(this).parents('.task').first().attr("id").split("-")[1];
+        var bId = $(this).parents('.board').first().attr("id").split("-")[1];
         console.log("task " +id);
         var priority = "high";
 
-        ajaxChangeTaskPriority(id, priority,
+        ajaxChangeTaskPriority(bId, id, priority,
                 function(){
                     console.log("1");
 
@@ -845,10 +872,11 @@ $(document).ready(function(){
 
     $(document).on('click', '.task-priority-normal-button', function(e) {
         var id = $(this).parents('.task').first().attr("id").split("-")[1];
+        var bId = $(this).parents('.board').first().attr("id").split("-")[1];
         console.log("task " +id);
         var priority = "normal";
 
-        ajaxChangeTaskPriority(id, priority,
+        ajaxChangeTaskPriority(bId, id, priority,
                 function(){
                     console.log("1");
 
@@ -877,10 +905,11 @@ $(document).ready(function(){
 
     $(document).on('click', '.task-priority-low-button', function(e) {
         var id = $(this).parents('.task').first().attr("id").split("-")[1];
+        var bId = $(this).parents('.board').first().attr("id").split("-")[1];
         console.log("task " +id);
         var priority = "low";
 
-        ajaxChangeTaskPriority(id, priority,
+        ajaxChangeTaskPriority(bId, id, priority,
                 function(){
                     console.log("1");
 
@@ -1181,12 +1210,13 @@ $(document).ready(function(){
 
 });
 
-function ajaxAssignTask(task){
+function ajaxAssignTask(board, task){
 
+    var boardId = board.attr('id').split("-")[1];
     var taskId = task.attr('id').split("-")[1];
     $.ajax({
 
-        url: "${pageContext.request.contextPath}/task/assign/"+taskId,
+        url: "${pageContext.request.contextPath}/task/assign/"+boardId+"/"+taskId,
         cache: false,
         success: function(response){
             var userList = response;
@@ -1249,7 +1279,7 @@ function ajaxAssignTask(task){
 
 function ajaxAssignTaskSubmit(ulist){
 
-
+    var bId = $("#boardIdForAssignUser").val();
     var tId = $("#taskIdForAssignUser").val();
     var objList = [];
     $.each(ulist, function( index, value ) {
@@ -1271,7 +1301,7 @@ function ajaxAssignTaskSubmit(ulist){
 
     })
     $.ajax({
-        url: "${pageContext.request.contextPath}/task/assign-task/"+tId,
+        url: "${pageContext.request.contextPath}/task/assign-task/"+bId+"/"+tId,
         type:"POST",
         cache: false,
         data : {

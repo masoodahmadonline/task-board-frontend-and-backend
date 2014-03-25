@@ -3,6 +3,7 @@ package web.dao;
 import java.util.Date;
 import java.util.List;
 
+import web.entity.Boards;
 import web.entity.Tasks;
 
 public interface ReportsDAO {

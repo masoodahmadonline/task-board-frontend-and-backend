@@ -6,7 +6,6 @@ package web.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import javax.persistence.*;
 
 /**
@@ -14,7 +13,7 @@ import javax.persistence.*;
  * @author syncsys
  */
 @Entity
-public class Boxes{
+public class Boxes {
     @Id
     @GeneratedValue
     private Long id;
@@ -31,16 +30,12 @@ public class Boxes{
     private Collection<Boxes> childBoxList = new ArrayList<Boxes>(); // the last leaf box will have childBox == null;
     @OneToMany(cascade=CascadeType.REMOVE,mappedBy="parentBox")
     private Collection<Tasks> taskList = new ArrayList<Tasks>();
-    @ManyToOne
-    private Companies company;
-    @ManyToMany
-    private Collection<BoxPrivileges> boxPrivilegesList = new ArrayList<BoxPrivileges>();
     private String type; // vertical / horizontal
     private String title;
     @Lob
     private String description;
     private boolean isFirstLevelBox; //in a board.
-    @ManyToMany 
+    @ManyToMany
     private Collection <Users> userList = new ArrayList<Users>();
 
     /**
@@ -113,19 +108,6 @@ public class Boxes{
         this.taskList = taskList;
     }
 
-    /**
-     * @return the boxPrivilegesList
-     */
-    public Collection<BoxPrivileges> getBoxPrivilegesList() {
-        return boxPrivilegesList;
-    }
-
-    /**
-     * @param boxPrivilegesList the boxPrivilegesList to set
-     */
-    public void setBoxPrivilegesList(Collection<BoxPrivileges> boxPrivilegesList) {
-        this.boxPrivilegesList = boxPrivilegesList;
-    }
 
     /**
      * @return the type
@@ -183,19 +165,6 @@ public class Boxes{
         this.isFirstLevelBox = isFirstLevelBox;
     }
     
-        /**
-     * @return the company
-     */
-    public Companies getCompany() {
-        return company;
-    }
-
-    /**
-     * @param company the company to set
-     */
-    public void setCompany(Companies company) {
-        this.company = company;
-    }
 
     /**
      * @return the userList
@@ -210,6 +179,5 @@ public class Boxes{
     public void setUserList(Collection <Users> userList) {
         this.userList = userList;
     }
-
 
 }

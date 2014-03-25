@@ -12,36 +12,62 @@ package web.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import web.dao.BoxesDAO;
 import web.dao.TasksDAO;
+import web.dao.UsersDAO;
 import web.entity.Attachment;
 import web.entity.Boxes;
 import web.entity.Tasks;
+import web.entity.Users;
 import web.service.common.ResultImpl;
+import web.service.common.ValidationUtility;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
 public class TasksServiceImpl implements TasksService{
-    
+
+    @Autowired
+    private UsersDAO userDAO;
     @Autowired
     private BoxesDAO boxDAO;
     @Autowired
     private TasksDAO taskDAO;
     @Autowired
     private ResultImpl result;
+<<<<<<< HEAD
     
    
 //    @Transactional(readOnly = false)
 //    public List<Tasks> getAllTasks(Long boardId, String groupBy, Date startDate, Date endDate){
 //    	return taskDAO.getAllTasks( boardId,  groupBy,  startDate,  endDate);
 //    }
+=======
+
+
+    @Transactional (readOnly = false)
+    public ResultImpl changeTaskStatus(Long id, String status){
+        Tasks task = (Tasks)(getTaskById(id)).getObject();
+        Tasks taskWithChangedStatus = setTaskStatus(task,status);
+        if(taskWithChangedStatus.getStatus().equals(status)){
+            result.setIsSuccessful(true);
+            result.setMessageList(Arrays.asList("success.taskStatusChanged"));
+            result.setObject(task);
+        }else{
+            result.setIsSuccessful(false);
+            result.setMessageList(Arrays.asList("error.taskStatusChangeFailure"));
+        }
+        return result;
+    }
+
+    @Transactional (readOnly = false)
+    public Tasks setTaskStatus(Tasks task, String status){
+        task.setStatus(status);
+        return task;
+    }
+    
+>>>>>>> 8f78a5254026f7c7540782ba8b45b1b4a1058260
     @Transactional(readOnly = false)
     public ResultImpl save(Tasks task){
         Tasks taskToBeReturned = taskDAO.save(task);
@@ -62,7 +88,7 @@ public class TasksServiceImpl implements TasksService{
         Tasks task = taskDAO.getTaskById(taskId);
         //save attachment while making the task as its parent
         Attachment savedAttachment = taskDAO.saveAttachment(attachment);
-        savedAttachment.setParentTask(task);//should move in else block {M-A}
+        savedAttachment.setParentTask(task);
         if(savedAttachment == null){
             result.setIsSuccessful(false);
             result.setObject(null);
@@ -77,13 +103,40 @@ public class TasksServiceImpl implements TasksService{
     
     @Transactional(readOnly = false)
     public ResultImpl deleteTask(Long id){
+        // Implementation for removing associated user to each task
+        int size = 0;
+        Tasks task = new Tasks();
+        task = (Tasks) userDAO.findById(task, id);
+        /*if(task.getUserList().isEmpty()){
+            userDAO.remove(task);
+        }else{
+            Iterator<Users> it = task.getUserList().iterator();
+            size = task.getUserList().size();
+            while(it.hasNext()){
+                Users user = it.next();
+                if(ValidationUtility.isExists(user.getId())){
+                    it.remove();
+                }
+            }
+            userDAO.remove(task);
+        }*/
+        userDAO.remove(task);
+        if(task == null){
+            result.setIsSuccessful(false);
+            result.setMessageList(Arrays.asList("error.taskDeletionFailed"));
+        }else{
+            result.setIsSuccessful(true);
+            result.setMessageList(Arrays.asList("success.taskDeleted"));
+        }
+
+        /*
         if(taskDAO.deleteTask(id)){
             result.setIsSuccessful(true);
             result.setMessageList(Arrays.asList("success.taskDeleted"));
         }else{
             result.setIsSuccessful(false);
             result.setMessageList(Arrays.asList("error.taskDeletionFailed"));
-        }
+        }*/
         return result;
     }
 
@@ -114,21 +167,6 @@ public class TasksServiceImpl implements TasksService{
         return result;
     }
 
-    @Transactional (readOnly = false)
-    public ResultImpl changeTaskStatus(Long id, String status){
-        Tasks task = (Tasks)(getTaskById(id)).getObject();
-        Tasks taskWithChangedStatus = setTaskStatus(task,status);
-        if(taskWithChangedStatus.getStatus().equals(status)){
-            result.setIsSuccessful(true);
-            result.setMessageList(Arrays.asList("success.taskStatusChanged"));
-            result.setObject(task);
-        }else{
-            result.setIsSuccessful(false);
-            result.setMessageList(Arrays.asList("error.taskStatusChangeFailure"));
-        }
-        return result;
-    }
-
     @Transactional
     public ResultImpl getTaskById(Long id){
         Tasks task = taskDAO.getTaskById(id);
@@ -146,12 +184,6 @@ public class TasksServiceImpl implements TasksService{
     @Transactional (readOnly = false)
     public Tasks setTaskPriority(Tasks task, String priority){
         task.setPriority(priority);
-        return task;
-    }
-
-    @Transactional (readOnly = false)
-    public Tasks setTaskStatus(Tasks task, String status){
-        task.setStatus(status);
         return task;
     }
 

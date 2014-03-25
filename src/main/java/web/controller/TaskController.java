@@ -13,17 +13,16 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import web.entity.Attachment;
 import web.entity.Boxes;
 import web.entity.Tasks;
-import web.entity.Users;
 import web.service.TasksService;
 import web.service.BoxesService;
 import web.service.UsersService;
@@ -34,7 +33,6 @@ import web.wrapper.UserWrapper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -62,6 +60,7 @@ public class TaskController {
 
 
     //ajax
+    @PreAuthorize("@securityService.hasBoxTaskEditPermission(#parentBoxId)")
     @RequestMapping (value = "/task/create/{parentBoxId}/{taskTitle}/{taskDescription}", method=RequestMethod.GET)
     public @ResponseBody  Tasks createTask(ModelMap model,
                                           @PathVariable(value="parentBoxId") String parentBoxId,
@@ -73,20 +72,11 @@ public class TaskController {
         //queue
         //get user id from session (save id in session first)
         //verify for privs of user if he can create box or not.
-    	User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String loginId = springUser.getUsername(); //get logged in username id
-        result = userService.getUserByLoginId(loginId); 
-        Users user = (Users)result.getObject();
-        
+
         Tasks taskToBeReturned = null;
         Tasks task = new Tasks();
         task.setTitle(taskTitle);
         task.setDescription(taskDescription);
-        task.setCreater(user);
-        task.setStatus("new");
-        task.setPriority("normal");
-        task.setCreationDateTime(new Date());
-        
         Boxes parentBox = (Boxes)( boxService.getBoxById(Long.valueOf(parentBoxId)) ).getObject();
         taskService.setParent(task, parentBox);
         result = taskService.save(task);
@@ -123,10 +113,11 @@ public class TaskController {
     }
 
 
-
     //ajax
-    @RequestMapping (value = "/task/set-priority/{taskId}/{priority}", method=RequestMethod.GET)
+    @PreAuthorize("@securityService.hasBoardEditPermission(#boardId)")
+    @RequestMapping (value = "/task/set-priority/{boardId}/{taskId}/{priority}", method=RequestMethod.GET)
     public @ResponseBody  String setPriority(ModelMap model,
+                                            @PathVariable(value="boardId") String boardId,
                                             @PathVariable(value="taskId") String taskId,
                                             @PathVariable(value="priority") String priority
     ){
@@ -145,26 +136,7 @@ public class TaskController {
     }
 
     //ajax
-    @RequestMapping (value = "/task/set-status/{taskId}/{status}", method=RequestMethod.GET)
-    public @ResponseBody  String setStatus(ModelMap model,
-                                             @PathVariable(value="taskId") String taskId,
-                                             @PathVariable(value="status") String status
-    ){
-        System.out.println("task status controller method called.");
-        result = taskService.changeTaskStatus(Long.parseLong(taskId), status);
-        if (result.getIsSuccessful()) {
-            model.put("successMessages", result.getMessageList());
-            System.out.println("task status changed ------------------");
-            return "success";
-        }else{
-            model.put("errorMessages", result.getMessageList());
-            System.out.println("result for ask status change was false");
-            return "failure";
-        }
-        //queued - send model message also (if needed)
-    }
-
-    //ajax
+    @PreAuthorize("@securityService.hasBoxTaskEditPermission(#initialParentBoxId)")
     @RequestMapping (value = "/task/move/{taskId}/{initialParentBoxId}/{destinationParentBoxId}", method=RequestMethod.GET)
     public @ResponseBody  String moveTask(ModelMap model,
                                            @PathVariable(value="taskId") String taskId,
@@ -259,11 +231,17 @@ public class TaskController {
     } //queued - send model message also (if needed)
 
     //ajax
-    @RequestMapping (value = "/task/assign/{taskId}", method= RequestMethod.GET)
-    public @ResponseBody List<UserWrapper> assignTask(ModelMap model, @PathVariable(value="taskId") String taskId){
+    @PreAuthorize("@securityService.hasBoardEditPermission(#boardId)")
+    @RequestMapping (value = "/task/assign/{boardId}/{taskId}", method= RequestMethod.GET)
+    public @ResponseBody List<UserWrapper> assignTask(ModelMap model, @PathVariable(value="boardId") String boardId, @PathVariable(value="taskId") String taskId){
         System.out.println("task assign controller method called.");
-        if(ValidationUtility.isExists(taskId)){
-            result = userService.getTaskUsersListAll(Long.valueOf(taskId));
+        User springUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        String companyId = null;
+        companyId = userService.getCompanyId(loginId);
+
+        if(ValidationUtility.isExists(taskId) && ValidationUtility.isExists(boardId)){
+            result = userService.getTaskUsersListAll(Long.valueOf(boardId), Long.valueOf(taskId), companyId);
         }
         for(UserWrapper wr : (List<UserWrapper>) result.getObject()){
             System.out.println("User enabled : " + wr.isEnableUserAssignId());
@@ -271,8 +249,9 @@ public class TaskController {
         return (List<UserWrapper>) result.getObject();
     }
 
-    @RequestMapping (value = "/task/assign-task/{tId}", method=RequestMethod.POST)
-    public @ResponseBody Result taskAssignment(HttpServletRequest request, ModelMap model,
+    @PreAuthorize("@securityService.hasBoardEditPermission(#bId)")
+    @RequestMapping (value = "/task/assign-task/{bId}/{tId}", method=RequestMethod.POST)
+    public @ResponseBody Result taskAssignment(HttpServletRequest request, ModelMap model, @PathVariable(value="bId") String bId,
                                  @PathVariable(value="tId") String tId) throws IOException {
         System.out.println("\n Task Id after POST method (for user assignment) : "+tId+"\n");
         UserWrapper wrapper = new UserWrapper();
@@ -308,7 +287,13 @@ public class TaskController {
             }
         }
         wrapper.setTaskId(tId);
+        wrapper.setBoardId(bId);
         wrapper.setUserList(userList);
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        loginId = userService.getUserId(loginId);
+        wrapper.setCreatedBy(loginId);
+        wrapper.setUpdatedBy(loginId);
         result = userService.taskAssignment(wrapper);
         //System.out.println("\n size of user's list: "+ulist.size()+"\n");
         /*if(result.getIsSuccessful()){

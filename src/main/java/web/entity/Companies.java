@@ -7,6 +7,7 @@ package web.entity;
 import com.sun.java.swing.plaf.windows.WindowsTreeUI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,25 +25,17 @@ public class Companies {
     private Long id;
     private String name;
     private String description;
-    private String address1;
-    private String address2;
-    private String address3;
-    private String phone1;
-    private String phone2;
-    private String phone3;
-    
+    private Long createdBy;
+    private Date createdDate;
+    private Long updatedBy;
+    private Date updatedDate;
+
     //users
     @OneToMany (mappedBy = "company")
     private Collection<Users> userList = new ArrayList<Users>();
     //boards
     @OneToMany  (mappedBy = "company")
     private Collection<Boards> boardList = new ArrayList<Boards>();
-    //boxes
-    @OneToMany (mappedBy = "company")
-    private Collection<Boxes> boxList = new ArrayList<Boxes>();
-    //tasks
-    @OneToMany  (mappedBy = "company")
-    private Collection<Tasks> taskList = new ArrayList<Tasks>();
 
     /**
      * @return the id
@@ -86,89 +79,6 @@ public class Companies {
         this.description = description;
     }
 
-    /**
-     * @return the address1
-     */
-    public String getAddress1() {
-        return address1;
-    }
-
-    /**
-     * @param address1 the address1 to set
-     */
-    public void setAddress1(String address1) {
-        this.address1 = address1;
-    }
-
-    /**
-     * @return the address2
-     */
-    public String getAddress2() {
-        return address2;
-    }
-
-    /**
-     * @param address2 the address2 to set
-     */
-    public void setAddress2(String address2) {
-        this.address2 = address2;
-    }
-
-    /**
-     * @return the address3
-     */
-    public String getAddress3() {
-        return address3;
-    }
-
-    /**
-     * @param address3 the address3 to set
-     */
-    public void setAddress3(String address3) {
-        this.address3 = address3;
-    }
-
-    /**
-     * @return the phone1
-     */
-    public String getPhone1() {
-        return phone1;
-    }
-
-    /**
-     * @param phone1 the phone1 to set
-     */
-    public void setPhone1(String phone1) {
-        this.phone1 = phone1;
-    }
-
-    /**
-     * @return the phone2
-     */
-    public String getPhone2() {
-        return phone2;
-    }
-
-    /**
-     * @param phone2 the phone2 to set
-     */
-    public void setPhone2(String phone2) {
-        this.phone2 = phone2;
-    }
-
-    /**
-     * @return the phone3
-     */
-    public String getPhone3() {
-        return phone3;
-    }
-
-    /**
-     * @param phone3 the phone3 to set
-     */
-    public void setPhone3(String phone3) {
-        this.phone3 = phone3;
-    }
 
     /**
      * @return the userList
@@ -198,32 +108,36 @@ public class Companies {
         this.boardList = boardList;
     }
 
-    /**
-     * @return the boxList
-     */
-    public Collection<Boxes> getBoxList() {
-        return boxList;
+
+    public Long getCreatedBy() {
+        return createdBy;
     }
 
-    /**
-     * @param boxList the boxList to set
-     */
-    public void setBoxList(Collection<Boxes> boxList) {
-        this.boxList = boxList;
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
     }
 
-    /**
-     * @return the taskList
-     */
-    public Collection<Tasks> getTaskList() {
-        return taskList;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    /**
-     * @param taskList the taskList to set
-     */
-    public void setTaskList(Collection<Tasks> taskList) {
-        this.taskList = taskList;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
-            
+
+    public Long getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Long updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
 }

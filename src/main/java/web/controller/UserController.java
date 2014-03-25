@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -55,11 +57,16 @@ public class UserController {
     private Result result;
     @Autowired
     private ProviderManager authenticationManager;
+    @Autowired
+    private ServletContext servletContext;
+
 
     private UserWrapper tempUserListWrapper = new UserWrapper();
     Map<String,String> roleMap = new LinkedHashMap<String, String>();
+    Map<String,String> companyMap = new LinkedHashMap<String, String>();
     private String message = "";
 
+    @PreAuthorize("permitAll")
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLoginPage(@RequestParam(value="error",required=false) boolean error,
                                                 ModelMap model) {
@@ -74,15 +81,19 @@ public class UserController {
         return "/login/login";
 
     }
-    
+
+    @PreAuthorize("hasAnyRole('ACCOUNT_ADMIN_ROLE')")
     @RequestMapping(value = "/users/create", method = RequestMethod.GET)
     public String createUser(ModelMap model){
         System.out.println("\n Create User GET method \n");
         UserWrapper wrapper = new UserWrapper();
+        this.companyMap = populateCompanyCombo();
+        model.put("companyList", companyMap);
         model.put("createUserWrapper", wrapper);
         return "/users/create";
     }
 
+    @PreAuthorize("hasAnyRole('ACCOUNT_ADMIN_ROLE')")
     @RequestMapping(value = "/users/create", method = RequestMethod.POST)
     public String createUser(HttpSession session, @ModelAttribute("createUserWrapper")UserWrapper userWrapper, ModelMap model){
 
@@ -90,6 +101,8 @@ public class UserController {
 
         model.put("error", true);
         model.put("success", false);
+        this.companyMap = populateCompanyCombo();
+        model.put("companyList", this.companyMap);
         if(!ValidationUtility.isExists(userWrapper.getEmail())){
             model.put("errorMsg", "Please enter your Login ID (Email)");
         }else if(!ValidationUtility.isValidEmail(userWrapper.getEmail())){
@@ -104,7 +117,14 @@ public class UserController {
             model.put("errorMsg", "Please enter both Passwords");
         }else if(!userWrapper.getPassword1().equals(userWrapper.getPassword2())){
             model.put("errorMsg", "Passwords don't match");
+        }else if(!ValidationUtility.isExists(userWrapper.getCompanyId())){
+            model.put("errorMsg", "Please select your company");
         }else {
+            User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String loginId = springUser.getUsername();
+            loginId = userService.getUserId(loginId);
+            userWrapper.setCreatedBy(loginId);
+            userWrapper.setUpdatedBy(loginId);
             result = userService.saveUser(userWrapper);
             if(result.getIsSuccessful()){
                 model.put("error", false);
@@ -120,16 +140,23 @@ public class UserController {
         return "/users/create";
     }
 
-    @RequestMapping(value = "/users/edit", method = RequestMethod.GET)
-    public String editUser(HttpServletRequest req, HttpSession session, ModelMap model){
+    @PreAuthorize("@securityService.hasUserAccessPermission(#id)")
+    @RequestMapping(value = "/boards/{id}/edit-user-access", method = RequestMethod.GET)
+    public String editBoardUser(HttpServletRequest req, HttpSession session, @PathVariable(value="id") String id, ModelMap model){
         System.out.println("\n Edit User GET method \n");
         UserWrapper wrapper = new UserWrapper();
         List<UserWrapper> usersList = null;
 
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        String companyId = null;
+        companyId = userService.getCompanyId(loginId);
+
         this.setTempUserListWrapper(null);
-        usersList = userService.listUsersWithDetail();
+        usersList = userService.listUsersWithDetail(companyId, id);
         wrapper.setUserList(usersList);
         model.put("editUserWrapper", wrapper);
+        model.put("boardId", id);
 
         String successParam = req.getParameter("success");
         System.out.println("Parameter Value: " + successParam);
@@ -137,13 +164,15 @@ public class UserController {
             getPageMessages(successParam, model);
         }
 
-        return "/users/edit";
+        return "/boards/edit-user-access";
     }
 
-    @RequestMapping(value = "/users/edit", method = RequestMethod.POST)
-    public String editUser(HttpSession session, @ModelAttribute("editUserWrapper")UserWrapper userWrapper, ModelMap model){
+    @PreAuthorize("@securityService.hasUserAccessPermission(#id)")
+    @RequestMapping(value = "/boards/{id}/edit-user-access", method = RequestMethod.POST)
+    public String editBoardUser(HttpSession session, @PathVariable(value="id") String id , @ModelAttribute("editUserWrapper")UserWrapper userWrapper, ModelMap model){
         System.out.println("\n Edit User POST method \n");
-        String returnString = "redirect:/users/edit";
+        model.put("boardId", id);
+        String returnString = "redirect:/boards/"+id+"/edit-user-access";
         this.setMessage("");
         this.setTempUserListWrapper(null);
         if (userWrapper.getUserList() != null && userWrapper.getUserList().size() > 0) {
@@ -151,7 +180,8 @@ public class UserController {
                 if(uWrapper.isEnableUserEditId()){
                     System.out.println("\n UserID: "+uWrapper.getUserId()+" Name:" + uWrapper.getFirstName());
                     this.setTempUserListWrapper(userWrapper);
-                    returnString = "redirect:/users/profile-edit-technical";
+                    editUserProfileTechnical(session, id, model);
+                    returnString = "/boards/edit-user-profile";
                 }else{
                     this.setPageMessages("Please select user before edit user's access", true, model);
                 }
@@ -164,17 +194,157 @@ public class UserController {
         return returnString;
     }
 
+    @PreAuthorize("@securityService.hasUserAccessPermission(#id)")
+    @RequestMapping(value = "/boards/{id}/delete-user")
+    public String deleteUserAccess(HttpSession session, @PathVariable(value="id") String id, @RequestParam(required=false) String uId, ModelMap model){
+        System.out.println("\n Delete User POST method \n");
+        String returnString = "redirect:/boards/"+id+"/edit-user-access";
+        this.setMessage("");
+        if (ValidationUtility.isExists(uId)) {
+            User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String loginId = springUser.getUsername();
+            loginId = userService.getUserId(loginId);
+            if(uId.equalsIgnoreCase(loginId)){
+                this.setPageMessages("You are not allowed to disable yourself", true, model);
+            }else{
+                UserWrapper wrapper = new UserWrapper();
+                wrapper.setUserId(uId);
+                wrapper.setCreatedBy(loginId);
+                wrapper.setUpdatedBy(loginId);
+                result = userService.deleteUserAccess(wrapper);
+                setPageMessages(result, model);
+            }
+        }else{
+            this.setPageMessages("Please select user before deletion", true, model);
+        }
+
+        //return "redirect:"+session.getAttribute("previous_page").toString();
+        return returnString;
+    }
+
+    @PreAuthorize("@securityService.hasUserAccessPermission(#id)")
+    @RequestMapping(value = "/boards/{id}/edit-user-profile", method = RequestMethod.GET)
+    public String editUserProfileTechnical(HttpSession session, @PathVariable(value="id") String id, ModelMap model){
+        System.out.println("\n Edit User Technical method \n");
+        model.put("boardId", id);
+        String returnPage = "/boards/"+id+"/edit-user-profile";
+
+        model = populateUserTechnicalInfo(model);
+        if(model.isEmpty()){
+            model.put("errorMsg", "Please select user before edit user's technical information");
+            returnPage = "redirect:/boards/"+id+"/edit-user-access";
+        }
+
+        return returnPage;
+    }
+
+    @PreAuthorize("@securityService.hasUserAccessPermission(#id)")
+    @RequestMapping(value = "/boards/{id}/edit-user-profile", method = RequestMethod.POST)
+    public String editUserProfileTechnical(HttpServletRequest req, HttpSession session, @PathVariable(value="id") String id, @ModelAttribute("editUserTechnicalWrapper")UserWrapper userWrapper, ModelMap model){
+        System.out.println("\n Edit User Technical POST method \n");
+        String returnPage = "redirect:/boards/"+id+"/edit-user-access";
+        this.setMessage("");
+        if(ValidationUtility.isExists(this.tempUserListWrapper)){
+            userWrapper.setUserList(this.tempUserListWrapper.getUserList());
+            userWrapper.setBoardId(id);
+            User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String loginId = springUser.getUsername();
+            loginId = userService.getUserId(loginId);
+            userWrapper.setCreatedBy(loginId);
+            userWrapper.setUpdatedBy(loginId);
+            result = userService.editUserAccess(userWrapper);
+            //System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
+            setPageMessages(result, model);
+            this.roleMap = populateUserRoleCombo();
+            model.put("roleList", roleMap);
+            doAutoLogin(req);
+
+        }else{
+            model.put("errorMsg", "User Profile not updated. Please select user first");
+            //returnPage = "/users/profile-edit-personal";
+            returnPage = "redirect:/boards/"+id+"/edit-user-access";
+        }
+
+        return returnPage;// If we redirect, whole page populated and error/success message not displayed
+    }
+
+    @PreAuthorize("hasAnyRole('ACCOUNT_ADMIN_ROLE')")
+    @RequestMapping(value = "/users/edit", method = RequestMethod.GET)
+    public String editUser(HttpServletRequest req, HttpSession session, ModelMap model){
+        System.out.println("\n Edit User GET method \n");
+        UserWrapper wrapper = new UserWrapper();
+        List<UserWrapper> usersList = null;
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        String companyId = null;
+        companyId = userService.getCompanyId(loginId);
+
+
+        this.setTempUserListWrapper(null);
+        usersList = userService.listUsersWithDetail(companyId);
+        wrapper.setUserList(usersList);
+        model.put("editUserWrapper", wrapper);
+
+        String successParam = req.getParameter("success");
+        System.out.println("Parameter Value: " + successParam);
+        if(ValidationUtility.isExists(successParam)){
+            getPageMessages(successParam, model);
+        }
+
+        return "/users/edit";
+    }
+
+    @PreAuthorize("hasAnyRole('ACCOUNT_ADMIN_ROLE')")
+    @RequestMapping(value = "/users/delete-user")
+    public String deleteUser(HttpSession session, @RequestParam(required=false) String uId, ModelMap model){
+        System.out.println("\n Delete User POST method \n");
+        String returnString = "redirect:/users/edit";
+        this.setMessage("");
+        if (ValidationUtility.isExists(uId)) {
+            User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String loginId = springUser.getUsername();
+            loginId = userService.getUserId(loginId);
+            if(uId.equalsIgnoreCase(loginId)){
+                this.setPageMessages("You are not allowed to remove yourself", true, model);
+            }else{
+                UserWrapper wrapper = new UserWrapper();
+                wrapper.setUserId(uId);
+                wrapper.setCreatedBy(loginId);
+                wrapper.setUpdatedBy(loginId);
+                result = userService.deleteUser(wrapper);
+                setPageMessages(result, model);
+            }
+        }else{
+            this.setPageMessages("Please select user before deletion", true, model);
+        }
+
+        //return "redirect:"+session.getAttribute("previous_page").toString();
+        return returnString;
+    }
+
+    @PreAuthorize("hasAnyRole('ACCOUNT_ADMIN_ROLE', 'ACCOUNT_USER_ROLE')")
     @RequestMapping(value = "/users/profile-edit-personal", method = RequestMethod.GET)
     public String editUserProfile(HttpSession session, @RequestParam(required=false) String uId, ModelMap model){
         System.out.println("\n Edit User Info method \n");
-        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String loginId = springUser.getUsername(); //get logged in username
-        uId = userService.getUserId(loginId); /////////////   to be edited
+        String returnPage = "/users/profile-edit-personal-access";
+        if(!ValidationUtility.isExists(uId)){//If user edit his own information (i.e. from home page)
+            System.out.println("\n Edit Personal Profile: RequestParam not exist. get current user's login id \n");
+            User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String loginId = springUser.getUsername();
+            uId = userService.getUserId(loginId);
+            returnPage = "/users/profile-edit-personal";
+        }
+        String imageName = "";
+        UserWrapper wrapper = new UserWrapper();
 
-        String returnPage = "/users/profile-edit-personal";
+
         if(ValidationUtility.isExists(uId)){
             result = userService.populateUserInfo(uId);
-            model.put("editUserProfileWrapper", result.getObject());
+            imageName = userService.populatePersonImage(uId, servletContext.getRealPath("/"));
+            wrapper = (UserWrapper) result.getObject();
+            wrapper.setImageName(imageName);
+            model.put("editUserProfileWrapper", wrapper);
+            model.put("imageName", imageName);
         }else{
             model.put("errorMsg", "Please select user before edit user's profile information");
             returnPage = "/users/edit";
@@ -184,6 +354,7 @@ public class UserController {
         return returnPage;
     }
 
+    @PreAuthorize("hasAnyRole('ACCOUNT_ADMIN_ROLE', 'ACCOUNT_USER_ROLE')")
     @RequestMapping(value = "/users/profile-edit-personal", method = RequestMethod.POST)
     public String editUserProfile(HttpSession session,
                            @ModelAttribute("editUserProfileWrapper")UserWrapper userWrapper, ModelMap model){
@@ -191,6 +362,9 @@ public class UserController {
         String returnPage = "/users/profile-edit-personal";
         model.put("error", true);
         model.put("success", false);
+        String imageName = "";
+        UserWrapper wrapper = new UserWrapper();
+
         if(ValidationUtility.isExists(userWrapper.getUserId())){
             if(!ValidationUtility.isExists(userWrapper.getEmail())){
                 model.put("errorMsg", "Please enter your Login ID (Email)");
@@ -201,11 +375,72 @@ public class UserController {
             }else if(!ValidationUtility.isExists(userWrapper.getLastName())){
                 model.put("errorMsg", "Please enter your Last Name");
             }else{
+                User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                String loginId = springUser.getUsername();
+                loginId = userService.getUserId(loginId);
+                userWrapper.setCreatedBy(loginId);
+                userWrapper.setUpdatedBy(loginId);
                 result = userService.updateUserInfo(userWrapper);
                 if(result.getIsSuccessful()){
                     model.put("error", false);
                     model.put("success", true);
                     model.put("successMsg", result.getMessage());
+                    imageName = userService.populatePersonImage(userWrapper.getUserId(), servletContext.getRealPath("/"));
+                    wrapper = (UserWrapper) result.getObject();
+                    wrapper.setImageName(imageName);
+                    model.put("editUserProfileWrapper", wrapper);
+                    model.put("imageName", imageName);
+
+                }else{
+                    model.put("errorMsg", result.getMessage());
+                }
+            }
+        }else{
+            model.put("errorMsg", "User Profile not updated. Please select user first");
+            //returnPage = "/users/profile-edit-personal";
+            returnPage = "redirect:/users/home";
+        }
+
+        return returnPage;// If we redirect, whole page populated and error/success message not displayed
+    }
+
+    @PreAuthorize("hasAnyRole('ACCOUNT_ADMIN_ROLE')")
+    @RequestMapping(value = "/users/profile-edit-personal-access", method = RequestMethod.POST)
+    public String editUserProfileAccess(HttpSession session,
+                                  @ModelAttribute("editUserProfileWrapper")UserWrapper userWrapper, ModelMap model){
+        System.out.println("\n Edit User Info Access POST method \n");
+        String returnPage = "/users/profile-edit-personal-access";
+        model.put("error", true);
+        model.put("success", false);
+        String imageName = "";
+        UserWrapper wrapper = new UserWrapper();
+
+        if(ValidationUtility.isExists(userWrapper.getUserId())){
+            if(!ValidationUtility.isExists(userWrapper.getEmail())){
+                model.put("errorMsg", "Please enter your Login ID (Email)");
+            }else if(!ValidationUtility.isValidEmail(userWrapper.getEmail())){
+                model.put("errorMsg", "Please enter Valid Email");
+            }else if(!ValidationUtility.isExists(userWrapper.getFirstName())){
+                model.put("errorMsg", "Please enter your First Name");
+            }else if(!ValidationUtility.isExists(userWrapper.getLastName())){
+                model.put("errorMsg", "Please enter your Last Name");
+            }else{
+                User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                String loginId = springUser.getUsername();
+                loginId = userService.getUserId(loginId);
+                userWrapper.setCreatedBy(loginId);
+                userWrapper.setUpdatedBy(loginId);
+                result = userService.updateUserInfo(userWrapper);
+                if(result.getIsSuccessful()){
+                    model.put("error", false);
+                    model.put("success", true);
+                    model.put("successMsg", result.getMessage());
+                    imageName = userService.populatePersonImage(userWrapper.getUserId(), servletContext.getRealPath("/"));
+                    wrapper = (UserWrapper) result.getObject();
+                    wrapper.setImageName(imageName);
+                    model.put("editUserProfileWrapper", wrapper);
+                    model.put("imageName", imageName);
+
                 }else{
                     model.put("errorMsg", result.getMessage());
                 }
@@ -219,50 +454,16 @@ public class UserController {
         return returnPage;// If we redirect, whole page populated and error/success message not displayed
     }
 
-    @RequestMapping(value = "/users/profile-edit-technical", method = RequestMethod.GET)
-    public String editUserProfileTechnical(HttpSession session, ModelMap model){
-        System.out.println("\n Edit User Technical method \n");
-        String returnPage = "/users/profile-edit-technical";
-
-        model = populateUserTechnicalInfo(model);
-        if(model.isEmpty()){
-            model.put("errorMsg", "Please select user before edit user's technical information");
-            returnPage = "redirect:/users/edit";
-        }
-
-        return returnPage;
-    }
-
-    @RequestMapping(value = "/users/profile-edit-technical", method = RequestMethod.POST)
-    public String editUserProfileTechnical(HttpServletRequest req, HttpSession session, @ModelAttribute("editUserTechnicalWrapper")UserWrapper userWrapper, ModelMap model){
-        System.out.println("\n Edit User Technical POST method \n");
-        String returnPage = "/users/profile-edit-technical";
-        returnPage = "redirect:/users/edit";
-        this.setMessage("");
-        if(ValidationUtility.isExists(this.tempUserListWrapper)){
-            userWrapper.setUserList(this.tempUserListWrapper.getUserList());
-            result = userService.editUserAccess(userWrapper);
-            //System.out.println("\n size of user's list: "+userWrapper.getUserList().size()+"\n");
-            setPageMessages(result, model);
-            this.roleMap = populateUserRoleCombo();
-            model.put("roleList", roleMap);
-            doAutoLogin(req);
-
-        }else{
-            model.put("errorMsg", "User Profile not updated. Please select user first");
-            //returnPage = "/users/profile-edit-personal";
-            returnPage = "redirect:/users/edit";
-        }
-
-        return returnPage;// If we redirect, whole page populated and error/success message not displayed
-    }
-
+    @PreAuthorize("hasAnyRole('ACCOUNT_ADMIN_ROLE', 'ACCOUNT_USER_ROLE')")
     @RequestMapping(value = "/users/change-password", method = RequestMethod.GET)
     public String changeUserPassword(HttpSession session, @RequestParam(required=false) String uId, ModelMap model){
         System.out.println("\n Change Password Get method \n");
-        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String loginId = springUser.getUsername(); //get logged in username
-        uId = userService.getUserId(loginId);
+        if(!ValidationUtility.isExists(uId)){
+            System.out.println("\n Change Password: RequestParam not exist. get current user's login id \n");
+            User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String loginId = springUser.getUsername(); //get logged in username
+            uId = userService.getUserId(loginId);
+        }
 
         String returnPage = "/users/change-password";
         if(ValidationUtility.isExists(uId)){
@@ -279,6 +480,7 @@ public class UserController {
         return returnPage;
     }
 
+    @PreAuthorize("hasAnyRole('ACCOUNT_ADMIN_ROLE', 'ACCOUNT_USER_ROLE')")
     @RequestMapping(value = "/users/change-password", method = RequestMethod.POST)
     public String changePassword(HttpSession session,
                                   @ModelAttribute("changePasswordWrapper")UserWrapper userWrapper, ModelMap model){
@@ -295,6 +497,11 @@ public class UserController {
         }else if(!userWrapper.getPassword1().equals(userWrapper.getPassword2())){
             model.put("errorMsg", "New Passwords don't match");
         }else {
+            User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String loginId = springUser.getUsername();
+            loginId = userService.getUserId(loginId);
+            userWrapper.setCreatedBy(loginId);
+            userWrapper.setUpdatedBy(loginId);
             result = userService.changePassword(userWrapper);
             if(result.getIsSuccessful()){
                 model.put("error", false);
@@ -310,6 +517,7 @@ public class UserController {
         return returnPage;// If we redirect, whole page populated and error/success message not displayed
     }
 
+    @PreAuthorize("hasAnyRole('ACCOUNT_ADMIN_ROLE', 'ACCOUNT_USER_ROLE')")
     @RequestMapping(value = "/users/home" )
     public String userHome(ModelMap model, HttpServletRequest request) {
         User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -317,7 +525,7 @@ public class UserController {
         result = userService.getUserByLoginId(loginId); /////////////   to be edited
         Users user = (Users)result.getObject();
         HttpSession session = request.getSession(true);
-        session.setAttribute("userName", user.getName());
+        session.setAttribute("userName", user.getEmail());
         result = boardService.getBoardListByUser(user);
         List<Boards> boardList = new ArrayList<Boards>((List)result.getObject());
         model.put("boards",boardList);
@@ -333,7 +541,7 @@ public class UserController {
     @RequestMapping(value = "/users/back-to-edit-user" )
     public String usersBackPage(HttpSession session) {
         //return "redirect:"+session.getAttribute("previous_page").toString();
-        return "redirect:/users/edit";
+        return "redirect:/boards/edit-user-access";
     }
     
     @RequestMapping(value = "/logoutfail" )
@@ -347,7 +555,8 @@ public class UserController {
     public String loginFail(ModelMap model){
         return "/login/login-fail";       
     }
-    
+
+    @PreAuthorize("hasAnyRole('ACCOUNT_ADMIN_ROLE')")
     @RequestMapping("/users/createadmin")
     public String createAdmin(ModelMap model){
         List errorMessagesList = new ArrayList();
@@ -359,7 +568,8 @@ public class UserController {
             successMessagesList.add(result.getMessageList());     // to be edited / removed. adds double success messagge on view page.
             Users user = new Users();
             user.setEmail("admin@admin.com");
-            user.setName("Admin");
+            //user.setName("Admin");
+            user.setFirstName("Admin");
             user.setPassword("admin");
             user.setCompany((Companies)result.getObject());   
             user.setIsEnabled(true);
@@ -381,25 +591,6 @@ public class UserController {
         return "/users/createadmin";       
     }
 
-    //{user-module} this method can be overridden
-    @RequestMapping(value = "/users/change-role/{userEmail}/{role}/{boardId}", method=RequestMethod.GET)
-    public String changeUserRole(ModelMap model,
-                                 @PathVariable(value="userEmail") String userEmail,
-                                 @PathVariable(value="role") String role,
-                                 @PathVariable(value="boardId") String boardId){
-        System.out.println("==========================");
-
-        result = userService.changeUserRoleForBoard(userEmail, role, Long.parseLong(boardId));
-        System.out.println("=========end=================");
-
-        return null;
-    }
-
-    @RequestMapping(value = "/users/profile-view", method = RequestMethod.GET)
-    public String viewUserProfile(ModelMap model){
-        return "/users/profile-view";
-    }
-
 
     public UserWrapper getTempUserListWrapper() {
         return tempUserListWrapper;
@@ -416,6 +607,18 @@ public class UserController {
         if (roleList != null && roleList.size() > 0) {
             for (UserWrapper uWrapper : roleList) {
                 roleMap.put(uWrapper.getRoleId(), uWrapper.getRoleName());
+            }
+        }
+        return roleMap;
+    }
+
+    private Map populateCompanyCombo(){
+        List<UserWrapper> companyList = null;
+        companyList = userService.populateCompanyList();
+        Map<String,String> roleMap = new LinkedHashMap<String, String>();
+        if (companyList != null && companyList.size() > 0) {
+            for (UserWrapper uWrapper : companyList) {
+                roleMap.put(uWrapper.getCompanyId(), uWrapper.getCompanyName());
             }
         }
         return roleMap;
