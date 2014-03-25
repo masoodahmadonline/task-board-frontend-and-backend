@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="526b93bc-8256-4334-9b16-db9f5f6a5271" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/login.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/login.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ttmaven.iws" />
@@ -28,7 +27,7 @@
     <file path="/Tasks.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1385407388687" ignored="false" />
     <file path="/File.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1385408246130" ignored="false" />
     <file path="/Attachment.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1386181039561" ignored="false" />
-    <file path="/Dummy.txt" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1395768980021" ignored="false" />
+    <file path="/Dummy.txt" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1395769139734" ignored="false" />
     <file path="/web.xml" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1388854430167" ignored="false" />
     <file path="/redirect.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1388861092943" ignored="false" />
     <file path="/box-template.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1393351145887" ignored="false" />
@@ -941,7 +940,11 @@
       <created>1395768991474</created>
       <updated>1395768991474</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="{M-A} test">
+      <created>1395769148447</created>
+      <updated>1395769148447</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -968,7 +971,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32478634" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2606383" sideWeight="0.6769231" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2606383" sideWeight="0.6769231" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.62459016" sideWeight="0.66742426" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.6717949" order="4" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -1019,7 +1022,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="{M-A} test 4  to resolve merge conflict}" />
+    <option name="LAST_COMMIT_MESSAGE" value="{M-A} test" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1033,7 +1036,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="added name to input fields of user/create.jsp" />
     <MESSAGE value="Changed DAOs for delete/getByIds, .find .merge. BoardController and some minor changes." />
     <MESSAGE value="Edited &amp; eliminated some errors in CompaniesDAOImpl, UsersDAOImpl to change method behaviour for unique and queries" />
     <MESSAGE value="DAOs cleanup - no major code change." />
@@ -1058,6 +1060,7 @@
     <MESSAGE value="{M-A} test 3  to resolve merge conflict}" />
     <MESSAGE value="{M-A} test (controller)  to resolve merge conflict}" />
     <MESSAGE value="{M-A} test 4  to resolve merge conflict}" />
+    <MESSAGE value="{M-A} test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
