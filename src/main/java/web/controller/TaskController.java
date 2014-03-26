@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import web.entity.Attachment;
 import web.entity.Boxes;
 import web.entity.Tasks;
+import web.entity.Users;
 import web.service.TasksService;
 import web.service.BoxesService;
 import web.service.UsersService;
@@ -68,15 +69,23 @@ public class TaskController {
                                           @PathVariable(value="taskDescription") String taskDescription
 
                                           ){
-        
+
         //queue
         //get user id from session (save id in session first)
         //verify for privs of user if he can create box or not.
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername(); //get logged in username id
+        result = userService.getUserByLoginId(loginId);
+        Users user = (Users)result.getObject();
 
         Tasks taskToBeReturned = null;
         Tasks task = new Tasks();
         task.setTitle(taskTitle);
         task.setDescription(taskDescription);
+        task.setCreater(user);
+        task.setStatus("new");
+        task.setPriority("normal");
+        task.setCreationDateTime(new Date());
         Boxes parentBox = (Boxes)( boxService.getBoxById(Long.valueOf(parentBoxId)) ).getObject();
         taskService.setParent(task, parentBox);
         result = taskService.save(task);

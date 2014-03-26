@@ -6,6 +6,7 @@ package web.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.*;
 
 /**
@@ -25,6 +26,9 @@ public class Tasks {
     private String priority; // high , low, critical, normal
     private String status; //completed, working, pending/queued, in problems.
     private String userSize; // just for checking how many users assigned to this task (no backend functionality)
+    @ManyToOne
+    private Users creater;
+    private Date creationDateTime;
 
     @OneToMany(cascade=CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "tasklist")
     private Collection<Tasks_Users_Updated> taskUsers = new ArrayList<Tasks_Users_Updated>();
@@ -151,5 +155,21 @@ public class Tasks {
 
     public void setUserList(Collection<Users> userList) {
         this.userList = userList;
+    }
+
+    public Users getCreater() {
+        return creater;
+    }
+
+    public void setCreater(Users creater) {
+        this.creater = creater;
+    }
+
+    public Date getCreationDateTime() {
+        return creationDateTime;
+    }
+
+    public void setCreationDateTime(Date creationDateTime) {
+        this.creationDateTime = creationDateTime;
     }
 }
