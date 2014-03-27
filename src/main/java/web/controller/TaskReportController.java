@@ -6,6 +6,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -54,8 +55,9 @@ public class TaskReportController {
     private Result result;
     @Autowired
     private ProviderManager authenticationManager;
-    
 
+
+    @PreAuthorize("@securityService.hasBoardViewPermission(#boardId)")
     @RequestMapping(value = "/report/pdf", method = RequestMethod.POST )
     public ModelAndView generatePdfReport(ModelAndView modelAndView, 
     					@RequestParam("boardId") Long boardId,
@@ -107,7 +109,8 @@ public class TaskReportController {
         return modelAndView;
  
     }//generatePdfReport
-    
+
+    @PreAuthorize("hasAnyRole('ACCOUNT_ADMIN_ROLE', 'ACCOUNT_USER_ROLE')")
     @RequestMapping(value = "/reports/cards/by-status" )
     public String userHome(ModelMap model, HttpServletRequest request) {
         User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
