@@ -236,10 +236,10 @@ function ajaxChangeTaskPriority(boardId, taskId, priority, success, error){
     });
 }
 
-function ajaxChangeTaskStatus(taskId, status, success, error){
+function ajaxChangeTaskStatus(boardId, taskId, status, success, error){
     console.log("task id to be changed for setting status: "+taskId);
     $.ajax({
-        url: "${pageContext.request.contextPath}/task/set-status/"+taskId+"/"+status,
+        url: "${pageContext.request.contextPath}/task/set-status/"+boardId+"/"+taskId+"/"+status,
         cache: false,
         success: success,
         error: error
@@ -939,10 +939,11 @@ $(document).ready(function(){
 
     $(document).on('click', '.task-status-new-button', function(e) {
         var id = $(this).parents('.task').first().attr("id").split("-")[1];
+        var bId = $(this).parents('.board').first().attr("id").split("-")[1];
         console.log("task " +id);
         var status = "new";
 
-        ajaxChangeTaskStatus(id, status,
+        ajaxChangeTaskStatus(bId, id, status,
                 function(){
                     console.log("1");
 
@@ -971,10 +972,11 @@ $(document).ready(function(){
 
     $(document).on('click', '.task-status-in-process-button', function(e) {
         var id = $(this).parents('.task').first().attr("id").split("-")[1];
+        var bId = $(this).parents('.board').first().attr("id").split("-")[1];
         console.log("task " +id);
         var status = "in-process";
 
-        ajaxChangeTaskStatus(id, status,
+        ajaxChangeTaskStatus(bId, id, status,
                 function(){
                     console.log("1");
 
@@ -1003,10 +1005,11 @@ $(document).ready(function(){
 
     $(document).on('click', '.task-status-in-issues-button', function(e) {
         var id = $(this).parents('.task').first().attr("id").split("-")[1];
+        var bId = $(this).parents('.board').first().attr("id").split("-")[1];
         console.log("task " +id);
         var status = "in-issues";
 
-        ajaxChangeTaskStatus(id, status,
+        ajaxChangeTaskStatus(bId, id, status,
                 function(){
                     console.log("1");
 
@@ -1035,10 +1038,11 @@ $(document).ready(function(){
 
     $(document).on('click', '.task-status-completed-button', function(e) {
         var id = $(this).parents('.task').first().attr("id").split("-")[1];
+        var bId = $(this).parents('.board').first().attr("id").split("-")[1];
         console.log("task " +id);
         var status = "completed";
 
-        ajaxChangeTaskStatus(id, status,
+        ajaxChangeTaskStatus(bId, id, status,
                 function(){
                     console.log("1");
 

@@ -623,14 +623,18 @@ public class UsersServiceImpl implements UsersService{
         if(ValidationUtility.isExists(wrapper.getPassword1())){
             table.setPassword(wrapper.getPassword1());
         }
-        if(ValidationUtility.isExists(wrapper.isEnableUserId())){
-            table.setEnabled(wrapper.isEnableUserId());
-        }
-        if(ValidationUtility.isExists(wrapper.isAccountAdmin())){
-            table.setAccountAdmin(wrapper.isAccountAdmin());
-        }
-        if(ValidationUtility.isExists(wrapper.isCanCreateBoard())){
-            table.setBoardCreator(wrapper.isCanCreateBoard());
+        if(ValidationUtility.isExists(wrapper.isUserAccessFlag())){
+            if(wrapper.isUserAccessFlag()){
+                if(ValidationUtility.isExists(wrapper.isEnableUserId())){
+                    table.setEnabled(wrapper.isEnableUserId());
+                }
+                if(ValidationUtility.isExists(wrapper.isAccountAdmin())){
+                    table.setAccountAdmin(wrapper.isAccountAdmin());
+                }
+                if(ValidationUtility.isExists(wrapper.isCanCreateBoard())){
+                    table.setBoardCreator(wrapper.isCanCreateBoard());
+                }
+            }
         }
 
         if(ValidationUtility.isExists(wrapper.getCompanyId())){

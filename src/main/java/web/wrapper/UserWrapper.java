@@ -40,6 +40,7 @@ public class UserWrapper implements Serializable {
     private boolean enableUserAssignId = false;
     private boolean canCreateBoard = false;
     private boolean accountAdmin = false;
+    private boolean userAccessFlag = false;
 
     private boolean taskUserExistSingle = false;
     private boolean taskUserExistMultiple = false;
@@ -82,6 +83,9 @@ public class UserWrapper implements Serializable {
         this.setEnableUserAssignId(false);
         this.setEnableUserEditId(false);
         this.setEnableUserId(false);
+        this.setUserAccessFlag(false);
+        this.setAccountAdmin(false);
+        this.setCanCreateBoard(false);
 
         this.setTaskUserSize("");
         this.setTaskUserExistSingle(false);
@@ -404,5 +408,13 @@ public class UserWrapper implements Serializable {
 
     public void setAccountAdmin(boolean accountAdmin) {
         this.accountAdmin = accountAdmin;
+    }
+
+    public boolean isUserAccessFlag() {
+        return userAccessFlag;
+    }
+
+    public void setUserAccessFlag(boolean userAccessFlag) {
+        this.userAccessFlag = userAccessFlag;
     }
 }

@@ -145,8 +145,10 @@ public class TaskController {
     }
 
     //ajax
-    @RequestMapping (value = "/task/set-status/{taskId}/{status}", method=RequestMethod.GET)
+    @PreAuthorize("@securityService.hasBoardEditPermission(#boardId)")
+    @RequestMapping (value = "/task/set-status/{boardId}/{taskId}/{status}", method=RequestMethod.GET)
     public @ResponseBody  String setStatus(ModelMap model,
+                                           @PathVariable(value="boardId") String boardId,
                                            @PathVariable(value="taskId") String taskId,
                                            @PathVariable(value="status") String status
     ){

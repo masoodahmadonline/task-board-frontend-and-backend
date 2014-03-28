@@ -380,6 +380,7 @@ public class UserController {
                 loginId = userService.getUserId(loginId);
                 userWrapper.setCreatedBy(loginId);
                 userWrapper.setUpdatedBy(loginId);
+                userWrapper.setUserAccessFlag(false);
                 result = userService.updateUserInfo(userWrapper);
                 if(result.getIsSuccessful()){
                     model.put("error", false);
@@ -430,6 +431,7 @@ public class UserController {
                 loginId = userService.getUserId(loginId);
                 userWrapper.setCreatedBy(loginId);
                 userWrapper.setUpdatedBy(loginId);
+                userWrapper.setUserAccessFlag(true);
                 result = userService.updateUserInfo(userWrapper);
                 if(result.getIsSuccessful()){
                     model.put("error", false);
