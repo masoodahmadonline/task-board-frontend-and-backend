@@ -35,14 +35,14 @@
 
         <!-- Names the annotated entity class -->
 
-        <mapping class="taskmanagsetup.Boards" />
-        <mapping class="taskmanagsetup.BoardPrivileges" />
-        <mapping class="taskmanagsetup.Boxes" />
-        <mapping class="taskmanagsetup.BoxPrivileges" />
-        <mapping class="taskmanagsetup.Groups" />
-        <mapping class="taskmanagsetup.Tasks" />
-        <mapping class="taskmanagsetup.TaskPrivileges" />
-        <mapping class="taskmanagsetup.Users" />
+        <!--<mapping class="taskmanagsetup.Boards" />-->
+        <!--<mapping class="taskmanagsetup.BoardPrivileges" />-->
+        <!--<mapping class="taskmanagsetup.Boxes" />-->
+        <!--<mapping class="taskmanagsetup.BoxPrivileges" />-->
+        <!--<mapping class="taskmanagsetup.Groups" />-->
+        <!--<mapping class="taskmanagsetup.Tasks" />-->
+        <!--<mapping class="taskmanagsetup.TaskPrivileges" />-->
+        <!--<mapping class="taskmanagsetup.Users" />-->
 
     </session-factory>
 
