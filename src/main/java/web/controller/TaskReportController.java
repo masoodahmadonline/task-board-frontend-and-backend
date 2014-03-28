@@ -97,7 +97,7 @@ public class TaskReportController {
 		}
         
         
-        List<Tasks> taskList = reportService.getTasksByDateRangeLong(3L, orderByParamList, startDate , endDate );
+        List<Tasks> taskList = reportService.getTasksByDateRangeLong(boardId, orderByParamList, startDate , endDate );
 
         JRDataSource JRdataSource = new JRBeanCollectionDataSource(taskList);
  
