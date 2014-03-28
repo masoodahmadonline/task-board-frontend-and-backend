@@ -144,6 +144,7 @@ public class TaskController {
         //queued - send model message also (if needed)
     }
 
+
     //ajax
     @PreAuthorize("@securityService.hasBoardEditPermission(#boardId)")
     @RequestMapping (value = "/task/set-status/{boardId}/{taskId}/{status}", method=RequestMethod.GET)
