@@ -63,7 +63,7 @@ function ajaxCreateBox(parent){
                                 '          <span>'+
                                 '                <div class="drop-menu-button">&#x25be; &nbsp;'+
                                 '                    <ul class="drop-menu-options">'+
-                                '                              <li style="width: auto;"><a href="#">Create a task</a></li>'+
+                                '                              <li style="width: auto;"><a href="#" class="create-task-wizard">Create a task</a></li>'+
                                 '                              <li style="width: auto;"><a href="#" class="create-box-wizard">Create child box</a></li>'+
                                 '                              <li style="width: auto;"><a href="#" class="edit-box-wizard">Edit this box</a></li>'+
                                 '                              <li><a href="#" class="delete-box-wizard">Delete this box</a></li>'+
@@ -293,21 +293,7 @@ $(function() {
         autoOpen: false,
         dialogClass: 'forms-for-board'
     });
-    $(".create-box-wizard").click(function () {
-        $( "#box-creation-form").dialog( "open" );
-        window["parentBoxForBoxCreation"]      =  $(this).parents(".box").first() ;
-        window["parentBoardForBoxCreation"]    =  $(this).parents(".board").first() ;
-        if(parentBoxForBoxCreation.length){
-            window["parentOfBox"] = parentBoxForBoxCreation;
-            console.log("parent of box is box, "+ parentBoxForBoxCreation.attr("id"));
-        }else{
-            window["parentOfBox"] = parentBoardForBoxCreation;
-            console.log("parent of box is board, "+ parentBoardForBoxCreation.attr("id"));
-        }
 
-
-
-    });
 
 
     $(".delete-box-wizard").click(function () {
@@ -325,12 +311,7 @@ $(function() {
         autoOpen: false,
         dialogClass: 'forms-for-board'
     });
-    $(".edit-box-wizard").click(function () {
-        $( "#box-editing-form").dialog( "open" );
-        window["box"]      =  $(this).parents(".box").first() ;
 
-
-    });
 
 
 
@@ -364,10 +345,10 @@ $(function() {
         dialogClass: 'forms-for-board'
     });
 
-    $(".create-task-wizard").click(function () {
-        $( "#task-creation-form").dialog( "open" );
-        window["parentBox"] =  $(this).parents(".box").first() ;
-    });
+//    $(".create-task-wizard").click(function () {      //created document.on(click, ... function at doc.ready at bottom
+//        $( "#task-creation-form").dialog( "open" );
+//        window["parentBox"] =  $(this).parents(".box").first() ;
+//    });
 
     $(".delete-task-wizard").click(function () {
 
@@ -1041,6 +1022,10 @@ $(document).ready(function(){
         );
     });
 
+
+
+
+
     $(document).on('click', '.task-status-completed-button', function(e) {
         var id = $(this).parents('.task').first().attr("id").split("-")[1];
         var bId = $(this).parents('.board').first().attr("id").split("-")[1];
@@ -1210,6 +1195,74 @@ $(document).ready(function(){
             }
         });
     });
+
+
+
+        /////////////////////task creation ////////////////////
+    $(document).on('click', '.create-task-wizard', function(e) {
+        $( "#task-creation-form").dialog( "open" );
+        window["parentBox"] =  $(this).parents(".box").first() ;
+    });
+
+
+       ///////////box creation//////////////////////////
+    $(document).on('click', '.create-box-wizard', function(e) {
+        $( "#box-creation-form").dialog( "open" );
+        window["parentBoxForBoxCreation"]      =  $(this).parents(".box").first() ;
+        window["parentBoardForBoxCreation"]    =  $(this).parents(".board").first() ;
+        if(parentBoxForBoxCreation.length){
+            window["parentOfBox"] = parentBoxForBoxCreation;
+            console.log("parent of box is box, "+ parentBoxForBoxCreation.attr("id"));
+        }else{
+            window["parentOfBox"] = parentBoardForBoxCreation;
+            console.log("parent of box is board, "+ parentBoardForBoxCreation.attr("id"));
+        }
+
+
+
+    });
+
+
+    ///////////////////// box editing ///////////////////
+
+    $(document).on('click', '.edit-box-wizard', function(e) {
+        $( "#box-editing-form").dialog( "open" );
+        window["box"]      =  $(this).parents(".box").first() ;
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
