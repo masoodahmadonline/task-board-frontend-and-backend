@@ -8,9 +8,11 @@
                     <c:if test="${sessionScope.userName != null}">
                               <div id="user"><span>&#x25be; </span>${sessionScope.userName}.
                                   <div id="user-options">
-                                      <a href="${pageContext.request.contextPath}/logout">Logout</a><br />
-                                      Edit profile <br />
-                                      and some more options 
+                                      <a href="${pageContext.request.contextPath}/logout">Logout</a>
+                                      <br />
+                                      <a href="${pageContext.request.contextPath}/users/profile-edit-personal" >Edit Profile</a>
+                                      <br />
+
                                   </div>
                               </div>
                     </c:if>                  
