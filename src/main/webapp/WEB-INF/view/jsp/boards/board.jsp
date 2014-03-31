@@ -89,7 +89,7 @@ function ajaxCreateBox(parent){
 
 
         });
-        $('#box-creation-form').children('form').reset;
+        $('#box-creation-form').find("input[type=text], textarea, checkbox").val("");
         $( "#box-creation-form" ).dialog( "close" );
     }
 
@@ -97,6 +97,7 @@ function ajaxCreateBox(parent){
 }
 
 function ajaxCreateTask(parentBox){
+    console.log('boo');
 
     var parentBoxId = parentBox.attr('id').split("-")[1];
     var taskTitle = $("#task-creation-form-title").val();
@@ -171,7 +172,7 @@ function ajaxCreateTask(parentBox){
 
         });
 
-        $('#task-creation-form').children('form').reset();
+        $('#task-creation-form').find("input[type=text], textarea, checkbox").val("");
 
     }
 }
