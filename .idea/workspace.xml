@@ -6,14 +6,27 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="526b93bc-8256-4334-9b16-db9f5f6a5271" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/hibernate.cfg.test.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/hibernate.cfg.test.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ttmaven.iml" afterPath="$PROJECT_DIR$/ttmaven.iml" />
+    <list default="true" id="526b93bc-8256-4334-9b16-db9f5f6a5271" name="Default" comment="{M-A} commented footer menu">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/access-denied.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/service/common/SecurityService.java" afterPath="$PROJECT_DIR$/src/main/java/web/service/common/SecurityService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/controller/TaskReportController.java" afterPath="$PROJECT_DIR$/src/main/java/web/controller/TaskReportController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/controller/UserController.java" afterPath="$PROJECT_DIR$/src/main/java/web/controller/UserController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/web/service/UsersServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/web/service/UsersServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/board.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/board.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/box-template.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/box-template.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/reports/cards/by-status.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/reports/cards/by-status.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/edit-user-access.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/edit-user-access.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/edit.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/edit.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/main.css" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/main.scss" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/main.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/messages.properties" afterPath="$PROJECT_DIR$/src/main/resources/messages.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring-security.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring-security.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/springDispatcher-servlet.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/springDispatcher-servlet.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ttmaven.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/board.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1393350435286" ignored="false" />
+    <file path="/board.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396272246805" ignored="false" />
     <file path="/fragment.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1392170147513" ignored="false" />
     <file path="/TaskController.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1395858883293" ignored="false" />
     <file path="/TasksService.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1393351998423" ignored="false" />
@@ -26,20 +39,20 @@
     <file path="/main.scss" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1393351704257" ignored="false" />
     <file path="$PROJECT_DIR$/../crawler/src/crawler/Crawler.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1392226378555" ignored="false" />
     <file path="/inner-header.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1391809228358" ignored="false" />
-    <file path="/UserController.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1391372761787" ignored="false" />
-    <file path="/UsersServiceImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1390336885335" ignored="false" />
-    <file path="/spring-security.xml" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389039817664" ignored="false" />
+    <file path="/UserController.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396276184703" ignored="false" />
+    <file path="/UsersServiceImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396271529284" ignored="false" />
+    <file path="/spring-security.xml" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396275661970" ignored="false" />
     <file path="/Crawler.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1392226159476" ignored="false" />
     <file path="/pom.xml" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1384363175122" ignored="false" />
     <file path="/Tasks.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1395858846006" ignored="false" />
     <file path="/File.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1385408246130" ignored="false" />
     <file path="/Attachment.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1386181039561" ignored="false" />
-    <file path="/Dummy.txt" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396031466488" ignored="false" />
+    <file path="/Dummy.txt" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396083548591" ignored="false" />
     <file path="/web.xml" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1388854430167" ignored="false" />
     <file path="/redirect.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1388861092943" ignored="false" />
-    <file path="/box-template.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1393351145887" ignored="false" />
+    <file path="/box-template.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396263588731" ignored="false" />
     <file path="/BoxesServiceImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1391194165951" ignored="false" />
-    <file path="/a.dummy" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396034743772" ignored="false" />
+    <file path="/a.dummy" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396277916875" ignored="false" />
     <file path="/Boxes.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1393353584504" ignored="false" />
     <file path="/Users.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389049876298" ignored="false" />
     <file path="/UserRoleForBoard.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389052849113" ignored="false" />
@@ -47,8 +60,8 @@
     <file path="/UsersService.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389052508414" ignored="false" />
     <file path="/create.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389704669785" ignored="false" />
     <file path="/login.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1389371569938" ignored="false" />
-    <file path="/messages.properties" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1391194105671" ignored="false" />
-    <file path="/edit.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1390598791315" ignored="false" />
+    <file path="/messages.properties" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396276456544" ignored="false" />
+    <file path="/edit.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396272778191" ignored="false" />
     <file path="/BoardsDAOImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1390060232590" ignored="false" />
     <file path="/CompaniesDAOImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1390248423620" ignored="false" />
     <file path="/UsersDAOImpl.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1390255444396" ignored="false" />
@@ -79,6 +92,9 @@
     <file path="/TaskReportController.java" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1395689543150" ignored="false" />
     <file path="/springDispatcher-servlet.xml" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1395853480234" ignored="false" />
     <file path="/__dummy.xml" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396034813261" ignored="false" />
+    <file path="/by-status.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396087822287" ignored="false" />
+    <file path="/edit-user-access.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396274249182" ignored="false" />
+    <file path="/access-denied.jsp" changelist="526b93bc-8256-4334-9b16-db9f5f6a5271" time="1396277776510" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +109,6 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -130,7 +145,24 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/web/controller/UserController.java" line="109" class="web.controller.UserController" package="web.controller">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -140,10 +172,96 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="hibernate.cfg.test.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/hibernate.cfg.test.xml">
+      <file leaf-file-name="edit.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/edit.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="24" selection-start="1733" selection-end="1733" vertical-scroll-proportion="1.1674008">
+            <state line="48" column="56" selection-start="2028" selection-end="2028" vertical-scroll-proportion="-5.8846154">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/UserController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="556" column="27" selection-start="27197" selection-end="27201" vertical-scroll-proportion="-7.32">
+              <folding>
+                <element signature="e#2232#2248#0" expanded="true" />
+                <element signature="e#2305#2321#0" expanded="true" />
+                <element signature="e#29648#29664#0" expanded="true" />
+                <element signature="e#30102#30118#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TaskController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/TaskController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="226" column="19" selection-start="10697" selection-end="10697" vertical-scroll-proportion="-6.64">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BoxController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/BoxController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="41" column="14" selection-start="1483" selection-end="1484" vertical-scroll-proportion="-6.16">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SecurityService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/web/service/common/SecurityService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="32" column="30" selection-start="930" selection-end="930" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BoardController.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/BoardController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="129" column="30" selection-start="5462" selection-end="5462" vertical-scroll-proportion="0.31750742">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login-fail.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/login/login-fail.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="access-denied.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/access-denied.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="46" selection-start="539" selection-end="539" vertical-scroll-proportion="-6.3846154">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="messages.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/messages.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="22" selection-start="377" selection-end="389" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="spring-security.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/spring-security.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="85" selection-start="626" selection-end="626" vertical-scroll-proportion="-3.84">
               <folding />
             </state>
           </provider>
@@ -169,22 +287,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/web/entity/Boxes.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/board.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/web/utils/BoxComparator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/web/utils/TaskComparator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/web/service/BoardsServiceImpl.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/web/controller/TaskReportController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/web/dao/impl/jpa/ReportsDAOImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/home.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/login.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/springDispatcher-servlet.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/web/entity/Tasks.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/common/footer.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/web/controller/TaskController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/web/service/TasksServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/hibernate.cfg.test.xml" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/reports/cards/by-status.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/common/variables.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/resources/css/main.css" />
+        <option value="$PROJECT_DIR$/src/main/webapp/resources/css/main.scss" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/box-template.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/web/controller/BoxController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/web/service/UsersServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/board.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/edit.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/edit-user-access.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/spring-security.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/messages.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/web/service/common/SecurityService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/web/controller/UserController.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/access-denied.jsp" />
       </list>
     </option>
   </component>
@@ -213,8 +331,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1366" />
-    <option name="height" value="733" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -244,7 +364,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -259,7 +379,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ttmaven" />
+              <option name="myItemId" value="otb" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -269,22 +389,258 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ttmaven" />
+              <option name="myItemId" value="otb" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value=".idea" />
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="otb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="otb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="otb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="otb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="otb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="otb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="otb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ttmaven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="otb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
@@ -300,10 +656,15 @@
     <property name="restartRequiresConfirmation" value="true" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
-  <component name="RunManager" selected="Tomcat Server.Unnamed">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\Development\Workspaces\IntelliJ\otb\src\main\webapp\WEB-INF\view\jsp" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Tomcat Server.ttmaven">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
@@ -316,34 +677,6 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
-      <envs />
-      <properties />
-      <listeners />
       <method />
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -400,6 +733,26 @@
       </option>
       <envs />
       <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Remote">
+      <option name="LOCAL" value="false" />
+      <deployment />
+      <server-settings>
+        <data>
+          <option name="transportHostId" />
+        </data>
+      </server-settings>
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="54078" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.01">
@@ -478,32 +831,12 @@
         </option>
       </method>
     </configuration>
-    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Remote">
-      <option name="LOCAL" value="false" />
-      <deployment />
-      <server-settings>
-        <data>
-          <option name="transportHostId" />
-        </data>
-      </server-settings>
-      <predefined_log_file id="Tomcat" enabled="true" />
-      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="54078" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="false" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="Unnamed" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.01">
-      <option name="UPDATING_POLICY" value="restart-server" />
+    <configuration default="false" name="ttmaven" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/ttmaven/login" />
       <deployment>
-        <artifact name="ttmaven:war">
+        <artifact name="ttmaven:war exploded">
           <settings>
-            <option name="CONTEXT_PATH" value="/" />
+            <option name="CONTEXT_PATH" value="/ttmaven" />
           </settings>
         </artifact>
       </deployment>
@@ -569,14 +902,13 @@
         </SHUTDOWN>
       </ConfigurationWrapper>
       <method>
-        <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="ttmaven:war" />
+          <artifact name="ttmaven:war exploded" />
         </option>
       </method>
     </configuration>
     <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="Tomcat Server.Unnamed" />
+      <item index="0" class="java.lang.String" itemvalue="Tomcat Server.ttmaven" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -738,7 +1070,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1366" height="733" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42905983" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -746,27 +1078,27 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32820514" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.07121212" sideWeight="0.8158784" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3982906" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3008547" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6649573" sideWeight="0.38145897" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34017095" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32307693" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29393938" sideWeight="0.20101352" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293919" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.8158784" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32478634" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2606383" sideWeight="0.557265" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.44273505" sideWeight="0.61854106" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25984848" sideWeight="0.6991453" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44262296" sideWeight="0.61854106" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28257576" sideWeight="0.4847973" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.6717949" order="4" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -862,13 +1194,212 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/hibernate.cfg.test.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/boards/edit-user-access.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="24" selection-start="1733" selection-end="1733" vertical-scroll-proportion="1.1674008">
+        <state line="56" column="100" selection-start="2804" selection-end="2804" vertical-scroll-proportion="-9.153846">
+          <folding>
+            <marker date="1396274305806" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
+        <state />
+      </provider>
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
+        <state />
+      </provider>
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/applicationContext.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="8.8">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/login.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/springDispatcher-servlet.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-6.48">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/redirect.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/users/edit.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="56" selection-start="2028" selection-end="2028" vertical-scroll-proportion="-5.8846154">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/login/login-fail.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/messages.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="22" selection-start="377" selection-end="389" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/spring-security.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="85" selection-start="626" selection-end="626" vertical-scroll-proportion="-3.84">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/service/common/SecurityService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="30" selection-start="930" selection-end="930" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/view/jsp/access-denied.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="46" selection-start="539" selection-end="539" vertical-scroll-proportion="-6.3846154">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="556" column="27" selection-start="27197" selection-end="27201" vertical-scroll-proportion="-7.32">
+          <folding>
+            <element signature="e#2232#2248#0" expanded="true" />
+            <element signature="e#2305#2321#0" expanded="true" />
+            <element signature="e#29648#29664#0" expanded="true" />
+            <element signature="e#30102#30118#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/BoxController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="14" selection-start="1483" selection-end="1484" vertical-scroll-proportion="-6.16">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/TaskController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="226" column="19" selection-start="10697" selection-end="10697" vertical-scroll-proportion="-6.64">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/web/controller/BoardController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="129" column="30" selection-start="5462" selection-end="5462" vertical-scroll-proportion="0.31750742">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>ttmaven:war</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Web</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>sass-stdlib</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>ttmaven</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: antlr:antlr:2.7.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
 

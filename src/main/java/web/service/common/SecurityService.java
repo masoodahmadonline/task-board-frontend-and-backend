@@ -5,6 +5,7 @@
 package web.service.common;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ import web.service.UsersService;
  */
 @Transactional(readOnly = true)
 @Component("securityService")
+@PreAuthorize("isAuthenticated()")
 public class SecurityService{
 
     @Autowired

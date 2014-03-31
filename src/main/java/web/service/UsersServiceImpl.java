@@ -651,7 +651,7 @@ public class UsersServiceImpl implements UsersService{
         if(!ValidationUtility.isExists(table.getWip())){
             table.setWip(Long.valueOf(0));  // For new User: assign Wip = 0
         }*/
-
+        System.out.println("\n\n Image Name: " + wrapper.getImageName());
         if(ValidationUtility.isExists(wrapper.getImageName())){
             table.setImageName(wrapper.getImageName());
         }
@@ -860,6 +860,9 @@ public class UsersServiceImpl implements UsersService{
         if(ValidationUtility.isExists(table.isBoardCreator())){
             wrapper.setCanCreateBoard(table.isBoardCreator());
         }
+        if(ValidationUtility.isExists(table.getImageName())){
+            wrapper.setImageName(table.getImageName());
+        }
         //wrapper.setAddress();
         //wrapper.setContactNumber();
 
@@ -1008,11 +1011,20 @@ public class UsersServiceImpl implements UsersService{
         String fileNameToSave = "";
         UserWrapper wrapper = new UserWrapper();
         Users table = new Users();
+
+        String fileSeparator = "/";
+        String your_os = System.getProperty("os.name").toLowerCase();
+        if(your_os.indexOf("win") >= 0){
+            fileSeparator = "/";
+        }else{
+            fileSeparator = "\\";
+        }
+
         if(ValidationUtility.isExists(userId)){
             table = (Users)userDAO.findById(table, Long.valueOf(userId));
             if(ValidationUtility.isExists(table.getPersonimage())){
                 fileNameToSave = File.separator + "images"+ File.separator + "user" + File.separator + table.getId() + ".png";
-                fileNameToSave = fileNameToSave.replace("\\", "/");
+                fileNameToSave = fileNameToSave.replace("\\", fileSeparator);
                 wrapper.setImageName(fileNameToSave);
                 try {
                     populatePersonImages(table, fileNameToSave, path);
@@ -1021,11 +1033,12 @@ public class UsersServiceImpl implements UsersService{
                 }
             }else{
                 fileNameToSave = File.separator + "images"+ File.separator + "user" + File.separator + "avatar-small.png";
-                fileNameToSave = fileNameToSave.replace("\\", "/");
+                fileNameToSave = fileNameToSave.replace("\\", fileSeparator);
                 wrapper.setImageName(fileNameToSave);
             }
 
         }
+        System.out.println("\n File Name to Save: " + fileNameToSave + "\n");
 
         return fileNameToSave;
     }

@@ -9,7 +9,7 @@
   
  <!-- This is where we configure Spring-Security  -->
 
-    <security:http auto-config="true" use-expressions="true" access-denied-page="/access-denied" >
+    <security:http auto-config="true" use-expressions="true" access-denied-page="/403" >
 
         <security:intercept-url pattern="/" access="permitAll"/>
         <security:intercept-url pattern="/favicon.ico" access="permitAll"/>  <!-- lolz -->
