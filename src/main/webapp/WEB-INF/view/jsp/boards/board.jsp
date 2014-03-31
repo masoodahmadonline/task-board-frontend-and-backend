@@ -44,53 +44,55 @@ function ajaxCreateBox(parent){
     var boxType = $('input[name="box-creation-form-type"]:checked').val();
     var boxTitle = $("#box-creation-form-title").val();
     var boxDescription = $("#box-creation-form-description").val();
-    $.ajax({
+    if(boxTitle.length > 0 && boxDescription.length > 0){
+        $.ajax({
+            url: "${pageContext.request.contextPath}/box/create/"+parentType+"/"+parentId+"/"+boxType+"/"+boxTitle+"/"+boxDescription,
+            cache: false,
+            //data:'firstName=' + $("#firstName").val() + "&lastName=" + $("#lastName").val() + "&email=" + $("#email").val(),
+            success: function(response){
+                var fetchedBoxId = response.id;
+                var fetchedBoxType = response.type;
+                var fetchedBoxTitle = response.title;
+                var fetchedBoxDescription = response.description;
+                //alert(fetchedBoxType+" "+fetchedBoxTitle+" "+fetchedBoxDescription);
+                $('#result').html(fetchedBoxId+" "+fetchedBoxType+" "+fetchedBoxTitle+" "+fetchedBoxDescription);
+                // createBoxInDom();
+                $("#"+parentElementId+" > ."+parentType+"-body").append(
+                        '<div id="boxid-'+fetchedBoxId+'" class="box box-'+fetchedBoxType+'" >'+
+                                '    <div class="box-title" title="'+fetchedBoxDescription+'">'+
+                                '          <span>'+
+                                '                <div class="drop-menu-button">&#x25be; &nbsp;'+
+                                '                    <ul class="drop-menu-options">'+
+                                '                              <li style="width: auto;"><a href="#">Create a task</a></li>'+
+                                '                              <li style="width: auto;"><a href="#" class="create-box-wizard">Create child box</a></li>'+
+                                '                              <li style="width: auto;"><a href="#" class="edit-box-wizard">Edit this box</a></li>'+
+                                '                              <li><a href="#" class="delete-box-wizard">Delete this box</a></li>'+
+                                '                      </ul>'+
+                                '                  </div>'+
+                                '                <span class="box-title-text">'+fetchedBoxTitle+'</span>'+
+                                '            </span> '+
+                                '        </div>'+
+                                '        <div class="box-body">'+
+                                '        </div>   '+
+                                '</div>');
 
-//                            url: "${pageContext.request.contextPath}/box/create/board/3/vertical/MyBoxTitle",
-        url: "${pageContext.request.contextPath}/box/create/"+parentType+"/"+parentId+"/"+boxType+"/"+boxTitle+"/"+boxDescription,
-        cache: false,
-        //data:'firstName=' + $("#firstName").val() + "&lastName=" + $("#lastName").val() + "&email=" + $("#email").val(),
-        success: function(response){
-            var fetchedBoxId = response.id;
-            var fetchedBoxType = response.type;
-            var fetchedBoxTitle = response.title;
-            var fetchedBoxDescription = response.description;
-            //alert(fetchedBoxType+" "+fetchedBoxTitle+" "+fetchedBoxDescription);
-            $('#result').html(fetchedBoxId+" "+fetchedBoxType+" "+fetchedBoxTitle+" "+fetchedBoxDescription);
-            // createBoxInDom();
-            $("#"+parentElementId+" > ."+parentType+"-body").append(
-                    '<div id="boxid-'+fetchedBoxId+'" class="box box-'+fetchedBoxType+'" >'+
-                            '    <div class="box-title" title="'+fetchedBoxDescription+'">'+
-                            '          <span>'+
-                            '                <div class="drop-menu-button">&#x25be; &nbsp;'+
-                            '                    <ul class="drop-menu-options">'+
-                            '                              <li style="width: auto;"><a href="#">Create a task</a></li>'+
-                            '                              <li style="width: auto;"><a href="#" class="create-box-wizard">Create child box</a></li>'+
-                            '                              <li style="width: auto;"><a href="#" class="edit-box-wizard">Edit this box</a></li>'+
-                            '                              <li><a href="#" class="delete-box-wizard">Delete this box</a></li>'+
-                            '                      </ul>'+
-                            '                  </div>'+
-                            '                <span class="box-title-text">'+fetchedBoxTitle+'</span>'+
-                            '            </span> '+
-                            '        </div>'+
-                            '        <div class="box-body">'+
-                            '        </div>   '+
-                            '</div>');
-
-            $('#boxid-'+fetchedBoxId+' .drop-menu-options').menu().hide();
-            $('#boxid-'+fetchedBoxId+' .delete-box-wizard').click(function () {
-                ajaxDeleteBox(     $(this).parents(".box").first()      );
-            });
-
-
-        },
-        error: function(){
-            alert('Error while request..');
-        }
+                $('#boxid-'+fetchedBoxId+' .drop-menu-options').menu().hide();
+                $('#boxid-'+fetchedBoxId+' .delete-box-wizard').click(function () {
+                    ajaxDeleteBox(     $(this).parents(".box").first()      );
+                });
 
 
-    });
-    $('#box-creation-form').children('form').reset;
+            },
+            error: function(){
+                alert('Error while request..');
+            }
+
+
+        });
+        $('#box-creation-form').children('form').reset;
+        $( "#box-creation-form" ).dialog( "close" );
+    }
+
 
 }
 
@@ -99,77 +101,79 @@ function ajaxCreateTask(parentBox){
     var parentBoxId = parentBox.attr('id').split("-")[1];
     var taskTitle = $("#task-creation-form-title").val();
     var taskDescription = $("#task-creation-form-description").val();
-//                                                          alert ("parent id: "+parentBoxId+ "taskTitle: " + taskTitle + "taskDescription: "+taskDescription );
-    $.ajax({
+    if(taskTitle.length > 0 && taskDescription.length > 0){
+        $( "#task-creation-form" ).dialog( "close" );
+        $.ajax({
+            url: "${pageContext.request.contextPath}/task/create/"+parentBoxId+"/"+taskTitle+"/"+taskDescription,
+            cache: false,
 
+            success: function(response){
+                var fetchedTaskId = response.id;
+                var fetchedTaskTitle = response.title;
+                var fetchedTaskDescription = response.description;
 
-        url: "${pageContext.request.contextPath}/task/create/"+parentBoxId+"/"+taskTitle+"/"+taskDescription,
-        cache: false,
+                $('#result').html(fetchedTaskId+"  "+fetchedTaskTitle+" "+fetchedTaskDescription);
+                // createBoxInDom();
+                $("#boxid-"+parentBoxId+" .box-body").append(
+                        '<div class="task" id="taskid-'+fetchedTaskId+'">' +
+                                '<div class="task-title" title="'+fetchedTaskTitle+'">' +
+                                '<span> '+
+                                '    <div class="drop-menu-button">&#x25be;&nbsp; '+
+                                '        <ul class="drop-menu-options">'+
+                                '                <li><a href="#" class="task-assign-unassign-wizard">Assign/Unassign</a></li>'+
+                                '                <li><a href="#" class="file-attachment-wizard">Attach file</a></li> '+
+                                '                <li class="ui-state-disabled"><a href="#">Edit this task</a></li> '+
+                                '                <li><a href="#">Set priority</a> '+
+                                '                    <ul>  '+
+                                '                        <li><a href="#" class="task-priority-critical-button">Critical</a></li> '+
+                                '                        <li><a href="#" class="task-priority-high-button">High</a></li>'+
+                                '                        <li><a href="#" class="task-priority-normal-button">Normal</a></li> '+
+                                '                        <li><a href="#" class="task-priority-low-button">Low</a></li> '+
+                                '                    </ul> '+
+                                '                </li> '+
+                                '                <li><a href="#">Set status</a> '+
+                                '                    <ul>  '+
+                                '                        <li><a href="#" class="task-status-new-button">New</a></li> '+
+                                '                        <li><a href="#" class="task-status-in-process-button">In-process</a></li>'+
+                                '                        <li><a href="#" class="task-status-in-issues-button">In-issues</a></li> '+
+                                '                        <li><a href="#" class="task-status-completed-button">Completed</a></li> '+
+                                '                    </ul> '+
+                                '                </li> '+
+                                '                <li><a href="#" class="delete-task-wizard">Delete this task</a></li>'+
+                                '        </ul>'+
+                                '    </div>   '+
+                                fetchedTaskTitle+
+                                '</span>      '+
+                                '</div>' +
+                                '<div class="task-body">' +
+                                fetchedTaskDescription +
+                                '   <div class="task-priority task-priority-normal task-status-new"></div>'+
+                                '</div>' +
+                                '' +
+                                '</div>'
+                );
+                $('#taskid-'+fetchedTaskId+' .drop-menu-options').menu().hide();
+                $('#taskid-'+fetchedTaskId+' .delete-task-wizard').click(function () {
+                    ajaxDeleteTask(     $(this).parents(".task").first()      );
+                });
+                $('#taskid-'+fetchedTaskId+' .task-assign-unassign-wizard').click(function () {
+                    $('#taskIdForAssignUser').val(  $(this).parents(".task").first().attr('id').split("-")[1] );
+                    $('#boardIdForAssignUser').val(  $(this).parents(".board").first().attr('id').split("-")[1] );
+                    ajaxAssignTask($(this).parents(".board").first(), $(this).parents(".task").first());
+                    //$("#task-assign-unassign-form").dialog("open");
+                    //window["parentTask"] = $(this).parents(".task").first();
+                });
 
-        success: function(response){
-            var fetchedTaskId = response.id;
-            var fetchedTaskTitle = response.title;
-            var fetchedTaskDescription = response.description;
+            },
+            error: function(){
+                alert('Error while request..');
+            }
 
-            $('#result').html(fetchedTaskId+"  "+fetchedTaskTitle+" "+fetchedTaskDescription);
-            // createBoxInDom();
-            $("#boxid-"+parentBoxId+" .box-body").append(
-                    '<div class="task" id="taskid-'+fetchedTaskId+'">' +
-                            '<div class="task-title" title="'+fetchedTaskTitle+'">' +
-                            '<span> '+
-                            '    <div class="drop-menu-button">&#x25be;&nbsp; '+
-                            '        <ul class="drop-menu-options">'+
-                            '                <li><a href="#" class="task-assign-unassign-wizard">Assign/Unassign</a></li>'+
-                            '                <li><a href="#" class="file-attachment-wizard">Attach file</a></li> '+
-                            '                <li class="ui-state-disabled"><a href="#">Edit this task</a></li> '+
-                            '                <li><a href="#">Set priority</a> '+
-                            '                    <ul>  '+
-                            '                        <li><a href="#" class="task-priority-critical-button">Critical</a></li> '+
-                            '                        <li><a href="#" class="task-priority-high-button">High</a></li>'+
-                            '                        <li><a href="#" class="task-priority-normal-button">Normal</a></li> '+
-                            '                        <li><a href="#" class="task-priority-low-button">Low</a></li> '+
-                            '                    </ul> '+
-                            '                </li> '+
-                            '                <li><a href="#">Set status</a> '+
-                            '                    <ul>  '+
-                            '                        <li><a href="#" class="task-status-new-button">New</a></li> '+
-                            '                        <li><a href="#" class="task-status-in-process-button">In-process</a></li>'+
-                            '                        <li><a href="#" class="task-status-in-issues-button">In-issues</a></li> '+
-                            '                        <li><a href="#" class="task-status-completed-button">Completed</a></li> '+
-                            '                    </ul> '+
-                            '                </li> '+
-                            '                <li><a href="#" class="delete-task-wizard">Delete this task</a></li>'+
-                            '        </ul>'+
-                            '    </div>   '+
-                            fetchedTaskTitle+
-                            '</span>      '+
-                            '</div>' +
-                            '<div class="task-body">' +
-                            fetchedTaskDescription +
-                            '   <div class="task-priority task-priority-normal task-status-new"></div>'+
-                            '</div>' +
-                            '' +
-                            '</div>'
-            );
-            $('#taskid-'+fetchedTaskId+' .drop-menu-options').menu().hide();
-            $('#taskid-'+fetchedTaskId+' .delete-task-wizard').click(function () {
-                ajaxDeleteTask(     $(this).parents(".task").first()      );
-            });
-            $('#taskid-'+fetchedTaskId+' .task-assign-unassign-wizard').click(function () {
-                $('#taskIdForAssignUser').val(  $(this).parents(".task").first().attr('id').split("-")[1] );
-                $('#boardIdForAssignUser').val(  $(this).parents(".board").first().attr('id').split("-")[1] );
-                ajaxAssignTask($(this).parents(".board").first(), $(this).parents(".task").first());
-                //$("#task-assign-unassign-form").dialog("open");
-                //window["parentTask"] = $(this).parents(".task").first();
-            });
+        });
 
-        },
-        error: function(){
-            alert('Error while request..');
-        }
+        $('#task-creation-form').children('form').reset();
 
-    });
-    $('#task-creation-form').children('form').reset();
+    }
 }
 
 
@@ -310,7 +314,7 @@ $(function() {
     });
 
     $(".create-box-wizard-submit").click(function () {
-        $( "#box-creation-form" ).dialog( "close" );
+        //$( "#box-creation-form" ).dialog( "close" );
     });
 
 
@@ -371,7 +375,7 @@ $(function() {
     });
 
     $(".create-task-wizard-submit").click(function () {
-        $( "#task-creation-form" ).dialog( "close" );
+        //$( "#task-creation-form" ).dialog( "close" );
 
     });
 
@@ -451,10 +455,10 @@ $(function() {
                 </td>
             </tr>
             <tr>
-                <td>Box title:</td><td><input id="box-creation-form-title" type="text" />
+                <td>Box title:</td><td><input id="box-creation-form-title" type="text" required="required" />
             </tr>
             <tr>
-                <td>Box description</td><td><textarea id="box-creation-form-description" style="min-height: 100px;"></textarea></td>
+                <td>Box description</td><td><textarea id="box-creation-form-description" style="min-height: 100px;" required="required"></textarea></td>
             </tr>
             <tr>
 
@@ -479,10 +483,10 @@ $(function() {
                 </td>
             </tr>
             <tr>
-                <td>Box title:</td><td><input id="box-editing-form-title" type="text" />
+                <td>Box title:</td><td><input id="box-editing-form-title" type="text" required="required" />
             </tr>
             <tr>
-                <td>Box description</td><td><textarea id="box-editing-form-description" style="min-height: 100px;"></textarea></td>
+                <td>Box description</td><td><textarea id="box-editing-form-description" style="min-height: 100px;" required="required"></textarea></td>
             </tr>
             <tr>
 
@@ -500,10 +504,10 @@ $(function() {
         <table>
 
             <tr>
-                <td>Task title:</td><td><input id="task-creation-form-title" type="text" /></td>
+                <td>Task title:</td><td><input id="task-creation-form-title" type="text" required="required"  /></td>
             </tr>
             <tr>
-                <td>Task description</td><td><textarea id="task-creation-form-description" style="min-height: 100px;"></textarea></td>
+                <td>Task description</td><td><textarea id="task-creation-form-description" style="min-height: 100px;" required="required"></textarea></td>
             </tr>
             <tr>
                 <td><input type="reset" /></td><td><input type="button" value="Create" class="create-task-wizard-submit" onClick="ajaxCreateTask(window.parentBox);" /></td>
@@ -1237,12 +1241,14 @@ function ajaxAssignTask(board, task){
             );--%>
             $('#task-assign-unassign-table').empty();
             $.each(userList, function( index, value ) {
+                //alert(${resourcesDir}+value.imageName);
                 if(value.enableUserAssignId == true){
                     $('#task-assign-unassign-table').prepend(+
                             '<input type="hidden" id="task-assign-userId2" value='+value.userId+' />'+
                             '   <tr>' +
                             '       <td>' +
-                            '           <img src="${resourcesDir}/images/avatar-small.png"/>' +
+                            //'           <img src="${resourcesDir}/images/avatar-small.png"/>' +
+                            '           <img src="${resourcesDir}'+value.imageName+'" height="25" width="22"/>' +
                             '       </td>' +
                             '       <td style="width: 200px;">' +
                             '           <input type="hidden" id="task-assign-userId" name="user-id-'+index+'" value='+value.userId+' />'+
@@ -1258,7 +1264,7 @@ function ajaxAssignTask(board, task){
                             '<input type="hidden" id="task-assign-userId2" value='+value.userId+' />'+
                             '   <tr>' +
                             '       <td>' +
-                            '           <img src="${resourcesDir}/images/avatar-small.png"/>' +
+                            '           <img src="${resourcesDir}'+value.imageName+'" height="25" width="22"/>' +
                             '       </td>' +
                             '       <td class="user-id2" style="width: 200px;">' +
                             '           <input type="hidden" id="task-assign-userId" name="user-id-'+index+'" value='+value.userId+' />'+
@@ -1347,6 +1353,27 @@ function ajaxAssignTaskSubmit(ulist){
         }
     });
 }*/
+
+
+$(document).ready(function(){
+    $('box-creation-form').on('submit', function(e){
+        var message = "";
+        var show = false;
+        if($("#box-creation-form-title").val().length <= 0 ){
+            show = true;
+            message = "<spring:message code="error.confirmPassowordMissmatch"/>";
+            e.preventDefault();
+        }
+
+        if(show){
+//                alert(message);
+            $(".form-messages").append('<span class="message-error">'+message+'</span>');
+        }
+
+    });
+
+});
+
 
 
 </script>

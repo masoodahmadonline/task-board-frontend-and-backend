@@ -51,7 +51,7 @@
                                     <form:hidden path="userList[${idx.index}].userId"></form:hidden>
                                     <tr>
                                         <td>
-                                            <img src="${resourcesDir}/images/avatar-small.png" height="40px;" />
+                                            <img src="${resourcesDir}${wrapper.imageName}" height="40px;" width="40px;" />
                                         </td>
                                         <td>
                                             <span style="width:200px;  display:inline-block; text-align: left; font-weight: bold">${wrapper.firstName}&nbsp;${wrapper.lastName}</span> <br />
@@ -72,12 +72,12 @@
                                             </c:url>
                                             <a title="Edit user" href='<c:out value="${uId2}"/>'>Edit</a>
                                         </td>
-                                        <td>
+                                        <%--<td>
                                             <c:url var="uId3" value="delete-user">
                                                 <c:param name="uId" value="${wrapper.userId}" />
                                             </c:url>
                                             <a title="Delete user" class="delete-button" href='<c:out value="${uId3}"/>'></a>
-                                        </td>
+                                        </td>--%>
                                     </tr>
                                 </c:forEach>
 

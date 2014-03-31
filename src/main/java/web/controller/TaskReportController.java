@@ -57,7 +57,7 @@ public class TaskReportController {
     private ProviderManager authenticationManager;
 
 
-    @PreAuthorize("@securityService.hasBoardViewPermission(#boardId)")
+    @PreAuthorize("@securityService.hasUserAccessPermission(#boardId)")
     @RequestMapping(value = "/report/pdf", method = RequestMethod.POST )
     public ModelAndView generatePdfReport(ModelAndView modelAndView, 
     					@RequestParam("boardId") Long boardId,

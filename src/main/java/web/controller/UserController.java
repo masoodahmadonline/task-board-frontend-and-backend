@@ -4,6 +4,7 @@
  */
 package web.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -67,6 +68,17 @@ public class UserController {
     private String message = "";
 
     @PreAuthorize("permitAll")
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String accessDenied(ModelMap model) {
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        result = userService.getUserByLoginId(loginId);
+        Users user = (Users)result.getObject();
+        model.addAttribute("message", "Sorry "+user.getFirstName()+"! You don't have privileges to view this page!!!");
+        return "access-denied";
+    }
+
+    @PreAuthorize("permitAll")
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLoginPage(@RequestParam(value="error",required=false) boolean error,
                                                 ModelMap model) {
@@ -125,6 +137,7 @@ public class UserController {
             loginId = userService.getUserId(loginId);
             userWrapper.setCreatedBy(loginId);
             userWrapper.setUpdatedBy(loginId);
+            userWrapper.setUserAccessFlag(true);
             result = userService.saveUser(userWrapper);
             if(result.getIsSuccessful()){
                 model.put("error", false);
@@ -340,7 +353,7 @@ public class UserController {
 
         if(ValidationUtility.isExists(uId)){
             result = userService.populateUserInfo(uId);
-            imageName = userService.populatePersonImage(uId, servletContext.getRealPath("/"));
+            imageName = userService.populatePersonImage(uId, servletContext.getRealPath(File.separator));
             wrapper = (UserWrapper) result.getObject();
             wrapper.setImageName(imageName);
             model.put("editUserProfileWrapper", wrapper);
@@ -386,7 +399,7 @@ public class UserController {
                     model.put("error", false);
                     model.put("success", true);
                     model.put("successMsg", result.getMessage());
-                    imageName = userService.populatePersonImage(userWrapper.getUserId(), servletContext.getRealPath("/"));
+                    imageName = userService.populatePersonImage(userWrapper.getUserId(), servletContext.getRealPath(File.separator));
                     wrapper = (UserWrapper) result.getObject();
                     wrapper.setImageName(imageName);
                     model.put("editUserProfileWrapper", wrapper);
@@ -437,7 +450,7 @@ public class UserController {
                     model.put("error", false);
                     model.put("success", true);
                     model.put("successMsg", result.getMessage());
-                    imageName = userService.populatePersonImage(userWrapper.getUserId(), servletContext.getRealPath("/"));
+                    imageName = userService.populatePersonImage(userWrapper.getUserId(), servletContext.getRealPath(File.separator));
                     wrapper = (UserWrapper) result.getObject();
                     wrapper.setImageName(imageName);
                     model.put("editUserProfileWrapper", wrapper);

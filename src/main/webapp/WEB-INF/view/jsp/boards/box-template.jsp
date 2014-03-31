@@ -93,6 +93,9 @@
                         <div class="task-priority task-priority-${task.priority}" id="priorityId-${task.id}"></div>
                         <c:if test="${not empty task.userList}">
                             <div class="user-icon1" id="userIconId1">
+                                <c:forEach var="us" items="${task.userList}">
+                                    <img src="${resourcesDir}${us.imageName}" height="15px" width="15px"/>
+                                </c:forEach>
                                 <security:authorize access="@securityService.hasBoxTaskEditPermission(${box.id})">
                                     <div id="boo2" class="user-content" class="forms-for-board" title="Users assigned to this task">
                                         <form>
@@ -100,7 +103,7 @@
                                                 <tbody style="margin-right:5px;margin-left: 15px; border: red thin solid background: blue;">
                                                 <c:forEach var="user" items="${task.userList}">
                                                     <tr id="userid-${user.id}">
-                                                        <td>
+                                                        <td style="vertical-align: top">
                                                             ${user.firstName}&nbsp;${user.lastName}
                                                         </td>
                                                         <td style="min-width: 5px;">
