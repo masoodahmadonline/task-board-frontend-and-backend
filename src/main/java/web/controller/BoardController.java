@@ -145,6 +145,7 @@ public class BoardController {
         return "/boards/board";
    }
 
+
     @PreAuthorize("@securityService.hasUserAccessPermission(#bId)")
     @RequestMapping(value = "/boards/delete-board")
     public String deleteBoard(HttpSession session, @RequestParam(required=false) String bId, ModelMap model){
