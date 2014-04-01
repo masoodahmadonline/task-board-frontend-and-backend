@@ -127,13 +127,19 @@ public class BoardsServiceImpl implements BoardsService{
 
         if(ValidationUtility.isExists(wrapper.getBoardId())){
             table.setId(Long.valueOf(wrapper.getBoardId()));
+            table.setUpdatedDate(new Date());
+            if(ValidationUtility.isExists(wrapper.getUpdatedBy())){
+                table.setUpdatedBy(Long.valueOf(wrapper.getUpdatedBy()));
+            }
+        }else{
+            if(ValidationUtility.isExists(wrapper.getCreatedBy())){
+                table.setCreatedBy(Long.valueOf(wrapper.getCreatedBy()));
+            }
+            table.setCreatedDate(new Date());
         }
         table.setTitle(wrapper.getBoardName());
         table.setDescription(wrapper.getBoardDesc());
-        if(ValidationUtility.isExists(wrapper.getUserId())){
-            table.setCreatedBy(Long.valueOf(wrapper.getUserId()));
-        }
-        table.setCreatedDate(new Date());
+
         if(ValidationUtility.isExists(wrapper.getCompanyId())){
             Companies comp = new Companies();
             comp.setId(Long.valueOf(wrapper.getCompanyId()));

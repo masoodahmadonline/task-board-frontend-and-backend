@@ -33,7 +33,12 @@
                 <c:url var="bId" value="/boards/delete-board">
                     <c:param name="bId" value="${board.id}" />
                 </c:url>
-                &nbsp;&nbsp;<a title="Delete Board" href='<c:out value="${bId}"/>'>Delete</a>
+                &nbsp;&nbsp;<a title="Delete Board" href='<c:out value="${bId}"/>'
+                               onclick="return confirm('Deleting this Board will result in the removal of all board related data. Are you sure you wish to delete this Board?')">Delete</a>
+                <c:url var="boardId" value="/boards/edit-board">
+                    <c:param name="boardId" value="${board.id}" />
+                </c:url>
+                &nbsp;&nbsp;<a title="Edit Board" href='<c:out value="${boardId}"/>'>Edit</a>
             </security:authorize>
     </c:forEach><br /><br />
 

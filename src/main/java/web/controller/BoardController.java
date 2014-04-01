@@ -64,6 +64,7 @@ public class BoardController {
         this.companyMap = populateCompanyCombo();
         model.put("companyList", companyMap);
         model.put("createBoardWrapper", wrapper);
+        model.put("boardTitle", "Create a new Board");
         return "/boards/create";
     }
 
@@ -164,6 +165,23 @@ public class BoardController {
                 model.put("errorMsg", result.getMessage());
                 returnString = "/users/home";
             }*/
+        }
+        return returnString;
+    }
+
+    @PreAuthorize("@securityService.hasUserAccessPermission(#boardId)")
+    @RequestMapping(value = "/boards/edit-board")
+    public String editBoard(HttpSession session, @RequestParam(required=false) String boardId, ModelMap model){
+        System.out.println("\n Edit board method \n");
+        String returnString = "redirect:/users/home";
+        if (ValidationUtility.isExists(boardId)) {
+            result = userService.editBoard(Long.valueOf(boardId));
+            UserWrapper wrapper = (UserWrapper)result.getObject();
+            this.companyMap = populateCompanyCombo();
+            model.put("companyList", companyMap);
+            model.put("createBoardWrapper", wrapper);
+            model.put("boardTitle", "Edit Board");
+            returnString = "/boards/create";
         }
         return returnString;
     }

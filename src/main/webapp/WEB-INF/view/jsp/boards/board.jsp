@@ -55,7 +55,7 @@ function ajaxCreateBox(parent){
                 var fetchedBoxTitle = response.title;
                 var fetchedBoxDescription = response.description;
                 //alert(fetchedBoxType+" "+fetchedBoxTitle+" "+fetchedBoxDescription);
-                $('#result').html(fetchedBoxId+" "+fetchedBoxType+" "+fetchedBoxTitle+" "+fetchedBoxDescription);
+                //$('#result').html(fetchedBoxId+" "+fetchedBoxType+" "+fetchedBoxTitle+" "+fetchedBoxDescription);
                 // createBoxInDom();
                 $("#"+parentElementId+" > ."+parentType+"-body").append(
                         '<div id="boxid-'+fetchedBoxId+'" class="box box-'+fetchedBoxType+'" >'+
@@ -113,7 +113,7 @@ function ajaxCreateTask(parentBox){
                 var fetchedTaskTitle = response.title;
                 var fetchedTaskDescription = response.description;
 
-                $('#result').html(fetchedTaskId+"  "+fetchedTaskTitle+" "+fetchedTaskDescription);
+                //$('#result').html(fetchedTaskId+"  "+fetchedTaskTitle+" "+fetchedTaskDescription);
                 // createBoxInDom();
                 $("#boxid-"+parentBoxId+" .box-body").append(
                         '<div class="task" id="taskid-'+fetchedTaskId+'">' +
@@ -181,7 +181,7 @@ function ajaxCreateTask(parentBox){
 
 function ajaxDeleteBox(box){
     var boxId = box.attr('id').split("-")[1];
-    alert("box id to be sent for deletion by ajax call: "+boxId);
+    //alert("box id to be sent for deletion by ajax call: "+boxId);
 
     $.ajax({
 
@@ -323,7 +323,7 @@ $(function() {
         var boxDescription = $("#box-editing-form-description").val();
         console.log("type:"+boxType+" title:"+boxTitle+" desc"+boxDescription)
         ajaxEditBox(window.box, boxType, boxTitle, boxDescription, function(){
-            alert("boo");
+            //alert("boo");
             $(window.box).removeClass("box-vertical");
             $(window.box).removeClass("box-horizontal");
             $(window.box).addClass("box-"+boxType);
@@ -333,7 +333,7 @@ $(function() {
 
         },
         function(){
-            alert("ooh");
+            //alert("ooh");
         });
         $( "#box-editing-form" ).dialog( "close" );
     });
@@ -1295,7 +1295,7 @@ function ajaxAssignTask(board, task){
             );--%>
             $('#task-assign-unassign-table').empty();
             $.each(userList, function( index, value ) {
-                //alert(${resourcesDir}+value.imageName);
+
                 if(value.enableUserAssignId == true){
                     $('#task-assign-unassign-table').prepend(+
                             '<input type="hidden" id="task-assign-userId2" value='+value.userId+' />'+

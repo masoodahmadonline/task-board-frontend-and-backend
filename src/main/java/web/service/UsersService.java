@@ -39,5 +39,6 @@ public interface UsersService {
     public String populatePersonImage(String userId, String path); // populate person image
     public String getCompanyId(String email);
     public ResultImpl deleteBoard(Long id);
+    public ResultImpl editBoard(Long id);
   
 }

@@ -93,8 +93,18 @@
                         <div class="task-priority task-priority-${task.priority}" id="priorityId-${task.id}"></div>
                         <c:if test="${not empty task.userList}">
                             <div class="user-icon1" id="userIconId1">
-                                <c:forEach var="us" items="${task.userList}">
-                                    <img src="${resourcesDir}${us.imageName}" height="15px" width="15px"/>
+                                <c:forEach var="us" items="${task.userList}" varStatus="status">
+                                    <c:choose>
+                                        <c:when test="${status.index == 0}">
+                                            <img src="${resourcesDir}${us.imageName}" height="15px" width="15px"/>
+                                        </c:when>
+                                        <c:when test="${status.index == 1}">
+                                            <img src="${resourcesDir}${us.imageName}" height="15px" width="15px"/>
+                                        </c:when>
+                                        <c:otherwise>
+
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                                 <security:authorize access="@securityService.hasBoxTaskEditPermission(${box.id})">
                                     <div id="boo2" class="user-content" class="forms-for-board" title="Users assigned to this task">
@@ -110,7 +120,7 @@
                                                             &nbsp;
                                                         </td>
                                                         <td>
-                                                            <img alt="${resourcesDir}${user.imageName}" class="top-header-image" src="${resourcesDir}${user.imageName}" height="50" width="80"/>
+                                                            <img alt="${resourcesDir}${user.imageName}" class="top-header-image" src="${resourcesDir}${user.imageName}" height="50" width="50"/>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

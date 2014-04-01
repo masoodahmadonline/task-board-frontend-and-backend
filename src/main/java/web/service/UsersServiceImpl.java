@@ -162,6 +162,22 @@ public class UsersServiceImpl implements UsersService{
     }
 
     @Transactional(readOnly = false)
+    public ResultImpl editBoard(Long id){
+        int size = 0;
+        Boards board = new Boards();
+        board = (Boards) userDAO.findById(board, id);
+        UserWrapper wrapper = new UserWrapper();
+        wrapper.setBoardId("" + board.getId());
+        wrapper.setBoardName(board.getTitle());
+        wrapper.setBoardDesc(board.getDescription());
+        if(ValidationUtility.isExists(board.getCompany())){
+            wrapper.setCompanyId("" + board.getCompany().getId());
+        }
+        result.setObject(wrapper);
+        return result;
+    }
+
+    @Transactional(readOnly = false)
     public ResultImpl saveUser(UserWrapper wrapper) {
         Users userTable = null;
 
