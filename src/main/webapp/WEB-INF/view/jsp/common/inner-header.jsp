@@ -8,9 +8,11 @@
                     <c:if test="${sessionScope.userName != null}">
                               <div id="user"><span>&#x25be; </span>${sessionScope.userName}.
                                   <div id="user-options">
-                                      <a href="${pageContext.request.contextPath}/logout">Logout</a><br />
-                                      Edit profile <br />
-                                      and some more options 
+                                      <a href="${pageContext.request.contextPath}/logout">Logout</a>
+                                      <br />
+                                      <a href="${pageContext.request.contextPath}/users/profile-edit-personal" >Edit Personal Information</a>
+                                      <br />
+                                      and some more options
                                   </div>
                               </div>
                     </c:if>                  
@@ -19,29 +21,24 @@
 
                           <div class="menu-items-row-for-top">
                               <span style="display:block;text-align:left; margin:2px;"> heading here</span>
-                              <div class="menu-item-wrapper" ></div>
-                              <div class="menu-item-wrapper" ></div>
-                              <div class="menu-item-wrapper" ></div>
+                              <div class="menu-item-wrapper" >Home</div>
+                              <div class="menu-item-wrapper" >Profile</div>
 
                           </div>
                           <div class="menu-items-row-for-middle">
                               <span style="display:block;text-align:left; margin:2px;"> heading here</span>
-                              <div class="menu-item-wrapper" ></div>
-                              <div class="menu-item-wrapper" ></div>
-                              <div class="menu-item-wrapper" ></div>
-                              <div class="menu-item-wrapper" ></div>
+                              <div class="menu-item-wrapper" >Create User</div>
+                              <div class="menu-item-wrapper" >Create Board</div>
                           </div>
                           <div class="menu-items-row-for-middle">
                               <span style="display:block;text-align:left; margin:2px;"> heading here</span>
-                              <div class="menu-item-wrapper" ></div>
-                              <div class="menu-item-wrapper" ></div>
-                              <div class="menu-item-wrapper" ></div>
-                              <div class="menu-item-wrapper" ></div>
+                              <div class="menu-item-wrapper" >User Access</div>
+                              <div class="menu-item-wrapper" >Reports</div>
                           </div>
                           <div class="menu-items-row-for-bottom">
                               <span style="display:block;text-align:left; margin:2px;"> heading here</span>
-                              <div class="menu-item-wrapper" ></div>
-                              <div class="menu-item-wrapper" ></div>
+                              <div class="menu-item-wrapper" >Logout</div>
+                              <div class="menu-item-wrapper" >Change Password</div>
 
 
                           </div>
