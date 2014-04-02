@@ -81,10 +81,12 @@ function ajaxCreateBox(parent){
                     ajaxDeleteBox(     $(this).parents(".box").first()      );
                 });
 
+                showSuccessMessage('Box deleted successfully!');
+
 
             },
             error: function(){
-                alert('Error while request..');
+                showErrorMessage('There was a problem deleting Box. Check internet connectivity and access rights');
             }
 
 
