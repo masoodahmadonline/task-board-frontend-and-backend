@@ -416,16 +416,20 @@ $(function() {
         dialogClass: 'forms-for-board'
     });
 
-    $(".file-attachment-wizard").click(function () {
-        $("#file-attachment-form").dialog("open");
-        window["parentTask"] = $(this).parents(".task").first();
-    });
+
 
     $(".file-attachment-wizard-submit").click(function () {
-        //$("#file-attachment-form").dialog("close");
+        //queue
 
     });
 
+    $('#file-attachment-inner-form').on('submit', function(event) {
+        if(!$('#file').val()){
+
+            alert('Please select a file to attach');
+            event.preventDefault();
+        }
+    });
 
 
 
@@ -584,7 +588,7 @@ $(function() {
 
 
 <div id="file-attachment-form" class="forms-for-board" title="Attach a file to this task">
-<form action="${pageContext.request.contextPath}/task/attach-file" method="POST" enctype="multipart/form-data">
+<form action="${pageContext.request.contextPath}/task/attach-file" method="POST" enctype="multipart/form-data" id="file-attachment-inner-form">
 <table>
 <input type="file" name="file" id="file">
 <tr>
@@ -1303,8 +1307,11 @@ $(document).ready(function(){
         window["task"]      =  $(this).parents(".task").first() ;
     });
 
-
-
+    ///////////////////////// file attachment ///////////////
+    $(document).on('click', '.file-attachment-wizard', function(e) {
+        $("#file-attachment-form").dialog("open");
+        window["parentTask"] = $(this).parents(".task").first();
+    });
 
 
 
