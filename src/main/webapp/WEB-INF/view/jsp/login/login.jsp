@@ -110,38 +110,24 @@
                 <div id="login-block-2" style="display:inline-block; margin-left: 30px; vertical-align: middle;">
                     <div  id="login-accordion-container" class="ui-widget-content accordion-resizer draggable">
                             <div id="login-accordion" class="accordion">
-                                <h3><span class="accordion-heading"> <spring:message code="title.termsAndConditions" /> </h3>
 
-                                <div>
-                                  <p>
-                                      <spring:message code="text.termsAndConditions" />
-                                  </p>
-                                </div>
 
                                 <h3><span class="accordion-heading ">Warning for unauthorized log-in attempts </span></h3>
                                 <div>
                                   <p>
-                                  Any attempt would by reported to authorities and legal action may be taken. bla bla bla
-                                  lba bla blabla bla bla bal bla bla lba bla bla bla
-                                  lba bla blabla bla bla bal bla bla lbabla bla bla
-                                  lba bla blabla bla bla bal bla bla lbabla bla bla
-                                  lba bla blabla bla bla bal bla bla lba
+                                    Any attempt to gain unauthorized access can be reported to authorities and legal action may be taken.
                                   </p> 
                                 </div>
 
-                                <h3><span class="accordion-heading ">Information about us</span></h3>
+                                <h3><span class="accordion-heading ">Browser support</span></h3>
                                 <div>
                                   <p>
-                                  bla bla bla
-                                  lba bla blabla bla bla bal bla bla lba bla bla bla
-                                  lba bla blabla bla bla bal bla bla lbabla bla bla
-                                  lba bla blabla bla bla bal bla bla lbabla bla bla
-                                  lba bla blabla bla bla bal bla bla lba
+
                                   </p>
                                   <ul>
-                                    <li>List item one</li>
-                                    <li>List item two</li>
-                                    <li>List item three</li>
+                                    <li>Google chrome v33 and above are most recommended.</li>
+                                    <li>Firefox v28 is supported and prefered 98%.</li>
+
                                   </ul>
                                 </div>
 
