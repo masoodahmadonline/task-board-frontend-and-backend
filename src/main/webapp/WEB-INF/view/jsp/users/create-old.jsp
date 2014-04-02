@@ -4,7 +4,7 @@
 
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" /> 
 <c:set var="pageTitle" scope="request" >
-    <spring:message code="pageTitle.users.create"/>
+    Create - old
 </c:set>
 
 <c:import url="${mainDir}/common/header.jsp" />

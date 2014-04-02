@@ -5,7 +5,7 @@
 
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" /> 
 <c:set var="pageTitle" scope="request" >
-    <spring:message code="pageTitle.login"/>
+    Report by card dates and status
 </c:set>
 
 <c:import url="${mainDir}/common/header.jsp" />
