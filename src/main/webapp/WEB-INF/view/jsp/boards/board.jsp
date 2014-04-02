@@ -6,7 +6,6 @@
 <%--test--%>
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" />
 <c:set var="pageTitle" scope="request" >
-    <spring:message code="pageTitle.board"/>
 </c:set>
 
 <c:import url="${mainDir}/common/header.jsp" />
@@ -125,7 +124,7 @@ function ajaxCreateTask(parentBox){
                                 '        <ul class="drop-menu-options">'+
                                 '                <li><a href="#" class="task-assign-unassign-wizard">Assign/Unassign</a></li>'+
                                 '                <li><a href="#" class="file-attachment-wizard">Attach file</a></li> '+
-                                '                <li class="ui-state-disabled"><a href="#">Edit this task</a></li> '+
+                                '                <li><a href="#" class="edit-task-wizard">Edit this task</a></li> '+
                                 '                <li><a href="#">Set priority</a> '+
                                 '                    <ul>  '+
                                 '                        <li><a href="#" class="task-priority-critical-button">Critical</a></li> '+
@@ -145,11 +144,11 @@ function ajaxCreateTask(parentBox){
                                 '                <li><a href="#" class="delete-task-wizard">Delete this task</a></li>'+
                                 '        </ul>'+
                                 '    </div>   '+
-                                fetchedTaskTitle+
+                                '<span class="task-title-text">'+fetchedTaskTitle+'</span>'+
                                 '</span>      '+
                                 '</div>' +
                                 '<div class="task-body">' +
-                                fetchedTaskDescription +
+                                '<span class="task-description-text">'+fetchedTaskDescription+'</span>'+
                                 '   <div class="task-priority task-priority-normal task-status-new"></div>'+
                                 '</div>' +
                                 '' +
@@ -211,6 +210,18 @@ function ajaxEditBox(box, boxType, boxTitle, boxDescription, success, error){
 
     $.ajax({
         url: "${pageContext.request.contextPath}/box/edit/"+boxId+"/"+boxType+"/"+boxTitle+"/"+boxDescription,
+        cache: false,
+        success: success,
+        error: error
+    });
+}
+
+function ajaxEditTask(task, taskTitle, taskDescription, success, error){
+    var taskId = task.attr('id').split("-")[1];
+    //alert("task id to be sent to edit by ajax call: "+taskId +" title:"+taskTitle+" desc"+taskDescription);
+
+    $.ajax({
+        url: "${pageContext.request.contextPath}/task/edit/"+taskId+"/"+taskTitle+"/"+taskDescription,
         cache: false,
         success: success,
         error: error
@@ -338,6 +349,37 @@ $(function() {
             //alert("ooh");
         });
         $( "#box-editing-form" ).dialog( "close" );
+    });
+
+
+    ////////////////////////// task editing ///////////////////////////////
+    $( "#task-editing-form" ).dialog({
+        autoOpen: false,
+        dialogClass: 'forms-for-board'
+    });
+
+
+
+
+
+    $(".edit-task-wizard-submit").click(function () {
+
+
+        var taskTitle = $("#task-editing-form-title").val();
+        var taskDescription = $("#task-editing-form-description").val();
+        console.log( "title:"+taskTitle+" desc"+taskDescription)
+        ajaxEditTask(window.task, taskTitle, taskDescription, function(){
+                    //alert("boo");
+
+                    $(window.task).find(".task-title-text").first().html(taskTitle);
+                    $(window.task).find(".task-description-text").first().html(taskDescription);
+                    showSuccessMessage('Task edited successfully!');
+
+                },
+                function(){
+                    showErrorMessage('Error editing task. Check internet connectivity and access rights.');
+                });
+        $( "#task-editing-form" ).dialog( "close" );
     });
 
 
@@ -475,6 +517,28 @@ $(function() {
             <tr>
 
                 <td><input type="reset" /></td><td><input type="button" value="Edit" class="edit-box-wizard-submit" /></td>
+            </tr>
+        </table>
+
+
+
+    </form>
+</div>
+
+
+<div id="task-editing-form" class="forms-for-board" title="Edit this task">
+    <form >
+        <table>
+
+            <tr>
+                <td>Task title:</td><td><input id="task-editing-form-title" type="text" required="required" />
+            </tr>
+            <tr>
+                <td>Task description</td><td><textarea id="task-editing-form-description" style="min-height: 100px;" required="required"></textarea></td>
+            </tr>
+            <tr>
+
+                <td><input type="reset" /></td><td><input type="button" value="Edit" class="edit-task-wizard-submit" /></td>
             </tr>
         </table>
 
@@ -1230,6 +1294,13 @@ $(document).ready(function(){
     $(document).on('click', '.edit-box-wizard', function(e) {
         $( "#box-editing-form").dialog( "open" );
         window["box"]      =  $(this).parents(".box").first() ;
+    });
+
+    ///////////////////// task editing ///////////////////
+
+    $(document).on('click', '.edit-task-wizard', function(e) {
+        $( "#task-editing-form").dialog( "open" );
+        window["task"]      =  $(this).parents(".task").first() ;
     });
 
 

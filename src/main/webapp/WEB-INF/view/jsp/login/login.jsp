@@ -87,7 +87,7 @@
                                                 <td>
                                                 </td>
                                                 <td style="text-align:right;" tabindex="5">
-                                                  Forgot your password?
+                                                  <%--Forgot your password?--%>
                                                 </td>
                                                 <td>
                                                 </td>
