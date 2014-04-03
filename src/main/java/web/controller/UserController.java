@@ -531,6 +531,7 @@ public class UserController {
 
         return returnPage;// If we redirect, whole page populated and error/success message not displayed
     }
+
     @PreAuthorize("hasAnyRole('ACCOUNT_ADMIN_ROLE', 'ACCOUNT_USER_ROLE')")
     @RequestMapping(value = "/users/home" )
     public String userHome(ModelMap model, HttpServletRequest request) {
