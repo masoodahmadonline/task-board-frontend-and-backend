@@ -47,10 +47,10 @@
                                 <input type="hidden" name="boardId" value="${board.id}" />
                             </td>
                             <td style="width:200px;">
-                                <input type="date" name="startDate" />
+                                <input class="date-picker" name="startDate" required="required" />
                             </td>
                             <td style="width:200px;">
-                                <input type="date" name="endDate"/>
+                                <input class="date-picker" name="endDate" required="required"/>
                             </td>
                             <td style="width:100px;">
                                 <input id="${board.id}" name="orderByStatus" type="checkbox" /><label for="${board.id}" class="priv-checkbox-this"></label>
@@ -66,7 +66,12 @@
       	</form>	
            
         </c:forEach><br /><br />
-    	
+    	<script>
+            $(function() {
+                $( ".date-picker" ).datepicker();
+            });
+        </script>
+
     		
                
   <c:import url="${mainDir}/common/footer.jsp" />

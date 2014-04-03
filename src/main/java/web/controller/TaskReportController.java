@@ -67,7 +67,7 @@ public class TaskReportController {
  
         logger.debug("--------------generate PDF report----------");
         
-        System.out.println(boardId+" - "+startDateString+" - "+endDateString +" - "+ orderByStatus +"=========");
+        System.out.println("--------"+boardId+" - "+startDateString+" - "+endDateString +" - "+ orderByStatus +"=========");
  
         Map<String,Object> parameterMap = new HashMap<String,Object>();
 //        Calendar calender = Calendar.getInstance();
@@ -83,14 +83,14 @@ public class TaskReportController {
         
         Date startDate = null;
 		try {
-			startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateString);
+			startDate = new SimpleDateFormat("MM/dd/yyyy").parse(startDateString);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         Date endDate = null;
 		try {
-			endDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDateString);
+			endDate = new SimpleDateFormat("MM/dd/yyyy").parse(endDateString);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
