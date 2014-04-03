@@ -776,13 +776,13 @@ input[type=checkbox]:checked + label {
   background-image: url("../images/task-priority-low.png"); }
 
 .task-status-in-process {
-    background: rgba(255, 255, 0, 0.3); }
+  background: rgba(255, 255, 0, 0.3); }
 
 .task-status-in-issues {
-    background: rgba(255, 0, 0, 0.3); }
+  background: rgba(255, 0, 0, 0.3); }
 
 .task-status-completed {
-    background: rgba(0, 128, 0, 0.3); }
+  background: rgba(0, 128, 0, 0.3); }
 
 .user-content {
   display: none;

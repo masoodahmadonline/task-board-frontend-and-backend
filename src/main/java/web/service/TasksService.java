@@ -28,6 +28,7 @@ public interface TasksService {
     public ResultImpl deleteAttachment(Long id);
     public ResultImpl changeTaskPriority(Long id, String priority);
     public ResultImpl changeTaskStatus(Long id, String status);
+    public ResultImpl editTask(Long id, String boxTitle, String boxDescription);
     
 
 }                               

@@ -102,6 +102,25 @@ public class TaskController {
         }
         return taskToBeReturned; //queued - send model message also (if needed)
     }
+
+    //ajax
+    @RequestMapping (value = "/task/edit/{taskId}/{taskTitle}/{taskDescription}", method=RequestMethod.GET)
+    public @ResponseBody  boolean editTask(ModelMap model,
+                                          @PathVariable(value="taskId") String taskId,
+                                          @PathVariable(value="taskTitle") String taskTitle,
+                                          @PathVariable(value="taskDescription") String taskDescription
+    ){
+
+
+        result = taskService.editTask(Long.valueOf(taskId), taskTitle, taskDescription);
+        if(result.getIsSuccessful()){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
     
     //ajax
     @RequestMapping (value = "/task/delete/{taskId}", method=RequestMethod.GET)

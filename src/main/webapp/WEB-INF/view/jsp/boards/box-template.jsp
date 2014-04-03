@@ -35,7 +35,7 @@
                               <ul class="drop-menu-options">
                                   <li><a href="#" class="task-assign-unassign-wizard">Assign/Unassign</a></li>
                                   <li><a href="#" class="file-attachment-wizard">Attach file</a></li>
-                                  <li class="ui-state-disabled"><a href="#">Edit this task</a></li>
+                                  <li><a href="#" class="edit-task-wizard">Edit this task</a></li>
                                   <li><a href="#">Set priority</a>
                                       <ul>
                                           <li><a href="#" class="task-priority-critical-button">Critical</a></li>
@@ -56,7 +56,7 @@
                               </ul>
                           </div>
                           </security:authorize>
-                          ${task.title}
+                          <span class="task-title-text">${task.title}</span>
                       </span>
                     </div>
                     <div class="task-body">
@@ -131,7 +131,7 @@
                                 </security:authorize>
                             </div>
                         </c:if>
-                        ${task.description}
+                        <span class="task-description-text">${task.description}</span>
                     </div>
                 </div>
             </c:forEach>

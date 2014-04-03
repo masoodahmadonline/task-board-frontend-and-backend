@@ -40,6 +40,21 @@ public class TasksServiceImpl implements TasksService{
    
 
 
+    @Transactional (readOnly = false)
+    public ResultImpl editTask(Long id, String taskTitle, String taskDescription){
+        result = getTaskById(id);
+        if(result.getIsSuccessful()){
+            Tasks task = (Tasks)result.getObject();
+
+            task.setTitle(taskTitle);
+            task.setDescription(taskDescription);
+            result.setObject(task);
+            result.setMessageList(Arrays.asList("success.taskEdited"));
+        }else{
+            result.setMessageList(Arrays.asList("error.taskEditFailed"));
+        }
+        return result;
+    }
 
     @Transactional (readOnly = false)
     public ResultImpl changeTaskStatus(Long id, String status){

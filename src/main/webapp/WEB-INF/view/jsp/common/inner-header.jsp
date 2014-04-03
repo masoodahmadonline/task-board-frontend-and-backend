@@ -12,7 +12,7 @@
                                       <br />
                                       <a href="${pageContext.request.contextPath}/users/profile-edit-personal" >Edit Personal Information</a>
                                       <br />
-                                      and some more options
+
                                   </div>
                               </div>
                     </c:if>                  
