@@ -26,7 +26,7 @@
 
         <div style="display: block;  ">
             <div class="form-messages">
-                <span class="form-title"><spring:message code="title.createUser"/></span>
+                <span class="form-title">${boardTitle}</span>
 
                 <c:if test="${error}">
                     <span class="message-error">${errorMsg}</span>
@@ -41,12 +41,20 @@
 
                     <div class="inner-form-wrapper" >
                         <form:form action="${pageContext.request.contextPath}/boards/create" method="post" commandName="createBoardWrapper">
+                            <form:hidden path="boardId"></form:hidden>
                             <table>
                                 <tbody>
                                 <tr>
                                     <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; text-align: right">Board Name:&nbsp;&nbsp;&nbsp;</td>
                                     <td>
                                         <form:input cssClass="form-input" path="boardName" tabindex="1" autocomplete="false" placeholder="Enter Board Name" maxlength="100" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; text-align: right">Board Description:&nbsp;&nbsp;&nbsp;</td>
+                                    <td>
+                                        <form:input cssClass="form-input" path="boardDesc" tabindex="1" autocomplete="false" placeholder="Enter Board Description" maxlength="100" />
                                     </td>
                                     <td></td>
                                 </tr>
@@ -58,11 +66,11 @@
                                         </form:select>
                                     </td>
                                 </tr>
-                                <tr></tr>
+                                <tr><td colspan="2">&nbsp;</td></tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type="submit" value="<spring:message code="form.text.button.creatBoard"/>" tabindex="7"/>
+                                        <input type="submit" value="<spring:message code="form.text.button.submit"/>" tabindex="7"/>
                                         <input type="<spring:message code="form.text.button.reset"/>" tabindex="8"/>
                                     </td>
                                     <td></td>

@@ -5,7 +5,7 @@
 
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" />
 <c:set var="pageTitle" scope="request" >
-    <spring:message code="pageTitle.users.create"/>
+    Edit user access
 </c:set>
 
 <c:import url="${mainDir}/common/header.jsp" />
@@ -54,7 +54,7 @@
                                             <form:checkbox id="1" path="userList[${idx.index}].enableUserEditId" cssStyle="display: inline-block; background-color: #fcefa1; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.7) inset;"></form:checkbox>
                                         </td>
                                         <td>
-                                            <img src="${resourcesDir}/images/avatar-small.png" height="40px;" />
+                                            <img src="${resourcesDir}${wrapper.imageName}" height="40px;" width="40px;" />
                                         </td>
                                         <td>
                                             <span style="width:200px;  display:inline-block; text-align: left; font-weight: bold">${wrapper.firstName}&nbsp;${wrapper.lastName}</span> <br />

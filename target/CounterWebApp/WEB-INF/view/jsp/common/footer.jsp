@@ -1,15 +1,15 @@
     </div> <!-- content end -->       
-        <div id="footer" class="hide-menu">
-            <div id="footer-on-off-button">+Menu</div>
-            <div class="menu">
-                <span>Admins</span>
-                <span>OtherThings</span>
+        <%--<div id="footer" class="hide-menu">--%>
+            <%--<div id="footer-on-off-button">+Menu</div>--%>
+            <%--<div class="menu">--%>
+                <%--<span>Admins</span>--%>
+                <%--<span>OtherThings</span>--%>
 
-                <span>Terms & Conditions</span>
+                <%--<span>Terms & Conditions</span>--%>
 
-                 <span>Contact US</span>
-            </div>     
-        </div>  
+                 <%--<span>Contact US</span>--%>
+            <%--</div>     --%>
+        <%--</div>  --%>
     </div> <!-- wrapper -->
        
     <script type="text/javascript">

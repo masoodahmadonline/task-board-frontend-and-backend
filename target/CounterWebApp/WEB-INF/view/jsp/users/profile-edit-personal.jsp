@@ -5,7 +5,7 @@
 
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" />
 <c:set var="pageTitle" scope="request" >
-    <spring:message code="pageTitle.users.create"/>
+    Edit personal profile
 </c:set>
 
 <c:import url="${mainDir}/common/header.jsp" />
@@ -36,14 +36,29 @@
                 </c:if>
             </div>
             <div>
-                <form:form action="${pageContext.request.contextPath}/users/profile-edit-personal" method="post" commandName="editUserProfileWrapper" >
+                <form:form action="${pageContext.request.contextPath}/users/profile-edit-personal" method="post" commandName="editUserProfileWrapper" enctype="multipart/form-data" >
                     <div class="form-wrapper jQeffect-show-clip" >
                         <div class="inner-form-wrapper" >
 
                             <h2>Personal Information</h2>
                             <form:hidden path="userId"/>
+                            <form:hidden path="imageName"/>
                             <table>
                                 <tbody>
+                                <tr>
+                                    <td class="">
+
+                                    </td>
+                                    <td>
+                                        <img alt="${resourcesDir}${imageName}" class="top-header-image" src="${resourcesDir}${imageName}" height="150" width="200"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <form:input path="imageData" id="image" type="file" cssClass="form-input" cssStyle="border: none;" />
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td class="form-input-description">
                                         First Name:

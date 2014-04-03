@@ -118,6 +118,7 @@ body {
 .menu-items-row-for-middle{
   margin: 5px 80px 5px 25px;
   text-align: center;
+  padding-right: 70px;
 }
 
 .menu-items-row-for-bottom{
@@ -127,8 +128,8 @@ body {
 
 .menu-item-wrapper{
   border: thin red solid;
-  display: inline-block;
-  width:50px;
+  display: inline-flex;
+  width:80px;
   height: 40px;
   margin: 0px 5px;
 }
@@ -398,7 +399,7 @@ background-repeat: repeat-x;
 #wrapper{
     position:relative;
     display:block;
-    border: red thin solid; 
+    border: transparent thin solid;
     min-height: 100%;
     height: auto !important;
     
@@ -1033,24 +1034,47 @@ z-index:11;
   background-image: url('../images/task-priority-low.png');
 }
 
-.task-status-new{}
-.task-status-in-process{background: rgba(255,255,0,0.3)}
-.task-status-in-issues{background: rgba(255,0,0,0.3)}
-.task-status-completed{background: rgba(0,128,0,0.3)}
+.task-status-in-process {
+  background: rgba(255, 255, 0, 0.3); }
 
+.task-status-in-issues {
+  background: rgba(255, 0, 0, 0.3); }
 
-.user-icon1 {
+.task-status-completed {
+  background: rgba(0, 128, 0, 0.3); }
+
+.user-content {
+  display: none;
+  position: absolute;
+  border: thin #d3d3d3 solid;
+  background: #ccddee; }
+
+.delete-user-icon {
   cursor: pointer;
   background-image: url("../images/avatar-small.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
   position: absolute;
-  left: 45px;
+  left: 60px;
   bottom: -10px;
   width: 15px;
   height: 15px;
 }
+
+
+
+.user-icon1 {
+  cursor: pointer;
+  /*background-image: url("../images/avatar-small.png");*/
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  position: absolute;
+  left: 75px;
+  bottom: 40px;
+  width: 15px;
+  height: 15px; }
 
 .user-icon2 {
   cursor: pointer;

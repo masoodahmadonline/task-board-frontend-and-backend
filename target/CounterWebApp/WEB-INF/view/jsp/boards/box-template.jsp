@@ -7,7 +7,7 @@
     <div id="boxid-${box.id}" class="box box-${box.type}" >
         <div class="box-title" title="${box.description}">
                       <span>
-                          <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')">
+                          <security:authorize access="@securityService.hasBoxTaskEditPermission(${box.id})">
                           <div class="drop-menu-button">&#x25be;&nbsp;
                               <ul class="drop-menu-options">
                                   <li style="width: auto;" class="create-task-wizard"><a href="#">Create a task</a></li>
@@ -30,12 +30,12 @@
                 <div class="task task-status-${task.status}" id="taskid-${task.id}">
                     <div class="task-title" title="${task.title}">
                        <span>
-                          <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')">
+                          <security:authorize access="@securityService.hasBoxTaskEditPermission(${box.id})">
                           <div class="drop-menu-button">&#x25be;&nbsp;
                               <ul class="drop-menu-options">
                                   <li><a href="#" class="task-assign-unassign-wizard">Assign/Unassign</a></li>
                                   <li><a href="#" class="file-attachment-wizard">Attach file</a></li>
-                                  <li class="ui-state-disabled"><a href="#">Edit this task</a></li>
+                                  <li><a href="#" class="edit-task-wizard">Edit this task</a></li>
                                   <li><a href="#">Set priority</a>
                                       <ul>
                                           <li><a href="#" class="task-priority-critical-button">Critical</a></li>
@@ -56,13 +56,13 @@
                               </ul>
                           </div>
                           </security:authorize>
-                          ${task.title}
+                          <span class="task-title-text">${task.title}</span>
                       </span>
                     </div>
                     <div class="task-body">
                         <c:if test="${not empty task.attachmentList}">
                             <div class="attachment">
-                                <security:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')">
+                                <security:authorize access="@securityService.hasBoxTaskEditPermission(${box.id})">
                                 <div id="boo" class="attachment-content" class="forms-for-board" title="Files attached to this task">
                                     <form>
                                         <table>
@@ -91,18 +91,47 @@
                             </div>
                         </c:if>
                         <div class="task-priority task-priority-${task.priority}" id="priorityId-${task.id}"></div>
-                        <c:set var="uSize" value="${task.userSize}" scope="request" />
-                        <c:if test="${uSize != null }">
-                            <c:if test="${uSize == '1' }">
-                                <div class="user-icon1" id="userIconId1"></div>
-                            </c:if>
-                            <c:if test="${uSize == '2' }">
-                                <div class="user-icon1" id="userIconId1"></div>
-                                <div class="user-icon2" id="userIconId2"></div>
-                            </c:if>
-                        </c:if>
+                        <c:if test="${not empty task.userList}">
+                            <div class="user-icon1" id="userIconId1">
+                                <c:forEach var="us" items="${task.userList}" varStatus="status">
+                                    <c:choose>
+                                        <c:when test="${status.index == 0}">
+                                            <img src="${resourcesDir}${us.imageName}" height="15px" width="15px"/>
+                                        </c:when>
+                                        <c:when test="${status.index == 1}">
+                                            <img src="${resourcesDir}${us.imageName}" height="15px" width="15px"/>
+                                        </c:when>
+                                        <c:otherwise>
 
-                        ${task.description}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                                <security:authorize access="@securityService.hasBoxTaskEditPermission(${box.id})">
+                                    <div id="boo2" class="user-content" class="forms-for-board" title="Users assigned to this task">
+                                        <form>
+                                            <table>
+                                                <tbody style="margin-right:5px;margin-left: 15px; border: red thin solid background: blue;">
+                                                <c:forEach var="user" items="${task.userList}">
+                                                    <tr id="userid-${user.id}">
+                                                        <td style="vertical-align: top">
+                                                            ${user.firstName}&nbsp;${user.lastName}
+                                                        </td>
+                                                        <td style="min-width: 5px;">
+                                                            &nbsp;
+                                                        </td>
+                                                        <td>
+                                                            <img alt="${resourcesDir}${user.imageName}" class="top-header-image" src="${resourcesDir}${user.imageName}" height="50" width="50"/>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </security:authorize>
+                            </div>
+                        </c:if>
+                        <span class="task-description-text">${task.description}</span>
                     </div>
                 </div>
             </c:forEach>
