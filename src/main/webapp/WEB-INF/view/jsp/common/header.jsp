@@ -11,6 +11,7 @@
         <script src="${resourcesDir}/scripts/jquery-ui-1.10.3/ui/minified/jquery-ui.min.js"></script>
         <!-- not avaialabe <link rel="stylesheet" href="/resources/demos/style.css" />  -->
         <link rel="stylesheet" href="${resourcesDir}/css/main.css" />
+        <link type="text/css" rel="stylesheet" href="${resourcesDir}/css/GridStyle.css"  />
         <title>${pageTitle}</title>
         
         <script>

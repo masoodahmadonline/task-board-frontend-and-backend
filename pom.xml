@@ -22,6 +22,12 @@
 	<dependencies>
 
                 <dependency>
+                    <groupId>DataGrid</groupId>
+                    <artifactId>dbgrid</artifactId>
+                    <version>1.0.4</version>
+                    <type>jar</type>
+                </dependency>
+                <dependency>
                     <groupId>net.sf.jasperreports</groupId>
                     <artifactId>jasperreports</artifactId>
                     <version>5.5.1</version>

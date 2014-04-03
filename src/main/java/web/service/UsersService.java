@@ -40,5 +40,6 @@ public interface UsersService {
     public String getCompanyId(String email);
     public ResultImpl deleteBoard(Long id);
     public ResultImpl editBoard(Long id);
+    public List<UserWrapper> populateUsersTaskList(Long userId);
   
 }

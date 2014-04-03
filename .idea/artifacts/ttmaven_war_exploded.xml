@@ -8,6 +8,7 @@
           <element id="module-output" name="ttmaven" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: DataGrid:dbgrid:1.0.4" />
           <element id="library" level="project" name="Maven: net.sf.jasperreports:jasperreports:5.5.1" />
           <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.8.0" />
           <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.1.1" />

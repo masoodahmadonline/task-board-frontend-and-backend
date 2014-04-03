@@ -17,6 +17,12 @@ public class UserWrapper implements Serializable {
     private String boardId;
     private String boardName;
     private String boardDesc;
+    private String taskName;
+    private String taskDesc;
+    private String taskPriority;
+    private String taskStatus;
+    private String taskAssignedBy;
+    private String taskAssignedDate;
     private String createdBy;
     private String createdDate;
     private String updatedBy;
@@ -80,6 +86,12 @@ public class UserWrapper implements Serializable {
         this.setImageName("");
         this.setImageData(null);
         this.setTaskId("");
+        this.setTaskName("");
+        this.setTaskDesc("");
+        this.setTaskPriority("");
+        this.setTaskStatus("");
+        this.setTaskAssignedBy("");
+        this.setTaskAssignedDate("");
         this.setEnableUserAssignId(false);
         this.setEnableUserEditId(false);
         this.setEnableUserId(false);
@@ -416,5 +428,53 @@ public class UserWrapper implements Serializable {
 
     public void setUserAccessFlag(boolean userAccessFlag) {
         this.userAccessFlag = userAccessFlag;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    public String getTaskDesc() {
+        return taskDesc;
+    }
+
+    public void setTaskDesc(String taskDesc) {
+        this.taskDesc = taskDesc;
+    }
+
+    public String getTaskPriority() {
+        return taskPriority;
+    }
+
+    public void setTaskPriority(String taskPriority) {
+        this.taskPriority = taskPriority;
+    }
+
+    public String getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(String taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public String getTaskAssignedBy() {
+        return taskAssignedBy;
+    }
+
+    public void setTaskAssignedBy(String taskAssignedBy) {
+        this.taskAssignedBy = taskAssignedBy;
+    }
+
+    public String getTaskAssignedDate() {
+        return taskAssignedDate;
+    }
+
+    public void setTaskAssignedDate(String taskAssignedDate) {
+        this.taskAssignedDate = taskAssignedDate;
     }
 }
