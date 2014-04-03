@@ -531,6 +531,7 @@ public class UserController {
 
         return returnPage;// If we redirect, whole page populated and error/success message not displayed
     }
+
     @PreAuthorize("hasAnyRole('ACCOUNT_ADMIN_ROLE', 'ACCOUNT_USER_ROLE')")
     @RequestMapping(value = "/users/home" )
     public String userHome(ModelMap model, HttpServletRequest request) {
@@ -547,6 +548,20 @@ public class UserController {
         for(Boards b: boardList){
          System.out.println("The board id fetched was "+b.getId());
         }
+        List taskMap = new ArrayList();
+        if(ValidationUtility.isExists(user.getId())){
+            List<UserWrapper> taskList = userService.populateUsersTaskList(user.getId());
+            if (taskList != null && taskList.size() > 0) {
+                UserWrapper wrapperTemp = new UserWrapper();
+                for (int j = 0; j < taskList.size(); j++) {
+                    wrapperTemp = (UserWrapper) taskList.get(j);
+                    taskMap.add(j, wrapperTemp);
+                }
+            }
+            System.out.println("\n\nNo of Tasks: " + taskList.size());
+        }
+        model.put("taskList",taskMap);
+
 //        model.addAttribute("username", user.getName());
         System.out.println("user-home shown--------------------");
         return "/users/home";       

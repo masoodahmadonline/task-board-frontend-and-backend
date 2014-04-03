@@ -22,6 +22,7 @@ import web.dao.BoardsDAO;
 import web.dao.TasksDAO;
 import web.dao.UsersDAO;
 import web.entity.*;
+import web.service.common.DateUtility;
 import web.service.common.ProjectDBConstants;
 import web.service.common.ResultImpl;
 import web.service.common.ValidationUtility;
@@ -818,6 +819,38 @@ public class UsersServiceImpl implements UsersService{
         }
 
         return result;
+    }
+
+    @Transactional
+    public List<UserWrapper> populateUsersTaskList(Long userId) {
+        List<UserWrapper> userList = new ArrayList<UserWrapper>();
+        Users userTable = new Users();
+        Tasks_Users_Updated taskUserTable = new Tasks_Users_Updated();
+        Tasks taskTable = new Tasks();
+        List list = new ArrayList();
+        UserWrapper wrapper = null;
+        if(ValidationUtility.isExists(userId)){
+            list = userDAO.findByProperty(taskUserTable, "userlist.id", Long.valueOf(userId));
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            taskUserTable = (Tasks_Users_Updated) list.get(i);
+            wrapper = new UserWrapper();
+            taskTable = (Tasks)userDAO.findById(taskTable, taskUserTable.getTasklist().getId());
+            if(ValidationUtility.isExists(taskUserTable.getCreatedBy())){
+                userTable = (Users)userDAO.findById(userTable, taskUserTable.getCreatedBy());
+            }
+            wrapper.setTaskName(taskTable.getTitle());
+            wrapper.setTaskDesc(taskTable.getDescription());
+            wrapper.setTaskPriority(taskTable.getPriority());
+            wrapper.setTaskStatus(taskTable.getStatus());
+            wrapper.setTaskAssignedBy(userTable.getFirstName());
+            wrapper.setTaskAssignedDate(DateUtility.getCustomDate("dd-MM-yyyy", taskUserTable.getCreatedDate()));
+            userList.add(wrapper);
+        }
+
+
+        return userList;
     }
 
     private UserWrapper populateWrapperFromRoleTable(UserWrapper wrapper, UserRoleForBoard table){
