@@ -116,7 +116,7 @@
                                 <h3><span class="accordion-heading ">Terms and conditions </span></h3>
                                 <div>
                                     <p>
-                                    <h2>WEBSITE TERMS AND CONDITIONS TEMPLATE </h2>
+                                    <h2>TERMS AND CONDITIONS</h2>
                                     <p>
                                     <h4>Introduction</h4>
                                     <p>

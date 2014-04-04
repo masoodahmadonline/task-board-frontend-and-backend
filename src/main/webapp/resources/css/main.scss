@@ -127,11 +127,24 @@ body {
 }
 
 .menu-item-wrapper{
-  border: thin red solid;
+  border: thin gray solid;
   display: inline-flex;
   width:80px;
   height: 40px;
   margin: 0px 5px;
+  border-radius: 15px;
+  @include boxShadow($baseUnit * 0 $baseUnit * 2 $baseUnit * 5 $baseUnit * 1 rgba($baseShadowRed,$baseShadowGreen,$baseShadowBlue,0.7));
+
+}
+
+.menu-item-wrapper .circle-menu-item-text{
+  margin-right:auto;
+  margin-left:auto;
+  vertical-align: middle;
+}
+
+.menu-item-wrapper .circle-menu-item-text a{
+  text-decoration: none;
 }
 
 
