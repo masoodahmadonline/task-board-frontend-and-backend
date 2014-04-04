@@ -59,24 +59,24 @@
     <br />
     <a href="${pageContext.request.contextPath}/reports/cards/by-status" >See reports for tasks by their status</a>
     <br /><br />
-    <c:if test="${!empty taskList}">
-    <table width="905" align="center" cellpadding="0" cellspacing="0">
-        <tr>
-            <td>
-                <grd:dbgrid id="tblStat" name="tblStat" width="100" pageSize="10" border="0" cellSpacing="1" cellPadding="1"
-                            dataMember="${taskList}" dataSource="${taskList}" cssClass="gridTable">
-                    <grd:rownumcolumn headerText="" width="5" HAlign="center"/>
-                    <grd:textcolumn dataField="taskName" headerText="Task Name" width="25" sortable="true"/>
-                    <grd:textcolumn dataField="taskPriority" headerText="Priority" width="15" sortable="true"/>
-                    <grd:textcolumn dataField="taskStatus" headerText="Status" width="15"/>
-                    <grd:textcolumn dataField="taskAssignedBy" headerText="Assigned By" width="15"/>
-                    <grd:datecolumn dataField="taskAssignedDate" headerText="Assigned Date" width="20" dataFormat="dd-mm-yyyy"/>
-                </grd:dbgrid>
-            </td>
-        </tr>
+    <%--<c:if test="${!empty taskList}">--%>
+    <%--<table width="905" align="center" cellpadding="0" cellspacing="0">--%>
+        <%--<tr>--%>
+            <%--<td>--%>
+                <%--<grd:dbgrid id="tblStat" name="tblStat" width="100" pageSize="10" border="0" cellSpacing="1" cellPadding="1"--%>
+                            <%--dataMember="${taskList}" dataSource="${taskList}" cssClass="gridTable">--%>
+                    <%--<grd:rownumcolumn headerText="" width="5" HAlign="center"/>--%>
+                    <%--<grd:textcolumn dataField="taskName" headerText="Task Name" width="25" sortable="true"/>--%>
+                    <%--<grd:textcolumn dataField="taskPriority" headerText="Priority" width="15" sortable="true"/>--%>
+                    <%--<grd:textcolumn dataField="taskStatus" headerText="Status" width="15"/>--%>
+                    <%--<grd:textcolumn dataField="taskAssignedBy" headerText="Assigned By" width="15"/>--%>
+                    <%--<grd:datecolumn dataField="taskAssignedDate" headerText="Assigned Date" width="20" dataFormat="dd-mm-yyyy"/>--%>
+                <%--</grd:dbgrid>--%>
+            <%--</td>--%>
+        <%--</tr>--%>
 
-    </table>
-    </c:if>
+    <%--</table>--%>
+    <%--</c:if>--%>
 
     <c:import url="${mainDir}/common/footer.jsp" />
 
