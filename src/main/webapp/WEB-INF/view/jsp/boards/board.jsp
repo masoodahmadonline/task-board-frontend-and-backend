@@ -1298,6 +1298,12 @@ $(document).ready(function(){
     $(document).on('click', '.edit-box-wizard', function(e) {
         $( "#box-editing-form").dialog( "open" );
         window["box"]      =  $(this).parents(".box").first() ;
+//        var boxType=
+//        var boxTitle= $(this).parents(".box").first().find(".box-title-text");
+//        var boxDescription=;
+//        $('input[name="box-editing-form-type"]:checked').val();
+//        $("#box-editing-form-title").val();
+//        $("#box-editing-form-description").val();
     });
 
     ///////////////////// task editing ///////////////////
