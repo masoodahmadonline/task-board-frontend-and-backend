@@ -634,8 +634,8 @@ $(function() {
                 <span>
                     <ul class="drop-menu-options" >
                         <li style="width: auto;"><a href="#" class="create-box-wizard">Create child box</a></li>
-                        <li class="ui-state-disabled"><a href="#">Edit this board</a></li>
-                        <li class="ui-state-disabled"><a href="#">Delete this board</a></li>
+                        <%--<li class="ui-state-disabled"><a href="#">Edit this board</a></li>--%>
+                        <%--<li class="ui-state-disabled"><a href="#">Delete this board</a></li>--%>
                     </ul>
                 </span>
             </span>
