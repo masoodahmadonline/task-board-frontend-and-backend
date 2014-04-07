@@ -64,7 +64,7 @@
             </security:authorize>
     </c:forEach><br /><br />
 
-    <security:authorize access="hasAnyRole('ACCOUNT_ADMIN_ROLE')">
+    <%--<security:authorize access="hasAnyRole('ACCOUNT_ADMIN_ROLE')">
         <a href="${pageContext.request.contextPath}/users/create" >Create a new User</a>&nbsp;&nbsp;&nbsp;&nbsp;
     </security:authorize>
     <security:authorize access="hasAnyRole('ACCOUNT_ADMIN_ROLE')">
@@ -78,7 +78,7 @@
 
     <br />
     <a href="${pageContext.request.contextPath}/reports/cards/by-status" >See reports for tasks by their status</a>
-    <br /><br />
+    <br /><br />--%>
     <c:if test="${!empty taskList}">
         <table width="905" align="center" cellpadding="0" cellspacing="0">
             <tr>
