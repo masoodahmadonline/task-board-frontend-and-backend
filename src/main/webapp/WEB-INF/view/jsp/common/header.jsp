@@ -15,6 +15,43 @@
         <title>${pageTitle}</title>
         
         <script>
+            function doNavigate(pstrWhere, pintTot)
+            {
+                var strTmp;
+                var intPg;
+                strTmp = document.frmMain.txtCurr.value;
+                intPg = parseInt(strTmp);
+                if (isNaN(intPg)) intPg = 1;
+                if ((pstrWhere == 'F' || pstrWhere == 'P') && intPg == 1)
+                {
+                    alert("You are already viewing first page!");
+                    return;
+                }
+                else if ((pstrWhere == 'N' || pstrWhere == 'L') && intPg == pintTot)
+                {
+                    alert("You are already viewing last page!");
+                    return;
+                }
+                if (pstrWhere == 'F')
+                    intPg = 1;
+                else if (pstrWhere == 'P')
+                    intPg = intPg - 1;
+                else if (pstrWhere == 'N')
+                    intPg = intPg + 1;
+                else if (pstrWhere == 'L')
+                    intPg = pintTot;
+                if (intPg < 1) intPg = 1;
+                if (intPg > pintTot) intPg = pintTot;
+                document.frmMain.txtCurr.value = intPg;
+                document.frmMain.submit();
+            }
+            function doSort(pstrFld, pstrOrd)
+            {
+                document.frmMain.txtSortCol.value = pstrFld;
+                document.frmMain.txtSortAsc.value = pstrOrd;
+                document.frmMain.submit();
+            }
+
             $(function() {
 
               var icons = {
