@@ -79,32 +79,32 @@
     <br />
     <a href="${pageContext.request.contextPath}/reports/cards/by-status" >See reports for tasks by their status</a>
     <br /><br />--%>
-    <c:if test="${!empty taskList}">
-        <table width="905" align="center" cellpadding="0" cellspacing="0">
-            <tr>
-                <td>
-                    <form NAME="frmMain" METHOD="post">
-                    <grd:dbgrid id="tblStat" name="tblStat" width="100" pageSize="5" border="0" cellSpacing="1" cellPadding="1"
-                            currentPage="<%=intCurr%>" dataMember="${taskList}" dataSource="${taskList}" cssClass="gridTable">
-                        <grd:gridpager imgFirst="${resourcesDir}/images/First.gif" imgPrevious="${resourcesDir}/images/Previous.gif"
-                            imgNext="${resourcesDir}/images/Next.gif" imgLast="${resourcesDir}/images/Last.gif"/>
-                        <%--<grd:gridsorter sortColumn="<%=strSortCol%>" sortAscending="<%=blnSortAsc%>"
-                            imageAscending="${resourcesDir}/images/ImgAsc.gif" imageDescending="${resourcesDir}/images/ImgDesc.gif"/>--%>
-                        <grd:rownumcolumn headerText="" width="5" HAlign="center"/>
-                        <grd:textcolumn dataField="taskName" headerText="Task Name" width="25" sortable="true"/>
-                        <grd:textcolumn dataField="taskPriority" headerText="Priority" width="15" sortable="true"/>
-                        <grd:textcolumn dataField="taskStatus" headerText="Status" width="15"/>
-                        <grd:textcolumn dataField="taskAssignedBy" headerText="Assigned By" width="15"/>
-                        <grd:datecolumn dataField="taskAssignedDate" headerText="Assigned Date" width="20" dataFormat="dd-mm-yyyy"/>
-                    </grd:dbgrid>
-                    <input TYPE="hidden" NAME="txtCurr" VALUE="<%=intCurr%>">
-                    <input TYPE="hidden" NAME="txtSortCol" VALUE="<%=strSortCol%>">
-                    <input TYPE="hidden" NAME="txtSortAsc" VALUE="<%=strSortOrd%>">
-                    </form>
-                </td>
-            </tr>
-        </table>
-    </c:if>
+    <%--<c:if test="${!empty taskList}">--%>
+        <%--<table width="905" align="center" cellpadding="0" cellspacing="0">--%>
+            <%--<tr>--%>
+                <%--<td>--%>
+                    <%--<form NAME="frmMain" METHOD="post">--%>
+                    <%--<grd:dbgrid id="tblStat" name="tblStat" width="100" pageSize="5" border="0" cellSpacing="1" cellPadding="1"--%>
+                            <%--currentPage="<%=intCurr%>" dataMember="${taskList}" dataSource="${taskList}" cssClass="gridTable">--%>
+                        <%--<grd:gridpager imgFirst="${resourcesDir}/images/First.gif" imgPrevious="${resourcesDir}/images/Previous.gif"--%>
+                            <%--imgNext="${resourcesDir}/images/Next.gif" imgLast="${resourcesDir}/images/Last.gif"/>--%>
+                        <%--&lt;%&ndash;<grd:gridsorter sortColumn="<%=strSortCol%>" sortAscending="<%=blnSortAsc%>"--%>
+                            <%--imageAscending="${resourcesDir}/images/ImgAsc.gif" imageDescending="${resourcesDir}/images/ImgDesc.gif"/>&ndash;%&gt;--%>
+                        <%--<grd:rownumcolumn headerText="" width="5" HAlign="center"/>--%>
+                        <%--<grd:textcolumn dataField="taskName" headerText="Task Name" width="25" sortable="true"/>--%>
+                        <%--<grd:textcolumn dataField="taskPriority" headerText="Priority" width="15" sortable="true"/>--%>
+                        <%--<grd:textcolumn dataField="taskStatus" headerText="Status" width="15"/>--%>
+                        <%--<grd:textcolumn dataField="taskAssignedBy" headerText="Assigned By" width="15"/>--%>
+                        <%--<grd:datecolumn dataField="taskAssignedDate" headerText="Assigned Date" width="20" dataFormat="dd-mm-yyyy"/>--%>
+                    <%--</grd:dbgrid>--%>
+                    <%--<input TYPE="hidden" NAME="txtCurr" VALUE="<%=intCurr%>">--%>
+                    <%--<input TYPE="hidden" NAME="txtSortCol" VALUE="<%=strSortCol%>">--%>
+                    <%--<input TYPE="hidden" NAME="txtSortAsc" VALUE="<%=strSortOrd%>">--%>
+                    <%--</form>--%>
+                <%--</td>--%>
+            <%--</tr>--%>
+        <%--</table>--%>
+    <%--</c:if>--%>
 
     <c:import url="${mainDir}/common/footer.jsp" />
 

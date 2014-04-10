@@ -68,7 +68,7 @@ function ajaxCreateBox(parent){
                                 '                              <li><a href="#" class="delete-box-wizard">Delete this box</a></li>'+
                                 '                      </ul>'+
                                 '                  </div>'+
-                                '                <span class="box-title-text">'+fetchedBoxTitle+'</span>'+
+                                '                <span class="box-title-text">'+fetchedBoxTitle+'</span><span class="box-description-text" style="display:none;">'+fetchedBoxDescription+'</span>'+
                                 '            </span> '+
                                 '        </div>'+
                                 '        <div class="box-body">'+
@@ -507,16 +507,16 @@ $(function() {
             <tr>
                 <td>Box Type (if changed required):</td>
                 <td>
-                    <input name="box-editing-form-type" value="vertical" type="radio" checked="checked" />Vertical Box
+                    <input id="box-editing-form-type-id-vertical" required="required" name="box-editing-form-type" value="vertical" type="radio" checked="checked" />Vertical Box
                     <br />
-                    <input name="box-editing-form-type" value="horizontal" type="radio" />Horizontal Box
+                    <input id="box-editing-form-type-id-horizontal" required="required" name="box-editing-form-type" value="horizontal" type="radio" />Horizontal Box
                 </td>
             </tr>
             <tr>
-                <td>Box title:</td><td><input id="box-editing-form-title" type="text" required="required" />
+                <td>Box title:</td><td><input id="box-editing-form-title" required="required" type="text" required="required" />
             </tr>
             <tr>
-                <td>Box description</td><td><textarea id="box-editing-form-description" style="min-height: 100px;" required="required"></textarea></td>
+                <td>Box description</td><td><textarea id="box-editing-form-description" required="required" style="min-height: 100px;" required="required"></textarea></td>
             </tr>
             <tr>
 
@@ -1299,8 +1299,30 @@ $(document).ready(function(){
         $( "#box-editing-form").dialog( "open" );
         window["box"]      =  $(this).parents(".box").first() ;
 //        var boxType=
-//        var boxTitle= $(this).parents(".box").first().find(".box-title-text");
-//        var boxDescription=;
+        var boxTitle = $(this).parents(".box").first().find(".box-title-text").first().text();
+        $("#box-editing-form-title").val(boxTitle);
+        var boxDescription = $(this).parents(".box").first().find(".box-description-text").first().text();
+        $("#box-editing-form-description").val(boxDescription);
+
+        if($(this).parents(".box").first().hasClass("box-vertical")){
+            console.log("this has box has vertical class applied to it.");
+            var boxType = "vertical";
+
+            $("#box-editing-form-type-id-horizontal").prop('checked',false);
+            $("#box-editing-form-type-id-vertical").prop('checked',true);
+
+
+        }
+        if($(this).parents(".box").first().hasClass("box-horizontal")){
+            console.log("this has box has horizontal class applied to it.");
+            var boxType = "horizontal";
+            $("#box-editing-form-type-id-vertical").prop('checked',false);
+            $("#box-editing-form-type-id-horizontal").prop('checked',true);
+        }
+
+
+
+
 //        $('input[name="box-editing-form-type"]:checked').val();
 //        $("#box-editing-form-title").val();
 //        $("#box-editing-form-description").val();
