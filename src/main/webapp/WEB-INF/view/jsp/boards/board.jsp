@@ -1333,6 +1333,13 @@ $(document).ready(function(){
     $(document).on('click', '.edit-task-wizard', function(e) {
         $( "#task-editing-form").dialog( "open" );
         window["task"]      =  $(this).parents(".task").first() ;
+
+        var taskTitle = $(this).parents(".task").first().find(".task-title-text").first().text();
+        $("#task-editing-form-title").val(taskTitle);
+        var taskDescription = $(this).parents(".task").first().find(".task-description-text").first().text();
+        $("#task-editing-form-description").val(taskDescription);
+
+
     });
 
     ///////////////////////// file attachment ///////////////
