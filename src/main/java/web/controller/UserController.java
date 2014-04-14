@@ -61,7 +61,6 @@ public class UserController {
     @Autowired
     private ServletContext servletContext;
 
-
     private UserWrapper tempUserListWrapper = new UserWrapper();
     Map<String,String> roleMap = new LinkedHashMap<String, String>();
     Map<String,String> companyMap = new LinkedHashMap<String, String>();
