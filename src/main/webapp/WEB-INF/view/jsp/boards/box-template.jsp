@@ -17,7 +17,7 @@
                               </ul>
                           </div>
                           </security:authorize>
-                          <span class="box-title-text">${box.title}</span>
+                          <span class="box-title-text">${box.title}</span><span class="box-description-text" style="display:none;">${box.description}</span>
                       </span>
         </div>
         <div class="box-body">
