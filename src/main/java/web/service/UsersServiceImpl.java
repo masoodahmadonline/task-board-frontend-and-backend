@@ -106,6 +106,19 @@ public class UsersServiceImpl implements UsersService{
 
     }
 
+    @Transactional
+    public String getBoardName(String boardId){
+        Boards board = new Boards();
+        String boardName = "";
+        if(ValidationUtility.isExists(boardId)){
+            board = (Boards) userDAO.findById(board, Long.valueOf(boardId));
+            boardName = board.getTitle();
+        }
+
+        return boardName;
+
+    }
+
     @Deprecated
     @Transactional(readOnly = false)
     //changeable with full authority by other peer developers{M-A}

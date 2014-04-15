@@ -1,7 +1,8 @@
 .gridTable
 {
 	border: #e7e9dd 1px solid;
-	background-color: #d2b48c
+	/*background-color: #d2b48c*/
+    background-color: rgba(41, 77, 107, 0.3);
 }
 
 .gridHeader
@@ -10,7 +11,8 @@
 	font-size: 8pt;
 	font-weight: bold;
 	color: #ffffff;
-	background-color: #998066;
+	/*background-color: #998066;*/
+    background-color: rgba(41, 77, 107, 0.3);
 	height: 24px
 }
 
@@ -44,12 +46,14 @@
 
 .gridPager
 {
-	background-color: #d2b48c
+	/*background-color: #d2b48c*/
+    background-color: rgba(41, 77, 107, 0.3);
 }
 
 .gridSort
 {
 	color: #ffffff;
-	background-color: #998066;
+	/*background-color: #998066;*/
+    background-color: rgba(41, 77, 107, 0.3);
 	text-decoration: none
 }

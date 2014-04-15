@@ -63,6 +63,19 @@ public class BoardController {
         UserWrapper wrapper = new UserWrapper();
         this.companyMap = populateCompanyCombo();
         model.put("companyList", companyMap);
+        /* Add functionality for selecting only Accu-Reference company - remove otherwise */
+        if(!companyMap.isEmpty()){
+            Set elementNames = companyMap.keySet();
+            Iterator iter = elementNames.iterator();
+            while(iter.hasNext()){
+                Object ob = iter.next();
+                if(companyMap.get(ob).toUpperCase().contains("ACCU")){
+                    wrapper.setCompanyId(ob.toString());
+                    wrapper.setCompanyName(companyMap.get(ob));
+                }
+            }
+        }
+        /* End Accu-Reference company functionality */
         model.put("createBoardWrapper", wrapper);
         model.put("boardTitle", "Create a new Board");
         return "/boards/create";
@@ -76,6 +89,21 @@ public class BoardController {
         model.put("success", false);
         this.companyMap = populateCompanyCombo();
         model.put("companyList", this.companyMap);
+
+        /* Add functionality for selecting only Accu-Reference company - remove otherwise */
+        if(!companyMap.isEmpty()){
+            Set elementNames = companyMap.keySet();
+            Iterator iter = elementNames.iterator();
+            while(iter.hasNext()){
+                Object ob = iter.next();
+                if(companyMap.get(ob).toUpperCase().contains("ACCU")){
+                    userWrapper.setCompanyId(ob.toString());
+                    userWrapper.setCompanyName(companyMap.get(ob));
+                }
+            }
+        }
+        /* End Accu-Reference company functionality */
+
         if(!ValidationUtility.isExists(userWrapper.getBoardName())){
             model.put("errorMsg", "Please enter board name");
         }else if(!ValidationUtility.isExists(userWrapper.getCompanyId())){

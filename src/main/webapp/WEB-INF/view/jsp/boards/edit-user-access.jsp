@@ -5,7 +5,7 @@
 
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" />
 <c:set var="pageTitle" scope="request" >
-    Edit user access
+    Edit board user's access
 </c:set>
 
 <c:import url="${mainDir}/common/header.jsp" />
@@ -26,7 +26,7 @@
 
         <div style="display: block;  ">
             <div class="form-messages">
-                <span class="form-title"><spring:message code="title.editeUserBoardAccess"/></span>
+                <span class="form-title">Edit Users Access to ${boardName}</span>
 
                 <c:if test="${error}">
                     <span class="message-error">${errorMsg}</span>

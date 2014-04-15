@@ -6,6 +6,7 @@
 <%--test--%>
 <c:import url="/WEB-INF/view/jsp/common/variables.jsp" />
 <c:set var="pageTitle" scope="request" >
+    ${board.title}
 </c:set>
 
 <c:import url="${mainDir}/common/header.jsp" />
@@ -618,22 +619,23 @@ $(function() {
 
 
 <div id="result"></div>
-<security:authorize access="@securityService.hasUserAccessPermission(${board.id})">
-    <div id="edit-user-div-id">
-        <c:url var="boardUserId" value="${board.id}/edit-user-access">
-            <c:param name="id" value="${board.id}" />
-        </c:url>
-        <a href='<c:out value="${boardUserId}"/>'>Edit Users Access</a>
-    </div>
-</security:authorize>
+
 
 <div class="board" id="boardid-${board.id}">
     <div class="board-title">
         <security:authorize access="@securityService.hasBoardEditPermission(${board.id})">
-            <span class="drop-menu-button">&#x25be;
+            <span class="drop-menu-button" style="font-size: 10px; text-align: center; margin-top: 10px;">&#x25be; Manage Board
                 <span>
                     <ul class="drop-menu-options" >
                         <li style="width: auto;"><a href="#" class="create-box-wizard">Create child box</a></li>
+                        <security:authorize access="@securityService.hasUserAccessPermission(${board.id})">
+                            <li style="width: auto;">
+                                <c:url var="boardUserId" value="${board.id}/edit-user-access">
+                                    <c:param name="id" value="${board.id}" />
+                                </c:url>
+                                <a href='<c:out value="${boardUserId}"/>'>Edit Board Users Access</a>
+                            </li>
+                        </security:authorize>
                         <%--<li class="ui-state-disabled"><a href="#">Edit this board</a></li>--%>
                         <%--<li class="ui-state-disabled"><a href="#">Delete this board</a></li>--%>
                     </ul>

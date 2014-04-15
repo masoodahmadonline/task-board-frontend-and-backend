@@ -8,6 +8,9 @@
           <element id="module-output" name="ttmaven" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.directwebremoting:dwr:3.0.M1" />
+          <element id="library" level="project" name="Maven: org.mortbay.jetty:cometd:6.1.4" />
+          <element id="library" level="project" name="Maven: org.mortbay.jetty:jetty-util:6.1.4" />
           <element id="library" level="project" name="Maven: DataGrid:dbgrid:1.0.4" />
           <element id="library" level="project" name="Maven: net.sf.jasperreports:jasperreports:5.5.1" />
           <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.8.0" />

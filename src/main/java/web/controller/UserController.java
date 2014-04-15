@@ -5,10 +5,7 @@
 package web.controller;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -100,6 +97,21 @@ public class UserController {
         UserWrapper wrapper = new UserWrapper();
         this.companyMap = populateCompanyCombo();
         model.put("companyList", companyMap);
+
+        /* Add functionality for selecting only Accu-Reference company - remove otherwise */
+        if(!companyMap.isEmpty()){
+            Set elementNames = companyMap.keySet();
+            Iterator iter = elementNames.iterator();
+            while(iter.hasNext()){
+                Object ob = iter.next();
+                if(companyMap.get(ob).toUpperCase().contains("ACCU")){
+                    wrapper.setCompanyId(ob.toString());
+                    wrapper.setCompanyName(companyMap.get(ob));
+                }
+            }
+        }
+        /* End Accu-Reference company functionality */
+
         model.put("createUserWrapper", wrapper);
         return "/users/create";
     }
@@ -114,6 +126,21 @@ public class UserController {
         model.put("success", false);
         this.companyMap = populateCompanyCombo();
         model.put("companyList", this.companyMap);
+
+        /* Add functionality for selecting only Accu-Reference company - remove otherwise */
+        if(!companyMap.isEmpty()){
+            Set elementNames = companyMap.keySet();
+            Iterator iter = elementNames.iterator();
+            while(iter.hasNext()){
+                Object ob = iter.next();
+                if(companyMap.get(ob).toUpperCase().contains("ACCU")){
+                    userWrapper.setCompanyId(ob.toString());
+                    userWrapper.setCompanyName(companyMap.get(ob));
+                }
+            }
+        }
+        /* End Accu-Reference company functionality */
+
         if(!ValidationUtility.isExists(userWrapper.getEmail())){
             model.put("errorMsg", "Please enter your Login ID (Email)");
         }else if(!ValidationUtility.isValidEmail(userWrapper.getEmail())){
@@ -170,6 +197,10 @@ public class UserController {
         model.put("editUserWrapper", wrapper);
         model.put("boardId", id);
 
+        String boardName = "";
+        boardName = userService.getBoardName(id);
+        model.put("boardName", boardName);
+
         String successParam = req.getParameter("success");
         System.out.println("Parameter Value: " + successParam);
         if(ValidationUtility.isExists(successParam)){
@@ -184,6 +215,9 @@ public class UserController {
     public String editBoardUser(HttpSession session, @PathVariable(value="id") String id , @ModelAttribute("editUserWrapper")UserWrapper userWrapper, ModelMap model){
         System.out.println("\n Edit User POST method \n");
         model.put("boardId", id);
+        String boardName = "";
+        boardName = userService.getBoardName(id);
+        model.put("boardName", boardName);
         String returnString = "redirect:/boards/"+id+"/edit-user-access";
         this.setMessage("");
         this.setTempUserListWrapper(null);
@@ -239,6 +273,9 @@ public class UserController {
     public String editUserProfileTechnical(HttpSession session, @PathVariable(value="id") String id, ModelMap model){
         System.out.println("\n Edit User Technical method \n");
         model.put("boardId", id);
+        String boardName = "";
+        boardName = userService.getBoardName(id);
+        model.put("boardName", boardName);
         String returnPage = "/boards/"+id+"/edit-user-profile";
 
         model = populateUserTechnicalInfo(model);
