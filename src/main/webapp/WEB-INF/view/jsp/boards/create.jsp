@@ -61,7 +61,8 @@
                                 <tr>
                                     <td style="font-family:Arial, Helvetica, sans-serif; font-size:14px; text-align: right">Company:&nbsp;&nbsp;&nbsp;</td>
                                     <td>
-                                        <form:select path="companyId" cssClass="form-input" >
+                                        <form:hidden path="companyId"></form:hidden>
+                                        <form:select path="companyId" cssClass="form-input" disabled="true">
                                             <form:options items="${companyList}" />
                                         </form:select>
                                     </td>

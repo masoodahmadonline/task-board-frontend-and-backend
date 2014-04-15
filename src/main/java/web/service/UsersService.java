@@ -38,6 +38,7 @@ public interface UsersService {
     ResultImpl deleteUserAccess(UserWrapper wrapper);  // Disable User
     public String populatePersonImage(String userId, String path); // populate person image
     public String getCompanyId(String email);
+    public String getBoardName(String boardId);
     public ResultImpl deleteBoard(Long id);
     public ResultImpl editBoard(Long id);
     public List<UserWrapper> populateUsersTaskList(Long userId);
