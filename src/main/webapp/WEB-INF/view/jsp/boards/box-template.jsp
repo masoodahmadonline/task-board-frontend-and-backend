@@ -27,8 +27,8 @@
                 <jsp:param name="box" value="${box}" />
             </jsp:include>
             <c:forEach var="task" items="${box.taskList}">
-                <div class="task task-status-${task.status}" id="taskid-${task.id}">
-                    <div class="task-title" title="${task.title}">
+                <div class="task task-status-${task.status} tooltip" id="taskid-${task.id}"  title="Title: ${task.title} <br /><br />Description: ${task.description}" >
+                    <div class="task-title">
                        <span>
                           <security:authorize access="@securityService.hasBoxTaskEditPermission(${box.id})">
                           <div class="drop-menu-button">&#x25be;&nbsp;

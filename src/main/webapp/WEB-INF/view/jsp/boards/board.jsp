@@ -118,8 +118,8 @@ function ajaxCreateTask(parentBox){
                 //$('#result').html(fetchedTaskId+"  "+fetchedTaskTitle+" "+fetchedTaskDescription);
                 // createBoxInDom();
                 $("#boxid-"+parentBoxId+" .box-body").append(
-                        '<div class="task" id="taskid-'+fetchedTaskId+'">' +
-                                '<div class="task-title" title="'+fetchedTaskTitle+'">' +
+                        '<div class="task tooltip" id="taskid-'+fetchedTaskId+'" title="Title: '+fetchedTaskTitle+' <br /><br />Description: '+fetchedTaskDescription+'">' +
+                                '<div class="task-title">' +
                                 '<span> '+
                                 '    <div class="drop-menu-button">&#x25be;&nbsp; '+
                                 '        <ul class="drop-menu-options">'+
@@ -665,6 +665,8 @@ $(function() {
 <script type="text/javascript">
 
 $(document).ready(function(){
+
+
     $('.attachment tbody tr:nth-child(2n)').css({backgroundColor:'#dadada' ,  'padding': '1px'});
     $('.attachment table').css({'border-spacing':'0px'});
 
@@ -703,6 +705,13 @@ $(document).ready(function(){
 //
 //                    });
     $(document).on('mouseover', '.task', function(e) {
+        $(".tooltip").tooltip({
+            content: function() {
+                return $(this).attr('title');
+            }
+        });
+//    $(".tooltip").tooltip();
+
         $('.task').draggable({ revert: "invalid" });
         $('.box-body').droppable({
             //activeClass: "ui-state-hover",
@@ -1349,8 +1358,6 @@ $(document).ready(function(){
         $("#file-attachment-form").dialog("open");
         window["parentTask"] = $(this).parents(".task").first();
     });
-
-
 
 
 
