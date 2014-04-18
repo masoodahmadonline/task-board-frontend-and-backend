@@ -24,4 +24,7 @@ public interface BoardsDAO {
 	Boards save(Boards board);
         Boards getBoardById(Long id);
         List<Boards> getBoardListByUser(Users user);
+
+    Long getBoxesCount(Long boardId);
+    Long getAttachmentCount(Long boardId);
 }

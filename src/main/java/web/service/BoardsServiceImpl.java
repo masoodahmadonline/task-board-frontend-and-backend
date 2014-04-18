@@ -13,6 +13,7 @@ import web.service.common.ResultImpl;
 import web.service.common.ValidationUtility;
 import web.utils.BoxComparator;
 import web.utils.TaskComparator;
+import web.wrapper.BoardWrapper;
 import web.wrapper.UserWrapper;
 
 @Service
@@ -162,6 +163,49 @@ public class BoardsServiceImpl implements BoardsService{
             result.setMessageList(Arrays.asList("error.boardRetrievalFailed","error.namedBoardDoesNotExist"));
         }
         return result;
+    }
+
+    @Transactional
+    public BoardWrapper getUpdatedBoardWrapper(BoardWrapper wrapper){
+        BoardWrapper retWrapper = new BoardWrapper();
+        retWrapper.setBoardId(wrapper.getBoardId());
+        retWrapper.setBoardUpdateRequired(false);
+        long totalCount = 0;
+        Long boardCount = null;
+        Long boardUserCount = null;
+        Long taskCount = null;
+        Long taskUserCount = null;
+        Long attachmentCount = null;
+        Long boxCount = null;
+
+        if(ValidationUtility.isExists(wrapper.getBoardId())){
+            boxCount = boardDAO.getBoxesCount(Long.valueOf(wrapper.getBoardId()));
+            if(ValidationUtility.isExists(boxCount)){
+                retWrapper.setBoxCount("" +boxCount);
+            }
+
+            /*attachmentCount = boardDAO.getAttachmentCount(Long.valueOf(wrapper.getBoardId()));
+            if(ValidationUtility.isExists(attachmentCount)){
+                retWrapper.setAttachmentCount("" +attachmentCount);
+            }*/
+        }
+
+        if(ValidationUtility.isExists(wrapper.getBoxCount())){
+            if(boxCount > Long.valueOf(wrapper.getBoxCount())){
+                totalCount = totalCount + (boxCount - Long.valueOf(wrapper.getBoxCount()));
+            }
+        }
+
+        if(totalCount > 0){
+            retWrapper.setBoardUpdateRequired(true);
+            if(totalCount == 1){
+                retWrapper.setMessage("[" +totalCount+ "] Board Update! Please refresh your page to see update ");
+            }else{
+                retWrapper.setMessage("[" +totalCount+ "] Board Updates! Please refresh your page to see updates ");
+            }
+        }
+        System.out.println("No. of board Updates: " + totalCount);
+        return retWrapper;
     }
     
     @Transactional

@@ -11,10 +11,86 @@
 
 <c:import url="${mainDir}/common/header.jsp" />
 
-<body>
+<body onload="setVariables();">
 <c:import url="${mainDir}/common/inner-header.jsp" />
 
+
+
 <script type="text/javascript">
+
+    var boardIdValue;
+    var boardCountValue;
+    var boardUserCountValue;
+    var taskCountValue;
+    var taskUserCountValue;
+    var boxCountValue;
+    var attachmentCountValue;
+
+    function setVariables() {
+        boardIdValue = "${boardWrapper.boardId}";
+        boardCountValue = "${boardWrapper.boardCount}";
+        boardUserCountValue = "${boardWrapper.boardUserCount}";
+        taskCountValue = "${boardWrapper.taskCount}";
+        taskUserCountValue = "${boardWrapper.taskUserCount}";
+        boxCountValue = "${boardWrapper.boxCount}";
+        attachmentCountValue = "${boardWrapper.attachmentCount}";
+    }
+
+    window.setInterval(function () {
+        ShowDialog();
+    }, 120000);
+    function ShowDialog() {
+        var obj = {};
+        var boardId = "boardId";
+        var boardCount = "boardCount";
+        var boardUserCount = "boardUserCount";
+        var taskCount = "taskCount";
+        var taskUserCount = "taskUserCount";
+        var boxCount = "boxCount";
+        var attachmentCount = "attachmentCount";
+        obj[boardId] = boardIdValue;
+        obj[boardCount] = boardCountValue;
+        obj[boardUserCount] = boardUserCountValue;
+        obj[taskCount] = taskCountValue;
+        obj[taskUserCount] = taskUserCountValue;
+        obj[boxCount] = boxCountValue;
+        obj[attachmentCount] = attachmentCountValue;
+        var objList = [];
+        objList.push(obj);
+
+        $.ajax({
+            url: "${pageContext.request.contextPath}/update-board",
+            type:"POST",
+            cache: false,
+            data : {
+                bWrapper : JSON.stringify(objList)
+            },
+            async: false,
+            success: function(response){
+                boardIdValue = response.boardId;
+                boardCountValue = response.boardCount;
+                boardUserCountValue = response.boardUserCount;
+                taskCountValue = response.taskCount;
+                taskUserCountValue = response.taskUserCount;
+                boxCountValue = response.boxCount;
+                attachmentCountValue = response.attachmentCount;
+                if(response.boardUpdateRequired){
+                    showBoardUpdateMessage(response.message);
+                }else{
+                    //showErrorMessage(response.message);
+                }
+            },
+            error: function(){
+                alert('Error while request..');
+            }
+        });
+    };
+function showBoardUpdateMessage(message) {
+    $("#message-box").addClass("success-message");
+    $("#message-box").html(message);
+    $("#message-box").effect( "highlight", {color:"#669966"}, 1000 );
+
+}
 
 function showSuccessMessage(message) {
     $("#message-box").addClass("success-message");

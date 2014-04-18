@@ -24,11 +24,13 @@ import web.entity.Attachment;
 import web.entity.Boxes;
 import web.entity.Tasks;
 import web.entity.Users;
+import web.service.BoardsService;
 import web.service.TasksService;
 import web.service.BoxesService;
 import web.service.UsersService;
 import web.service.common.Result;
 import web.service.common.ValidationUtility;
+import web.wrapper.BoardWrapper;
 import web.wrapper.UserWrapper;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,6 +56,8 @@ public class TaskController {
     private BoxesService boxService;
     @Autowired
     private UsersService userService;
+    @Autowired
+    private BoardsService boardService;
     @Autowired
     private MessageSource messages;
     @Autowired
@@ -365,6 +369,60 @@ public class TaskController {
         return result;
     }
 
+    @PreAuthorize("permitAll")
+    @RequestMapping (value = "/update-board", method=RequestMethod.POST)
+    public @ResponseBody BoardWrapper boardUpdates(ModelMap model, HttpServletRequest request){
+        BoardWrapper wrapper1 = new BoardWrapper();
+        String[] names2 = request.getParameterValues("bWrapper");
+        List<String> lList = Arrays.asList(names2);
+        for (String s : lList) {
+            JSONParser parser=new JSONParser();
+            Object obj = null;
+            try {
+                obj = parser.parse(s);
+                JSONArray array = (JSONArray)obj;
+                for(int i = 0; i < array.size(); i++){
+                    JSONObject jObject = (JSONObject)array.get(i);
+                    Set elementNames = jObject.keySet();
+                    Iterator iter = elementNames.iterator();
+                    while(iter.hasNext()){
+                        Object ob = iter.next();
+                        System.out.println("Key:" + ob + "Value:" + jObject.get(ob));
+                        if(ob.equals("boardId")){
+                            wrapper1.setBoardId("" + jObject.get(ob));
+                        }else if(ob.equals("boardCount")){
+                            wrapper1.setBoardCount("" + jObject.get(ob));
+                        }else if(ob.equals("boardUserCount")){
+                            wrapper1.setBoardUserCount("" + jObject.get(ob));
+                        }else if(ob.equals("taskCount")){
+                            wrapper1.setTaskCount("" + jObject.get(ob));
+                        }else if(ob.equals("taskUserCount")){
+                            wrapper1.setTaskUserCount("" + jObject.get(ob));
+                        }else if(ob.equals("boxCount")){
+                            wrapper1.setBoxCount("" + jObject.get(ob));
+                        }else if(ob.equals("attachmentCount")){
+                            wrapper1.setAttachmentCount("" + jObject.get(ob));
+                        }else{
+                            //do nothing
+                        }
+                    }
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        }
+        System.out.println("\n Board Id for updation : "+wrapper1.getBoardId()+"\n");
+        BoardWrapper retWrapper = new BoardWrapper();
+        retWrapper.setBoardUpdateRequired(false);
+        retWrapper = boardService.getUpdatedBoardWrapper(wrapper1);
+        if(retWrapper.isBoardUpdateRequired()){
+            System.out.println("New Board Updates");
+        }else{
+            System.out.println("No New Board Updates");
+        }
+        model.put("boardWrapper", retWrapper);
+        return retWrapper;
+    }
 
 }
 

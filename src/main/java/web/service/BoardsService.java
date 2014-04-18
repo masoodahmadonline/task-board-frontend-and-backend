@@ -7,6 +7,7 @@ package web.service;
 import web.entity.Boards;
 import web.entity.Users;
 import web.service.common.ResultImpl;
+import web.wrapper.BoardWrapper;
 import web.wrapper.UserWrapper;
 
 /**
@@ -19,4 +20,5 @@ public interface BoardsService {
     public ResultImpl getBoardByIdToDisplay(Long id);
     public ResultImpl getBoardListByUser(Users user);
     public ResultImpl saveBoard(UserWrapper wrapper);
+    public BoardWrapper getUpdatedBoardWrapper(BoardWrapper wrapper);
 }

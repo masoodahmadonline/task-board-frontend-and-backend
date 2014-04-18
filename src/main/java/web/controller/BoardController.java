@@ -17,6 +17,7 @@ import web.service.BoxesService;
 import web.service.UsersService;
 import web.service.common.Result;
 import web.service.common.ValidationUtility;
+import web.wrapper.BoardWrapper;
 import web.wrapper.UserWrapper;
 
 
@@ -157,6 +158,10 @@ public class BoardController {
        String[] uriArray = request.getRequestURI().toString().split("/");
         int uriArraySize = uriArray.length;
         session.setAttribute("previous_page", "/"+uriArray[uriArraySize-2]+"/"+uriArray[uriArraySize-1]);
+        BoardWrapper bWrapper = new BoardWrapper();
+        bWrapper.setBoardId(id);
+        bWrapper = boardService.getUpdatedBoardWrapper(bWrapper);
+        model.put("boardWrapper", bWrapper);
         result =  boardService.getBoardByIdToDisplay(Long.parseLong(id));
         if(result.getIsSuccessful()){
             model.put("successMessages", result.getMessageList());
