@@ -85,6 +85,7 @@ public class BoardsDAOImpl implements BoardsDAO {
             count = countInt.longValue();
         }
         return count;
+
     }
 
     public Long getAttachmentCount(Long boardId) {
