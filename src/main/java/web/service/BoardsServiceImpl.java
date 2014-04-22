@@ -184,15 +184,55 @@ public class BoardsServiceImpl implements BoardsService{
                 retWrapper.setBoxCount("" +boxCount);
             }
 
-            /*attachmentCount = boardDAO.getAttachmentCount(Long.valueOf(wrapper.getBoardId()));
+            attachmentCount = boardDAO.getAttachmentCount(Long.valueOf(wrapper.getBoardId()));
             if(ValidationUtility.isExists(attachmentCount)){
                 retWrapper.setAttachmentCount("" +attachmentCount);
-            }*/
+            }
+
+            taskUserCount = boardDAO.getTaskUserCount(Long.valueOf(wrapper.getBoardId()));
+            if(ValidationUtility.isExists(taskUserCount)){
+                retWrapper.setTaskUserCount("" +taskUserCount);
+            }
+
+            taskCount = boardDAO.getTaskCount(Long.valueOf(wrapper.getBoardId()));
+            if(ValidationUtility.isExists(taskCount)){
+                retWrapper.setTaskCount("" +taskCount);
+            }
         }
 
-        if(ValidationUtility.isExists(wrapper.getBoxCount())){
+        if(ValidationUtility.isExists(wrapper.getBoxCount()) && ValidationUtility.isExists(boxCount)){
             if(boxCount > Long.valueOf(wrapper.getBoxCount())){
                 totalCount = totalCount + (boxCount - Long.valueOf(wrapper.getBoxCount()));
+            }
+            if(boxCount < Long.valueOf(wrapper.getBoxCount())){
+                totalCount = totalCount + (Long.valueOf(wrapper.getBoxCount()) - boxCount);
+            }
+        }
+
+        if(ValidationUtility.isExists(wrapper.getAttachmentCount()) && ValidationUtility.isExists(attachmentCount)){
+            if(attachmentCount > Long.valueOf(wrapper.getAttachmentCount())){
+                totalCount = totalCount + (attachmentCount - Long.valueOf(wrapper.getAttachmentCount()));
+            }
+            if(attachmentCount < Long.valueOf(wrapper.getAttachmentCount())){
+                totalCount = totalCount + (Long.valueOf(wrapper.getAttachmentCount()) - attachmentCount);
+            }
+        }
+
+        if(ValidationUtility.isExists(wrapper.getTaskUserCount()) && ValidationUtility.isExists(taskUserCount)){
+            if(taskUserCount > Long.valueOf(wrapper.getTaskUserCount())){
+                totalCount = totalCount + (taskUserCount - Long.valueOf(wrapper.getTaskUserCount()));
+            }
+            if(taskUserCount < Long.valueOf(wrapper.getTaskUserCount())){
+                totalCount = totalCount + (Long.valueOf(wrapper.getTaskUserCount()) - taskUserCount);
+            }
+        }
+
+        if(ValidationUtility.isExists(wrapper.getTaskCount()) && ValidationUtility.isExists(taskCount)){
+            if(taskCount > Long.valueOf(wrapper.getTaskCount())){
+                totalCount = totalCount + (taskCount - Long.valueOf(wrapper.getTaskCount()));
+            }
+            if(taskCount < Long.valueOf(wrapper.getTaskCount())){
+                totalCount = totalCount + (Long.valueOf(wrapper.getTaskCount()) - taskCount);
             }
         }
 

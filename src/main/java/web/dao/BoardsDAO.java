@@ -27,4 +27,6 @@ public interface BoardsDAO {
 
     Long getBoxesCount(Long boardId);
     Long getAttachmentCount(Long boardId);
+    Long getTaskUserCount(Long boardId);
+    Long getTaskCount(Long boardId);
 }

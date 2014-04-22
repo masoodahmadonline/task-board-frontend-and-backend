@@ -38,7 +38,7 @@
 
     window.setInterval(function () {
         ShowDialog();
-    }, 120000);
+    }, 10000);
     function ShowDialog() {
         var obj = {};
         var boardId = "boardId";
@@ -81,14 +81,15 @@
                 }
             },
             error: function(){
-                alert('Error while request..');
+                showBoardUpdateMessage("Board updates not available at the moment!");
             }
         });
     };
 function showBoardUpdateMessage(message) {
-    $("#message-box").addClass("success-message");
-    $("#message-box").html(message);
-    $("#message-box").effect( "highlight", {color:"#669966"}, 1000 );
+    $("#board-updated-box").addClass("board-message");
+    $("#board-updated-box").html(message);
+    /*$("#board-updated-box").append("<a href='#' onClick='location.reload();'>myString</a>");
+    $("#board-updated-box").append(document.create);*/
 
 }
 
@@ -245,7 +246,7 @@ function ajaxCreateTask(parentBox){
 
             },
             error: function(){
-                alert('Error while request..');
+                showErrorMessage('There is some problem during task assignment. Please check internet connectivity and access rights');
             }
 
         });

@@ -387,7 +387,6 @@ public class TaskController {
                     Iterator iter = elementNames.iterator();
                     while(iter.hasNext()){
                         Object ob = iter.next();
-                        System.out.println("Key:" + ob + "Value:" + jObject.get(ob));
                         if(ob.equals("boardId")){
                             wrapper1.setBoardId("" + jObject.get(ob));
                         }else if(ob.equals("boardCount")){
@@ -411,7 +410,6 @@ public class TaskController {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
         }
-        System.out.println("\n Board Id for updation : "+wrapper1.getBoardId()+"\n");
         BoardWrapper retWrapper = new BoardWrapper();
         retWrapper.setBoardUpdateRequired(false);
         retWrapper = boardService.getUpdatedBoardWrapper(wrapper1);

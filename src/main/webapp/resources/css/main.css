@@ -721,6 +721,31 @@ input[type=checkbox]:checked + label {
 .error-message {
   background-color: rgba(255, 0, 0, 0.1); }
 
+#board-updated-box {
+    display: block;
+    position: absolute;
+    top: 55px;
+    right: 30%;
+    left: 30%;
+    max-height: 50px;
+    width: 300px;
+    max-width: 300px;
+    vertical-align: middle;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -o-border-radius: 20px;
+    -ms-border-radius: 20px;
+    border-radius: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px; }
+
+.board-message {
+    background-color: #ffffff }
+
 .forms-for-board {
   display: block;
   position: fixed;

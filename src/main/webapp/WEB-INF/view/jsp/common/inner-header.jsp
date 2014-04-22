@@ -46,6 +46,7 @@
                       <span style="position:absolute; display:block; left:75px; bottom:60px;">&#x25be;</span>
                     </div>
                     <div id="message-box"></div>
+                    <a id="board-updated-box" href="#" onclick="location.reload();" style="text-decoration: none; color: #999999;"></a>
                 </div>
             </div>
         

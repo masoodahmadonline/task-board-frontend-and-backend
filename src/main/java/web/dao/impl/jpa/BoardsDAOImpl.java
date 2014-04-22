@@ -90,14 +90,51 @@ public class BoardsDAOImpl implements BoardsDAO {
 
     public Long getAttachmentCount(Long boardId) {
         Session session = getHibernateSession();
+        BigInteger countInt = null;
         Long count = null;
-        String queryString = "SELECT count(att.id) " +
-                "FROM Attachment as att " +
-                "WHERE att.parentTask.parentBox.parentBoard.id = "+boardId+" OR " +
-                "att.parentTask.parentBox.parentBox.parentBoard.id = "+boardId;
-        Query queryObject = session.createQuery(queryString);
+        String queryString = " WITH RECURSIVE q AS ( " +
+                " SELECT att.id, b1.parentbox_id FROM attachment att, boxes b1 WHERE b1.parentboard_id = "+ boardId +
+                " UNION " +
+                " SELECT att.id, b1.parentbox_id FROM attachment att, boxes b1 JOIN q ON b1.parentbox_id = q.id) " +
+                " SELECT count(id) FROM q;";
+        Query queryObject = session.createSQLQuery(queryString);
         if(ValidationUtility.isExists(queryObject.uniqueResult())){
-            count = (Long)queryObject.uniqueResult();
+            countInt = (BigInteger)queryObject.uniqueResult();
+            count = countInt.longValue();
+        }
+        return count;
+    }
+
+    public Long getTaskUserCount(Long boardId) {
+        Session session = getHibernateSession();
+        BigInteger countInt = null;
+        Long count = null;
+        String queryString = " WITH RECURSIVE q AS ( " +
+                " SELECT t1.id, b1.parentbox_id FROM tasks_users_updated t1, boxes b1 WHERE b1.parentboard_id = "+ boardId +
+                " UNION " +
+                " SELECT t1.id, b1.parentbox_id FROM tasks_users_updated t1, boxes b1 JOIN q ON b1.parentbox_id = q.id) " +
+                " SELECT count(id) FROM q;";
+        Query queryObject = session.createSQLQuery(queryString);
+        if(ValidationUtility.isExists(queryObject.uniqueResult())){
+            countInt = (BigInteger)queryObject.uniqueResult();
+            count = countInt.longValue();
+        }
+        return count;
+    }
+
+    public Long getTaskCount(Long boardId) {
+        Session session = getHibernateSession();
+        BigInteger countInt = null;
+        Long count = null;
+        String queryString = " WITH RECURSIVE q AS ( " +
+                " SELECT t1.id, b1.parentbox_id FROM tasks t1, boxes b1 WHERE b1.parentboard_id = "+ boardId +
+                " UNION " +
+                " SELECT t1.id, b1.parentbox_id FROM tasks t1, boxes b1 JOIN q ON b1.parentbox_id = q.id) " +
+                " SELECT count(id) FROM q;";
+        Query queryObject = session.createSQLQuery(queryString);
+        if(ValidationUtility.isExists(queryObject.uniqueResult())){
+            countInt = (BigInteger)queryObject.uniqueResult();
+            count = countInt.longValue();
         }
         return count;
     }
