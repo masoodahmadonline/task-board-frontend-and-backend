@@ -13,10 +13,11 @@
 <body>
     <c:import url="${mainDir}/common/inner-header.jsp" />
     
-   		
+   		     <h2>Task status and details report.</h2>
+            <br />
 	        <table>
 	       		<tbody>
-		        	<tr>
+		        	<tr style="background-color: #dadada; font-weight: bold;">
 		        		<td style="width:200px;">
 		        			Board
 		        		</td>
@@ -26,10 +27,21 @@
 		        		<td style="width:200px;">
 		        			Date to
 		        		</td>
-		        		<td style="width:100px;">
-		        			order by<br />
-		        			card status?
+                        <td style="width:50px;">
+		        			order tasks<br />by date
 		        		</td>
+                        <td style="width:50px;">
+                            order tasks<br />by status
+                        </td>
+                        <td style="width:50px; border-right: thin #dadada solid">
+                            order tasks<br />by priority
+                        </td>
+                        <td style="width:50px; border-left: thin #dadada solid">
+                            view as<br />pdf report
+                        </td>
+                        <td style="width:50px;">
+                            view as<br />excel report
+                        </td>
 		        		
 		        		
 		        	</tr>
@@ -37,7 +49,7 @@
       		</table>  
       	
         <c:forEach var="board" items="${boards}">
-        <form method="post" action="${pageContext.request.contextPath}/report/pdf">
+        <form method="post" action="${pageContext.request.contextPath}/report/task-details">
 	        <table>
 	       		<tbody>
                     <security:authorize access="@securityService.hasUserAccessPermission(${board.id})">
@@ -52,13 +64,31 @@
                             <td style="width:200px;">
                                 <input class="date-picker" name="endDate" required="required"/>
                             </td>
-                            <td style="width:100px;">
-                                <input id="${board.id}" name="orderByStatus" type="checkbox" /><label for="${board.id}" class="priv-checkbox-this"></label>
+                            <td style="width:50px;">
+                                <input name="orderBy" type="radio" value="date" checked="checked" />
+                            </td>
+
+                            <td style="width:50px;">
+                                <input name="orderBy" type="radio" value="status"/>
+                            </td>
+
+                            <td style="width:50px; border-right: thin #dadada solid">
+                                <input name="orderBy" type="radio" value="priority"/>
+                            </td>
+
+                            <td style="width:50px; border-left: thin #dadada solid">
+                                <input name="viewAs" type="radio" value="pdf" checked="checked" />
+                            </td>
+
+                            <td style="width:50px;">
+                                <input name="viewAs" type="radio" value="excel" />
                             </td>
 
                             <td>
                                 <input type="submit" value="View Report" />
                             </td>
+
+
                         </tr>
                     </security:authorize>
 	        	</tbody>

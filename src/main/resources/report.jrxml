@@ -26,44 +26,60 @@
 				<reportElement x="446" y="3" width="100" height="17" uuid="e397b34d-19c2-4e04-8c4d-393e04a5ed9b"/>
 				<text><![CDATA[Report created on:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="137" y="40" width="280" height="30" uuid="6d5a87a2-b0ad-41de-9f72-a82652f0ac7e"/>
-				<textElement>
-					<font size="22"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="148" y="52" width="237" height="18" uuid="38cd983a-146b-4503-ad79-d6f2334a1aac"/>
+				<reportElement positionType="FixRelativeToBottom" x="148" y="50" width="237" height="18" uuid="38cd983a-146b-4503-ad79-d6f2334a1aac"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{parentBox.parentBoard.title}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="135" y="10" width="262" height="25" uuid="3a7c716c-19f3-4a95-aeee-4ef09bf0910d"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Task status and details report]]></text>
+			</staticText>
 		</band>
 	</title>
 	<columnHeader>
-		<band height="38" splitType="Stretch">
+		<band height="39" splitType="Stretch">
 			<staticText>
 				<reportElement x="65" y="9" width="100" height="20" uuid="412d0321-79b3-4426-bf51-c981c0978ac4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Title]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="188" y="9" width="70" height="20" uuid="230586aa-3ea4-4654-b94b-7f1cedc1f4e3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Status]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="268" y="9" width="50" height="20" uuid="235b1ab9-471d-4334-9f5e-cb2679fa791b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Priority]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="337" y="10" width="100" height="20" uuid="87de4dc7-ee29-4346-801f-dc7c3c92a373"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Creater Name]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="7" width="60" height="24" uuid="60d67f7b-1971-41d8-816e-8716e7899eae"/>
 				<textElement markup="none">
-					<font size="10"/>
+					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Creation Date]]></text>
 			</staticText>
+			<line>
+				<reportElement x="0" y="34" width="451" height="1" uuid="ca034997-575c-4146-bd55-a9bfb94de0d1"/>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -95,22 +111,22 @@
 	</columnFooter>
 	<pageFooter>
 		<band height="55" splitType="Stretch">
+			<staticText>
+				<reportElement x="373" y="35" width="27" height="20" uuid="78ef0f67-47af-407b-8529-fc7c17e8b524"/>
+				<text><![CDATA[Page]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="457" y="35" width="18" height="20" uuid="29b9bd64-acba-405f-aa01-f3490a9fd5fe"/>
+				<text><![CDATA[of]]></text>
+			</staticText>
 			<textField>
-				<reportElement x="385" y="25" width="47" height="30" uuid="d281fbba-37ca-4057-b5ff-a88f37eb94ce"/>
+				<reportElement x="405" y="35" width="47" height="20" uuid="d281fbba-37ca-4057-b5ff-a88f37eb94ce"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="463" y="25" width="60" height="30" uuid="ad0d57a1-5990-41f5-941a-730fc11b04d1"/>
+				<reportElement x="480" y="35" width="60" height="20" uuid="ad0d57a1-5990-41f5-941a-730fc11b04d1"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="440" y="28" width="18" height="20" uuid="29b9bd64-acba-405f-aa01-f3490a9fd5fe"/>
-				<text><![CDATA[of]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="343" y="30" width="27" height="20" uuid="78ef0f67-47af-407b-8529-fc7c17e8b524"/>
-				<text><![CDATA[Page]]></text>
-			</staticText>
 		</band>
 	</pageFooter>
 	<summary>

@@ -58,16 +58,17 @@ public class TaskReportController {
 
 
     @PreAuthorize("@securityService.hasUserAccessPermission(#boardId)")
-    @RequestMapping(value = "/report/pdf", method = RequestMethod.POST )
+    @RequestMapping(value = "/report/task-details", method = RequestMethod.POST )
     public ModelAndView generatePdfReport(ModelAndView modelAndView, 
     					@RequestParam("boardId") Long boardId,
 			    		@RequestParam("startDate") String startDateString,
 			    		@RequestParam("endDate") String endDateString,
-			    		@RequestParam(value = "orderByStatus",required = false, defaultValue = "off") String orderByStatus){
+                        @RequestParam(value = "viewAs",required = false, defaultValue = "pdf") String viewAs,
+			    		@RequestParam(value = "orderBy",required = false, defaultValue = "date") String orderBy){
  
-        logger.debug("--------------generate PDF report----------");
+        logger.debug("--------------generate report----------");
         
-        System.out.println("--------"+boardId+" - "+startDateString+" - "+endDateString +" - "+ orderByStatus +"=========");
+        System.out.println("--------"+boardId+" - "+startDateString+" - "+endDateString +" - "+ orderBy +"=========");
  
         Map<String,Object> parameterMap = new HashMap<String,Object>();
 //        Calendar calender = Calendar.getInstance();
@@ -76,10 +77,10 @@ public class TaskReportController {
 // 
 //        List<Tasks> taskList = taskService.getAllTasks(3L, "status", calender.getTime() , new Date() );
         
-        List<String> orderByParamList = new ArrayList<String>(); //the order by params can be many. so making a list
-        if (orderByStatus.equals("on")){
-        	orderByParamList.add("status");
-        }
+//        List<String> orderByParamList = new ArrayList<String>(); //the order by params can be many. so making a list
+//        if (orderBy.equals("on")){
+//        	orderByParamList.add("status");
+//        }
         
         Date startDate = null;
 		try {
@@ -97,14 +98,20 @@ public class TaskReportController {
 		}
         
         
-        List<Tasks> taskList = reportService.getTasksByDateRangeLong(boardId, orderByParamList, startDate , endDate );
+        List<Tasks> taskList = reportService.getTasksByDateRangeLong(boardId, orderBy, startDate , endDate );
 
         JRDataSource JRdataSource = new JRBeanCollectionDataSource(taskList);
  
         parameterMap.put("datasource", JRdataSource);
  
         //pdfReport bean has ben declared in the jasper-views.xml file
-        modelAndView = new ModelAndView("pdfReport", parameterMap);
+        if(viewAs.equals("pdf")){
+            modelAndView = new ModelAndView("pdfReport", parameterMap);
+        }
+
+        if(viewAs.equals("excel")){
+            modelAndView = new ModelAndView("xlsReport", parameterMap);
+        }
  
         return modelAndView;
  

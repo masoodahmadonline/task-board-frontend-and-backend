@@ -25,8 +25,8 @@ public class ReportsServiceImpl implements ReportsService{
 	    
 	   
 	    @Transactional(readOnly = false)
-	    public List<Tasks> getTasksByDateRangeLong(Long boardId, List<String> orderByParamList, Date startDate, Date endDate){
-	    	return reportDAO.getTasksByDateRangeLong( boardId,  orderByParamList,  startDate,  endDate);
+	    public List<Tasks> getTasksByDateRangeLong(Long boardId, String orderBy, Date startDate, Date endDate){
+	    	return reportDAO.getTasksByDateRangeLong( boardId,  orderBy,  startDate,  endDate);
 	    }
 
 
