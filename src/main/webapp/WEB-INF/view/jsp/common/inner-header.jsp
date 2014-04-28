@@ -43,7 +43,7 @@
                           </div>
 
 
-                      <span style="position:absolute; display:block; left:75px; bottom:45px; font-size: 20px;">&#x1d31f;</span>
+                      <span style="position:absolute; display:block; left:75px; bottom:45px; font-size: 20px;">&#x1d356;</span>
                     </div>
                     <div id="message-box"></div>
                     <a id="board-updated-box" href="#" onclick="location.reload();" style="text-decoration: none; color: #999999;"></a>
