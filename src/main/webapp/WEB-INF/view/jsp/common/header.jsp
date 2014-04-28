@@ -13,8 +13,9 @@
         <link rel="stylesheet" href="${resourcesDir}/css/main.css" />
         <link type="text/css" rel="stylesheet" href="${resourcesDir}/css/GridStyle.css"  />
         <title>${pageTitle}</title>
-        
+
         <script>
+
             function doNavigate(pstrWhere, pintTot)
             {
                 var strTmp;

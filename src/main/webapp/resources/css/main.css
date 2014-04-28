@@ -864,3 +864,20 @@ input[type=checkbox]:checked + label {
   bottom: -10px;
   width: 15px;
   height: 15px; }
+
+
+.show{
+    transition:All 2s ease;
+    -webkit-transition:All 2s ease;
+    -moz-transition:All 2s ease;
+    -o-transition:All 2s ease;
+    opacity: 1;
+}
+
+.hide{
+    transition:All 2s ease;
+    -webkit-transition:All 2s ease;
+    -moz-transition:All 2s ease;
+    -o-transition:All 2s ease;
+    opacity: 0;
+}
