@@ -14,77 +14,80 @@
        
     <script type="text/javascript">
         $(document).ready(function(){
-        var menuOnn = false; 
-        
-
-
-          $('.blur').blurjs({
-                  draggable: true,
-                  overlay: 'rgba(255,255,255,0.1)',
-                  radius:40
-          });
+            var menuOnn = false;
 
 
 
-          var options = {percent: 100};
-          $(".jQeffect-show-clip").css("display", "none");
-          $( ".jQeffect-show-clip" ).show( 'clip', options, 3000 );
-        //  $(".jQeffect-show-clip").css("display", "inline-block");
-
-        $("#user").click(function(){
-            $('#user-options').toggleClass('user-options-show');
-          });
-      
-        $(".circle").click(function(){
-            $('.circle').toggleClass('expanded');
-          });
-
-//         $("#circle").click(function(){
-//
-//              if(menuOnn){
-//                  $("#circle").animate({
-//                     backgroundColor: "rgba(70,130,180, 0.1)",
-//                    //opacity: 0.4,
-//                    top:"-328px",
-//                    right:"-290px"
-////                    marginRight: "-180px",
-////                    marginTop: "-192px"
-//
-//                  }, 1500 );
-//                  menuOnn = false;
-//                  
-//              }else{
-//                  
-//                  $("#circle").animate({
-//                   
-//                    backgroundColor: "rgba(176,196,222, 0.7)",
-//                    //opacity: 0.4,
-//                    top:"-70px",
-//                    right:"-70px"
-////                    marginRight: "-40px",
-////                    marginTop: "-40px"
-//
-//
-//                  }, 1500 );
-//                  menuOnn = true;
-//              }
-//
-//          });
-//      
-      
-      
-      
-          
-          $("#footer-on-off-button").click(function(){
-            $('#footer').toggleClass('hide-menu');
-          });
+              $('.blur').blurjs({
+                      draggable: true,
+                      overlay: 'rgba(255,255,255,0.1)',
+                      radius:40
+              });
 
 
+
+              var options = {percent: 100};
+              $(".jQeffect-show-clip").css("display", "none");
+              $( ".jQeffect-show-clip" ).show( 'clip', options, 3000 );
+            //  $(".jQeffect-show-clip").css("display", "inline-block");
+
+            $("#user").click(function(){
+                $('#user-options').toggleClass('user-options-show');
+              });
+
+            $(".circle").click(function(){
+                $('.circle').toggleClass('expanded');
+              });
+
+    //         $("#circle").click(function(){
+    //
+    //              if(menuOnn){
+    //                  $("#circle").animate({
+    //                     backgroundColor: "rgba(70,130,180, 0.1)",
+    //                    //opacity: 0.4,
+    //                    top:"-328px",
+    //                    right:"-290px"
+    ////                    marginRight: "-180px",
+    ////                    marginTop: "-192px"
+    //
+    //                  }, 1500 );
+    //                  menuOnn = false;
+    //
+    //              }else{
+    //
+    //                  $("#circle").animate({
+    //
+    //                    backgroundColor: "rgba(176,196,222, 0.7)",
+    //                    //opacity: 0.4,
+    //                    top:"-70px",
+    //                    right:"-70px"
+    ////                    marginRight: "-40px",
+    ////                    marginTop: "-40px"
+    //
+    //
+    //                  }, 1500 );
+    //                  menuOnn = true;
+    //              }
+    //
+    //          });
+    //
+
+
+
+
+              $("#footer-on-off-button").click(function(){
+                $('#footer').toggleClass('hide-menu');
+              });
+
+
+
+              $("#wrapper").removeClass("hide");
+              $("#wrapper").addClass("show");
 
 
         });
 			  
-			  
+
 				   
     </script>
 

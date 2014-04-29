@@ -7,5 +7,5 @@ import web.entity.Boards;
 import web.entity.Tasks;
 
 public interface ReportsDAO {
-	public List<Tasks> getTasksByDateRangeLong(Long boardId, List<String> orderByParamList, Date startDate, Date endDate);
+	public List<Tasks> getTasksByDateRangeLong(Long boardId, String orderBy, Date startDate, Date endDate);
 }

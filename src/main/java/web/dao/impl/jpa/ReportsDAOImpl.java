@@ -19,7 +19,7 @@ public class ReportsDAOImpl implements ReportsDAO{
 //  @Autowired
 private EntityManager entityManager;
 	
-	public List<Tasks> getTasksByDateRangeLong(Long boardId, List<String> orderByParamList, Date startDate, Date endDate){
+	public List<Tasks> getTasksByDateRangeLong(Long boardId, String orderBy, Date startDate, Date endDate){
     	System.out.println("boardId: " + boardId);
 //    	System.out.println("grouBy: " + groupBy);
     	System.out.println("startDate: " + startDate.toString());
@@ -29,14 +29,17 @@ private EntityManager entityManager;
     			queryString.append( "SELECT task FROM Tasks AS task ");
     			queryString.append( "WHERE task.parentBox.parentBoard.id = :boardId ");
     			queryString.append(  "AND task.creationDateTime BETWEEN :startDate AND :endDate " );
-    			queryString.append(  "ORDER BY task.creationDateTime " );
-    			if(orderByParamList != null){
-    				if(orderByParamList.size()>0){
-    					for(String orderByString : orderByParamList){
-    						queryString.append(", task.");
-    						queryString.append(orderByString);
-    					}
+
+    			if(orderBy != null){
+    				if(orderBy.equals("date")){
+    						queryString.append("ORDER BY task.creationDateTime");
     				}
+                    if(orderBy.equals("status")){
+                        queryString.append("ORDER BY task.status");
+                    }
+                    if(orderBy.equals("priority")){
+                        queryString.append("ORDER BY task.priority");
+                    }
     			}
 
     	System.out.println(queryString + "--------------------");		
