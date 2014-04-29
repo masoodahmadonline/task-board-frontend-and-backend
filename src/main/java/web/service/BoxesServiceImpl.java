@@ -22,6 +22,7 @@ import web.entity.Tasks;
 import web.entity.Users;
 import web.service.common.ResultImpl;
 import web.service.common.ValidationUtility;
+import web.wrapper.UserWrapper;
 
 @Service
 @Transactional(readOnly = true)
@@ -149,13 +150,17 @@ public class BoxesServiceImpl implements BoxesService{
 
 
     @Transactional(readOnly = false)
-    public ResultImpl editBox(Long id, String type, String title, String description){
+    public ResultImpl editBox(Long id, String type, String title, String description, UserWrapper wrapper){
         result = getBoxById(id);
         if(result.getIsSuccessful()){
             Boxes box = (Boxes)result.getObject();
             box.setType(type);
             box.setTitle(title);
             box.setDescription(description);
+            if(ValidationUtility.isExists(wrapper.getUpdatedBy())){
+                box.setUpdatedBy(Long.valueOf(wrapper.getUpdatedBy()));
+                box.setUpdatedDate(new Date());
+            }
             result.setObject(box);
             result.setMessageList(Arrays.asList("success.boxEdited"));
         }else{

@@ -138,6 +138,22 @@ public class BoardsDAOImpl implements BoardsDAO {
         }
         return count;
     }
+
+    public Long getTotalBoardCount(Long boardId, Long userId) {
+        Session session = getHibernateSession();
+        BigInteger countInt = null;
+        Long count = null;
+
+        String queryString = "SELECT count(id) " +
+                "FROM Boards_Log as log WHERE log.logby IS NOT NULL AND log.logby != " + userId;
+        Query queryObject = session.createSQLQuery(queryString);
+        if(ValidationUtility.isExists(queryObject.uniqueResult())){
+            countInt = (BigInteger)queryObject.uniqueResult();
+            count = countInt.longValue();
+        }
+        return count;
+
+    }
 	
 	
 }

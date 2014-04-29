@@ -66,8 +66,9 @@ public class TaskController {
 
     //ajax
     @PreAuthorize("@securityService.hasBoxTaskEditPermission(#parentBoxId)")
-    @RequestMapping (value = "/task/create/{parentBoxId}/{taskTitle}/{taskDescription}", method=RequestMethod.GET)
+    @RequestMapping (value = "/task/create/{boardLogId}/{parentBoxId}/{taskTitle}/{taskDescription}", method=RequestMethod.GET)
     public @ResponseBody  Tasks createTask(ModelMap model,
+                                          @PathVariable(value="boardLogId") String boardLogId,
                                           @PathVariable(value="parentBoxId") String parentBoxId,
                                           @PathVariable(value="taskTitle") String taskTitle,
                                           @PathVariable(value="taskDescription") String taskDescription
@@ -86,10 +87,10 @@ public class TaskController {
         Tasks task = new Tasks();
         task.setTitle(taskTitle);
         task.setDescription(taskDescription);
-        task.setCreater(user);
+        task.setCreatedBy(user.getId());
         task.setStatus("new");
         task.setPriority("normal");
-        task.setCreationDateTime(new Date());
+        task.setCreatedDate(new Date());
         Boxes parentBox = (Boxes)( boxService.getBoxById(Long.valueOf(parentBoxId)) ).getObject();
         taskService.setParent(task, parentBox);
         result = taskService.save(task);
@@ -104,19 +105,33 @@ public class TaskController {
         }else{
             model.put("errorMessages", result.getMessageList());
         }
+        /*BoardWrapper bWrapper = new BoardWrapper();
+        bWrapper.setBoardId(boardLogId);
+        bWrapper = boardService.getUpdatedBoardWrapper(bWrapper);
+        model.put("boardWrapper", bWrapper);*/
         return taskToBeReturned; //queued - send model message also (if needed)
     }
 
     //ajax
-    @RequestMapping (value = "/task/edit/{taskId}/{taskTitle}/{taskDescription}", method=RequestMethod.GET)
+    @RequestMapping (value = "/task/edit/{boardLogId}/{taskId}/{taskTitle}/{taskDescription}", method=RequestMethod.GET)
     public @ResponseBody  boolean editTask(ModelMap model,
+                                          @PathVariable(value="boardLogId") String boardLogId,
                                           @PathVariable(value="taskId") String taskId,
                                           @PathVariable(value="taskTitle") String taskTitle,
                                           @PathVariable(value="taskDescription") String taskDescription
     ){
 
-
-        result = taskService.editTask(Long.valueOf(taskId), taskTitle, taskDescription);
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        result = userService.getUserByLoginId(loginId);
+        Users user = (Users)result.getObject();
+        UserWrapper wrapper = new UserWrapper();
+        wrapper.setUpdatedBy("" + user.getId());
+        result = taskService.editTask(Long.valueOf(taskId), taskTitle, taskDescription, wrapper);
+        /*BoardWrapper bWrapper = new BoardWrapper();
+        bWrapper.setBoardId(boardLogId);
+        bWrapper = boardService.getUpdatedBoardWrapper(bWrapper);
+        model.put("boardWrapper", bWrapper);*/
         if(result.getIsSuccessful()){
             return true;
         }else{
@@ -127,12 +142,23 @@ public class TaskController {
 
     
     //ajax
-    @RequestMapping (value = "/task/delete/{taskId}", method=RequestMethod.GET)
+    @RequestMapping (value = "/task/delete/{boardLogId}/{taskId}", method=RequestMethod.GET)
     public @ResponseBody  String deleteTask(ModelMap model,
+                                          @PathVariable(value="boardLogId") String boardLogId,
                                           @PathVariable(value="taskId") String taskId
                                           ){
         System.out.println("task delete controller method called.");
-        result = taskService.deleteTask(Long.parseLong(taskId));
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        result = userService.getUserByLoginId(loginId);
+        Users user = (Users)result.getObject();
+        UserWrapper wrapper = new UserWrapper();
+        wrapper.setUpdatedBy("" + user.getId());
+        result = taskService.deleteTask(Long.parseLong(taskId), wrapper);
+        /*BoardWrapper bWrapper = new BoardWrapper();
+        bWrapper.setBoardId(boardLogId);
+        bWrapper = boardService.getUpdatedBoardWrapper(bWrapper);
+        model.put("boardWrapper", bWrapper);*/
         if (result.getIsSuccessful()) {
             model.put("successMessages", result.getMessageList());
             System.out.println("task deleted ------------------");
@@ -154,7 +180,18 @@ public class TaskController {
                                             @PathVariable(value="priority") String priority
     ){
         System.out.println("task priority controller method called.");
-        result = taskService.changeTaskPriority(Long.parseLong(taskId), priority);
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        result = userService.getUserByLoginId(loginId);
+        Users user = (Users)result.getObject();
+        UserWrapper wrapper = new UserWrapper();
+        wrapper.setUpdatedBy("" + user.getId());
+
+        result = taskService.changeTaskPriority(Long.parseLong(taskId), priority, wrapper);
+        /*BoardWrapper bWrapper = new BoardWrapper();
+        bWrapper.setBoardId(boardId);
+        bWrapper = boardService.getUpdatedBoardWrapper(bWrapper);
+        model.put("boardWrapper", bWrapper);*/
         if (result.getIsSuccessful()) {
             model.put("successMessages", result.getMessageList());
             System.out.println("task priority changed ------------------");
@@ -177,7 +214,17 @@ public class TaskController {
                                            @PathVariable(value="status") String status
     ){
         System.out.println("task status controller method called.");
-        result = taskService.changeTaskStatus(Long.parseLong(taskId), status);
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        result = userService.getUserByLoginId(loginId);
+        Users user = (Users)result.getObject();
+        UserWrapper wrapper = new UserWrapper();
+        wrapper.setUpdatedBy("" + user.getId());
+        result = taskService.changeTaskStatus(Long.parseLong(taskId), status, wrapper);
+        /*BoardWrapper bWrapper = new BoardWrapper();
+        bWrapper.setBoardId(boardId);
+        bWrapper = boardService.getUpdatedBoardWrapper(bWrapper);
+        model.put("boardWrapper", bWrapper);*/
         if (result.getIsSuccessful()) {
             model.put("successMessages", result.getMessageList());
             System.out.println("task status changed ------------------");
@@ -192,16 +239,26 @@ public class TaskController {
 
     //ajax
     @PreAuthorize("@securityService.hasBoxTaskEditPermission(#initialParentBoxId)")
-    @RequestMapping (value = "/task/move/{taskId}/{initialParentBoxId}/{destinationParentBoxId}", method=RequestMethod.GET)
+    @RequestMapping (value = "/task/move/{boardLogId}/{taskId}/{initialParentBoxId}/{destinationParentBoxId}", method=RequestMethod.GET)
     public @ResponseBody  String moveTask(ModelMap model,
+                                           @PathVariable(value="boardLogId") String boardLogId,
                                            @PathVariable(value="taskId") String taskId,
                                            @PathVariable(value="initialParentBoxId") String initialParentBoxId,
                                            @PathVariable(value="destinationParentBoxId") String destinationParentBoxId
                                         ){
 
         System.out.println("task delete controller method called.");
-        result = taskService.moveTask(Long.parseLong(taskId), Long.parseLong(initialParentBoxId), Long.parseLong(destinationParentBoxId));
-
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        result = userService.getUserByLoginId(loginId);
+        Users user = (Users)result.getObject();
+        UserWrapper wrapper = new UserWrapper();
+        wrapper.setUpdatedBy("" + user.getId());
+        result = taskService.moveTask(Long.parseLong(taskId), Long.parseLong(initialParentBoxId), Long.parseLong(destinationParentBoxId), wrapper);
+        /*BoardWrapper bWrapper = new BoardWrapper();
+        bWrapper.setBoardId(boardLogId);
+        bWrapper = boardService.getUpdatedBoardWrapper(bWrapper);
+        model.put("boardWrapper", bWrapper);*/
         Tasks savedTask = (Tasks)result.getObject();
 //        Tasks taskToBeReturned = new Tasks();
 //        taskToBeReturned.setTitle(savedTask.getTitle());
@@ -227,6 +284,10 @@ public class TaskController {
                             @RequestParam("file") MultipartFile file
         ) throws IOException {
         System.out.println("taskId is: "+taskIdForFileUpload+" and file name and size are: "+file.getName()+ " " +file.getSize()/1024+ " kb, content type: " +file.getContentType() + file.getOriginalFilename() + "THe description is: " +fileDescription);
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        result = userService.getUserByLoginId(loginId);
+        Users user = (Users)result.getObject();
         String filePathToSave =  "/attachments/"+taskIdForFileUpload+"/"+file.getOriginalFilename();
         FileUtils.writeByteArrayToFile(new File(filePathToSave), file.getBytes());
         Attachment attachment = new Attachment();
@@ -234,6 +295,8 @@ public class TaskController {
         attachment.setSize(file.getSize() / 1024);//convert to kb instead of bytes
         attachment.setPath(filePathToSave);
         attachment.setDescription(fileDescription);
+        attachment.setCreatedBy(user.getId());
+        attachment.setCreatedDate(new Date());
         Long taskId = Long.parseLong(taskIdForFileUpload);
         System.out.println("service call param for task: ===========" +taskId);
         result = taskService.saveAttachment(taskId, attachment);
@@ -272,10 +335,21 @@ public class TaskController {
     }
 
     //ajax
-    @RequestMapping (value = "/attachment/delete/{attachmentId}", method=RequestMethod.GET)
+    @RequestMapping (value = "/attachment/delete/{boardLogId}/{attachmentId}", method=RequestMethod.GET)
     public @ResponseBody  String deleteAttachment(ModelMap model,
+                                          @PathVariable(value="boardLogId") String boardLogId,
                                           @PathVariable(value="attachmentId") Long attachmentId ){
-        result =  taskService.deleteAttachment(attachmentId);
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        result = userService.getUserByLoginId(loginId);
+        Users user = (Users)result.getObject();
+        UserWrapper wrapper = new UserWrapper();
+        wrapper.setUpdatedBy("" + user.getId());
+        result =  taskService.deleteAttachment(attachmentId, wrapper);
+        /*BoardWrapper bWrapper = new BoardWrapper();
+        bWrapper.setBoardId(boardLogId);
+        bWrapper = boardService.getUpdatedBoardWrapper(bWrapper);
+        model.put("boardWrapper", bWrapper);*/
         if(result.getIsSuccessful()){
             System.out.println("attachment deleted ==========");
             return "success";
@@ -389,18 +463,8 @@ public class TaskController {
                         Object ob = iter.next();
                         if(ob.equals("boardId")){
                             wrapper1.setBoardId("" + jObject.get(ob));
-                        }else if(ob.equals("boardCount")){
-                            wrapper1.setBoardCount("" + jObject.get(ob));
-                        }else if(ob.equals("boardUserCount")){
-                            wrapper1.setBoardUserCount("" + jObject.get(ob));
-                        }else if(ob.equals("taskCount")){
-                            wrapper1.setTaskCount("" + jObject.get(ob));
-                        }else if(ob.equals("taskUserCount")){
-                            wrapper1.setTaskUserCount("" + jObject.get(ob));
-                        }else if(ob.equals("boxCount")){
-                            wrapper1.setBoxCount("" + jObject.get(ob));
-                        }else if(ob.equals("attachmentCount")){
-                            wrapper1.setAttachmentCount("" + jObject.get(ob));
+                        }else if(ob.equals("totalCount")){
+                            wrapper1.setTotalCount("" + jObject.get(ob));
                         }else{
                             //do nothing
                         }
@@ -410,8 +474,10 @@ public class TaskController {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
         }
+        HttpSession session = request.getSession(true);
         BoardWrapper retWrapper = new BoardWrapper();
         retWrapper.setBoardUpdateRequired(false);
+        wrapper1.setBoardUserId("" + session.getAttribute("userId"));
         retWrapper = boardService.getUpdatedBoardWrapper(wrapper1);
         if(retWrapper.isBoardUpdateRequired()){
             System.out.println("New Board Updates");

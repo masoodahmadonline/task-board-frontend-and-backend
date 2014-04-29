@@ -19,42 +19,22 @@
 <script type="text/javascript">
 
     var boardIdValue;
-    var boardCountValue;
-    var boardUserCountValue;
-    var taskCountValue;
-    var taskUserCountValue;
-    var boxCountValue;
-    var attachmentCountValue;
+    var totalCountValue;
 
     function setVariables() {
         boardIdValue = "${boardWrapper.boardId}";
-        boardCountValue = "${boardWrapper.boardCount}";
-        boardUserCountValue = "${boardWrapper.boardUserCount}";
-        taskCountValue = "${boardWrapper.taskCount}";
-        taskUserCountValue = "${boardWrapper.taskUserCount}";
-        boxCountValue = "${boardWrapper.boxCount}";
-        attachmentCountValue = "${boardWrapper.attachmentCount}";
+        totalCountValue = "${boardWrapper.totalCount}";
     }
 
     window.setInterval(function () {
         ShowDialog();
-    }, 10000);
+    }, 20000);
     function ShowDialog() {
         var obj = {};
         var boardId = "boardId";
-        var boardCount = "boardCount";
-        var boardUserCount = "boardUserCount";
-        var taskCount = "taskCount";
-        var taskUserCount = "taskUserCount";
-        var boxCount = "boxCount";
-        var attachmentCount = "attachmentCount";
+        var totalCount = "totalCount";
         obj[boardId] = boardIdValue;
-        obj[boardCount] = boardCountValue;
-        obj[boardUserCount] = boardUserCountValue;
-        obj[taskCount] = taskCountValue;
-        obj[taskUserCount] = taskUserCountValue;
-        obj[boxCount] = boxCountValue;
-        obj[attachmentCount] = attachmentCountValue;
+        obj[totalCount] = totalCountValue;
         var objList = [];
         objList.push(obj);
 
@@ -68,12 +48,7 @@
             async: false,
             success: function(response){
                 boardIdValue = response.boardId;
-                boardCountValue = response.boardCount;
-                boardUserCountValue = response.boardUserCount;
-                taskCountValue = response.taskCount;
-                taskUserCountValue = response.taskUserCount;
-                boxCountValue = response.boxCount;
-                attachmentCountValue = response.attachmentCount;
+                //totalCountValue = response.totalCount;
                 if(response.boardUpdateRequired){
                     showBoardUpdateMessage(response.message);
                 }else{
@@ -117,13 +92,13 @@ function ajaxCreateBox(parent){
     if (parentElementId.split("-")[0] == "boardid"){ parentType = "board";}
     if (parentElementId.split("-")[0] == "boxid"){ parentType = "box";}
 
-
+    var boardLogId = "${board.id}";
     var boxType = $('input[name="box-creation-form-type"]:checked').val();
     var boxTitle = $("#box-creation-form-title").val();
     var boxDescription = $("#box-creation-form-description").val();
     if(boxTitle.length > 0 && boxDescription.length > 0){
         $.ajax({
-            url: "${pageContext.request.contextPath}/box/create/"+parentType+"/"+parentId+"/"+boxType+"/"+boxTitle+"/"+boxDescription,
+            url: "${pageContext.request.contextPath}/box/create/"+boardLogId+"/"+parentType+"/"+parentId+"/"+boxType+"/"+boxTitle+"/"+boxDescription,
             cache: false,
             //data:'firstName=' + $("#firstName").val() + "&lastName=" + $("#lastName").val() + "&email=" + $("#email").val(),
             success: function(response){
@@ -157,13 +132,12 @@ function ajaxCreateBox(parent){
                 $('#boxid-'+fetchedBoxId+' .delete-box-wizard').click(function () {
                     ajaxDeleteBox(     $(this).parents(".box").first()      );
                 });
-
-                showSuccessMessage('Box deleted successfully!');
+                showSuccessMessage('Box created successfully!');
 
 
             },
             error: function(){
-                showErrorMessage('There was a problem deleting Box. Check internet connectivity and access rights');
+                showErrorMessage('There was a problem creating Box. Check internet connectivity and access rights');
             }
 
 
@@ -177,14 +151,14 @@ function ajaxCreateBox(parent){
 
 function ajaxCreateTask(parentBox){
     console.log('boo');
-
+    var boardLogId = "${board.id}";
     var parentBoxId = parentBox.attr('id').split("-")[1];
     var taskTitle = $("#task-creation-form-title").val();
     var taskDescription = $("#task-creation-form-description").val();
     if(taskTitle.length > 0 && taskDescription.length > 0){
         $( "#task-creation-form" ).dialog( "close" );
         $.ajax({
-            url: "${pageContext.request.contextPath}/task/create/"+parentBoxId+"/"+taskTitle+"/"+taskDescription,
+            url: "${pageContext.request.contextPath}/task/create/"+boardLogId+"/"+parentBoxId+"/"+taskTitle+"/"+taskDescription,
             cache: false,
 
             success: function(response){
@@ -260,22 +234,21 @@ function ajaxCreateTask(parentBox){
 
 function ajaxDeleteBox(box){
     var boxId = box.attr('id').split("-")[1];
+    var boardLogId = "${board.id}";
     //alert("box id to be sent for deletion by ajax call: "+boxId);
 
     $.ajax({
 
-        url: "${pageContext.request.contextPath}/box/delete/"+boxId,
+        url: "${pageContext.request.contextPath}/box/delete/"+boardLogId+"/"+boxId,
 
         cache: false,
 
         success: function(response){
-
             box.remove();
-
-
+            showSuccessMessage('Box deleted successfully!');
         },
         error: function(){
-            alert('Error while request..');
+            showErrorMessage('There was a problem deleting Box. Check internet connectivity and access rights');
         }
 
     });
@@ -284,10 +257,11 @@ function ajaxDeleteBox(box){
 
 function ajaxEditBox(box, boxType, boxTitle, boxDescription, success, error){
     var boxId = box.attr('id').split("-")[1];
+    var boardLogId = "${board.id}";
     //alert("box id to be sent to edit by ajax call: "+boxId +" type:"+boxType+" title:"+boxTitle+" desc"+boxDescription);
 
     $.ajax({
-        url: "${pageContext.request.contextPath}/box/edit/"+boxId+"/"+boxType+"/"+boxTitle+"/"+boxDescription,
+        url: "${pageContext.request.contextPath}/box/edit/"+boardLogId+"/"+boxId+"/"+boxType+"/"+boxTitle+"/"+boxDescription,
         cache: false,
         success: success,
         error: error
@@ -296,10 +270,11 @@ function ajaxEditBox(box, boxType, boxTitle, boxDescription, success, error){
 
 function ajaxEditTask(task, taskTitle, taskDescription, success, error){
     var taskId = task.attr('id').split("-")[1];
+    var boardLogId = "${board.id}";
     //alert("task id to be sent to edit by ajax call: "+taskId +" title:"+taskTitle+" desc"+taskDescription);
 
     $.ajax({
-        url: "${pageContext.request.contextPath}/task/edit/"+taskId+"/"+taskTitle+"/"+taskDescription,
+        url: "${pageContext.request.contextPath}/task/edit/"+boardLogId+"/"+taskId+"/"+taskTitle+"/"+taskDescription,
         cache: false,
         success: success,
         error: error
@@ -310,14 +285,16 @@ function ajaxEditTask(task, taskTitle, taskDescription, success, error){
 
 function ajaxDeleteTask(task){
     var taskId = task.attr('id').split("-")[1];
+    var boardLogId = "${board.id}";
     $.ajax({
-        url: "${pageContext.request.contextPath}/task/delete/"+taskId,
+        url: "${pageContext.request.contextPath}/task/delete/"+boardLogId+"/"+taskId,
         cache: false,
         success: function(response){
             task.remove();
+            showSuccessMessage('Task deleted successfully!');
         },
         error: function(){
-            alert('Error while request..');
+            showErrorMessage('There was a problem deleting Task. Check internet connectivity and access rights');
         }
     });
 }
@@ -343,6 +320,7 @@ function ajaxChangeTaskStatus(boardId, taskId, status, success, error){
 }
 
 function ajaxMoveTask(taskId, initialParentBoxId, destinationParentBoxId, success, error){
+    var boardLogId = "${board.id}";
 //                var taskId = task.attr('id').split("-")[1];
 //                var initialParentBox = task.parents(".box").first();
 //                var initialParentBoxId = initialParentBox.attr('id').split("-")[1];
@@ -351,7 +329,7 @@ function ajaxMoveTask(taskId, initialParentBoxId, destinationParentBoxId, succes
 
     $.ajax({
 
-        url: "${pageContext.request.contextPath}/task/move/"+taskId+"/"+initialParentBoxId+"/"+destinationParentBoxId,
+        url: "${pageContext.request.contextPath}/task/move/"+boardLogId+"/"+taskId+"/"+initialParentBoxId+"/"+destinationParentBoxId,
 
         cache: false,
         success: success,
@@ -360,13 +338,14 @@ function ajaxMoveTask(taskId, initialParentBoxId, destinationParentBoxId, succes
 }
 
 function ajaxDeleteAttachment(attachmentId, success, error){
+    var boardLogId = "${board.id}";
     //                var taskId = task.attr('id').split("-")[1];
     //                var initialParentBox = task.parents(".box").first();
     //                var initialParentBoxId = initialParentBox.attr('id').split("-")[1];
 
     console.log("attachmentId id to be sent for deletion by ajax call: "+attachmentId);
     $.ajax({
-        url: "${pageContext.request.contextPath}/attachment/delete/"+attachmentId,
+        url: "${pageContext.request.contextPath}/attachment/delete/"+boardLogId+"/"+attachmentId,
         cache: false,
         success: success,
         error: error
@@ -1537,7 +1516,7 @@ function ajaxAssignTask(board, task){
             console.log("task id for user assignment is :" +  $('#taskIdForAssignUser').val());
         },
         error: function(){
-            alert('Error while request..');
+            showErrorMessage('There was a problem during task assignment to the user. Please check internet connectivity and access rights');
         }
     });
 }
@@ -1588,7 +1567,7 @@ function ajaxAssignTaskSubmit(ulist){
             }
         },
         error: function(){
-            alert('Error while request..');
+            showErrorMessage('There is a problem during task assignment to the user. Please check internet connectivity and access rights');
         }
 
     });

@@ -171,6 +171,7 @@ public class BoardsServiceImpl implements BoardsService{
         retWrapper.setBoardId(wrapper.getBoardId());
         retWrapper.setBoardUpdateRequired(false);
         long totalCount = 0;
+        long totalBoardCount = 0;
         Long boardCount = null;
         Long boardUserCount = null;
         Long taskCount = null;
@@ -178,8 +179,8 @@ public class BoardsServiceImpl implements BoardsService{
         Long attachmentCount = null;
         Long boxCount = null;
 
-        if(ValidationUtility.isExists(wrapper.getBoardId())){
-            boxCount = boardDAO.getBoxesCount(Long.valueOf(wrapper.getBoardId()));
+        if(ValidationUtility.isExists(wrapper.getBoardId()) && ValidationUtility.isExists(wrapper.getBoardUserId())){
+            /*boxCount = boardDAO.getBoxesCount(Long.valueOf(wrapper.getBoardId()));
             if(ValidationUtility.isExists(boxCount)){
                 retWrapper.setBoxCount("" +boxCount);
             }
@@ -197,10 +198,14 @@ public class BoardsServiceImpl implements BoardsService{
             taskCount = boardDAO.getTaskCount(Long.valueOf(wrapper.getBoardId()));
             if(ValidationUtility.isExists(taskCount)){
                 retWrapper.setTaskCount("" +taskCount);
+            }*/
+            totalBoardCount = boardDAO.getTotalBoardCount(Long.valueOf(wrapper.getBoardId()), Long.valueOf(wrapper.getBoardUserId()));
+            if(ValidationUtility.isExists(totalBoardCount)){
+                retWrapper.setTotalCount("" +totalBoardCount);
             }
         }
 
-        if(ValidationUtility.isExists(wrapper.getBoxCount()) && ValidationUtility.isExists(boxCount)){
+        /*if(ValidationUtility.isExists(wrapper.getBoxCount()) && ValidationUtility.isExists(boxCount)){
             if(boxCount > Long.valueOf(wrapper.getBoxCount())){
                 totalCount = totalCount + (boxCount - Long.valueOf(wrapper.getBoxCount()));
             }
@@ -233,6 +238,15 @@ public class BoardsServiceImpl implements BoardsService{
             }
             if(taskCount < Long.valueOf(wrapper.getTaskCount())){
                 totalCount = totalCount + (Long.valueOf(wrapper.getTaskCount()) - taskCount);
+            }
+        }*/
+
+        if(ValidationUtility.isExists(wrapper.getTotalCount()) && ValidationUtility.isExists(totalBoardCount)){
+            if(totalBoardCount > Long.valueOf(wrapper.getTotalCount())){
+                totalCount = totalCount + (totalBoardCount - Long.valueOf(wrapper.getTotalCount()));
+            }
+            if(totalBoardCount < Long.valueOf(wrapper.getTotalCount())){
+                totalCount = totalCount + (Long.valueOf(wrapper.getTotalCount()) - totalBoardCount);
             }
         }
 

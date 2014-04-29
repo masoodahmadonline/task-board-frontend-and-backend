@@ -30,6 +30,10 @@ import web.service.CompaniesService;
 import web.service.UsersService;
 import web.service.common.Result;
 import web.service.common.ResultImpl;
+import web.wrapper.BoardWrapper;
+import web.wrapper.UserWrapper;
+
+import java.util.Date;
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpSession;
 
@@ -45,6 +49,8 @@ public class BoxController {
     @Autowired
     private BoardsService boardService;
     @Autowired
+    private UsersService userService;
+    @Autowired
     private MessageSource messages;
     @Autowired
     private Result result;
@@ -52,8 +58,9 @@ public class BoxController {
     
     //ajax
     @PreAuthorize("@securityService.hasBoxCreatePermission(#parent, #parentId)")
-    @RequestMapping (value = "/box/create/{parent}/{parentId}/{boxType}/{boxTitle}/{boxDescription}", method=RequestMethod.GET)
+    @RequestMapping (value = "/box/create/{boardLogId}/{parent}/{parentId}/{boxType}/{boxTitle}/{boxDescription}", method=RequestMethod.GET)
     public @ResponseBody  Boxes createBox(ModelMap model,
+                                          @PathVariable(value="boardLogId") String boardLogId,
                                           @PathVariable(value="parent") String parent,
                                           @PathVariable(value="parentId") String parentId,
                                           @PathVariable(value="boxType") String boxType,
@@ -65,11 +72,17 @@ public class BoxController {
         //verify for privs of user if he can create box or not.
         
         //create box in the parent board / box
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        result = userService.getUserByLoginId(loginId);
+        Users user = (Users)result.getObject();
         Boxes boxToBeReturned = null;
         Boxes box = new Boxes();
         box.setTitle(boxTitle);
         box.setType(boxType);
         box.setDescription(boxDescription);
+        box.setCreatedBy(user.getId());
+        box.setCreatedDate(new Date());
         if(parent.equals("board")){
             box.setIsFirstLevelBox(true);
             Boards board = (Boards)( boardService.getBoardById(Long.valueOf(parentId)) ).getObject();
@@ -94,13 +107,18 @@ public class BoxController {
         }else{
             model.put("errorMessages", result.getMessageList());
         }
+        /*BoardWrapper bWrapper = new BoardWrapper();
+        bWrapper.setBoardId(boardLogId);
+        bWrapper = boardService.getUpdatedBoardWrapper(bWrapper);
+        model.put("boardWrapper", bWrapper);*/
         return boxToBeReturned; //queued - send model message also (if needed)
     }
 
     //ajax
     @PreAuthorize("@securityService.hasBoxTaskEditPermission(#boxId)")
-    @RequestMapping (value = "/box/edit/{boxId}/{boxType}/{boxTitle}/{boxDescription}", method=RequestMethod.GET)
+    @RequestMapping (value = "/box/edit/{boardLogId}/{boxId}/{boxType}/{boxTitle}/{boxDescription}", method=RequestMethod.GET)
     public @ResponseBody  boolean editBox(ModelMap model,
+                                          @PathVariable(value="boardLogId") String boardLogId,
                                           @PathVariable(value="boxId") String boxId,
                                           @PathVariable(value="boxType") String boxType,
                                           @PathVariable(value="boxTitle") String boxTitle,
@@ -109,8 +127,17 @@ public class BoxController {
         //queue {user-module}
         //get user id from session (save id in session first)
         //verify for privs of user if he can edit box or not.
-
-        result = boxService.editBox(Long.valueOf(boxId), boxType, boxTitle, boxDescription);
+        User springUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String loginId = springUser.getUsername();
+        result = userService.getUserByLoginId(loginId);
+        Users user = (Users)result.getObject();
+        UserWrapper wrapper = new UserWrapper();
+        wrapper.setUpdatedBy("" + user.getId());
+        result = boxService.editBox(Long.valueOf(boxId), boxType, boxTitle, boxDescription, wrapper);
+        /*BoardWrapper bWrapper = new BoardWrapper();
+        bWrapper.setBoardId(boardLogId);
+        bWrapper = boardService.getUpdatedBoardWrapper(bWrapper);
+        model.put("boardWrapper", bWrapper);*/
         if(result.getIsSuccessful()){
             return true;
         }else{
@@ -121,12 +148,17 @@ public class BoxController {
 
     //ajax
     @PreAuthorize("@securityService.hasBoxTaskEditPermission(#boxId)")
-    @RequestMapping (value = "/box/delete/{boxId}", method=RequestMethod.GET)
+    @RequestMapping (value = "/box/delete/{boardLogId}/{boxId}", method=RequestMethod.GET)
     public @ResponseBody  String deleteBox(ModelMap model,
+                                          @PathVariable(value="boardLogId") String boardLogId,
                                           @PathVariable(value="boxId") String boxId
                                           ){
         System.out.println("box delete controller method called.");
         result = boxService.deleteBox(Long.parseLong(boxId));
+        /*BoardWrapper bWrapper = new BoardWrapper();
+        bWrapper.setBoardId(boardLogId);
+        bWrapper = boardService.getUpdatedBoardWrapper(bWrapper);
+        model.put("boardWrapper", bWrapper);*/
         if(result.getIsSuccessful()){
             model.put("successMessages", result.getMessageList());
             System.out.println("box deleted ------------------");

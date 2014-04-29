@@ -577,10 +577,10 @@ public class UserController {
         Users user = (Users)result.getObject();
         HttpSession session = request.getSession(true);
         session.setAttribute("userName", user.getFirstName());
+        session.setAttribute("userId", user.getId());
         result = boardService.getBoardListByUser(user);
         List<Boards> boardList = new ArrayList<Boards>((List)result.getObject());
         model.put("boards",boardList);
-        System.out.println("boardList size: "+boardList.size());
         for(Boards b: boardList){
          System.out.println("The board id fetched was "+b.getId());
         }

@@ -21,6 +21,7 @@ import web.entity.Tasks;
 import web.entity.Users;
 import web.service.common.ResultImpl;
 import web.service.common.ValidationUtility;
+import web.wrapper.UserWrapper;
 
 import java.util.*;
 
@@ -41,13 +42,17 @@ public class TasksServiceImpl implements TasksService{
 
 
     @Transactional (readOnly = false)
-    public ResultImpl editTask(Long id, String taskTitle, String taskDescription){
+    public ResultImpl editTask(Long id, String taskTitle, String taskDescription, UserWrapper wrapper){
         result = getTaskById(id);
         if(result.getIsSuccessful()){
             Tasks task = (Tasks)result.getObject();
 
             task.setTitle(taskTitle);
             task.setDescription(taskDescription);
+            if(ValidationUtility.isExists(wrapper.getUpdatedBy())){
+                task.setUpdatedBy(Long.valueOf(wrapper.getUpdatedBy()));
+                task.setUpdatedDate(new Date());
+            }
             result.setObject(task);
             result.setMessageList(Arrays.asList("success.taskEdited"));
         }else{
@@ -57,9 +62,9 @@ public class TasksServiceImpl implements TasksService{
     }
 
     @Transactional (readOnly = false)
-    public ResultImpl changeTaskStatus(Long id, String status){
+    public ResultImpl changeTaskStatus(Long id, String status, UserWrapper wrapper){
         Tasks task = (Tasks)(getTaskById(id)).getObject();
-        Tasks taskWithChangedStatus = setTaskStatus(task,status);
+        Tasks taskWithChangedStatus = setTaskStatus(task,status, wrapper);
         if(taskWithChangedStatus.getStatus().equals(status)){
             result.setIsSuccessful(true);
             result.setMessageList(Arrays.asList("success.taskStatusChanged"));
@@ -72,7 +77,11 @@ public class TasksServiceImpl implements TasksService{
     }
 
     @Transactional (readOnly = false)
-    public Tasks setTaskStatus(Tasks task, String status){
+    public Tasks setTaskStatus(Tasks task, String status, UserWrapper wrapper){
+        if(ValidationUtility.isExists(wrapper.getUpdatedBy())){
+            task.setUpdatedBy(Long.valueOf(wrapper.getUpdatedBy()));
+            task.setUpdatedDate(new Date());
+        }
         task.setStatus(status);
         return task;
     }
@@ -112,11 +121,15 @@ public class TasksServiceImpl implements TasksService{
     }
     
     @Transactional(readOnly = false)
-    public ResultImpl deleteTask(Long id){
+    public ResultImpl deleteTask(Long id, UserWrapper wrapper){
         // Implementation for removing associated user to each task
         int size = 0;
         Tasks task = new Tasks();
         task = (Tasks) userDAO.findById(task, id);
+        if(ValidationUtility.isExists(wrapper.getUpdatedBy())){
+            task.setUpdatedBy(Long.valueOf(wrapper.getUpdatedBy()));
+            task.setUpdatedDate(new Date());
+        }
         /*if(task.getUserList().isEmpty()){
             userDAO.remove(task);
         }else{
@@ -151,8 +164,8 @@ public class TasksServiceImpl implements TasksService{
     }
 
     @Transactional(readOnly = false)
-    public ResultImpl deleteAttachment(Long id){
-        if(taskDAO.deleteAttachment(id)){
+    public ResultImpl deleteAttachment(Long id, UserWrapper wrapper){
+        if(taskDAO.deleteAttachment(id, wrapper)){
             result.setIsSuccessful(true);
             result.setMessageList(Arrays.asList("success.attachmentDeleted"));
         }else{
@@ -163,9 +176,9 @@ public class TasksServiceImpl implements TasksService{
     }
 
     @Transactional (readOnly = false)
-    public ResultImpl changeTaskPriority(Long id, String priority){
+    public ResultImpl changeTaskPriority(Long id, String priority, UserWrapper wrapper){
         Tasks task = (Tasks)(getTaskById(id)).getObject();
-        Tasks taskWithChangedPriority = setTaskPriority(task,priority);
+        Tasks taskWithChangedPriority = setTaskPriority(task,priority, wrapper);
         if(taskWithChangedPriority.getPriority().equals(priority)){
             result.setIsSuccessful(true);
             result.setMessageList(Arrays.asList("success.taskPriorityChanged"));
@@ -192,16 +205,24 @@ public class TasksServiceImpl implements TasksService{
     }
 
     @Transactional (readOnly = false)
-    public Tasks setTaskPriority(Tasks task, String priority){
+    public Tasks setTaskPriority(Tasks task, String priority, UserWrapper wrapper){
+        if(ValidationUtility.isExists(wrapper.getUpdatedBy())){
+            task.setUpdatedBy(Long.valueOf(wrapper.getUpdatedBy()));
+            task.setUpdatedDate(new Date());
+        }
         task.setPriority(priority);
         return task;
     }
 
     @Transactional(readOnly = false) //queued, to be made like changeTaskPriority(Long id, String priority)
-    public ResultImpl moveTask(Long taskId, Long initialParentBoxId, Long destinationParentBoxId){
+    public ResultImpl moveTask(Long taskId, Long initialParentBoxId, Long destinationParentBoxId, UserWrapper wrapper){
         Tasks task = taskDAO.getTaskById(taskId);
         Boxes newParentBox = boxDAO.getBoxById(destinationParentBoxId);
         task.setParentBox(newParentBox);//queued
+        if(ValidationUtility.isExists(wrapper.getUpdatedBy())){
+            task.setUpdatedBy(Long.valueOf(wrapper.getUpdatedBy()));
+            task.setUpdatedDate(new Date());
+        }
         if(task != null){
             result.setObject(task);
             result.setIsSuccessful(true);

@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class BoardWrapper implements Serializable {
     private String boardId;
+    private String boardUserId;
     private boolean boardUpdateRequired = false;
     private String boardCount;
     private String boardUserCount;
@@ -23,9 +24,12 @@ public class BoardWrapper implements Serializable {
     private String boxCount;
     private String attachmentCount;
     private String message;
+    private String totalCount;
 
     public void clearAll(){
         this.setBoardId("");
+        this.setBoardUserId("");
+        this.setTotalCount("");
         this.setAttachmentCount("");
         this.setBoardCount("");
         this.setBoardUpdateRequired(false);
@@ -108,5 +112,21 @@ public class BoardWrapper implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(String totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public String getBoardUserId() {
+        return boardUserId;
+    }
+
+    public void setBoardUserId(String boardUserId) {
+        this.boardUserId = boardUserId;
     }
 }

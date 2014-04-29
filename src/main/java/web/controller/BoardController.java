@@ -146,6 +146,9 @@ public class BoardController {
        String companyId = null;
        companyId = userService.getCompanyId(loginId);
 
+       result = userService.getUserByLoginId(loginId);
+       Users user = (Users)result.getObject();
+
        usersList = userService.listUsersWithDetail(companyId, id);
        //UserWrapper userWrapper = new UserWrapper();
        //userWrapper.setUserList(usersList);
@@ -160,6 +163,7 @@ public class BoardController {
         session.setAttribute("previous_page", "/"+uriArray[uriArraySize-2]+"/"+uriArray[uriArraySize-1]);
         BoardWrapper bWrapper = new BoardWrapper();
         bWrapper.setBoardId(id);
+        bWrapper.setBoardUserId("" + user.getId());
         bWrapper = boardService.getUpdatedBoardWrapper(bWrapper);
         model.put("boardWrapper", bWrapper);
         result =  boardService.getBoardByIdToDisplay(Long.parseLong(id));

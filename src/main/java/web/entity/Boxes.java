@@ -6,6 +6,7 @@ package web.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.*;
 
 /**
@@ -37,6 +38,10 @@ public class Boxes {
     private boolean isFirstLevelBox; //in a board.
     @ManyToMany
     private Collection <Users> userList = new ArrayList<Users>();
+    private Long createdBy;
+    private Date createdDate;
+    private Long updatedBy;
+    private Date updatedDate;
 
     /**
      * @return the id
@@ -180,4 +185,35 @@ public class Boxes {
         this.userList = userList;
     }
 
+    public Long getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Long getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Long updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
 }

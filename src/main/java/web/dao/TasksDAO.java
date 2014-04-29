@@ -9,6 +9,7 @@ import java.util.List;
 import web.entity.Attachment;
 import web.entity.Boxes;
 import web.entity.Tasks;
+import web.wrapper.UserWrapper;
 
 /**
  * 
@@ -28,6 +29,6 @@ public interface TasksDAO {
     public boolean deleteTask(Long id);
     public Attachment saveAttachment(Attachment attachment);
     public Attachment getAttachmentById(Long id);
-    public boolean deleteAttachment(Long id);
+    public boolean deleteAttachment(Long id, UserWrapper wrapper);
         
 }

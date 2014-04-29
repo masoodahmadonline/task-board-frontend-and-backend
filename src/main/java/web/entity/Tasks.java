@@ -26,9 +26,10 @@ public class Tasks {
     private String priority; // high , low, critical, normal
     private String status; //completed, working, pending/queued, in problems.
     private String userSize; // just for checking how many users assigned to this task (no backend functionality)
-    @ManyToOne
-    private Users creater;
-    private Date creationDateTime;
+    private Long createdBy;
+    private Date createdDate;
+    private Long updatedBy;
+    private Date updatedDate;
 
     @OneToMany(cascade=CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "tasklist")
     private Collection<Tasks_Users_Updated> taskUsers = new ArrayList<Tasks_Users_Updated>();
@@ -157,19 +158,36 @@ public class Tasks {
         this.userList = userList;
     }
 
-    public Users getCreater() {
-        return creater;
+
+    public Long getCreatedBy() {
+        return createdBy;
     }
 
-    public void setCreater(Users creater) {
-        this.creater = creater;
+    public void setCreatedBy(Long createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public Date getCreationDateTime() {
-        return creationDateTime;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreationDateTime(Date creationDateTime) {
-        this.creationDateTime = creationDateTime;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Long getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Long updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
     }
 }

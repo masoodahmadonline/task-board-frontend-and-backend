@@ -10,6 +10,8 @@ import web.dao.TasksDAO;
 import web.entity.Attachment;
 import web.entity.Tasks;
 import web.entity.Boxes;
+import web.service.common.ValidationUtility;
+import web.wrapper.UserWrapper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -51,9 +53,13 @@ public class TasksDAOImpl implements TasksDAO {
          return b;
     }
 
-    public boolean deleteAttachment(Long id){
+    public boolean deleteAttachment(Long id, UserWrapper wrapper){
         boolean b = false;
         Attachment attachment = entityManager.find(Attachment.class, id);
+        if(ValidationUtility.isExists(wrapper.getUpdatedBy())){
+            attachment.setUpdatedBy(Long.valueOf(wrapper.getUpdatedBy()));
+            attachment.setUpdatedDate(new Date());
+        }
         System.out.println("Task fetched for deletion: "+ attachment.getId());
         if(attachment != null){
             entityManager.remove(attachment);
