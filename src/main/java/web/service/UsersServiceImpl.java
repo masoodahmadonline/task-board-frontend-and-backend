@@ -503,6 +503,9 @@ public class UsersServiceImpl implements UsersService{
                                         taskUsers = new Tasks_Users_Updated();
                                         taskUsers.setUserlist(uTable);
                                         taskUsers.setTasklist(tTable);
+                                        if(ValidationUtility.isExists(wrapper.getBoardId())){
+                                            taskUsers.setBoardLogId(Long.valueOf(wrapper.getBoardId()));
+                                        }
                                         if(ValidationUtility.isExists(wrapper.getCreatedBy())){
                                             taskUsers.setCreatedBy(Long.valueOf(wrapper.getCreatedBy()));
                                         }

@@ -164,103 +164,6 @@ public class BoardsServiceImpl implements BoardsService{
         }
         return result;
     }
-
-    @Transactional
-    public BoardWrapper getUpdatedBoardWrapper(BoardWrapper wrapper){
-        BoardWrapper retWrapper = new BoardWrapper();
-        retWrapper.setBoardId(wrapper.getBoardId());
-        retWrapper.setBoardUpdateRequired(false);
-        long totalCount = 0;
-        long totalBoardCount = 0;
-        Long boardCount = null;
-        Long boardUserCount = null;
-        Long taskCount = null;
-        Long taskUserCount = null;
-        Long attachmentCount = null;
-        Long boxCount = null;
-
-        if(ValidationUtility.isExists(wrapper.getBoardId()) && ValidationUtility.isExists(wrapper.getBoardUserId())){
-            /*boxCount = boardDAO.getBoxesCount(Long.valueOf(wrapper.getBoardId()));
-            if(ValidationUtility.isExists(boxCount)){
-                retWrapper.setBoxCount("" +boxCount);
-            }
-
-            attachmentCount = boardDAO.getAttachmentCount(Long.valueOf(wrapper.getBoardId()));
-            if(ValidationUtility.isExists(attachmentCount)){
-                retWrapper.setAttachmentCount("" +attachmentCount);
-            }
-
-            taskUserCount = boardDAO.getTaskUserCount(Long.valueOf(wrapper.getBoardId()));
-            if(ValidationUtility.isExists(taskUserCount)){
-                retWrapper.setTaskUserCount("" +taskUserCount);
-            }
-
-            taskCount = boardDAO.getTaskCount(Long.valueOf(wrapper.getBoardId()));
-            if(ValidationUtility.isExists(taskCount)){
-                retWrapper.setTaskCount("" +taskCount);
-            }*/
-            totalBoardCount = boardDAO.getTotalBoardCount(Long.valueOf(wrapper.getBoardId()), Long.valueOf(wrapper.getBoardUserId()));
-            if(ValidationUtility.isExists(totalBoardCount)){
-                retWrapper.setTotalCount("" +totalBoardCount);
-            }
-        }
-
-        /*if(ValidationUtility.isExists(wrapper.getBoxCount()) && ValidationUtility.isExists(boxCount)){
-            if(boxCount > Long.valueOf(wrapper.getBoxCount())){
-                totalCount = totalCount + (boxCount - Long.valueOf(wrapper.getBoxCount()));
-            }
-            if(boxCount < Long.valueOf(wrapper.getBoxCount())){
-                totalCount = totalCount + (Long.valueOf(wrapper.getBoxCount()) - boxCount);
-            }
-        }
-
-        if(ValidationUtility.isExists(wrapper.getAttachmentCount()) && ValidationUtility.isExists(attachmentCount)){
-            if(attachmentCount > Long.valueOf(wrapper.getAttachmentCount())){
-                totalCount = totalCount + (attachmentCount - Long.valueOf(wrapper.getAttachmentCount()));
-            }
-            if(attachmentCount < Long.valueOf(wrapper.getAttachmentCount())){
-                totalCount = totalCount + (Long.valueOf(wrapper.getAttachmentCount()) - attachmentCount);
-            }
-        }
-
-        if(ValidationUtility.isExists(wrapper.getTaskUserCount()) && ValidationUtility.isExists(taskUserCount)){
-            if(taskUserCount > Long.valueOf(wrapper.getTaskUserCount())){
-                totalCount = totalCount + (taskUserCount - Long.valueOf(wrapper.getTaskUserCount()));
-            }
-            if(taskUserCount < Long.valueOf(wrapper.getTaskUserCount())){
-                totalCount = totalCount + (Long.valueOf(wrapper.getTaskUserCount()) - taskUserCount);
-            }
-        }
-
-        if(ValidationUtility.isExists(wrapper.getTaskCount()) && ValidationUtility.isExists(taskCount)){
-            if(taskCount > Long.valueOf(wrapper.getTaskCount())){
-                totalCount = totalCount + (taskCount - Long.valueOf(wrapper.getTaskCount()));
-            }
-            if(taskCount < Long.valueOf(wrapper.getTaskCount())){
-                totalCount = totalCount + (Long.valueOf(wrapper.getTaskCount()) - taskCount);
-            }
-        }*/
-
-        if(ValidationUtility.isExists(wrapper.getTotalCount()) && ValidationUtility.isExists(totalBoardCount)){
-            if(totalBoardCount > Long.valueOf(wrapper.getTotalCount())){
-                totalCount = totalCount + (totalBoardCount - Long.valueOf(wrapper.getTotalCount()));
-            }
-            if(totalBoardCount < Long.valueOf(wrapper.getTotalCount())){
-                totalCount = totalCount + (Long.valueOf(wrapper.getTotalCount()) - totalBoardCount);
-            }
-        }
-
-        if(totalCount > 0){
-            retWrapper.setBoardUpdateRequired(true);
-            if(totalCount == 1){
-                retWrapper.setMessage("[" +totalCount+ "] Board Update! Please refresh your page to see update ");
-            }else{
-                retWrapper.setMessage("[" +totalCount+ "] Board Updates! Please refresh your page to see updates ");
-            }
-        }
-        System.out.println("No. of board Updates: " + totalCount);
-        return retWrapper;
-    }
     
     @Transactional
     public ResultImpl getBoardByIdToDisplay(Long id){
@@ -415,6 +318,103 @@ public class BoardsServiceImpl implements BoardsService{
 
 
         return wrapper;
+    }
+
+    @Transactional
+    public BoardWrapper getUpdatedBoardWrapper(BoardWrapper wrapper){
+        BoardWrapper retWrapper = new BoardWrapper();
+        retWrapper.setBoardId(wrapper.getBoardId());
+        retWrapper.setBoardUpdateRequired(false);
+        long totalCount = 0;
+        long totalBoardCount = 0;
+        Long boardCount = null;
+        Long boardUserCount = null;
+        Long taskCount = null;
+        Long taskUserCount = null;
+        Long attachmentCount = null;
+        Long boxCount = null;
+
+        if(ValidationUtility.isExists(wrapper.getBoardId()) && ValidationUtility.isExists(wrapper.getBoardUserId())){
+            /*boxCount = boardDAO.getBoxesCount(Long.valueOf(wrapper.getBoardId()));
+            if(ValidationUtility.isExists(boxCount)){
+                retWrapper.setBoxCount("" +boxCount);
+            }
+
+            attachmentCount = boardDAO.getAttachmentCount(Long.valueOf(wrapper.getBoardId()));
+            if(ValidationUtility.isExists(attachmentCount)){
+                retWrapper.setAttachmentCount("" +attachmentCount);
+            }
+
+            taskUserCount = boardDAO.getTaskUserCount(Long.valueOf(wrapper.getBoardId()));
+            if(ValidationUtility.isExists(taskUserCount)){
+                retWrapper.setTaskUserCount("" +taskUserCount);
+            }
+
+            taskCount = boardDAO.getTaskCount(Long.valueOf(wrapper.getBoardId()));
+            if(ValidationUtility.isExists(taskCount)){
+                retWrapper.setTaskCount("" +taskCount);
+            }*/
+            totalBoardCount = boardDAO.getTotalBoardCount(Long.valueOf(wrapper.getBoardId()), Long.valueOf(wrapper.getBoardUserId()));
+            if(ValidationUtility.isExists(totalBoardCount)){
+                retWrapper.setTotalCount("" +totalBoardCount);
+            }
+        }
+
+        /*if(ValidationUtility.isExists(wrapper.getBoxCount()) && ValidationUtility.isExists(boxCount)){
+            if(boxCount > Long.valueOf(wrapper.getBoxCount())){
+                totalCount = totalCount + (boxCount - Long.valueOf(wrapper.getBoxCount()));
+            }
+            if(boxCount < Long.valueOf(wrapper.getBoxCount())){
+                totalCount = totalCount + (Long.valueOf(wrapper.getBoxCount()) - boxCount);
+            }
+        }
+
+        if(ValidationUtility.isExists(wrapper.getAttachmentCount()) && ValidationUtility.isExists(attachmentCount)){
+            if(attachmentCount > Long.valueOf(wrapper.getAttachmentCount())){
+                totalCount = totalCount + (attachmentCount - Long.valueOf(wrapper.getAttachmentCount()));
+            }
+            if(attachmentCount < Long.valueOf(wrapper.getAttachmentCount())){
+                totalCount = totalCount + (Long.valueOf(wrapper.getAttachmentCount()) - attachmentCount);
+            }
+        }
+
+        if(ValidationUtility.isExists(wrapper.getTaskUserCount()) && ValidationUtility.isExists(taskUserCount)){
+            if(taskUserCount > Long.valueOf(wrapper.getTaskUserCount())){
+                totalCount = totalCount + (taskUserCount - Long.valueOf(wrapper.getTaskUserCount()));
+            }
+            if(taskUserCount < Long.valueOf(wrapper.getTaskUserCount())){
+                totalCount = totalCount + (Long.valueOf(wrapper.getTaskUserCount()) - taskUserCount);
+            }
+        }
+
+        if(ValidationUtility.isExists(wrapper.getTaskCount()) && ValidationUtility.isExists(taskCount)){
+            if(taskCount > Long.valueOf(wrapper.getTaskCount())){
+                totalCount = totalCount + (taskCount - Long.valueOf(wrapper.getTaskCount()));
+            }
+            if(taskCount < Long.valueOf(wrapper.getTaskCount())){
+                totalCount = totalCount + (Long.valueOf(wrapper.getTaskCount()) - taskCount);
+            }
+        }*/
+
+        if(ValidationUtility.isExists(wrapper.getTotalCount()) && ValidationUtility.isExists(totalBoardCount)){
+            if(totalBoardCount > Long.valueOf(wrapper.getTotalCount())){
+                totalCount = totalCount + (totalBoardCount - Long.valueOf(wrapper.getTotalCount()));
+            }
+            if(totalBoardCount < Long.valueOf(wrapper.getTotalCount())){
+                totalCount = totalCount + (Long.valueOf(wrapper.getTotalCount()) - totalBoardCount);
+            }
+        }
+
+        if(totalCount > 0){
+            retWrapper.setBoardUpdateRequired(true);
+            if(totalCount == 1){
+                retWrapper.setMessage("[" +totalCount+ "] Board Update! Please refresh your page to see update ");
+            }else{
+                retWrapper.setMessage("[" +totalCount+ "] Board Updates! Please refresh your page to see updates ");
+            }
+        }
+        System.out.println("No. of board Updates: " + totalCount);
+        return retWrapper;
     }
     
     

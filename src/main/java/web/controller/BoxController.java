@@ -30,6 +30,7 @@ import web.service.CompaniesService;
 import web.service.UsersService;
 import web.service.common.Result;
 import web.service.common.ResultImpl;
+import web.service.common.ValidationUtility;
 import web.wrapper.BoardWrapper;
 import web.wrapper.UserWrapper;
 
@@ -91,6 +92,9 @@ public class BoxController {
         }else if(parent.equals("box")){
             Boxes parentBox = (Boxes)( boxService.getBoxById(Long.valueOf(parentId)) ).getObject();
             boxService.setParent(box, parentBox);
+        }
+        if(ValidationUtility.isExists(boardLogId)){
+            box.setBoardLogId(Long.valueOf(boardLogId));
         }
         result = boxService.save(box);
         if(result.getIsSuccessful()){

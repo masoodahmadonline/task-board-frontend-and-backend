@@ -91,6 +91,9 @@ public class TaskController {
         task.setStatus("new");
         task.setPriority("normal");
         task.setCreatedDate(new Date());
+        if(ValidationUtility.isExists(boardLogId)){
+            task.setBoardLogId(Long.valueOf(boardLogId));
+        }
         Boxes parentBox = (Boxes)( boxService.getBoxById(Long.valueOf(parentBoxId)) ).getObject();
         taskService.setParent(task, parentBox);
         result = taskService.save(task);
@@ -280,6 +283,7 @@ public class TaskController {
     @RequestMapping (value = "/task/attach-file", method=RequestMethod.POST)
     public String uploadFile( HttpSession session,
                             @RequestParam("taskIdForFileUpload") String taskIdForFileUpload,
+                            @RequestParam("boardIdForFileUpload") String boardIdForFileUpload,
                             @RequestParam("fileDescription") String fileDescription,
                             @RequestParam("file") MultipartFile file
         ) throws IOException {
@@ -297,6 +301,9 @@ public class TaskController {
         attachment.setDescription(fileDescription);
         attachment.setCreatedBy(user.getId());
         attachment.setCreatedDate(new Date());
+        if(ValidationUtility.isExists(boardIdForFileUpload)){
+            attachment.setBoardLogId(Long.valueOf(boardIdForFileUpload));
+        }
         Long taskId = Long.parseLong(taskIdForFileUpload);
         System.out.println("service call param for task: ===========" +taskId);
         result = taskService.saveAttachment(taskId, attachment);

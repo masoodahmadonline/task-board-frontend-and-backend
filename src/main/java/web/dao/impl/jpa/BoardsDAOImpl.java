@@ -145,7 +145,10 @@ public class BoardsDAOImpl implements BoardsDAO {
         Long count = null;
 
         String queryString = "SELECT count(id) " +
-                "FROM Boards_Log as log WHERE log.logby IS NOT NULL AND log.logby != " + userId;
+                "FROM Boards_Log as log WHERE " +
+                "log.logby IS NOT NULL AND " +
+                "log.logby != " + userId +" AND " +
+                "log.boardLogId = " + boardId;
         Query queryObject = session.createSQLQuery(queryString);
         if(ValidationUtility.isExists(queryObject.uniqueResult())){
             countInt = (BigInteger)queryObject.uniqueResult();

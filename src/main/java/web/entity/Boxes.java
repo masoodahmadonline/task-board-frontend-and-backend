@@ -42,6 +42,7 @@ public class Boxes {
     private Date createdDate;
     private Long updatedBy;
     private Date updatedDate;
+    private Long boardLogId;
 
     /**
      * @return the id
@@ -215,5 +216,13 @@ public class Boxes {
 
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
+    }
+
+    public Long getBoardLogId() {
+        return boardLogId;
+    }
+
+    public void setBoardLogId(Long boardLogId) {
+        this.boardLogId = boardLogId;
     }
 }

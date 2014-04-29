@@ -28,6 +28,7 @@ public class Tasks_Users_Updated implements Serializable{
     private Date createdDate;
     private Long updatedBy;
     private Date updatedDate;
+    private Long boardLogId;
 
     public Long getId() {
         return id;
@@ -86,4 +87,11 @@ public class Tasks_Users_Updated implements Serializable{
     }
 
 
+    public Long getBoardLogId() {
+        return boardLogId;
+    }
+
+    public void setBoardLogId(Long boardLogId) {
+        this.boardLogId = boardLogId;
+    }
 }

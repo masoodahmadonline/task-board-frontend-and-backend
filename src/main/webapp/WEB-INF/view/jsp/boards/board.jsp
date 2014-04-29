@@ -705,6 +705,7 @@ $(function() {
     <td><textarea id="fileDescription" name="fileDescription" style="min-height: 100px;"></textarea></td>
 </tr>
 <input id="taskIdForFileUpload" type="hidden" name="taskIdForFileUpload" value="" />
+<input id="boardIdForFileUpload" type="hidden" name="boardIdForFileUpload" value="" />
 <%--<input id="taskIdForFileUpload" type="hidden" name="taskIdForFileUpload" value="233" />--%>
 
             <%--<tr>--%>
@@ -935,6 +936,7 @@ $(document).ready(function(){
     $(document).on('click', '.file-attachment-wizard', function(e) {
         //   $('#taskId-input-field').val(  $(this).parents(".task").first().attr('id') );
         $('#taskIdForFileUpload').val(  $(this).parents(".task").first().attr('id').split("-")[1] );
+        $('#boardIdForFileUpload').val(  $(this).parents('.board').first().attr("id").split("-")[1] );
         console.log("task id is :" +  $('#taskIdForFileUpload').val());
 //                    alert("hello "+$('#taskid-input-field').val());
     });

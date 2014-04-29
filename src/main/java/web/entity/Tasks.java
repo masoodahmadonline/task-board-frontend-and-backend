@@ -30,6 +30,7 @@ public class Tasks {
     private Date createdDate;
     private Long updatedBy;
     private Date updatedDate;
+    private Long boardLogId;
 
     @OneToMany(cascade=CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "tasklist")
     private Collection<Tasks_Users_Updated> taskUsers = new ArrayList<Tasks_Users_Updated>();
@@ -189,5 +190,13 @@ public class Tasks {
 
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
+    }
+
+    public Long getBoardLogId() {
+        return boardLogId;
+    }
+
+    public void setBoardLogId(Long boardLogId) {
+        this.boardLogId = boardLogId;
     }
 }
