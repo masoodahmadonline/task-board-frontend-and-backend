@@ -86,8 +86,8 @@
 
 
         });
-			  
 
+        $('#refreshPage').click(function(){ window.location.reload(true) });
 				   
     </script>
 

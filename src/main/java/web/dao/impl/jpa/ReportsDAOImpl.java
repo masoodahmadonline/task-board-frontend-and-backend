@@ -28,11 +28,11 @@ private EntityManager entityManager;
     	StringBuffer queryString = new StringBuffer();
     			queryString.append( "SELECT task FROM Tasks AS task ");
     			queryString.append( "WHERE task.parentBox.parentBoard.id = :boardId ");
-    			queryString.append(  "AND task.creationDateTime BETWEEN :startDate AND :endDate " );
+    			queryString.append(  "AND task.createdDate BETWEEN :startDate AND :endDate " );
 
     			if(orderBy != null){
     				if(orderBy.equals("date")){
-    						queryString.append("ORDER BY task.creationDateTime");
+    						queryString.append("ORDER BY task.createdDate");
     				}
                     if(orderBy.equals("status")){
                         queryString.append("ORDER BY task.status");
@@ -50,6 +50,9 @@ private EntityManager entityManager;
     	query.setParameter("startDate", startDate);
     	query.setParameter("endDate", endDate);
     	List<Tasks> taskList = query.getResultList();
+        for(Tasks t : taskList){
+            System.out.println("debug: "+t.getTitle() + " " + t.getCreatedDate());
+        }
     	return taskList;
     }
 	
