@@ -7,7 +7,7 @@
 	</queryString>
 	<field name="title" class="java.lang.String"/>
 	<field name="status" class="java.lang.String"/>
-	<field name="creationDateTime" class="java.util.Date"/>
+	<field name="createdDate" class="java.util.Date"/>
 	<field name="priority" class="java.lang.String"/>
 	<field name="creater.firstName" class="java.lang.String"/>
 	<field name="creater.lastName" class="java.lang.String"/>
@@ -94,7 +94,7 @@
 			</textField>
 			<textField>
 				<reportElement x="0" y="0" width="60" height="20" uuid="0990888a-7cd1-4ad5-a774-4a8f5744e937"/>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yy").format($F{creationDateTime})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yy").format($F{createdDate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="268" y="0" width="50" height="20" uuid="2168093e-2031-4070-8955-ad81d7e5225c"/>
