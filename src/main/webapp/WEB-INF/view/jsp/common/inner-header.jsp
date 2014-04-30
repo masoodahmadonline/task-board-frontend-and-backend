@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="wrapper" class="hide">
-    
+
         
             <div id="header">  
                 <div id="header-inner" >
@@ -15,7 +15,10 @@
 
                                   </div>
                               </div>
-                    </c:if>                  
+                    </c:if>
+
+
+                    <div id="refreshPage"><img style="width:20px;" src="${resourcesDir}/images/refresh.png" title="Refresh Page"></div>
 
                     <div id="circle" class="circle">
 

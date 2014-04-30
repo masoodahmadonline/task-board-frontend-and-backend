@@ -50,6 +50,9 @@ private EntityManager entityManager;
     	query.setParameter("startDate", startDate);
     	query.setParameter("endDate", endDate);
     	List<Tasks> taskList = query.getResultList();
+        for(Tasks t : taskList){
+            System.out.println("debug: "+t.getTitle() + " " + t.getCreatedDate());
+        }
     	return taskList;
     }
 	

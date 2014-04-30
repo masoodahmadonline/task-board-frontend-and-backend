@@ -362,6 +362,15 @@ background-repeat: repeat-x;
  
 }
 
+#refreshPage {
+  display: inline-block;
+  float: right;
+  margin-right: 50px;
+  margin-top: 15px;
+  clear:both;
+  cursor: pointer;
+}
+
 #user-options{
    display: block;
    position: absolute;
