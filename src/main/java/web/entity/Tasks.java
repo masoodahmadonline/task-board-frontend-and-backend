@@ -31,6 +31,8 @@ public class Tasks {
     private Long updatedBy;
     private Date updatedDate;
     private Long boardLogId;
+    @ManyToOne
+    private Users creater;
 
     @OneToMany(cascade=CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "tasklist")
     private Collection<Tasks_Users_Updated> taskUsers = new ArrayList<Tasks_Users_Updated>();
@@ -198,5 +200,13 @@ public class Tasks {
 
     public void setBoardLogId(Long boardLogId) {
         this.boardLogId = boardLogId;
+    }
+
+    public Users getCreater() {
+        return creater;
+    }
+
+    public void setCreater(Users creater) {
+        this.creater = creater;
     }
 }
